@@ -1,9 +1,5 @@
-import SignInForm from "@/components/sign-in/sign-in-form";
+import SignInPageComponent from "@/components/sign-in/sign-in-page-component";
 
-export default function Page()  {
-    return(
-        <div className="">
-            <SignInForm />
-        </div>
-    )
+export default function Page() {
+  return <SignInPageComponent />;
 }
