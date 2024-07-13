@@ -1,7 +1,7 @@
-import { Client } from "pg";
+import { Pool } from "pg";
 
-const db = new Client({
-    user: process.env.USER,    
+export const dbPool = new Pool({
+    user: process.env.USER,
     host: process.env.HOST,
     database: process.env.DATABASE,
     port: 5432,
@@ -11,4 +11,3 @@ const db = new Client({
 
 
 
-export default db;
