@@ -18,7 +18,7 @@ const PageWrapper = ({ children, additionalComponent, pageTitle, icon, buttonTex
         <Card className="shadow-md rounded-xl">
             <CardHeader className="flex flex-row justify-between items-center">
                 <div className="flex items-center">
-                    <div className="p-2 bg-[#6950e81a] bg-opacity-10 inline rounded-sm mr-2">
+                    <div className="p-2 bg-[#6950e81a] bg-opacity-10 inline rounded-lg mr-2">
                         {icon}
                     </div>
 
@@ -31,7 +31,7 @@ const PageWrapper = ({ children, additionalComponent, pageTitle, icon, buttonTex
                     <MdAdd className="w-5 h-5 mr-2" /> <span className="text-sm">{buttonText}</span>
                 </Button>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-0">
                 {children}
             </CardContent>
         </Card>
