@@ -43,24 +43,25 @@ const users: User[] = [
 
 const columns: ColumnDef<User>[] = [
     {
-        accessorKey: "name",
-        header: "Name",
-    },
-    {
-        accessorKey: "lastName",
-        header: "Last Name",
-    },
+        accessorKey: "fullName",
+        header: () => <h1 className="text-sm text-[#111827] font-semibold">Name</h1>,
+        cell: ({ row }) => {
+            const name = row.original.name
+            const lastName = row.original.lastName
+            return <p>{`${name} ${lastName}`}</p>
+        }
+    },    
     {
         accessorKey: "userName",
-        header: "Username",
+        header: () => <h1 className="text-sm text-[#111827] font-semibold">User Name</h1>,
     },
     {
         accessorKey: "email",
-        header: "Email",
+        header: () => <h1 className="text-sm text-[#111827] font-semibold">Email</h1>,
     },
     {
         accessorKey: "role",
-        header: "Role"
+        header: () => <h1 className="text-sm text-[#111827] font-semibold">Role</h1>,
     }
 
 ]
