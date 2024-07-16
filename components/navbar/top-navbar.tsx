@@ -20,7 +20,7 @@ const TopNavbar = () => {
                     <MdLanguage size={24} />
                 </Button>
                 <Button variant={'ghost'} size={'icon'} className="p-2 rounded-full">
-                    <CgProfile size={24} color="#6B7280" />
+                    <CgProfile size={24} />
                 </Button>
 
             </div>

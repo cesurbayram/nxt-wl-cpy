@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import SideNavbar from "@/components/navbar/side-navbar";
 import TopNavbar from "@/components/navbar/top-navbar";
 
@@ -23,11 +23,13 @@ export default function RootLayout({
           <div className="w-64 border-2 border-red-500 pr-4 pl-7"> {/* Side nav kısım */}
             <SideNavbar />
           </div>
-          <div className="border-2 border-green-600 flex-grow px-6 bg-[#fdfdff]">
-            <TopNavbar />
-            <main className="mt-4 mb-8">            
-              {children}
-            </main>
+          <div className="border-2 border-green-600 flex-grow px-6 bg-[#fdfdff] flex flex-col items-center">
+            <div className="max-w-6xl w-full">
+              <TopNavbar />
+              <main className="mt-4 mb-8">
+                {children}
+              </main>
+            </div>
           </div>
         </div>
       </body>
