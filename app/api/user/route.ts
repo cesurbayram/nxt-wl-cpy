@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { dbPool } from '@/utils/dbUtil';
 import { v4 as uuidv4 } from 'uuid';
 
-interface User {
+export interface User {
     id:string;
     name: string;
     lastName: string;
@@ -16,7 +16,8 @@ interface User {
 
 export async function GET(request: NextRequest) {
     try {
-        const userDbResp = await dbPool.query('SELECT * FROM "users"');
+        console.log('BURADA');        
+        const userDbResp = await dbPool.query('SELECT * FROM "users"');        
         const users: User[] = userDbResp.rows;
         return NextResponse.json(users, { status: 200 });
     } catch (error: any) {
