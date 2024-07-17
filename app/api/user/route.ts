@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { dbPool } from '@/utils/dbUtil';
 import { v4 as uuidv4 } from 'uuid';
 
-interface User {
+export interface User {
     id:string;
     name: string;
     lastName: string;

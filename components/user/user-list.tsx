@@ -32,8 +32,8 @@ import { getUser } from "@/utils/service/user";
 interface User {
   id: string;
   name: string;
-  lastName: string;
-  userName: string;
+  last_name: string;
+  user_name: string;
   email: string;
   role: string;
 }
@@ -47,12 +47,12 @@ const columns: ColumnDef<User>[] = [
 
     cell: ({ row }) => {
       const name = row.original.name;
-      const lastName = row.original.lastName;
+      const lastName = row.original.last_name;
       return <p>{`${name} ${lastName}`}</p>;
     },
   },
   {
-    accessorKey: "userName",
+    accessorKey: "user_name",
     header: () => (
       <h1 className="text-sm text-[#111827] font-semibold">User Name</h1>
     ),
@@ -107,12 +107,10 @@ const UserList = () => {
     })
     const [sorting, setSorting] = useState<SortingState>([])
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-
-    console.log('users', users);
     
   const table = useReactTable({
     columns,
-    data: users,
+    data: isLoading ? [] : users,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
