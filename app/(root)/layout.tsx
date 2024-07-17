@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "../globals.css";
 import SideNavbar from "@/components/navbar/side-navbar";
 import TopNavbar from "@/components/navbar/top-navbar";
+import ReactQueryProvider from "@/utils/providers/react-query-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,19 +20,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="flex">
-          <div className="w-64 border-2 border-red-500 pr-4 pl-7"> {/* Side nav kısım */}
-            <SideNavbar />
-          </div>
-          <div className="border-2 border-green-600 flex-grow px-6 bg-[#fdfdff] flex flex-col items-center">
-            <div className="max-w-6xl w-full">
-              <TopNavbar />
-              <main className="mt-4 mb-8">
-                {children}
-              </main>
+        <ReactQueryProvider>
+          <div className="flex">
+            <div className="w-64 border-2 border-red-500 pr-4 pl-7">
+              {" "}
+              {/* Side nav kısım */}
+              <SideNavbar />
+            </div>
+            <div className="border-2 border-green-600 flex-grow px-6 bg-[#fdfdff] flex flex-col items-center">
+              <div className="max-w-6xl w-full">
+                <TopNavbar />
+                <main className="mt-4 mb-8">{children}</main>
+              </div>
             </div>
           </div>
-        </div>
+        </ReactQueryProvider>
       </body>
     </html>
   );
