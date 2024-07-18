@@ -76,10 +76,11 @@ export async function DELETE(request: NextRequest) {
     const client = await dbPool.connect();
     try {
         await client.query('BEGIN');
-        await client.query(
-            `DELETE FROM "users" WHERE id = $1`,
+        const res = await client.query(
+            `DELETE FROM users WHERE id = $1`,
             [id]
         );
+        console.log('res', res);        
         return NextResponse.json({ message: 'User deleted successfully' }, { status: 200 });
     } catch (error: any) {
         console.error('DB ERROR:', error.message);

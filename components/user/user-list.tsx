@@ -26,7 +26,7 @@ import { useState } from "react";
 import { ArrowUpDown } from "lucide-react";
 import { Input } from "../ui/input";
 import DataTablePagination from "../shared/pagination";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { deleteUser, getUser } from "@/utils/service/user";
 import { User } from "@/types/user.types";
 import LoadingUi from "../shared/loadingUi";
@@ -39,16 +39,18 @@ const UserList = () => {
     data: users,
     isLoading,
     isError,
+    refetch
   } = useQuery<User[], string>({
     queryFn: async () => await getUser(),
     queryKey: ['users'],
+    cacheTime: 0    
   });
 
-  const { mutate } = useMutation({
+  const { mutate, isLoading:isDeleteLoading } = useMutation({
     mutationFn: async({ id }: User) => await deleteUser({ id }),
     onSuccess: () => {
-        queryClient.invalidateQueries(['users'])
-    }           
+        queryClient.invalidateQueries(['users'])        
+    },               
   })
 
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -144,7 +146,7 @@ const UserList = () => {
 
   return (
     <>
-      <LoadingUi isLoading={isLoading} />
+      <LoadingUi isLoading={isLoading || isDeleteLoading} />
       <div className="flex items-center py-4 px-3">
         <Input
           placeholder="Filter"

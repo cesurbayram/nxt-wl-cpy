@@ -19,9 +19,9 @@ const deleteUser = async ({ id }: User): Promise<boolean> => {
     const apiRes = await fetch('/api/user', {
         method: 'DELETE',
         body: JSON.stringify(body),
-        headers: {
-            'Content-Type': 'application/json',
-        }
+        // headers: {
+        //     'Content-Type': 'application/json',
+        // }
     })
 
     if(apiRes.ok !== true) throw new Error('An error occured when deleting user')
