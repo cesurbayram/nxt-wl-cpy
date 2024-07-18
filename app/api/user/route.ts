@@ -16,7 +16,6 @@ export interface User {
 
 export async function GET(request: NextRequest) {
     try {
-        console.log('BURADA');        
         const userDbResp = await dbPool.query('SELECT * FROM "users"');        
         const users: User[] = userDbResp.rows;
         return NextResponse.json(users, { status: 200 });
@@ -71,14 +70,17 @@ export async function PUT(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
-    const { userName }: { userName: string } = await request.json();
+    const { id }: User = await request.json();
+    console.log('id', id);
+    
     const client = await dbPool.connect();
     try {
         await client.query('BEGIN');
-        await client.query(
-            `DELETE FROM "users" WHERE user_name = $1`,
-            [userName]
+        const res = await client.query(
+            `DELETE FROM users WHERE id = $1`,
+            [id]
         );
+        console.log('res', res);        
         return NextResponse.json({ message: 'User deleted successfully' }, { status: 200 });
     } catch (error: any) {
         console.error('DB ERROR:', error.message);
