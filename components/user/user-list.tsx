@@ -29,7 +29,7 @@ import DataTablePagination from "../shared/pagination";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { deleteUser, getUser } from "@/utils/service/user";
 import { User } from "@/types/user.types";
-import LoadingUi from "../shared/loadingUi";
+import LoadingUi from "../shared/loading-ui";
 
 
 
@@ -42,8 +42,7 @@ const UserList = () => {
     refetch
   } = useQuery<User[], string>({
     queryFn: async () => await getUser(),
-    queryKey: ['users'],
-    cacheTime: 0    
+    queryKey: ['users'],        
   });
 
   const { mutate, isLoading:isDeleteLoading } = useMutation({
@@ -59,10 +58,7 @@ const UserList = () => {
   const deleteClick = (id: string) => {
     mutate({ id })
   }
-
-  console.log('users', users);
-  
-
+    
   const columns: ColumnDef<User>[] = [
     {
       accessorKey: "fullName",

@@ -70,8 +70,7 @@ export async function PUT(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
-    const { id }: User = await request.json();
-    console.log('id', id);
+    const { id } = await request.json();
     
     const client = await dbPool.connect();
     try {
@@ -80,7 +79,7 @@ export async function DELETE(request: NextRequest) {
             `DELETE FROM users WHERE id = $1`,
             [id]
         );
-        console.log('res', res);        
+        await client.query('COMMIT')        
         return NextResponse.json({ message: 'User deleted successfully' }, { status: 200 });
     } catch (error: any) {
         console.error('DB ERROR:', error.message);
