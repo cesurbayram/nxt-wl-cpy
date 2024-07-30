@@ -22,12 +22,12 @@ export default function RootLayout({
       <body className={inter.className}>
         <ReactQueryProvider>
           <div className="flex">
-            <div className="w-64 border-2 border-red-500 pr-4 pl-7">
+            <div className="w-64 pr-4 pl-7 border-r-2 h-screen">
               {" "}
               {/* Side nav kısım */}
               <SideNavbar />
             </div>
-            <div className="border-2 border-green-600 flex-grow px-6 bg-[#fdfdff] flex flex-col items-center">
+            <div className="flex-grow px-6 bg-[#fdfdff] flex flex-col items-center h-screen">
               <div className="max-w-6xl w-full">
                 <TopNavbar />
                 <main className="mt-4 mb-8">{children}</main>

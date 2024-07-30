@@ -5,7 +5,6 @@ import UserListNew from "@/components/user/user-list-new";
 import { User } from "@/types/user.types";
 import { deleteUser, getUser } from "@/utils/service/user";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import { HiUsers } from "react-icons/hi";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 

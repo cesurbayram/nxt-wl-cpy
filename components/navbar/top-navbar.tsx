@@ -6,7 +6,7 @@ import { CgProfile } from "react-icons/cg";
 
 const TopNavbar = () => {
     return (
-        <div className="border-2 py-4 flex justify-between">
+        <div className="py-4 flex justify-between">
             
             <Button variant={'ghost'} size={'icon'} className="p-2 rounded-full">
                 <FaSearch size={18} color="#6B7280" />
