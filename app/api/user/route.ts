@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
         const users: User[] = userDbResp.rows;
         return NextResponse.json(users, { status: 200 });
     } catch (error: any) {
-        console.error('DB ERROR:', error.message);
+        console.error('DB ERROR:', error);
         return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
     }
 }
