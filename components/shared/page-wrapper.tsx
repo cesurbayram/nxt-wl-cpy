@@ -9,11 +9,12 @@ interface PageWrapperProps {
     additionalComponent?: ReactNode;
     icon?: ReactNode;
     buttonText:string
+    buttonAction?: () => void
 
 }
 
 
-const PageWrapper = ({ children, additionalComponent, pageTitle, icon, buttonText }: PageWrapperProps) => {
+const PageWrapper = ({ children, additionalComponent, pageTitle, icon, buttonText, buttonAction }: PageWrapperProps) => {
     return(
         <Card className="shadow-md rounded-xl">
             <CardHeader className="flex flex-row justify-between items-center">
@@ -27,7 +28,10 @@ const PageWrapper = ({ children, additionalComponent, pageTitle, icon, buttonTex
 
                 {additionalComponent}
 
-                <Button className="rounded-xl bg-[#6950E8]">
+                <Button 
+                    className="rounded-xl bg-[#6950E8]"
+                    onClick={buttonAction}
+                >
                     <MdAdd className="w-5 h-5 mr-2" /> <span className="text-sm">{buttonText}</span>
                 </Button>
             </CardHeader>

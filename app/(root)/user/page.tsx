@@ -4,12 +4,14 @@ import PageWrapper from "@/components/shared/page-wrapper"
 import UserListNew from "@/components/user/user-list-new";
 import { User } from "@/types/user.types";
 import { deleteUser, getUser } from "@/utils/service/user";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { HiUsers } from "react-icons/hi";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
 
 const Page = () => {
+    const router = useRouter()
     const queryClient = useQueryClient()
     const {data: users, isLoading} = useQuery<User[], string>({
         queryFn: async () => await getUser(),
@@ -22,6 +24,10 @@ const Page = () => {
             queryClient.invalidateQueries(['users'])
         }
     })
+
+    const handleRouteUserCreate = () => {
+        router.push('/user/0')
+    }
     
     return (
         <>
@@ -30,6 +36,7 @@ const Page = () => {
                 buttonText="Add New User"
                 pageTitle="Users"
                 icon={<HiUsers size={24} color="#6950e8" />}
+                buttonAction={handleRouteUserCreate}
             >
                 <UserListNew users={users || []} deleteClick={mutate} />
             </PageWrapper>
