@@ -5,6 +5,7 @@ import { ArrowUpDown } from "lucide-react";
 import { MdDelete } from "react-icons/md";
 import { FaArrowRight } from "react-icons/fa6";
 import { DataTable } from "../shared/data-table";
+import { useRouter } from "next/navigation";
 
 interface UserListNewProps {
     users: User[];
@@ -13,7 +14,7 @@ interface UserListNewProps {
 
 
 const UserListNew = ({ users, deleteClick }: UserListNewProps) => {    
-
+    const router = useRouter()
     const columns: ColumnDef<User>[] = [
         {
             accessorKey: "fullName",
@@ -73,7 +74,7 @@ const UserListNew = ({ users, deleteClick }: UserListNewProps) => {
                         >
                             <MdDelete size={20} className="text-red-500" />
                         </Button>
-                        <Button size="icon" variant="ghost">
+                        <Button size="icon" variant="ghost" onClick={() => router.push(`/user/${row.original.id}`)}>
                             <FaArrowRight size={20} className="text-[#6950E8]" />
                         </Button>
                     </div>

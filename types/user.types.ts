@@ -8,5 +8,7 @@ export interface User {
     bcryptPassword?: string;
     createdAt?: string;
     updateAt?: string;
+    bcrypt_password?: string;
+    user_name?: string
 }
   
