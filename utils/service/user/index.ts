@@ -58,4 +58,19 @@ const createUser = async (values: User): Promise<boolean> => {
     return true
 }
 
-export { getUser, deleteUser, createUser, getUserById }
+const updateUser = async (values: User): Promise<boolean> => {
+    const body = values;
+    const apiRes = await fetch('/api/user', {
+        method: 'PUT',
+        body: JSON.stringify(body),
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+
+    if(apiRes.ok !== true) throw new Error(`An error occured when updating user`)
+
+    return true;
+}
+
+export { getUser, deleteUser, createUser, getUserById, updateUser }

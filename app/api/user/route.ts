@@ -9,14 +9,14 @@ export interface User {
     userName: string;
     email: string;
     role: string;
-    bcryptPassword: string;
+    bcryptPassword?: string;
     createdAt?: string;
     updateAt?: string;
 }
 
 export async function GET(request: NextRequest) {
     try {
-        const userDbResp = await dbPool.query('SELECT * FROM "users"');        
+        const userDbResp = await dbPool.query('SELECT id, name, last_name, user_name, email, role FROM "users"');        
         const users: User[] = userDbResp.rows;
         return NextResponse.json(users, { status: 200 });
     } catch (error: any) {
@@ -48,15 +48,15 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
-    const {id, name, lastName, userName, email, role, bcryptPassword }: User = await request.json();
+    const {id, name, lastName, userName, email, role }: User = await request.json();
     const client = await dbPool.connect();
     try {
         await client.query('BEGIN');
         await client.query(
             `UPDATE "users" 
-            SET name = $1, last_name = $2, email = $3, role = $4, bcrypt_password = $5, user_name= $6, update_at = now() 
-            WHERE id = $7`,
-            [name, lastName, email, role, bcryptPassword, userName, id]
+            SET name = $1, last_name = $2, email = $3, role = $4, user_name= $5, update_at = now() 
+            WHERE id = $6`,
+            [name, lastName, email, role, userName, id]
         );
         await client.query('COMMIT')
         return NextResponse.json({ message: 'User updated successfully' }, { status: 200 });
@@ -75,7 +75,7 @@ export async function DELETE(request: NextRequest) {
     const client = await dbPool.connect();
     try {
         await client.query('BEGIN');
-        const res = await client.query(
+        await client.query(
             `DELETE FROM users WHERE id = $1`,
             [id]
         );
