@@ -6,21 +6,22 @@ import { User } from "@/types/user.types";
 import { deleteUser, getUser } from "@/utils/service/user";
 import { useRouter } from "next/navigation";
 import { HiUsers } from "react-icons/hi";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 
 const Page = () => {
     const router = useRouter()
     const queryClient = useQueryClient()
+    
     const {data: users, isLoading} = useQuery<User[], string>({
-        queryFn: async () => await getUser(),
-        queryKey: ['users']
+        queryFn: () => getUser(),
+        queryKey: ["users"]
     })
 
-    const {mutate, isLoading: deleteLoading} = useMutation({
-        mutationFn: async ({id}: User) => await deleteUser({id}),
+    const { mutateAsync: deleteMutation, isPending } = useMutation({
+        mutationFn: ({id}: User) => deleteUser({id}),
         onSuccess: () => {
-            queryClient.invalidateQueries(['users'])
+            queryClient.invalidateQueries({queryKey: ["users"]})
         }
     })
 
@@ -30,14 +31,14 @@ const Page = () => {
     
     return (
         <>
-            <LoadingUi isLoading={isLoading || deleteLoading} />
+            <LoadingUi isLoading={isLoading || isPending} />
             <PageWrapper
                 buttonText="Add New User"
                 pageTitle="Users"
                 icon={<HiUsers size={24} color="#6950e8" />}
                 buttonAction={handleRouteUserCreate}
             >
-                <UserListNew users={users || []} deleteClick={mutate} />
+                <UserListNew users={users || []} deleteClick={deleteMutation} />
             </PageWrapper>
         </>
     )

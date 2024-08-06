@@ -12,11 +12,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { UserEditValidation } from "@/lib/validations/user-edit";
 import { User } from "@/types/user.types";
-import { createUser, getUserById } from "@/utils/service/user";
+import { createUser, getUserById, updateUser } from "@/utils/service/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
 
 const initialValues = {
@@ -36,43 +36,57 @@ const Page = ({ params }: { params: { id: string } }) => {
     defaultValues: initialValues,
   });
 
-  const {mutate, isLoading} = useMutation({
-    mutationFn: async (values: User) => await createUser(values),
+  const {mutateAsync: createMutation, isPending: isCreateloading} = useMutation({
+    mutationFn: (values: User) => createUser(values),
     onSuccess: async () => {
-      await queryClient.invalidateQueries(['users'])
+      queryClient.invalidateQueries({queryKey: ["users"]})
       router.push('/user')
     }
   })
 
-  const {data: user, isLoading: isLoadingFetchUser} = useQuery<User>({
+  const {mutateAsync: updateMutation, isPending: isUpdateLoading} = useMutation({
+    mutationFn: (values: User) => updateUser(values),
+    onSuccess: async () => {
+      queryClient.invalidateQueries({queryKey: ['users']})
+      router.push('/user')
+    }
+  })
+
+  const {data: user, isLoading: isLoadingFetchUser, isSuccess} = useQuery<User>({
     queryFn: async () => await getUserById({id: params.id}),
     queryKey: ['user'],
     enabled: params.id != '0',
-    onSuccess: async (result) => {
-      form.setValue('name', result.name as string),
-      form.setValue('lastName', result.last_name as string),
-      form.setValue('email', result.email as string),
-      form.setValue('password', result.bcrypt_password as string),
-      form.setValue('role', result.role as string),
-      form.setValue('userName', result.user_name as string)
-    } 
+    gcTime: 0
   })
 
+  if(isSuccess && params.id != '0') {
+    form.setValue('name', user.name as string),
+    form.setValue('lastName', user.last_name as string),
+    form.setValue('email', user.email as string),
+    form.setValue('password', user.bcrypt_password as string),
+    form.setValue('role', user.role as string),
+    form.setValue('userName', user.user_name as string)
+  }
+
   
   
 
-  const onSubmit = (values: z.infer<typeof UserEditValidation>) => {
+  const onSubmit = async (values: z.infer<typeof UserEditValidation>) => {
     const newValues: User = {
       ...values,
       bcryptPassword: values.password
     }
-
-    mutate(newValues)
+    if(params.id == '0') {
+      await createMutation(newValues)
+    } else {
+      newValues.id = params.id
+      await updateMutation(newValues)
+    }
   };
 
   return (
     <>
-      <LoadingUi isLoading={isLoading || isLoadingFetchUser} />
+      <LoadingUi isLoading={isCreateloading || isLoadingFetchUser || isUpdateLoading} />
       <div className="container mx-auto">
         <Card className="shadow-md rounded-xl">
           <Form {...form}>
@@ -174,7 +188,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                     </FormItem>
                   )}
                 />
-                <FormField
+                {params.id == '0' && <FormField
                   control={form.control}
                   name="password"
                   render={({ field }) => (
@@ -193,7 +207,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                />}
               </CardContent>
               <CardFooter className="flex justify-between mt-3">
                 <Button
@@ -201,14 +215,15 @@ const Page = ({ params }: { params: { id: string } }) => {
                   size="sm"
                   type="submit"
                 >
-                  Create User
+                  {params.id != '0' ? 'Update User' : 'Create User'}
                 </Button>
                 <Button 
                   className="rounded-xl" 
                   size="sm" 
                   variant={"outline"}
+                  type="button"
                   onClick={() => {
-                    router.push('/user')
+                    router.back()
                   }}
                 >
                   Cancel

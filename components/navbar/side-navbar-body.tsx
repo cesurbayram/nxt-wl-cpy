@@ -1,6 +1,7 @@
 import { FaUser } from "react-icons/fa";
 import { Button } from "../ui/button";
 import { GiRobotGrab } from "react-icons/gi";
+import Link from "next/link";
 
 const sideMenuItems = [
     {
@@ -23,6 +24,7 @@ const SideNavbarBody = () => {
 
             {sideMenuItems.map((item) => (
                 <Button
+                    asChild
                     key={item.title}
                     variant={"ghost"}
                     className={`
@@ -38,8 +40,10 @@ const SideNavbarBody = () => {
 
                 `}
                 >
-                    {item.icon}
-                    {item.title}
+                    <Link href={item.link}>
+                        {item.icon}
+                        {item.title}
+                    </Link>
                 </Button>
             ))}
         </div>
