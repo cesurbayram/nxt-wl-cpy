@@ -11,12 +11,21 @@ export interface User {
     role: string;
     bcryptPassword?: string;
     createdAt?: string;
-    updateAt?: string;
+    updatedAt?: string;
 }
 
 export async function GET(request: NextRequest) {
     try {
-        const userDbResp = await dbPool.query('SELECT id, name, last_name, user_name, email, role FROM "users"');        
+        const userDbResp = await dbPool.query(`
+            SELECT 
+            r.id, 
+            r.name, 
+            r.last_name AS "lastName", 
+            r.user_name AS "userName", 
+            r.email, 
+            r.role 
+        FROM 
+            "users" r`);        
         const users: User[] = userDbResp.rows;
         return NextResponse.json(users, { status: 200 });
     } catch (error: any) {
@@ -54,7 +63,7 @@ export async function PUT(request: NextRequest) {
         await client.query('BEGIN');
         await client.query(
             `UPDATE "users" 
-            SET name = $1, last_name = $2, email = $3, role = $4, user_name= $5, update_at = now() 
+            SET name = $1, last_name = $2, email = $3, role = $4, user_name= $5, updated_at = now() 
             WHERE id = $6`,
             [name, lastName, email, role, userName, id]
         );
