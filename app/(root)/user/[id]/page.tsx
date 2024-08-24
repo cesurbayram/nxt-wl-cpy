@@ -18,6 +18,9 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
+import PageWrapper from "@/components/shared/page-wrapper";
+import { AiOutlineUserAdd } from "react-icons/ai";
+import { LiaUserEditSolid } from "react-icons/lia";
 
 const initialValues = {
   name: "",
@@ -87,8 +90,12 @@ const Page = ({ params }: { params: { id: string } }) => {
   return (
     <>
       <LoadingUi isLoading={isCreateloading || isLoadingFetchUser || isUpdateLoading} />
-      <div className="container mx-auto">
-        <Card className="shadow-md rounded-xl">
+      
+        <PageWrapper
+            shownHeaderButton={false}
+            pageTitle={params.id != '0' ? 'Update User' : 'Create User'}
+            icon={params.id != '0' ? <LiaUserEditSolid size={24} color="#6950e8" /> : <AiOutlineUserAdd size={24} color="#6950e8" />}
+        >
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <CardContent className="grid grid-cols-2 gap-6 p-6">
@@ -97,7 +104,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormControl>
+                      <FormControl className="relative">
                         <Input
                           placeholder="Name"
                           {...field}
@@ -105,7 +112,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                             form.formState.errors.name
                               ? "border-red-600 focus:border-red-800"
                               : ""
-                          } h-12 rounded-lg`}
+                          } h-12 rounded-lg focus:placeholder:-translate-y-7 focus:placeholder:z-20 focus:placeholder:transition-transform`}
                         />
                       </FormControl>
                       <FormMessage />
@@ -231,8 +238,8 @@ const Page = ({ params }: { params: { id: string } }) => {
               </CardFooter>
             </form>
           </Form>
-        </Card>
-      </div>
+        </PageWrapper>
+        
     </>
   );
 };
