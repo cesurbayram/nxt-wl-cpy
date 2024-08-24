@@ -33,6 +33,7 @@ export async function POST(request: NextRequest) {
     const { name, model, ipAddress, status, serialNumber, intervalMs, maxConnection, location }: Robot = await request.json();
     const client = await dbPool.connect();
     const newRobotId = uuidv4();
+    const newRobotStatusId = uuidv4();
     try {
         await client.query('BEGIN');
         await client.query(
@@ -40,6 +41,11 @@ export async function POST(request: NextRequest) {
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
             [newRobotId, name, model, ipAddress, status, serialNumber, intervalMs, maxConnection, location]
         );
+
+        await client.query(`INSERT INTO robot_status (id, ip_address, teach, servo, operating, cycle, hold, alarm, error, stop) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`, [
+            newRobotStatusId, ipAddress, 'TEACH', false, false, 'CYCLE', false, false, false, false
+        ]);
+        
         await client.query('COMMIT');
         return NextResponse.json({ message: 'Robot created successfully' }, { status: 201 });
     } catch (error: any) {
