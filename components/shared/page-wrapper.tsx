@@ -20,9 +20,9 @@ const PageWrapper = ({ children, additionalComponent, pageTitle, icon, buttonTex
         <Card className="shadow-md rounded-xl">
             <CardHeader className="flex flex-row justify-between items-center">
                 <div className="flex items-center">
-                    <div className="p-2 bg-[#6950e81a] bg-opacity-10 inline rounded-lg mr-2">
+                    {icon && <div className="p-2 bg-[#6950e81a] bg-opacity-10 inline rounded-lg mr-2">
                         {icon}
-                    </div>
+                    </div>}
 
                     <p className="text-base">{pageTitle}</p>
                 </div>

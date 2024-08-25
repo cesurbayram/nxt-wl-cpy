@@ -5,7 +5,7 @@ import { Robot } from "@/types/robot.types";
 import { useRouter } from "next/navigation";
 import { GiRobotGrab } from "react-icons/gi";
 
-const controllers: Robot[] = [
+export const controllers: Robot[] = [
     {
         id: '1',
         intervalMs: 10,
