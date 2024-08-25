@@ -1,3 +1,5 @@
+import { ControllerStatus } from "./controllerStatus.types";
+
 export interface Robot {
     id: string;
     name: string;
@@ -11,4 +13,5 @@ export interface Robot {
     createdAt?: string;
     updatedAt?: string;
     deletedAt?: string;
+    controllerStatus?: ControllerStatus   
 }
