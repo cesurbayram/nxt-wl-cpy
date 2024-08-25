@@ -14,6 +14,7 @@ import { PiLightning } from "react-icons/pi";
 import { IoWarningOutline } from "react-icons/io5";
 import { FaRegHandLizard } from "react-icons/fa6";
 import { GrPowerCycle } from "react-icons/gr";
+import Link from "next/link";
 
 
 interface ControllerListProps {
@@ -123,10 +124,12 @@ const ControllerList = ({ controllers }: ControllerListProps) => {
                         </Button>
                         <Button 
                             size="icon" 
-                            variant="ghost" 
-                            //</div>onClick={() => router.push(`/user/${row.original.id}`)}
+                            variant="ghost"
+                            asChild 
                         >
-                            <FaArrowRight size={20} className="text-[#6950E8]" />
+                            <Link href={`/controller/${row.original.id}`}>
+                                <FaArrowRight size={20} className="text-[#6950E8]" />
+                            </Link>
                         </Button>
                     </div>
                 );
