@@ -24,7 +24,7 @@ const UserListNew = ({ users, deleteClick }: UserListNewProps) => {
 
             cell: ({ row }) => {
                 const name = row.original.name;
-                const lastName = row.original.last_name;
+                const lastName = row.original.lastName;
                 return <p>{`${name} ${lastName}`}</p>;
             },
         },

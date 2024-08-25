@@ -64,7 +64,7 @@ const Page = ({ params }: { params: { id: string } }) => {
 
   if(isSuccess && params.id != '0') {
     form.setValue('name', user.name as string),
-    form.setValue('lastName', user.last_name as string),
+    form.setValue('lastName', user.lastName as string),
     form.setValue('email', user.email as string),
     form.setValue('password', user.bcrypt_password as string),
     form.setValue('role', user.role as string),
