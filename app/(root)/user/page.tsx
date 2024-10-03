@@ -7,6 +7,7 @@ import { deleteUser, getUser } from "@/utils/service/user";
 import { useRouter } from "next/navigation";
 import { HiUsers } from "react-icons/hi";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Fragment } from "react";
 
 
 const Page = () => {
@@ -30,7 +31,7 @@ const Page = () => {
     }
     
     return (
-        <>
+        <Fragment>
             <LoadingUi isLoading={isLoading || isPending} />
             <PageWrapper
                 buttonText="Add New User"
@@ -40,7 +41,7 @@ const Page = () => {
             >
                 <UserListNew users={users || []} deleteClick={deleteMutation} />
             </PageWrapper>
-        </>
+        </Fragment>
     )
 }
 
