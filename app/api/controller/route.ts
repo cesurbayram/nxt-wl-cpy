@@ -45,6 +45,34 @@ export async function POST(request: NextRequest) {
         await client.query(`INSERT INTO robot_status (id, ip_address, teach, servo, operating, cycle, hold, alarm, error, stop) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`, [
             newRobotStatusId, ipAddress, 'TEACH', false, false, 'CYCLE', false, false, false, false
         ]);
+
+        await client.query(
+            `INSERT INTO d_read (id, ip_address, no, name, value)
+             SELECT uuid_generate_v4(), $1, gs, null, '0'
+             FROM generate_series(0, 3000) as gs;`,
+            [ipAddress]
+        );
+
+        // await client.query(
+        //     `INSERT INTO s_read (id, ip_address, no, name, value)
+        //      SELECT uuid_generate_v4(), $1, gs, null, '0'
+        //      FROM generate_series(0, 3000) as gs;`,
+        //     [ipAddress]
+        // );
+
+        // await client.query(
+        //     `INSERT INTO ı_read (id, ip_address, no, name, value)
+        //      SELECT uuid_generate_v4(), $1, gs, null, '0'
+        //      FROM generate_series(0, 3000) as gs;`,
+        //     [ipAddress]
+        // );
+
+        // await client.query(
+        //     `INSERT INTO r_read (id, ip_address, no, name, value)
+        //      SELECT uuid_generate_v4(), $1, gs, null, '0'
+        //      FROM generate_series(0, 3000) as gs;`,
+        //     [ipAddress]
+        // );
         
         await client.query('COMMIT');
         return NextResponse.json({ message: 'Robot created successfully' }, { status: 201 });

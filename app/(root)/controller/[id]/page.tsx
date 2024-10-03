@@ -7,6 +7,8 @@ import Alarm from "@/components/controller/alarm/alarm";
 import { controllers } from "../page";
 import { ControllerStatus } from "@/types/controllerStatus.types";
 import InputOutput from "@/components/controller/input-output/input-output";
+import Variable from "@/components/controller/variable/variable";
+
 
 const tabItems = [
     {
@@ -83,6 +85,9 @@ const Page = ({ params }: { params: { id: string } }) => {
                 </TabsContent>
                 <TabsContent value="inputOutput">
                     <InputOutput />
+                </TabsContent>
+                <TabsContent value="variable">
+                    <Variable />
                 </TabsContent>
             </Tabs>
         </PageWrapper>
