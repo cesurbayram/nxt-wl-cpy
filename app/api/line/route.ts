@@ -6,18 +6,17 @@ export interface Line {
     id: string;
     name: string;
     status: string;
-    cell_id?: string
+    cellIds?: string
 }
 
 export async function GET(request: NextRequest) {
     try {
         const lineDbResp = await dbPool.query(`
-            SELECT 
-              *
+            SELECT DISTINCT line_id AS id, name, status             
             FROM
                 line
         `);
-        
+
         const cells: Line[] = lineDbResp.rows;
         return NextResponse.json(cells, { status: 200 });
     } catch (error: any) {
@@ -27,16 +26,24 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-    const { name, status, cell_id }: Line = await request.json();
+    const { name, status, cellIds }: Line = await request.json();
     const client = await dbPool.connect();
-    const newLineId = uuidv4();
+    
     try {
+        if(!cellIds || cellIds.length === 0){
+            return NextResponse.json({ message: 'Cells are required' }, { status: 500});
+        }
+
         await client.query('BEGIN');
-        await client.query(
-            `INSERT INTO "line" (id, name, status, cell_id) 
-            VALUES ($1, $2, $3, $4)`,
-            [newLineId, name, status, cell_id]
-        );
+        const newLineId = uuidv4();
+        for (const item of cellIds) {
+            const recordId = uuidv4();
+            await client.query(
+                `INSERT INTO "line" (id, name, status, cell_id, line_id) 
+                VALUES ($1, $2, $3, $4, $5)`,
+                [recordId, name, status, item, newLineId]
+            );        
+        }
         await client.query('COMMIT');
         return NextResponse.json({ message: 'Line created successfully' }, { status: 201 });
     } catch (error: any) {
@@ -49,16 +56,16 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
-    const { id, name, status, cell_id }: Line = await request.json();
+    const { id, name, status, cellIds }: Line = await request.json();
     const client = await dbPool.connect();
     try {
         await client.query('BEGIN');
-        await client.query(
-            `UPDATE "line" 
-            SET name = $1, status = $2, cell_id = $3, updated_at = NOW()
-            WHERE id = $4`,
-            [name, status, cell_id, id]
-        );
+        // await client.query(
+        //     `UPDATE "line" 
+        //     SET name = $1, status = $2, cell_id = $3, updated_at = NOW()
+        //     WHERE id = $4`,
+        //     [name, status, cell_id, id]
+        // );
         await client.query('COMMIT');
         return NextResponse.json({ message: 'Line updated successfully' }, { status: 200 });
     } catch (error: any) {
