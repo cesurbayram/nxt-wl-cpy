@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import LoadingUi from "@/components/shared/loading-ui";
 import { Button } from "@/components/ui/button";
 import { CardContent, CardFooter } from "@/components/ui/card";
@@ -24,6 +24,7 @@ import PageWrapper from "@/components/shared/page-wrapper";
 import { AiOutlineAppstoreAdd } from "react-icons/ai";
 import { LiaEditSolid } from "react-icons/lia";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { MultiSelect } from "@/components/shared/multi-select";
 
 const initialValues = {
   name: "",
@@ -34,6 +35,7 @@ const initialValues = {
 const Page = ({ params }: { params: { id: string } }) => {
   const queryClient = useQueryClient();
   const router = useRouter();
+  const [selectedCells, setSelectedCells] = useState<string[]>([]);
   const form = useForm<z.infer<typeof LineEditValidation>>({
     resolver: zodResolver(LineEditValidation),
     defaultValues: initialValues,
@@ -48,7 +50,10 @@ const Page = ({ params }: { params: { id: string } }) => {
   });
 
   const { mutateAsync: createMutation, isPending: isCreateloading } = useMutation({
-    mutationFn: (values: Line) => createLine(values),
+    mutationFn: (values: Line) => {
+      values.cellIds = selectedCells;
+      createLine(values)
+    },
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["line"] });
       router.push("/line");
@@ -66,15 +71,27 @@ const Page = ({ params }: { params: { id: string } }) => {
     queryFn: async () => await getCell(),  // Tüm cell'leri getiren fonksiyon
     queryKey: ["cell"],
   });
-  
+
+  const formattedCell = useMemo(() => {
+    if (cell && cell?.length > 0) {
+      return cell.map((item) => {
+        return {
+          label: (item.name) as string,
+          value: (item.id) as string,
+        }
+      })
+    }
+  }, [cell])
 
   useEffect(() => {
     if (isSuccess && params.id != "0") {
       form.setValue("name", line.name as string);
       form.setValue("status", line.status as string);
-      form.setValue("cell_id", line.cell_id as string);
+      setSelectedCells(line.cellIds ? line.cellIds : []);
     }
   }, [isSuccess, line, params.id, form]);
+
+  console.log('selectedCells', selectedCells);
 
   const onSubmit = async (values: z.infer<typeof LineEditValidation>) => {
     if (params.id == "0") {
@@ -103,7 +120,7 @@ const Page = ({ params }: { params: { id: string } }) => {
       >
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <CardContent className="grid grid-cols-1 gap-6 p-6">
+            <CardContent className="grid grid-cols-2 gap-6 p-6">
               <FormField
                 control={form.control}
                 name="name"
@@ -113,11 +130,10 @@ const Page = ({ params }: { params: { id: string } }) => {
                       <Input
                         placeholder="Line Name"
                         {...field}
-                        className={`${
-                          form.formState.errors.name
+                        className={`${form.formState.errors.name
                             ? "border-red-600 focus:border-red-800"
                             : ""
-                        } h-12 rounded-lg focus:placeholder:-translate-y-7 focus:placeholder:z-20 focus:placeholder:transition-transform`}
+                          } h-12 rounded-lg focus:placeholder:-translate-y-7 focus:placeholder:z-20 focus:placeholder:transition-transform`}
                       />
                     </FormControl>
                     <FormMessage />
@@ -135,11 +151,10 @@ const Page = ({ params }: { params: { id: string } }) => {
                         value={field.value}
                       >
                         <SelectTrigger
-                          className={`${
-                            form.formState.errors.status
+                          className={`${form.formState.errors.status
                               ? "border-red-600 focus:border-red-800"
                               : ""
-                          } h-12 rounded-lg`}
+                            } h-12 rounded-lg`}
                         >
                           <SelectValue placeholder="Select Status" />
                         </SelectTrigger>
@@ -152,35 +167,22 @@ const Page = ({ params }: { params: { id: string } }) => {
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              />              
               <FormField
                 control={form.control}
                 name="cell_id"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className="col-span-2">
                     <FormControl>
-                      <Select
-                        onValueChange={(value) => field.onChange(value)}
-                        value={field.value}
-                      >
-                        <SelectTrigger
-                          className={`${
-                            form.formState.errors.cell_id
-                              ? "border-red-600 focus:border-red-800"
-                              : ""
-                          } h-12 rounded-lg`}
-                        >
-                          <SelectValue placeholder="Select Cell" />
-                        </SelectTrigger>
-                        <SelectContent>
-                        {cell?.map((cell) => (
-                        cell.id && (
-                          <SelectItem key={cell.id} value={cell.id}>
-                            {cell.name}
-                          </SelectItem>
-                        )))}
-                        </SelectContent>
-                      </Select>
+                      <MultiSelect
+                        options={formattedCell ? formattedCell : []}
+                        onValueChange={setSelectedCells}
+                        defaultValue={selectedCells}
+                        placeholder="Select cells"
+                        variant={"secondary"}
+                        animation={2}
+                        maxCount={3}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

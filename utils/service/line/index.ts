@@ -15,7 +15,6 @@ const getLine = async (): Promise<Line[]> => {
 }
 
 const getLineById = async (id: string): Promise<Line> => {
-    console.log('id in method', id);
 
     const apiRes = await fetch(`/api/line/${id}`, {
         method: 'GET',

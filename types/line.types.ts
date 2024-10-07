@@ -3,4 +3,5 @@ export interface Line {
     name?: string;
     status?: string;
     cell_id?: string;
+    cellIds?: string[];
 }
