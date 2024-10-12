@@ -6,7 +6,7 @@ export interface Factory {
     id: string;
     name: string;
     status: string;
-    line_id?: string
+    lineIds?: string[]
 }
 
 export async function GET(request: NextRequest) {
@@ -27,16 +27,23 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-    const { name, status, line_id}: Factory = await request.json();
+    const { name, status, lineIds}: Factory = await request.json();
     const client = await dbPool.connect();
-    const newLineId = uuidv4();
+    
     try {
+        if(!lineIds || lineIds.length === 0){
+            return NextResponse.json({ message: 'At least one line required' }, { status: 500});
+        }
+        const newFactoryId = uuidv4();
         await client.query('BEGIN');
         await client.query(
-            `INSERT INTO "factory" (id, name, status, line_id) 
-            VALUES ($1, $2, $3, $4)`,
-            [newLineId, name, status, line_id]
+            `INSERT INTO factory (id, name, status) 
+            VALUES ($1, $2, $3)`,
+            [newFactoryId, name, status]
         );
+        await client.query(`
+            UPDATE line SET factory_id = $1 WHERE id = ANY ($2)
+        `, [newFactoryId, lineIds])
         await client.query('COMMIT');
         return NextResponse.json({ message: 'Line created successfully' }, { status: 201 });
     } catch (error: any) {
@@ -49,16 +56,22 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
-    const { id, name, status, line_id }: Factory = await request.json();
+    const { id, name, status, lineIds }: Factory = await request.json();
     const client = await dbPool.connect();
     try {
-        await client.query('BEGIN');
-        await client.query(
-            `UPDATE "factory" 
-            SET name = $1, status = $2, line_id = $3, updated_at = NOW()
-            WHERE id = $4`,
-            [name, status, line_id, id]
-        );
+        await client.query('BEGIN');        
+        await client.query(`
+            UPDATE factory SET name = $1, status = $2 WHERE id = $3
+        `, [name, status, id])
+
+        await client.query(`
+            UPDATE line SET factory_id = $1 WHERE factory_id = $2 
+        `, [null, id])
+
+        await client.query(`
+            UPDATE line SET factory_id = $1 WHERE id = ANY($2)
+        `, [id, lineIds])
+
         await client.query('COMMIT');
         return NextResponse.json({ message: 'Factory updated successfully' }, { status: 200 });
     } catch (error: any) {

@@ -12,14 +12,12 @@ export async function GET(
         l.id,
         l.name,
         l.status,
-        array_agg(c.id) AS "cellIds"
-    FROM
-        line l
-            JOIN
-            factory_line_cell flc ON l.id = flc.line_id
-            JOIN cell c ON flc.cell_id = c.id
-        WHERE l.id = $1
-        GROUP BY l.id, l.name, l.status`,
+      COALESCE(array_agg(DISTINCT c.id) FILTER (WHERE c.id IS NOT NULL), '{}') AS "cellIds"
+      FROM
+      line l LEFT JOIN
+        cell c ON l.id = c.line_id
+      WHERE l.id = $1
+      GROUP BY l.id`,
       [params.id]
     );
 

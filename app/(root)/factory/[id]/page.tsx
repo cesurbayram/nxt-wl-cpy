@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import LoadingUi from "@/components/shared/loading-ui";
 import { Button } from "@/components/ui/button";
 import { CardContent, CardFooter } from "@/components/ui/card";
@@ -17,18 +17,19 @@ import { createFactory, getFactoryById, updateFactory } from "@/utils/service/fa
 import { getLine} from "@/utils/service/line";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
 import PageWrapper from "@/components/shared/page-wrapper";
 import { MdOutlineFactory } from "react-icons/md";
 import { LiaEditSolid } from "react-icons/lia";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { MultiSelect } from "@/components/shared/multi-select";
 
 const initialValues = {
   name: "",
   status: "",
-  line_id: "",
+  lineIds: [],
 };
 
 const Page = ({ params }: { params: { id: string } }) => {
@@ -63,16 +64,26 @@ const Page = ({ params }: { params: { id: string } }) => {
   });
 
   const { data: line, isLoading: isLoadingFactorys } = useQuery({
-    queryFn: async () => await getLine(),  // Tüm cell'leri getiren fonksiyon
+    queryFn: async () => await getLine(),  // Tüm line getiren fonksiyon
     queryKey: ["line"],
   });
-  
 
+  const formattedLines = useMemo(() => {
+    if (line && line?.length > 0) {
+      return line.map((item) => {
+        return {
+          label: item.name as string,
+          value: item.id as string,
+        };
+      });
+    }
+  }, [line]);
+  
   useEffect(() => {
     if (isSuccess && params.id != "0") {
       form.setValue("name", factory.name as string);
       form.setValue("status", factory.status as string);
-      form.setValue("line_id", factory.line_id as string);
+      form.setValue("lineIds", factory.lineIds as [string, ...string[]]);
     }
   }, [isSuccess, factory, params.id, form]);
 
@@ -103,7 +114,7 @@ const Page = ({ params }: { params: { id: string } }) => {
       >
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <CardContent className="grid grid-cols-1 gap-6 p-6">
+            <CardContent className="grid grid-cols-2 gap-6 p-6">
               <FormField
                 control={form.control}
                 name="name"
@@ -155,32 +166,28 @@ const Page = ({ params }: { params: { id: string } }) => {
               />
               <FormField
                 control={form.control}
-                name="line_id"
+                name="lineIds"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className="col-span-2">
                     <FormControl>
-                      <Select
-                        onValueChange={(value) => field.onChange(value)}
-                        value={field.value}
-                      >
-                        <SelectTrigger
-                          className={`${
-                            form.formState.errors.line_id
-                              ? "border-red-600 focus:border-red-800"
-                              : ""
-                          } h-12 rounded-lg`}
-                        >
-                          <SelectValue placeholder="Select Line" />
-                        </SelectTrigger>
-                        <SelectContent>
-                        {line?.map((line) => (
-                        line.id && (
-                          <SelectItem key={line.id} value={line.id}>
-                            {line.name}
-                          </SelectItem>
-                        )))}
-                        </SelectContent>
-                      </Select>
+                      <Controller
+                        control={form.control}
+                        name="lineIds"
+                        defaultValue={field.value}
+                        render={({field: controllerField}) => (
+                          <MultiSelect
+                            options={formattedLines ? formattedLines : []}
+                            onValueChange={(value) => {
+                              controllerField.onChange(value)
+                            }}
+                            defaultValue={controllerField.value}
+                            placeholder="Select Lines"
+                            variant={"secondary"}
+                            animation={2}
+                            maxCount={3} 
+                          />
+                        )} 
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
