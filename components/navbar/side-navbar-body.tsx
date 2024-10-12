@@ -17,12 +17,6 @@ const sideMenuItems = [
     childPages: [],
   },
   {
-    title: "Controllers",
-    icon: <GiRobotGrab size={15} />,
-    link: "/controller",
-    childPages: [],
-  },
-  {
     title: "Location",
     link: "",
     icon: <FaLocationDot size={15} />,
@@ -44,6 +38,13 @@ const sideMenuItems = [
       },
     ],
   },
+  {
+    title: "Controllers",
+    icon: <GiRobotGrab size={15} />,
+    link: "/controller",
+    childPages: [],
+  },
+  
 ];
 
 const SideNavbarBody = () => {

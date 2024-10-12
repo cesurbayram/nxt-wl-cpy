@@ -26,11 +26,11 @@ const CollapsibleButton = ({
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <CollapsibleTrigger asChild className="w-full">
-        <Button
-          variant={"ghost"}
-          className={`                    
+    <>
+      <Button
+        onClick={() => setIsOpen(!isOpen)}
+        variant={"ghost"}
+        className={`                    
                     flex
                     mb-1 
                     justify-start
@@ -41,19 +41,27 @@ const CollapsibleButton = ({
                     text-sm
                     text-[#6B7280]
                 `}
-        >
-          {parentIcon}
-          {parentTitle}
-          {isOpen ? (
-            <FaChevronDown className="ml-auto" size={12} />
-          ) : (
-            <FaChevronRight className="ml-auto" size={12} />
-          )}
-        </Button>
-      </CollapsibleTrigger>
-      <CollapsibleContent
-        className={`pl-4 space-y-2`}
       >
+        {parentIcon}
+        {parentTitle}
+        <FaChevronRight
+          className={`
+                ml-auto
+                transition-all
+                duration-200
+                ${isOpen ? "rotate-90" : "-rotate-0"}
+            `}
+          size={12}
+        />
+      </Button>
+      <div className={`
+        ${isOpen ? 'max-h-40' : 'max-h-0'}
+        overflow-hidden
+        pl-4
+        transition-all
+        duration-500
+        ease-in-out        
+        `}>
         {childPages.map((item) => (
           <Button
             asChild
@@ -76,8 +84,8 @@ const CollapsibleButton = ({
             </Link>
           </Button>
         ))}
-      </CollapsibleContent>
-    </Collapsible>
+      </div>
+    </>
   );
 };
 
