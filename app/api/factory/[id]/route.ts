@@ -4,7 +4,18 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     try {
         const dbRes = await dbPool.query(
-            `SELECT * FROM factory WHERE id = $1`, 
+            `
+            SELECT
+                f.id,
+                f.name,
+                f.status,
+                COALESCE(array_agg(DISTINCT l.id) FILTER (WHERE l.id IS NOT NULL), '{}') AS "lineIds"
+            FROM
+                factory f LEFT JOIN
+                line l ON f.id = l.factory_id
+                WHERE f.id = $1
+                GROUP BY f.id
+            `, 
             [params.id]
         );
         

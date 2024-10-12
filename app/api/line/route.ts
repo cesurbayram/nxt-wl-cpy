@@ -6,7 +6,7 @@ export interface Line {
     id: string;
     name: string;
     status: string;
-    cellIds?: string
+    cellIds?: string[]
 }
 
 export async function GET(request: NextRequest) {
@@ -15,8 +15,7 @@ export async function GET(request: NextRequest) {
             SELECT * FROM line
         `);
 
-        const lines: Line[] = lineDbResp.rows;
-        console.log('lines', lines);        
+        const lines: Line[] = lineDbResp.rows;       
         return NextResponse.json(lines, { status: 200 });
     } catch (error: any) {
         console.error('DB ERROR:', error);
@@ -36,14 +35,13 @@ export async function POST(request: NextRequest) {
         await client.query('BEGIN');
         const newLineId = uuidv4();
         await client.query(`
-            INSERT INTO line (id, name, status) VALUES ($1, $2, $3)
-        `, [newLineId, name, status])
+            INSERT INTO line (id, name, status, factory_id) VALUES ($1, $2, $3, $4)
+        `, [newLineId, name, status, null])
+                
+        await client.query(`
+            UPDATE cell SET line_id = $1 WHERE id = ANY($2)
+        `, [newLineId, cellIds])
         
-        for(const item of cellIds){
-            const factoryLineCellId = uuidv4();
-            await client.query(`INSERT INTO factory_line_cell (id, factory_id, line_id, cell_id) VALUES ($1, $2, $3, $4)`, [factoryLineCellId, null, newLineId, item])
-        }
-
         await client.query('COMMIT');
         return NextResponse.json({ message: 'Line created successfully' }, { status: 201 });
     } catch (error: any) {
@@ -57,15 +55,23 @@ export async function POST(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
     const { id, name, status, cellIds }: Line = await request.json();
+    
     const client = await dbPool.connect();
     try {
         await client.query('BEGIN');
-        // await client.query(
-        //     `UPDATE "line" 
-        //     SET name = $1, status = $2, cell_id = $3, updated_at = NOW()
-        //     WHERE id = $4`,
-        //     [name, status, cell_id, id]
-        // );
+        await client.query(`
+            UPDATE line SET name = $1, status = $2 WHERE id = $3    
+        `, [name, status, id])
+        
+        //Öncelikle cell içindeki line_id ler null a çekildi.
+        await client.query(` 
+            UPDATE cell SET line_id = $1 WHERE line_id = $2
+        `, [null, id])
+
+        await client.query(`
+            UPDATE cell SET line_id = $1 WHERE id = ANY($2)
+        `, [id, cellIds])
+        
         await client.query('COMMIT');
         return NextResponse.json({ message: 'Line updated successfully' }, { status: 200 });
     } catch (error: any) {
@@ -83,7 +89,7 @@ export async function DELETE(request: NextRequest) {
     try {
         await client.query('BEGIN');
         await client.query(
-            `DELETE FROM "line" WHERE id = $1`,
+            `DELETE FROM line WHERE id = $1`,
             [id]
         );
         await client.query('COMMIT');
