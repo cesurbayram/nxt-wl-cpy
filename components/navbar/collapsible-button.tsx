@@ -1,10 +1,8 @@
 "use client";
-import { ReactElement, useState } from "react";
-import { Collapsible, CollapsibleTrigger } from "../ui/collapsible";
+import { useState } from "react";
 import { Button } from "../ui/button";
-import { CollapsibleContent } from "@radix-ui/react-collapsible";
 import Link from "next/link";
-import { FaChevronDown, FaChevronRight } from "react-icons/fa6";
+import { FaChevronRight } from "react-icons/fa6";
 
 interface ChildPages {
   title: string;

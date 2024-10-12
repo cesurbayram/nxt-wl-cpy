@@ -2,7 +2,6 @@ import { FaUser } from "react-icons/fa";
 import { Button } from "../ui/button";
 import { GiRobotGrab } from "react-icons/gi";
 import Link from "next/link";
-import { Collapsible } from "../ui/collapsible";
 import CollapsibleButton from "./collapsible-button";
 import { FaLocationDot } from "react-icons/fa6";
 import { MdFactory } from "react-icons/md";
