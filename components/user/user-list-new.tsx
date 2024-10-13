@@ -29,7 +29,7 @@ const UserListNew = ({ users, deleteClick }: UserListNewProps) => {
             },
         },
         {
-            accessorKey: "user_name",
+            accessorKey: "userName",
             header: () => (
                 <h1 className="text-sm text-[#111827] font-semibold">User Name</h1>
             ),
