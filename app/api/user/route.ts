@@ -1,22 +1,25 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { dbPool } from '@/utils/dbUtil';
-import { v4 as uuidv4 } from 'uuid';
+import { NextRequest, NextResponse } from "next/server";
+import { dbPool } from "@/utils/dbUtil";
+import { v4 as uuidv4 } from "uuid";
+import bcrypt from "bcrypt";
 
 export interface User {
-    id:string;
-    name: string;
-    lastName: string;
-    userName: string;
-    email: string;
-    role: string;
-    bcryptPassword?: string;
-    createdAt?: string;
-    updatedAt?: string;
+  id: string;
+  name: string;
+  lastName: string;
+  userName: string;
+  email: string;
+  role: string;
+  password?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
+const saltRounds = 10;
+
 export async function GET(request: NextRequest) {
-    try {
-        const userDbResp = await dbPool.query(`
+  try {
+    const userDbResp = await dbPool.query(`
             SELECT 
             r.id, 
             r.name, 
@@ -25,76 +28,110 @@ export async function GET(request: NextRequest) {
             r.email, 
             r.role 
         FROM 
-            "users" r`);        
-        const users: User[] = userDbResp.rows;
-        return NextResponse.json(users, { status: 200 });
-    } catch (error: any) {
-        console.error('DB ERROR:', error);
-        return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
-    }
+            "users" r`);
+    const users: User[] = userDbResp.rows;
+    return NextResponse.json(users, { status: 200 });
+  } catch (error: any) {
+    console.error("DB ERROR:", error);
+    return NextResponse.json(
+      { message: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
 }
 
 export async function POST(request: NextRequest) {
-    const { name, lastName, userName, email, role, bcryptPassword }: User = await request.json();
-    const client = await dbPool.connect();
-    const newUserId=uuidv4();
-    try {
-        await client.query('BEGIN');
-        await client.query(
-            `INSERT INTO "users" (id, name, last_name, user_name, email, role, bcrypt_password) 
-            VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-            [newUserId, name, lastName, userName, email, role, bcryptPassword]
-        );
-        await client.query('COMMIT')
-        return NextResponse.json({ message: 'User created successfully' }, { status: 201 });
-    } catch (error: any) {
-        console.error('DB ERROR:', error.message);
-        await client.query('ROLLBACK')
-        return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
-    } finally {
-        client.release();
+  const { name, lastName, userName, email, role, password }: User =
+    await request.json();
+  const client = await dbPool.connect();
+  const newUserId = uuidv4();
+  try {
+    const checkUser = await client.query(
+      `SELECT * FROM users WHERE email = $1`,
+      [email]
+    );
+
+    if (checkUser.rowCount && checkUser.rowCount > 0) {
+      return NextResponse.json(
+        { message: "User already exist!" },
+        { status: 409 }
+      );
     }
+    await client.query("BEGIN");
+    const bcryptPassword =
+      password && (await bcrypt.hash(password, saltRounds));
+
+    await client.query(
+      `INSERT INTO "users" (id, name, last_name, user_name, email, role, bcrypt_password) 
+            VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+      [newUserId, name, lastName, userName, email, role, bcryptPassword]
+    );
+    await client.query("COMMIT");
+    return NextResponse.json(
+      { message: "User created successfully" },
+      { status: 201 }
+    );
+  } catch (error: any) {
+    console.error("DB ERROR:", error.message);
+    await client.query("ROLLBACK");
+    return NextResponse.json(
+      { message: "Internal Server Error" },
+      { status: 500 }
+    );
+  } finally {
+    client.release();
+  }
 }
 
 export async function PUT(request: NextRequest) {
-    const {id, name, lastName, userName, email, role }: User = await request.json();
-    const client = await dbPool.connect();
-    try {
-        await client.query('BEGIN');
-        await client.query(
-            `UPDATE "users" 
+  const { id, name, lastName, userName, email, role }: User =
+    await request.json();
+  const client = await dbPool.connect();
+  try {
+    await client.query("BEGIN");
+    await client.query(
+      `UPDATE "users" 
             SET name = $1, last_name = $2, email = $3, role = $4, user_name= $5, updated_at = now() 
             WHERE id = $6`,
-            [name, lastName, email, role, userName, id]
-        );
-        await client.query('COMMIT')
-        return NextResponse.json({ message: 'User updated successfully' }, { status: 200 });
-    } catch (error: any) {        
-        console.error('DB ERROR:', error.message);
-        await client.query('ROLLBACK')
-        return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
-    } finally {
-        client.release();
-    }
+      [name, lastName, email, role, userName, id]
+    );
+    await client.query("COMMIT");
+    return NextResponse.json(
+      { message: "User updated successfully" },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    console.error("DB ERROR:", error.message);
+    await client.query("ROLLBACK");
+    return NextResponse.json(
+      { message: "Internal Server Error" },
+      { status: 500 }
+    );
+  } finally {
+    client.release();
+  }
 }
 
 export async function DELETE(request: NextRequest) {
-    const { id } = await request.json();
-    
-    const client = await dbPool.connect();
-    try {
-        await client.query('BEGIN');
-        await client.query(
-            `DELETE FROM users WHERE id = $1`,
-            [id]
-        );
-        await client.query('COMMIT')        
-        return NextResponse.json({ message: 'User deleted successfully' }, { status: 200 });
-    } catch (error: any) {
-        console.error('DB ERROR:', error.message);
-        await client.query('ROLLBACK')
-        return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
-    } finally {
-        client.release();
-    }
+  const { id } = await request.json();
+
+  const client = await dbPool.connect();
+  try {
+    await client.query("BEGIN");
+    await client.query(`DELETE FROM users WHERE id = $1`, [id]);
+    await client.query("COMMIT");
+    return NextResponse.json(
+      { message: "User deleted successfully" },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    console.error("DB ERROR:", error.message);
+    await client.query("ROLLBACK");
+    return NextResponse.json(
+      { message: "Internal Server Error" },
+      { status: 500 }
+    );
+  } finally {
+    client.release();
+  }
 }
