@@ -59,7 +59,7 @@ const SignInPageComponent = () => {
             />
             <FormField
               control={form.control}
-              name="password"
+              name="password"              
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
@@ -70,6 +70,7 @@ const SignInPageComponent = () => {
                           : ""
                       } h-12 rounded-lg mt-4`}
                       placeholder="Password"
+                      type="password"
                       {...field}
                     />
                   </FormControl>
