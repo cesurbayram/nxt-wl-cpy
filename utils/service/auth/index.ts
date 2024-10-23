@@ -14,4 +14,17 @@ const userLogin = async(values: Login): Promise<boolean> => {
     return true;
 }
 
-export { userLogin }
+const userLogout = async(): Promise<boolean> => {
+    const apiRes = await fetch('/api/logout', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+
+    if(apiRes.ok !== true) throw new Error('An error occured when logout');
+
+    return true
+}
+
+export { userLogin, userLogout }

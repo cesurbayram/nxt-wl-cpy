@@ -9,6 +9,7 @@ import { Button } from "../ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { Login } from "@/types/login.types";
 import { userLogin } from "@/utils/service/auth";
+import { useRouter } from "next/navigation";
 
 
 const initialValues = {
@@ -17,18 +18,23 @@ const initialValues = {
 };
 
 const SignInPageComponent = () => {
+    const router = useRouter();
   const form = useForm<z.infer<typeof LoginValidation>>({
     defaultValues: initialValues,
     resolver: zodResolver(LoginValidation),
   });
 
-  const { mutateAsync: loginMutation, isPending: isSingInLoading } = useMutation({
-    mutationFn: (values: Login) => userLogin(values)
+  const { mutateAsync: loginMutation, isPending: isSingInLoading, isSuccess } = useMutation({
+    mutationFn: (values: Login) => userLogin(values),
+    onSuccess: () => {
+        router.push('/')
+    }
   })
 
   const onSubmit = async (values: z.infer<typeof LoginValidation>) => {
     await loginMutation(values);
   };
+
 
   return (
     <div className="flex flex-col justify-center h-full px-[25%]">
