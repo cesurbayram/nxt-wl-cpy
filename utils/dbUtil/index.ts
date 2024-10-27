@@ -6,7 +6,7 @@ export const dbPool = new Pool({
     database: process.env.DATABASE,
     port: 5432,
     password: process.env.PASSWORD,
-    ssl: true,
+    //ssl: true,
 })
 
 

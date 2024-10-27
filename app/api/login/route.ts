@@ -39,6 +39,7 @@ export async function POST(request: NextRequest) {
     }
 
     const tokenData = {
+        id: userData.id,
         name: userData.name,
         lastName: userData.lastName,
         userName: userData.userName,

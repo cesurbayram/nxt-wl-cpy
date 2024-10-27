@@ -1,4 +1,5 @@
 import { Login } from "@/types/login.types";
+import { User } from "@/types/user.types";
 
 const userLogin = async(values: Login): Promise<boolean> => {
     const apiRes = await fetch('/api/login', {
@@ -27,4 +28,17 @@ const userLogout = async(): Promise<boolean> => {
     return true
 }
 
-export { userLogin, userLogout }
+const getUserAfterAuth = async(): Promise<User> => {
+    const apiRes = await fetch('/api/get-user-auth', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+
+    if(apiRes.ok !== true) throw new Error('An error occured when fetch user');
+    const result = await apiRes.json();
+    return result
+}
+
+export { userLogin, userLogout, getUserAfterAuth }
