@@ -2,7 +2,7 @@ import { FaSearch } from "react-icons/fa";
 import { Button } from "../ui/button";
 import { MdLightMode } from "react-icons/md";
 import { MdLanguage } from "react-icons/md";
-import { CgProfile } from "react-icons/cg";
+import UserProfileButton from "./user-profile-button";
 
 const TopNavbar = () => {
     return (
@@ -19,12 +19,9 @@ const TopNavbar = () => {
                 <Button variant={'ghost'} size={'icon'} className="p-2 rounded-full">
                     <MdLanguage size={24} />
                 </Button>
-                <Button variant={'ghost'} size={'icon'} className="p-2 rounded-full">
-                    <CgProfile size={24} />
-                </Button>
-
-            </div>
-            
+                
+                <UserProfileButton />
+            </div>            
         </div>
     )
 }
