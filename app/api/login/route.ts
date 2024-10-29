@@ -47,8 +47,8 @@ export async function POST(request: NextRequest) {
         role: userData.role        
     }
 
-    const token = await jwt.sign(tokenData, process.env.SECRET, {
-        expiresIn: "24h"  
+    const token = jwt.sign(tokenData, process.env.SECRET, {
+        expiresIn: 24 * 60 * 60  
     })
 
     const response = NextResponse.json({
@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
         success: true
     }, {status: 200})
 
-    response.cookies.set("token", token, {httpOnly: true})
+    response.cookies.set("token", token, {httpOnly: true, secure: true, maxAge: 24 * 60 * 60 })
     return response
   } catch (error: any) {
     return NextResponse.json({error: error?.message}, {status: 500})
