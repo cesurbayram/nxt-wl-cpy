@@ -3,7 +3,17 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     try {
-        const dbRes = await dbPool.query(`SELECT * FROM controller WHERE id = $1`, [params.id]);
+        const dbRes = await dbPool.query(`SELECT
+            id,
+            name,
+            model,
+            ip_address AS "ipAddress",
+            status,
+            serial_number AS "serialNumber",
+            interval_ms AS "intervalMs",
+            max_connection AS "maxConnection",
+            location            
+            FROM controller WHERE id = $1`, [params.id]);
 
         if (dbRes?.rowCount && dbRes.rowCount > 0) {
             const controller = dbRes.rows[0];
