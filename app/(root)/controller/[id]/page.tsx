@@ -11,6 +11,7 @@ import InputOutput from "@/components/controller/input-output/input-output";
 import Variable from "@/components/controller/variable/variable";
 import { GiMechanicalArm } from "react-icons/gi";
 import ControllerForm from "@/components/controller/controller-form";
+import ControllerStatusBar from "@/components/controller/controller-status-bar";
 
 const tabItems = [
   {
@@ -90,6 +91,7 @@ const Page = ({ params }: { params: { id: string } }) => {
           )
         }
       >
+        {params.id != '0' && controller?.controllerStatus &&  <ControllerStatusBar controllerStatus={controller?.controllerStatus} />}
         <Tabs
           defaultValue={params.id == "0" ? "create" : "alarm"}
           className="mt-5"
