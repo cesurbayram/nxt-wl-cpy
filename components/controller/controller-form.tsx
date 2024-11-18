@@ -34,6 +34,7 @@ interface ControllerFormProps {
 const initialValues = {
   name: "",
   model: "",
+  application: "",
   ipAddress: "",
   status: "",
   location: "",
@@ -89,10 +90,12 @@ const ControllerForm = ({ controllerId }: ControllerFormProps) => {
   useEffect(() => {
     if (isSuccess && controllerId != "0") {
       form.setValue("name", controller.name as string);
-      form.setValue("status", controller.status as string);
-      form.setValue("model", controller.model as string);
+      form.setValue("status",controller.status as string);
+      form.setValue("model",  controller.model as string);
       form.setValue("location", controller.location as string);
       form.setValue("ipAddress", controller.ipAddress as string);
+      form.setValue("application", controller.application as string);
+      form.setValue("serialNumber", controller.serialNumber as string);
     }
   }, [isSuccess, controller, controllerId, form]);
 
@@ -120,15 +123,18 @@ const ControllerForm = ({ controllerId }: ControllerFormProps) => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Select onValueChange={field.onChange} value={field.value}>
-                    <SelectTrigger className="h-12 rounded-lg">
-                      <SelectValue placeholder="Select Status" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="active">Active</SelectItem>
-                      <SelectItem value="passive">Passive</SelectItem>
-                    </SelectContent>
-                  </Select>
+                <Select
+                  onValueChange={(value) => field.onChange(value)}
+                  value={field.value}
+                >
+                  <SelectTrigger className="h-12 rounded-lg">
+                    <SelectValue placeholder="Select Status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="active">Active</SelectItem>
+                    <SelectItem value="passive">Passive</SelectItem>
+                  </SelectContent>
+                </Select>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -140,11 +146,47 @@ const ControllerForm = ({ controllerId }: ControllerFormProps) => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input
-                    {...field}
-                    placeholder="Model"
-                    className="h-12 rounded-lg"
-                  />
+                <Select
+                  onValueChange={(value) => field.onChange(value)}
+                  value={field.value}
+                >
+                  <SelectTrigger className="h-12 rounded-lg">
+                    <SelectValue placeholder="Controller Type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="yrc1000">YRC1000</SelectItem>
+                    <SelectItem value="yrc1000m">YRC1000m</SelectItem>
+                    <SelectItem value="dx200">DX200</SelectItem>
+                    <SelectItem value="dx100">DX100</SelectItem>
+                    <SelectItem value="fs100">FS100</SelectItem>
+                  </SelectContent>
+              </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="application"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                <Select
+                  onValueChange={(value) => field.onChange(value)}
+                  value={field.value}
+                >
+                  <SelectTrigger className="h-12 rounded-lg">
+                    <SelectValue placeholder="Select Application" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="arc">ARC</SelectItem>
+                    <SelectItem value="handling">HANDLING</SelectItem>
+                    <SelectItem value="spot">SPOT</SelectItem>
+                    <SelectItem value="general">GENERAL</SelectItem>
+                    <SelectItem value="paint">PAINT</SelectItem>
+                  </SelectContent>
+              </Select>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -175,6 +217,22 @@ const ControllerForm = ({ controllerId }: ControllerFormProps) => {
                   <Input
                     {...field}
                     placeholder="Location"
+                    className="h-12 rounded-lg"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="serialNumber"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input
+                    {...field}
+                    placeholder="Serial Number"
                     className="h-12 rounded-lg"
                   />
                 </FormControl>

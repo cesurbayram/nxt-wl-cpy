@@ -4,6 +4,7 @@ export interface Controller {
     id?: string;
     name?: string;
     model?: string;
+    application?: string;
     ipAddress?: string;
     status?: string;
     serialNumber?: string;

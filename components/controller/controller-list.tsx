@@ -34,6 +34,38 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
                 <h1 className="text-sm text-[#111827] font-semibold">Name</h1>
             ),            
         },
+        {
+          accessorKey: 'model',
+          header: () => (
+              <h1 className="text-sm text-[#111827] font-semibold">Controller Type</h1>
+          ),
+          cell: ({ row }) => {
+            const model = 
+            row.original.model === "yrc1000" ? "YRC1000":
+            row.original.model === "yrc1000m" ? "YRC1000m" :
+            row.original.model === "dx200" ? "DX200" :
+            row.original.model === "dx100" ? "DX100" :
+            row.original.model === "fs100" ? "FS100" :
+            "Unknown Model";
+            return <p>{model}</p>
+          },
+      },
+      {
+        accessorKey: 'application',
+        header: () => (
+            <h1 className="text-sm text-[#111827] font-semibold">Application</h1>
+        ),
+        cell: ({ row }) => {
+          const application = 
+          row.original.application=== "arc" ? "ARC":
+          row.original.application === "handling" ? "HANDLING" :
+          row.original.application === "spot" ? "SPOT" :
+          row.original.application === "general" ? "GENERAL" :
+          row.original.application === "paint" ? "PAINT" :
+          "Unknown Application";
+          return <p>{application}</p>
+        },
+    },
         // {
         //     accessorKey: 'statusBar',
         //     header: () => (
@@ -99,18 +131,22 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
         //         <h1 className="text-sm text-[#111827] font-semibold">Location</h1>
         //     )
         // },
-        {
-            accessorKey: 'model',
-            header: () => (
-                <h1 className="text-sm text-[#111827] font-semibold">Model</h1>
-            )
-        },
         // {
         //     accessorKey: 'maintenance',
         //     header: () => (
         //         <h1 className="text-sm text-[#111827] font-semibold">Maintenance</h1>
         //     )
         // },
+        {
+            accessorKey: 'status',
+            header: () => (
+                <h1 className="text-sm text-[#111827] font-semibold">Status</h1>
+            ),
+            cell: ({ row }) => {
+              const status = row.original.status === "active" ? "Active" : "Passive";
+              return <p>{status}</p>;
+            },
+        },
         {
             id: 'actions',
             header: () => (

@@ -7,6 +7,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
             id,
             name,
             model,
+            application,
             ip_address AS "ipAddress",
             status,
             serial_number AS "serialNumber",
