@@ -1,4 +1,3 @@
-//import { Robot } from "@/types/robot.types"
 import { Controller } from "@/types/controller.types";
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "../ui/button";
@@ -15,6 +14,10 @@ import { PiLightning } from "react-icons/pi";
 import { IoWarningOutline } from "react-icons/io5";
 import { FaRegHandLizard } from "react-icons/fa6";
 import { GrPowerCycle } from "react-icons/gr";
+import { MdOutlineHdrAuto } from "react-icons/md";
+import { DiSublime } from "react-icons/di";
+import { BsTropicalStorm } from "react-icons/bs";
+import { FaExternalLinkAlt } from "react-icons/fa";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -25,7 +28,6 @@ interface ControllerListProps {
 
 const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
   const router = useRouter();
-
   const columns: ColumnDef<Controller>[] = [
     {
       accessorKey: "name",
@@ -84,8 +86,24 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
               color={row.original.controllerStatus?.stop ? "green" : "gray"}
               size={30}
             />
-            <FaRegHandLizard color="green" size={30} />
-            <GrPowerCycle color="green" size={30} />
+            {row.original.controllerStatus?.teach === "TEACH" && (
+              <FaRegHandLizard title="teach" color="green" size={30} />
+            )}
+            {row.original.controllerStatus?.teach === "PLAY" && (
+              <BsTropicalStorm title="play" color="green" size={30} />
+            )}
+            {row.original.controllerStatus?.teach === "REMOTE" && (
+              <FaExternalLinkAlt title="remote" color="purple" size={30} />
+            )}
+            {row.original.controllerStatus?.cycle === "CYCLE" && (
+              <GrPowerCycle title="cycle" color="green" size={30} />
+            )}
+            {row.original.controllerStatus?.cycle === "STEP" && (
+              <DiSublime title="step" color="green" size={30} />
+            )}
+            {row.original.controllerStatus?.cycle === "AUTO" && (
+              <MdOutlineHdrAuto title="auto" color="green" size={30} />
+            )}
           </div>
         );
       },
@@ -173,7 +191,6 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
       cell: ({ row }) => {
         return (
           <div className="flex justify-center items-center gap-4 h-full">
-            {/* Delete Button */}
             <Button
               size="icon"
               variant="ghost"
@@ -184,8 +201,6 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
             >
               <MdDelete size={20} className="text-red-500" />
             </Button>
-
-            {/* Navigate Button */}
             <Button size="icon" variant="ghost" className="p-2" asChild>
               <Link href={`/controller/${row.original.id}`}>
                 <FaArrowRight size={20} className="text-[#6950E8]" />
