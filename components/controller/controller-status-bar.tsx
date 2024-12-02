@@ -9,12 +9,44 @@ import { IoWarningOutline } from "react-icons/io5";
 import { FaRegHandLizard } from "react-icons/fa6";
 import { GrPowerCycle } from "react-icons/gr";
 import { ControllerStatus } from "@/types/controllerStatus.types";
+import { MdOutlineHdrAuto } from "react-icons/md";
+import { DiSublime } from "react-icons/di";
+import { BsTropicalStorm } from "react-icons/bs";
+import { FaExternalLinkAlt } from "react-icons/fa";
 
 interface ControllerStatusBarProps {
-    controllerStatus: ControllerStatus
+  controllerStatus: ControllerStatus;
 }
 
-const ControllerStatusBar = ({ controllerStatus }: ControllerStatusBarProps) => {
+const ControllerStatusBar = ({
+  controllerStatus,
+}: ControllerStatusBarProps) => {
+  const getTeachIcon = () => {
+    switch (controllerStatus.teach) {
+      case "TEACH":
+        return <FaRegHandLizard size={26} color="green" />;
+      case "PLAY":
+        return <BsTropicalStorm size={26} color="green" />;
+      case "REMOTE":
+        return <FaExternalLinkAlt size={26} color="green" />;
+      default:
+        return null;
+    }
+  };
+
+  const getCycleIcon = () => {
+    switch (controllerStatus.cycle) {
+      case "CYCLE":
+        return <GrPowerCycle size={26} color="green" />;
+      case "STEP":
+        return <DiSublime size={26} color="green" />;
+      case "AUTO":
+        return <MdOutlineHdrAuto size={26} color="green" />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="flex gap-6 items-center px-5 -mt-1">
       <div className="flex flex-col items-center">
@@ -74,13 +106,12 @@ const ControllerStatusBar = ({ controllerStatus }: ControllerStatusBarProps) => 
         <p className="text-xs">Stop</p>
       </div>
       <div className="flex flex-col items-center">
-        <FaRegHandLizard color="green" size={26} />
-        <p className="text-xs">Teach</p>
+        {getTeachIcon()}
+        <p className="text-xs">{controllerStatus.teach}</p>
       </div>
-
       <div className="flex flex-col items-center">
-        <GrPowerCycle color="green" size={26} />
-        <p className="text-xs">Cycle</p>
+        {getCycleIcon()}
+        <p className="text-xs">{controllerStatus.cycle}</p>
       </div>
     </div>
   );

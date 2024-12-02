@@ -1,5 +1,6 @@
 import { DataTable } from "@/components/shared/data-table"
 import { ColumnDef } from "@tanstack/react-table"
+import type { Variable } from "@/types/variable.types";
 
 interface VariableListProps {
     variables: Variable[]

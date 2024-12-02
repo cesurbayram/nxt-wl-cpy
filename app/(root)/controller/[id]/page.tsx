@@ -116,7 +116,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                 <InputOutput />
               </TabsContent>
               <TabsContent value="variable">
-                <Variable />
+                <Variable controllerId={params.id} />
               </TabsContent>
             </>
           )}

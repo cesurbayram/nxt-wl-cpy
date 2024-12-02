@@ -1,4 +1,4 @@
-interface Variable {
+export interface Variable {
     no: String;
     value: String;
     name: String;
