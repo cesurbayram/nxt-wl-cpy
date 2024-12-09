@@ -91,7 +91,11 @@ const Page = ({ params }: { params: { id: string } }) => {
           )
         }
       >
-        {params.id != '0' && controller?.controllerStatus &&  <ControllerStatusBar controllerStatus={controller?.controllerStatus} />}
+        {params.id != "0" && controller?.controllerStatus && (
+          <ControllerStatusBar
+            controllerStatus={controller?.controllerStatus}
+          />
+        )}
         <Tabs
           defaultValue={params.id == "0" ? "create" : "alarm"}
           className="mt-5"
@@ -110,7 +114,7 @@ const Page = ({ params }: { params: { id: string } }) => {
           {params.id != "0" && (
             <>
               <TabsContent value="alarm">
-                <Alarm />
+                <Alarm controllerId={params.id} />
               </TabsContent>
               <TabsContent value="inputOutput">
                 <InputOutput />
