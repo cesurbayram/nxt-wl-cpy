@@ -117,7 +117,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                 <Alarm controllerId={params.id} />
               </TabsContent>
               <TabsContent value="inputOutput">
-                <InputOutput />
+                <InputOutput controllerId={params.id} />
               </TabsContent>
               <TabsContent value="variable">
                 <Variable controllerId={params.id} />

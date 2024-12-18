@@ -138,6 +138,132 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    const ioGroups = [
+      {
+        name: "External Input",
+        start_byte: 2001,
+        end_byte: 2512,
+        shortName: "EI",
+        bitType: "I",
+      },
+      {
+        name: "External Output",
+        start_byte: 3001,
+        end_byte: 3512,
+        shortName: "EO",
+        bitType: "O",
+      },
+      {
+        name: "Universal Input",
+        start_byte: 10,
+        end_byte: 5127,
+        shortName: "UI",
+        bitType: "I",
+      },
+      {
+        name: "Universal Output",
+        start_byte: 1001,
+        end_byte: 1512,
+        shortName: "UO",
+        bitType: "O",
+      },
+      {
+        name: "Specific Input",
+        start_byte: 4001,
+        end_byte: 4160,
+        shortName: "SI",
+        bitType: "I",
+      },
+      {
+        name: "Specific Output",
+        start_byte: 5001,
+        end_byte: 5300,
+        shortName: "SO",
+        bitType: "O",
+      },
+      {
+        name: "Interface Panel",
+        start_byte: 6001,
+        end_byte: 6064,
+        shortName: "IP",
+        bitType: "P",
+      },
+      {
+        name: "Auxiliary Relay",
+        start_byte: 7001,
+        end_byte: 7999,
+        shortName: "AR",
+        bitType: "R",
+      },
+      {
+        name: "Control Status",
+        start_byte: 8001,
+        end_byte: 8064,
+        shortName: "CS",
+        bitType: "S",
+      },
+      {
+        name: "Pseudo Input",
+        start_byte: 8201,
+        end_byte: 8220,
+        shortName: "PI",
+        bitType: "I",
+      },
+      {
+        name: "Network Input",
+        start_byte: 2701,
+        end_byte: 2956,
+        shortName: "NI",
+        bitType: "I",
+      },
+      {
+        name: "Network Output",
+        start_byte: 3701,
+        end_byte: 3956,
+        shortName: "NO",
+        bitType: "O",
+      },
+      {
+        name: "Registers",
+        start_byte: 100000,
+        end_byte: 100559,
+        shortName: "R",
+        bitType: "R",
+      },
+    ];
+
+    for (const group of ioGroups) {
+      const groupId = uuidv4();
+
+      await client.query(
+        `INSERT INTO io_group (id, name, start_byte, end_byte, controller_id)
+         VALUES ($1, $2, $3, $4, $5)`,
+        [groupId, group.name, group.start_byte, group.end_byte, newRobotId]
+      );
+
+      for (let byte = group.start_byte; byte <= group.end_byte; byte++) {
+        const signalId = uuidv4();
+
+        await client.query(
+          `INSERT INTO io_signal (id, group_id, byte_number, description)
+           VALUES ($1, $2, $3, $4)`,
+          [signalId, groupId, byte, `${group.name} #${byte}`]
+        );
+
+        for (let bit = 0; bit < 8; bit++) {
+          const formattedBitNumber = `#${byte}${bit} (${group.shortName} ${
+            group.bitType
+          }${bit + 1})`;
+
+          await client.query(
+            `INSERT INTO io_bit (id, signal_id, bit_number, name, is_active)
+             VALUES ($1, $2, $3, $4, $5)`,
+            [uuidv4(), signalId, formattedBitNumber, null, false]
+          );
+        }
+      }
+    }
+
     await client.query("COMMIT");
     return NextResponse.json(
       { message: "Controller created successfully" },

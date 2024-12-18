@@ -1,73 +1,140 @@
+"use client";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import InputOutputList from "./input-output-list";
+import { useState, useEffect } from "react";
+import type { InputOutput } from "@/types/inputOutput.types";
+import { getInputOutputType } from "@/utils/service/input-output";
 
-const inputOutputMenu = [
-    {
-        label: 'External Input',
-        value: 'extInput'
-    },
-    {
-        label: 'External Output',
-        value: 'extOutput'
-    },
-    {
-        label: 'Universal Input',
-        value: 'univInput'
-    },
-    {
-        label: 'Universal Output',
-        value: 'univOutput'
-    },
-    {
-        label: 'Spesific Input',
-        value: 'spesInput'
-    },
-    {
-        label: 'Spesific Output',
-        value: 'spesOutput'
-    },
-    {
-        label: 'Auxiliary Relay',
-        value: 'auxRel'
-    },
-    {
-        label: 'Control Status',
-        value: 'contStat'
-    },
-    {
-        label: 'Pseudo Input',
-        value: 'pseInput'
-    },
-    {
-        label: 'Network Input',
-        value: 'netInput'
-    },
-    {
-        label: 'Network Output',
-        value: 'netOutput'
-    },
-    {
-        label: 'Registers',
-        value: 'register'
-    },
-]
+const tabItems = [
+  {
+    label: "External Input",
+    value: "extInput",
+  },
+  {
+    label: "External Output",
+    value: "extOutput",
+  },
+  {
+    label: "Universal Input",
+    value: "univInput",
+  },
+  {
+    label: "Universal Output",
+    value: "univOutput",
+  },
+  {
+    label: "Spesific Input",
+    value: "spesInput",
+  },
+  {
+    label: "Spesific Output",
+    value: "spesOutput",
+  },
+  {
+    label: "Interface Panel",
+    value: "interPanel",
+  },
+  {
+    label: "Auxiliary Relay",
+    value: "auxRel",
+  },
+  {
+    label: "Control Status",
+    value: "contStat",
+  },
+  {
+    label: "Pseudo Input",
+    value: "pseInput",
+  },
+  {
+    label: "Network Input",
+    value: "netInput",
+  },
+  {
+    label: "Network Output",
+    value: "netOutput",
+  },
+  {
+    label: "Registers",
+    value: "register",
+  },
+];
 
-const InputOutput = () => {
-    return(
-        <Tabs defaultValue="detected" className="grid grid-cols-7 gap-3" orientation="vertical" >
-            <TabsList className="flex flex-col h-fit border-2 gap-1">                
-                {inputOutputMenu.map((item) => <TabsTrigger key={item.value} value={item.value} className="w-full">{item.label}</TabsTrigger>)}
-            </TabsList>
-            <TabsContent value="extInput" className="col-span-6 grid grid-cols-2">
-                <div className="col-span-4">
-                    <InputOutputList />
-                </div>
-                {/* <div className="col-span-2">
-                    <div />
-                </div> */}
-            </TabsContent>                        
-        </Tabs>
-    )
-}
+const InputOutputTabs = ({ controllerId }: { controllerId: string }) => {
+  const [activeTab, setActiveTab] = useState("extInput");
+  const [inputoutput, setInputOutput] = useState<InputOutput[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<Error | null>(null);
 
-export default InputOutput;
+  useEffect(() => {
+    if (controllerId && activeTab) {
+      setIsLoading(true);
+      setError(null);
+
+      getInputOutputType(controllerId, activeTab)
+        .then((data) => {
+          setInputOutput(data);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          setError(err);
+          setIsLoading(false);
+        });
+    }
+  }, [controllerId, activeTab]);
+
+  return (
+    <Tabs
+      defaultValue="extInput"
+      className="grid grid-cols-5 gap-3"
+      orientation="vertical"
+      onValueChange={(value) => setActiveTab(value)}
+    >
+      <TabsList className="flex flex-col h-fit border-2 gap-1">
+        {tabItems.map((item) => (
+          <TabsTrigger key={item.value} value={item.value} className="w-full">
+            {item.label}
+          </TabsTrigger>
+        ))}
+      </TabsList>
+
+      {tabItems.map((item) => (
+        <TabsContent value={item.value} key={item.value} className="col-span-4">
+          {activeTab === item.value && (
+            <>
+              {isLoading && <p>Loading...</p>}
+              {error && <p>Error: {error.message}</p>}
+              {!isLoading && !error && (
+                <InputOutputList inputOutput={inputoutput} />
+              )}
+            </>
+          )}
+        </TabsContent>
+      ))}
+    </Tabs>
+  );
+};
+
+export default InputOutputTabs;
+
+// const InputOutput = ({ controllerId }: { controllerId: string }) => {
+//     return (
+//       <Tabs defaultValue="extInput" className="grid grid-cols-7 gap-3" orientation="vertical">
+//         <TabsList className="flex flex-col h-fit border-2 gap-1">
+//           {inputOutputMenu.map((item) => (
+//             <TabsTrigger key={item.value} value={item.value} className="w-full">
+//               {item.label}
+//             </TabsTrigger>
+//           ))}
+//         </TabsList>
+//         <TabsContent value="extInput" className="col-span-6 grid grid-cols-2">
+//           <div className="col-span-4">
+//             <InputOutputList controllerId={controllerId} inputOutputType="External Input" />
+//           </div>
+//         </TabsContent>
+//       </Tabs>
+//     );
+//   };
+
+// export default InputOutput;
