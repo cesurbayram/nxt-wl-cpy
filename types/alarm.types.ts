@@ -1,9 +1,12 @@
 export interface Alarm {
-    code: string;
-    alarm: string;
-    detected: string;
-    removed: string;
-    text: string;
-    originDate: string;
-    priority: number;
+  code: string;
+  name?: string;
+  mode?: string;
+  type?: string;
+  alarm?: string;
+  detected?: string;
+  removed?: string;
+  text?: string;
+  originDate?: string;
+  priority?: number;
 }

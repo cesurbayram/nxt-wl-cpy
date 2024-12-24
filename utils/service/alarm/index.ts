@@ -2,12 +2,16 @@ import { Alarm } from "@/types/alarm.types";
 
 const getAlarmsByControllerId = async (
   controllerId: string,
-  alarmType:string
+  alarmType: string,
+  type?: string
 ): Promise<Alarm[]> => {
-  
-  console.log('alarmType', alarmType);
+  let url = `/api/controller/${controllerId}/alarms/${alarmType}`;
 
-  const apiRes = await fetch(`/api/controller/${controllerId}/alarms/${alarmType}`, {
+  if (alarmType === "almhist" && type) {
+    url += `?type=${type}`;
+  }
+
+  const apiRes = await fetch(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
