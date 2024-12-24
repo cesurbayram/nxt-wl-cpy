@@ -18,8 +18,17 @@ const tabItems = [
   },
 ];
 
+const almhistTypes = [
+  { label: "MAJOR", value: "MAJOR" },
+  { label: "MINOR", value: "MINOR" },
+  { label: "SYSTEM", value: "SYSTEM" },
+  { label: "USER", value: "USER" },
+  { label: "OFF-LINE", value: "OFF-LINE" },
+];
+
 const AlarmTabs = ({ controllerId }: { controllerId: string }) => {
   const [activeTab, setActiveTab] = useState("detected");
+  const [activeType, setActiveType] = useState("MAJOR");
   const [alarms, setAlarms] = useState<Alarm[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
@@ -29,17 +38,31 @@ const AlarmTabs = ({ controllerId }: { controllerId: string }) => {
       setIsLoading(true);
       setError(null);
 
-      getAlarmsByControllerId(controllerId, activeTab)
-        .then((data) => {
-          setAlarms(data);
+      const fetchData = async () => {
+        try {
+          if (activeTab === "almhist") {
+            const data = await getAlarmsByControllerId(
+              controllerId,
+              activeTab,
+              activeType
+            );
+            setAlarms(data);
+          } else {
+            const data = await getAlarmsByControllerId(controllerId, activeTab);
+            setAlarms(data);
+          }
           setIsLoading(false);
-        })
-        .catch((err) => {
-          setError(err);
+        } catch (err) {
+          setError(
+            err instanceof Error ? err : new Error("Unknown error occurred")
+          );
           setIsLoading(false);
-        });
+        }
+      };
+
+      fetchData();
     }
-  }, [controllerId, activeTab]);
+  }, [controllerId, activeTab, activeType]);
 
   return (
     <Tabs
@@ -54,6 +77,21 @@ const AlarmTabs = ({ controllerId }: { controllerId: string }) => {
             {item.label}
           </TabsTrigger>
         ))}
+        {activeTab === "almhist" && (
+          <div className="flex flex-col mt-2">
+            {almhistTypes.map((type) => (
+              <button
+                key={type.value}
+                className={`w-full py-2 px-4 border ${
+                  activeType === type.value ? "bg-gray-200" : ""
+                }`}
+                onClick={() => setActiveType(type.value)}
+              >
+                {type.label}
+              </button>
+            ))}
+          </div>
+        )}
       </TabsList>
 
       {tabItems.map((item) => (
