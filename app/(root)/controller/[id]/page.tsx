@@ -12,6 +12,7 @@ import Variable from "@/components/controller/variable/variable";
 import { GiMechanicalArm } from "react-icons/gi";
 import ControllerForm from "@/components/controller/controller-form";
 import ControllerStatusBar from "@/components/controller/controller-status-bar";
+import Maintenance from "@/components/controller/maintenance/maintenance";
 
 const tabItems = [
   {
@@ -121,6 +122,9 @@ const Page = ({ params }: { params: { id: string } }) => {
               </TabsContent>
               <TabsContent value="variable">
                 <Variable controllerId={params.id} />
+              </TabsContent>
+              <TabsContent value="maintenance">
+                <Maintenance controllerId={params.id} />
               </TabsContent>
             </>
           )}
