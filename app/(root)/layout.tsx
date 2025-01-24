@@ -4,8 +4,14 @@ import "../globals.css";
 import SideNavbar from "@/components/navbar/side-navbar";
 import TopNavbar from "@/components/navbar/top-navbar";
 import ReactQueryProvider from "@/utils/providers/react-query-provider";
+import { initializeBackupScheduler } from "@/utils/service/files/backup/backupScheduler";
 
 const inter = Inter({ subsets: ["latin"] });
+
+// Yedekleme sistemini başlat
+initializeBackupScheduler()
+  .then(() => console.log("Yedekleme sistemi başlatıldı"))
+  .catch(console.error);
 
 export const metadata: Metadata = {
   title: "Create Next App",

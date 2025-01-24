@@ -14,6 +14,7 @@ import ControllerForm from "@/components/controller/controller-form";
 import ControllerStatusBar from "@/components/controller/controller-status-bar";
 import Maintenance from "@/components/controller/maintenance/maintenance";
 import Utilization from "@/components/controller/utilization/utilization";
+import Files from "@/components/controller/files/files";
 
 const tabItems = [
   {
@@ -129,6 +130,9 @@ const Page = ({ params }: { params: { id: string } }) => {
               </TabsContent>
               <TabsContent value="util">
                 <Utilization controllerId={params.id} />
+              </TabsContent>
+              <TabsContent value="file">
+                <Files controllerId={params.id} />
               </TabsContent>
             </>
           )}
