@@ -63,6 +63,7 @@ export async function GET(request: NextRequest) {
     controller c
         INNER JOIN controller_status ct
             ON c.id = ct.controller_id
+            ORDER BY c.created_at ASC
         `);
 
     const controllers: Controller[] = controllerDbResp.rows;

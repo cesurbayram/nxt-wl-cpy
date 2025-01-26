@@ -1,5 +1,5 @@
 "use client"
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ControllerList from "@/components/controller/controller-list";
 import LoadingUi from "@/components/shared/loading-ui";
 import PageWrapper from "@/components/shared/page-wrapper"
@@ -9,6 +9,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { GiRobotGrab } from "react-icons/gi";
 import { deleteController, getController } from "@/utils/service/controller";
 import { Controller } from "@/types/controller.types";
+import Timer from "@/components/shared/timer";
 
 // export const controllers: Robot[] = [
 //     {
@@ -41,11 +42,25 @@ import { Controller } from "@/types/controller.types";
 const Page = () => {
     const router = useRouter();
     const queryClient = useQueryClient();
+    const [controller, setController] = useState<Controller[]>([])
+    const [loading, setLoading] = useState<boolean>(false)
 
-    const { data: controller, isLoading } = useQuery<Controller[], string>({
-        queryFn: () => getController(),
-        queryKey: ["controller"]
-    });
+    const listController = async () => {
+        try {
+            controller.length === 0 && setLoading(true)
+            const controllerRes = await getController();
+            setController(controllerRes);            
+        } catch (error) {
+            console.error('/api/controller: ', error)            
+        } finally {
+            controller.length === 0 && setLoading(false)
+        }
+    }
+
+    useEffect(() => {
+        listController()
+    }, [])
+    
 
     const { mutateAsync: deleteMutation, isPending } = useMutation({
         mutationFn: ({id}: Controller) => deleteController({id}),
@@ -60,13 +75,16 @@ const Page = () => {
     
     return(
         <>
-        <LoadingUi isLoading={isLoading || isPending} />
+        <LoadingUi isLoading={loading || isPending} />
         <PageWrapper
             buttonText="Add New Controller"
             pageTitle="Controllers"
             icon={<GiRobotGrab size={24} color="#6950e8" />}
             buttonAction={handleRouteControllerCreate}
         >
+            <div className="w-1/3 px-6 mb-2">
+                <Timer callback={listController} />
+            </div>
             <ControllerList controller={controller || []} deleteClick={deleteMutation}/>
         </PageWrapper>
         </>

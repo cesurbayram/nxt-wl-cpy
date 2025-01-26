@@ -19,7 +19,6 @@ import { DiSublime } from "react-icons/di";
 import { BsTropicalStorm } from "react-icons/bs";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 interface ControllerListProps {
   controller: Controller[];
@@ -27,7 +26,6 @@ interface ControllerListProps {
 }
 
 const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
-  const router = useRouter();
   const columns: ColumnDef<Controller>[] = [
     {
       accessorKey: "name",
