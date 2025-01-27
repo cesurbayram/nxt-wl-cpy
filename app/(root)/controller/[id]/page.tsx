@@ -15,6 +15,7 @@ import ControllerStatusBar from "@/components/controller/controller-status-bar";
 import Maintenance from "@/components/controller/maintenance/maintenance";
 import Utilization from "@/components/controller/utilization/utilization";
 import Files from "@/components/controller/files/files";
+import Job from "@/components/controller/job/job";
 
 const tabItems = [
   {
@@ -133,6 +134,9 @@ const Page = ({ params }: { params: { id: string } }) => {
               </TabsContent>
               <TabsContent value="file">
                 <Files controllerId={params.id} />
+              </TabsContent>
+              <TabsContent value="job">
+                <Job controllerId={params.id} />
               </TabsContent>
             </>
           )}
