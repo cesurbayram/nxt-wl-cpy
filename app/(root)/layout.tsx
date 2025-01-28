@@ -4,14 +4,9 @@ import "../globals.css";
 import SideNavbar from "@/components/navbar/side-navbar";
 import TopNavbar from "@/components/navbar/top-navbar";
 import ReactQueryProvider from "@/utils/providers/react-query-provider";
-import { initializeBackupScheduler } from "@/utils/service/files/backup/backupScheduler";
+import { ThemeProvider } from "next-themes";
 
 const inter = Inter({ subsets: ["latin"] });
-
-// Yedekleme sistemini başlat
-initializeBackupScheduler()
-  .then(() => console.log("Yedekleme sistemi başlatıldı"))
-  .catch(console.error);
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -24,23 +19,28 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <ReactQueryProvider>
-          <div className="flex">
-            <div className="w-64 pr-4 pl-7 border-r-2 h-screen">
-              {" "}
-              {/* Side nav kısım */}
-              <SideNavbar />
-            </div>
-            <div className="flex-grow px-6 bg-[#fdfdff] flex flex-col items-center h-screen">
-              <div className="max-w-6xl w-full">
-                <TopNavbar />
-                <main className="mt-4 mb-8">{children}</main>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ReactQueryProvider>
+            <div className="flex">
+              <div className="w-64 pr-4 pl-7 border-r-2 h-screen">
+                <SideNavbar />
+              </div>
+              <div className="flex-grow px-6 bg-background flex flex-col items-center h-screen">
+                <div className="max-w-6xl w-full">
+                  <TopNavbar />
+                  <main className="mt-4 mb-8">{children}</main>
+                </div>
               </div>
             </div>
-          </div>
-        </ReactQueryProvider>
+          </ReactQueryProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

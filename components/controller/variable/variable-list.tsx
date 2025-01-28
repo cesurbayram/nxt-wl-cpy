@@ -10,21 +10,15 @@ const VariableList = ({ variables }: VariableListProps) => {
   const columns: ColumnDef<Variable>[] = [
     {
       accessorKey: "no",
-      header: () => (
-        <h1 className="text-sm text-[#111827] font-semibold">No</h1>
-      ),
+      header: () => <div className="text-sm font-medium">No</div>,
     },
     {
       accessorKey: "value",
-      header: () => (
-        <h1 className="text-sm text-[#111827] font-semibold">Value</h1>
-      ),
+      header: () => <div className="text-sm font-medium">Value</div>,
     },
     {
       accessorKey: "name",
-      header: () => (
-        <h1 className="text-sm text-[#111827] font-semibold">Name</h1>
-      ),
+      header: () => <div className="text-sm font-medium">Name</div>,
     },
   ];
 

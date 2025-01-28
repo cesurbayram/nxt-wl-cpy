@@ -161,7 +161,7 @@ export default function Plans({
   return (
     <div className="space-y-6">
       <div className="flex justify-end items-center space-x-2">
-        <span>Copy plan:</span>
+        <span className="text-sm font-medium">Copy plan:</span>
         <Select>
           <SelectTrigger className="w-[200px]">
             <SelectValue placeholder="Select device" />
@@ -177,10 +177,10 @@ export default function Plans({
         <table className="w-full">
           <thead>
             <tr className="border-b">
-              <th className="p-4 text-left">Day</th>
-              <th className="p-4 text-left">Time</th>
-              <th className="p-4 text-left">File types</th>
-              <th className="p-4 text-left">Tools</th>
+              <th className="p-4 text-left text-sm font-medium">Day</th>
+              <th className="p-4 text-left text-sm font-medium">Time</th>
+              <th className="p-4 text-left text-sm font-medium">File types</th>
+              <th className="p-4 text-left text-sm font-medium">Tools</th>
             </tr>
           </thead>
           <tbody>

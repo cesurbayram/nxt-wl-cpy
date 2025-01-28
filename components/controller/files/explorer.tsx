@@ -16,7 +16,7 @@ export const Explorer: React.FC<ExplorerProps> = ({ files, isLoading }) => {
         <div className="flex items-center space-x-2">
           <Button>
             <span className="mr-2">+</span>
-            File
+            <span className="text-sm font-medium">File</span>
           </Button>
           <Select defaultValue="jbi">
             <option value="jbi">Job File (.jbi)</option>
@@ -24,15 +24,17 @@ export const Explorer: React.FC<ExplorerProps> = ({ files, isLoading }) => {
             <option value="cnd">Condition File (.cnd)</option>
           </Select>
         </div>
-        <Button variant="outline">Clear filters</Button>
+        <Button variant="outline">
+          <span className="text-sm font-medium">Clear filters</span>
+        </Button>
       </div>
 
       <div className="border rounded-md">
         <table className="w-full">
           <thead>
             <tr className="border-b">
-              <th className="p-4 text-left">File</th>
-              <th className="p-4 text-left">Tools</th>
+              <th className="p-4 text-left text-sm font-medium">File</th>
+              <th className="p-4 text-left text-sm font-medium">Tools</th>
             </tr>
           </thead>
           <tbody>

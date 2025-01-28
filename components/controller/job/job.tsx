@@ -21,7 +21,7 @@ const JobComponent = ({ controllerId }: JobTabProps) => {
         setError(null);
       } catch (err) {
         console.error("Error fetching jobs:", err);
-        setError("Jobs yüklenirken bir hata oluştu");
+        setError("Error loading jobs");
         setJobs([]);
       }
     };
@@ -34,15 +34,17 @@ const JobComponent = ({ controllerId }: JobTabProps) => {
   return (
     <div className="grid grid-cols-12 gap-4 h-full">
       {/* Sol Panel - Job Listesi */}
-      <div className="col-span-4 bg-white rounded-lg shadow">
-        <div className="p-4 border-b">
-          <h2 className="text-lg font-semibold">Jobs</h2>
+      <div className="col-span-4 bg-white dark:bg-gray-800 rounded-lg shadow">
+        <div className="p-4 border-b dark:border-gray-700">
+          <div className="text-sm font-medium dark:text-white">Jobs</div>
         </div>
         <div className="p-2">
           {error ? (
             <div className="text-red-500 p-3">{error}</div>
           ) : jobs.length === 0 ? (
-            <div className="text-gray-500 p-3">Henüz job bulunmuyor</div>
+            <div className="text-gray-500 dark:text-gray-400 p-3">
+              No jobs found yet
+            </div>
           ) : (
             jobs.map((job) => (
               <div
@@ -50,11 +52,13 @@ const JobComponent = ({ controllerId }: JobTabProps) => {
                 onClick={() => setSelectedJob(job)}
                 className={`p-3 rounded-md cursor-pointer mb-2 ${
                   selectedJob?.id === job.id
-                    ? "bg-blue-50 border border-blue-200"
-                    : "hover:bg-gray-50 border border-gray-100"
+                    ? "bg-blue-50 dark:bg-blue-900 border border-blue-200 dark:border-blue-700"
+                    : "hover:bg-gray-50 dark:hover:bg-gray-700 border border-gray-100 dark:border-gray-700"
                 }`}
               >
-                <div className="font-medium">{job.job_name}</div>
+                <div className="text-sm font-medium dark:text-white">
+                  {job.job_name}
+                </div>
               </div>
             ))
           )}
@@ -62,31 +66,35 @@ const JobComponent = ({ controllerId }: JobTabProps) => {
       </div>
 
       {/* Sağ Panel - Job İçeriği */}
-      <div className="col-span-8 bg-white rounded-lg shadow">
+      <div className="col-span-8 bg-white dark:bg-gray-800 rounded-lg shadow">
         {selectedJob ? (
           <div className="p-4">
             <div className="mb-4">
-              <h3 className="text-xl font-semibold">{selectedJob.job_name}</h3>
+              <div className="text-sm font-medium dark:text-white">
+                {selectedJob.job_name}
+              </div>
             </div>
-            <div className="font-mono bg-gray-50 p-4 rounded-lg overflow-auto h-[400px] border border-gray-200">
+            <div className="font-mono bg-gray-50 dark:bg-gray-900 p-4 rounded-lg overflow-auto h-[400px] border border-gray-200 dark:border-gray-700">
               {selectedJob.job_content.split("\n").map((line, index) => (
                 <div
                   key={index}
                   className={`py-1 px-2 ${
                     index + 1 === selectedJob.current_line
-                      ? "bg-yellow-100"
+                      ? "bg-yellow-100 dark:bg-yellow-900"
                       : ""
                   }`}
                 >
-                  <span className="text-gray-400 mr-4">{index + 1}</span>
-                  {line}
+                  <span className="text-gray-400 dark:text-gray-500 mr-4">
+                    {index + 1}
+                  </span>
+                  <span className="dark:text-gray-200">{line}</span>
                 </div>
               ))}
             </div>
           </div>
         ) : (
-          <div className="h-full flex items-center justify-center text-gray-500">
-            Sol panelden bir job seçin
+          <div className="h-full flex items-center justify-center text-gray-500 dark:text-gray-400">
+            Select a job from the left panel
           </div>
         )}
       </div>

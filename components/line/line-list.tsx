@@ -1,4 +1,4 @@
-import { Line } from "@/types/line.types"; 
+import { Line } from "@/types/line.types";
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "../ui/button";
 import { FaArrowRight } from "react-icons/fa6";
@@ -8,7 +8,7 @@ import { MdDelete } from "react-icons/md";
 
 interface LineListProps {
   line: Line[];
-  deleteClick: any
+  deleteClick: any;
 }
 const LineList = ({ line, deleteClick }: LineListProps) => {
   const router = useRouter();
@@ -16,26 +16,20 @@ const LineList = ({ line, deleteClick }: LineListProps) => {
   const columns: ColumnDef<Line>[] = [
     {
       accessorKey: "name",
-      header: () => (
-        <h1 className="text-sm text-[#111827] font-semibold">Line Name</h1>
-      ),
+      header: () => <div className="text-sm font-medium">Line Name</div>,
     },
     {
       accessorKey: "status",
-      header: () => (
-        <h1 className="text-sm text-[#111827] font-semibold">Status</h1>
-      ),
+      header: () => <div className="text-sm font-medium">Status</div>,
       cell: ({ row }) => {
         const status = row.original.status === "active" ? "Active" : "Passive";
         return <p>{status}</p>;
       },
-    },    
+    },
     {
       id: "actions",
       header: () => (
-        <h1 className="text-sm text-[#111827] font-semibold text-center">
-          Actions
-        </h1>
+        <div className="text-sm font-medium text-center">Actions</div>
       ),
       cell: ({ row }) => {
         return (
@@ -44,7 +38,7 @@ const LineList = ({ line, deleteClick }: LineListProps) => {
               size="icon"
               variant="ghost"
               onClick={async () => {
-                  await deleteClick({ id: row.original.id });
+                await deleteClick({ id: row.original.id });
               }}
             >
               <MdDelete size={20} className="text-red-500" />
@@ -59,7 +53,7 @@ const LineList = ({ line, deleteClick }: LineListProps) => {
           </div>
         );
       },
-    }    
+    },
   ];
 
   return <DataTable columns={columns} data={line} />;

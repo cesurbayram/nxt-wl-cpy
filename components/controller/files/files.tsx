@@ -54,7 +54,7 @@ export function Files({ controllerId }: FilesProps) {
   });
 
   if (filesQuery.isLoading || plansQuery.isLoading || historyQuery.isLoading) {
-    return <div>Loading...</div>;
+    return <div className="text-sm font-medium">Loading...</div>;
   }
 
   return (
@@ -65,7 +65,11 @@ export function Files({ controllerId }: FilesProps) {
     >
       <TabsList className="flex flex-col h-fit border-2 gap-1">
         {tabItems.map((item) => (
-          <TabsTrigger key={item.value} value={item.value} className="w-full">
+          <TabsTrigger
+            key={item.value}
+            value={item.value}
+            className="w-full text-sm font-medium"
+          >
             {item.label}
           </TabsTrigger>
         ))}
@@ -74,7 +78,9 @@ export function Files({ controllerId }: FilesProps) {
       <TabsContent value="overview" className="col-span-4">
         <Card>
           <CardHeader>
-            <CardTitle>Files Overview</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Files Overview
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <Overview
@@ -89,7 +95,7 @@ export function Files({ controllerId }: FilesProps) {
       <TabsContent value="plans" className="col-span-4">
         <Card>
           <CardHeader>
-            <CardTitle>Backup Plans</CardTitle>
+            <CardTitle className="text-sm font-medium">Backup Plans</CardTitle>
           </CardHeader>
           <CardContent>
             <Plans
@@ -104,7 +110,7 @@ export function Files({ controllerId }: FilesProps) {
       <TabsContent value="explorer" className="col-span-4">
         <Card>
           <CardHeader>
-            <CardTitle>File Explorer</CardTitle>
+            <CardTitle className="text-sm font-medium">File Explorer</CardTitle>
           </CardHeader>
           <CardContent>
             <Explorer
