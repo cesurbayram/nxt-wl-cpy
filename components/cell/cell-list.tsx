@@ -8,7 +8,7 @@ import { MdDelete } from "react-icons/md";
 
 interface CellListProps {
   cell: Cell[];
-  deleteClick: any
+  deleteClick: any;
 }
 
 const CellList = ({ cell, deleteClick }: CellListProps) => {
@@ -17,15 +17,11 @@ const CellList = ({ cell, deleteClick }: CellListProps) => {
   const columns: ColumnDef<Cell>[] = [
     {
       accessorKey: "name",
-      header: () => (
-        <h1 className="text-sm text-[#111827] font-semibold">Name</h1>
-      ),
+      header: () => <div className="text-sm font-medium">Name</div>,
     },
     {
       accessorKey: "status",
-      header: () => (
-        <h1 className="text-sm text-[#111827] font-semibold">Status</h1>
-      ),
+      header: () => <div className="text-sm font-medium">Status</div>,
       cell: ({ row }) => {
         const status = row.original.status === "active" ? "Active" : "Passive";
         return <p>{status}</p>;
@@ -34,9 +30,7 @@ const CellList = ({ cell, deleteClick }: CellListProps) => {
     {
       id: "actions",
       header: () => (
-        <h1 className="text-sm text-[#111827] font-semibold text-center">
-          Actions
-        </h1>
+        <div className="text-sm font-medium text-center">Actions</div>
       ),
       cell: ({ row }) => {
         return (
@@ -45,10 +39,10 @@ const CellList = ({ cell, deleteClick }: CellListProps) => {
               size="icon"
               variant="ghost"
               onClick={async () => {
-                  await deleteClick({ id: row.original.id });
+                await deleteClick({ id: row.original.id });
               }}
             >
-                <MdDelete size={20} className="text-red-500" />
+              <MdDelete size={20} className="text-red-500" />
             </Button>
             <Button
               size="icon"
@@ -60,7 +54,7 @@ const CellList = ({ cell, deleteClick }: CellListProps) => {
           </div>
         );
       },
-    }    
+    },
   ];
 
   return <DataTable columns={columns} data={cell} />;

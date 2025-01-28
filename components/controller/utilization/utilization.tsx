@@ -64,7 +64,7 @@ const Utilization = ({ controllerId }: UtilizationProps) => {
 
   const { data, isLoading } = useQuery({
     queryKey: ["utilization", controllerId, timeRange, interval],
-    queryFn: () => getUtilizationData(controllerId, timeRange, interval), // Parametreleri ekledik
+    queryFn: () => getUtilizationData(controllerId, timeRange, interval),
   });
 
   if (isLoading) {
@@ -90,7 +90,9 @@ const Utilization = ({ controllerId }: UtilizationProps) => {
         <Card>
           <CardHeader>
             <CardTitle>
-              Utilization: {controller?.name || "Loading..."}
+              <div className="text-sm font-medium">
+                Utilization: {controller?.name || "Loading..."}
+              </div>
             </CardTitle>
             <div className="flex gap-4">
               <Select value={timeRange} onValueChange={setTimeRange}>
@@ -143,7 +145,9 @@ const Utilization = ({ controllerId }: UtilizationProps) => {
         <Card>
           <CardHeader>
             <CardTitle>
-              Live Utilization: {controller?.name || "Loading..."}
+              <div className="text-sm font-medium">
+                Live Utilization: {controller?.name || "Loading..."}
+              </div>
             </CardTitle>
           </CardHeader>
           <CardContent>

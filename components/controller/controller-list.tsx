@@ -29,15 +29,11 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
   const columns: ColumnDef<Controller>[] = [
     {
       accessorKey: "name",
-      header: () => (
-        <h1 className="text-sm text-[#111827] font-semibold">Name</h1>
-      ),
+      header: () => <div className="text-sm font-medium">Name</div>,
     },
     {
       accessorKey: "statusBar",
-      header: () => (
-        <h1 className="text-sm text-[#111827] font-semibold">Robot Status</h1>
-      ),
+      header: () => <div className="text-sm font-medium">Robot Status</div>,
       cell: ({ row }) => {
         return (
           <div className="flex gap-1 items-center">
@@ -108,11 +104,7 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
     },
     {
       accessorKey: "model",
-      header: () => (
-        <h1 className="text-sm text-[#111827] font-semibold">
-          Controller Type
-        </h1>
-      ),
+      header: () => <div className="text-sm font-medium">Controller Type</div>,
       cell: ({ row }) => {
         const model =
           row.original.model === "yrc1000"
@@ -131,9 +123,7 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
     },
     {
       accessorKey: "application",
-      header: () => (
-        <h1 className="text-sm text-[#111827] font-semibold">Application</h1>
-      ),
+      header: () => <div className="text-sm font-medium">Application</div>,
       cell: ({ row }) => {
         const application =
           row.original.application === "arc"
@@ -153,27 +143,11 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
 
     {
       accessorKey: "ipAddress",
-      header: () => (
-        <h1 className="text-sm text-[#111827] font-semibold">IP Address</h1>
-      ),
+      header: () => <div className="text-sm font-medium">IP Address</div>,
     },
-    // {
-    //     accessorKey: 'location',
-    //     header: () => (
-    //         <h1 className="text-sm text-[#111827] font-semibold">Location</h1>
-    //     )
-    // },
-    // {
-    //     accessorKey: 'maintenance',
-    //     header: () => (
-    //         <h1 className="text-sm text-[#111827] font-semibold">Maintenance</h1>
-    //     )
-    // },
     {
       accessorKey: "status",
-      header: () => (
-        <h1 className="text-sm text-[#111827] font-semibold">Status</h1>
-      ),
+      header: () => <div className="text-sm font-medium">Status</div>,
       cell: ({ row }) => {
         const status = row.original.status === "active" ? "Active" : "Passive";
         return <p>{status}</p>;
@@ -182,9 +156,7 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
     {
       id: "actions",
       header: () => (
-        <h1 className="text-sm text-[#111827] font-semibold text-center">
-          Actions
-        </h1>
+        <div className="text-sm font-medium text-center">Actions</div>
       ),
       cell: ({ row }) => {
         return (

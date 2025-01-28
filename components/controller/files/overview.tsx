@@ -46,15 +46,21 @@ export function Overview({ files, selectedDate, onDateChange }: OverviewProps) {
             onDateChange(undefined);
           }}
         >
-          Clear filters
+          <span className="text-sm font-medium">Clear filters</span>
         </Button>
       </div>
 
       <Tabs defaultValue="overview">
         <TabsList>
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="plans">Plans</TabsTrigger>
-          <TabsTrigger value="tools">Tools</TabsTrigger>
+          <TabsTrigger value="overview" className="text-sm font-medium">
+            Overview
+          </TabsTrigger>
+          <TabsTrigger value="plans" className="text-sm font-medium">
+            Plans
+          </TabsTrigger>
+          <TabsTrigger value="tools" className="text-sm font-medium">
+            Tools
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview">
@@ -62,19 +68,27 @@ export function Overview({ files, selectedDate, onDateChange }: OverviewProps) {
             <div className="space-y-4">
               <div className="flex items-center space-x-2">
                 <div className="w-3 h-3 rounded-full bg-green-500" />
-                <span>Başarılı: {successCount}</span>
+                <span className="text-sm font-medium">
+                  Başarılı: {successCount}
+                </span>
               </div>
               <div className="flex items-center space-x-2">
                 <div className="w-3 h-3 rounded-full bg-red-500" />
-                <span>Hatalı: {errorCount}</span>
+                <span className="text-sm font-medium">
+                  Hatalı: {errorCount}
+                </span>
               </div>
               <div className="flex items-center space-x-2">
                 <div className="w-3 h-3 rounded-full bg-blue-500" />
-                <span>İşlemde: {inProgressCount}</span>
+                <span className="text-sm font-medium">
+                  İşlemde: {inProgressCount}
+                </span>
               </div>
               <div className="flex items-center space-x-2">
                 <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                <span>Kısmi: {partialCount}</span>
+                <span className="text-sm font-medium">
+                  Kısmi: {partialCount}
+                </span>
               </div>
             </div>
           </Card>
