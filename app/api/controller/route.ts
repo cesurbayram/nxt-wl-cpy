@@ -131,7 +131,7 @@ export async function POST(request: NextRequest) {
 
     const tables = ["b_read", "d_read", "s_read", "i_read", "r_read"];
     for (const table of tables) {
-      for (let i = 0; i < 11; i++) {
+      for (let i = 0; i < 99; i++) {
         await client.query(
           `INSERT INTO ${table} (id, ip_address, no, name, value, controller_id) VALUES ($1, $2, $3, $4, $5, $6)`,
           [uuidv4(), ipAddress, i, null, "0", newRobotId]
