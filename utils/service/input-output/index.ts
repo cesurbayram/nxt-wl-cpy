@@ -23,4 +23,31 @@ const getInputOutputType = async (
   return result;
 };
 
-export { getInputOutputType };
+const sendInputOutputCommand = async ({
+  activeTab,
+  controllerId,
+}: {
+  activeTab: string;
+  controllerId: string;
+}): Promise<boolean> => {
+  const apiRes = await fetch("http://localhost:8082/api/input-output-socket", {
+    method: "POST",
+    body: JSON.stringify({ activeInputOutput: activeTab, controllerId }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!apiRes.ok) {
+    const errorData = await apiRes.json();
+    throw new Error(
+      `An error occurred when creating controller: ${
+        errorData.message || "Unknown error"
+      }`
+    );
+  }
+
+  return true;
+};
+
+export { getInputOutputType, sendInputOutputCommand };

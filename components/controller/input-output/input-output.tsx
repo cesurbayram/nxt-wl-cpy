@@ -4,7 +4,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import InputOutputList from "./input-output-list";
 import { useState, useEffect } from "react";
 import type { InputOutput } from "@/types/inputOutput.types";
-import { getInputOutputType } from "@/utils/service/input-output";
+import {
+  getInputOutputType,
+  sendInputOutputCommand,
+} from "@/utils/service/input-output";
+import { send } from "process";
 
 const tabItems = [
   {
@@ -67,10 +71,23 @@ const InputOutputTabs = ({ controllerId }: { controllerId: string }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
 
+  const sendActiveTabRequest = async (
+    activeTab: string,
+    controllerId: string
+  ) => {
+    try {
+      await sendInputOutputCommand({ controllerId, activeTab });
+    } catch (error) {
+      console.error("Failed to send command to controller: ", error);
+    }
+  };
+
   useEffect(() => {
     if (controllerId && activeTab) {
       setIsLoading(true);
       setError(null);
+
+      sendActiveTabRequest(activeTab, controllerId);
 
       getInputOutputType(controllerId, activeTab)
         .then((data) => {
