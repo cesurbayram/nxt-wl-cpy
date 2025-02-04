@@ -1,8 +1,8 @@
 "use client";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { Controller } from "@/types/controller.types";
 import { getControllerById } from "@/utils/service/controller";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import PageWrapper from "@/components/shared/page-wrapper";
 import { LiaEditSolid } from "react-icons/lia";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -16,6 +16,7 @@ import Maintenance from "@/components/controller/maintenance/maintenance";
 import Utilization from "@/components/controller/utilization/utilization";
 import Files from "@/components/controller/files/files";
 import Job from "@/components/controller/job/job";
+import Timer from "@/components/shared/timer";
 
 const tabItems = [
   {
@@ -65,12 +66,51 @@ const tabItems = [
 ];
 
 const Page = ({ params }: { params: { id: string } }) => {
+  const queryClient = useQueryClient();
+  const [activeTab, setActiveTab] = useState("alarm");
+
   const { data: controller } = useQuery<Controller>({
     queryFn: async () => await getControllerById(params.id),
     queryKey: ["controller", params.id],
     enabled: params.id != "0",
     gcTime: 0,
   });
+
+  const handleTimerCallback = () => {
+    if (params.id !== "0") {
+      switch (activeTab) {
+        case "alarm":
+          queryClient.invalidateQueries({ queryKey: ["alarms", params.id] });
+          break;
+        case "inputOutput":
+          queryClient.invalidateQueries({ queryKey: ["io", params.id] });
+          break;
+        case "variable":
+          queryClient.invalidateQueries({ queryKey: ["variables", params.id] });
+          break;
+        case "maintenance":
+          queryClient.invalidateQueries({
+            queryKey: ["maintenance", params.id],
+          });
+          break;
+        case "util":
+          queryClient.invalidateQueries({
+            queryKey: ["utilization", params.id],
+          });
+          break;
+        case "file":
+          queryClient.invalidateQueries({ queryKey: ["files", params.id] });
+          break;
+        case "job":
+          queryClient.invalidateQueries({ queryKey: ["jobs", params.id] });
+          break;
+        default:
+          queryClient.invalidateQueries({
+            queryKey: ["controller", params.id],
+          });
+      }
+    }
+  };
 
   const modifiedTabs = useMemo(() => {
     if (params.id != "0") {
@@ -96,13 +136,19 @@ const Page = ({ params }: { params: { id: string } }) => {
         }
       >
         {params.id != "0" && controller?.controllerStatus && (
-          <ControllerStatusBar
-            controllerStatus={controller?.controllerStatus}
-          />
+          <>
+            <div className="flex justify-between items-center w-full px-6 mb-2">
+              <Timer callback={handleTimerCallback} />
+            </div>
+            <ControllerStatusBar
+              controllerStatus={controller?.controllerStatus}
+            />
+          </>
         )}
         <Tabs
           defaultValue={params.id == "0" ? "create" : "alarm"}
           className="mt-5"
+          onValueChange={(value) => setActiveTab(value)}
         >
           <TabsList className="w-full flex">
             {modifiedTabs?.map((item) => (
