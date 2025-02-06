@@ -2,9 +2,12 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import VariableList from "./variable-list";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getVariablesByType } from "@/utils/service/variable";
+import {
+  getVariablesByType,
+  sendVariableCommand,
+} from "@/utils/service/variable";
 import { Variable } from "@/types/variable.types";
 
 const tabItems = [
@@ -43,11 +46,26 @@ const variableList = ({ controllerId }: { controllerId: string }) => {
   const [variables, setVariables] = useState<Variable[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
+  const isFirstRender = useRef(true);
+
+  const sendActiveTabRequest = async (
+    activeTab: string,
+    controllerId: string
+  ) => {
+    try {
+      await sendVariableCommand({ controllerId, activeTab });
+    } catch (error) {
+      console.error("Failed to send command to controller: ", error);
+    }
+  };
 
   useEffect(() => {
-    if (controllerId && activeTab) {
+    if (controllerId && activeTab && isFirstRender.current) {
+      isFirstRender.current = false;
       setIsLoading(true);
       setError(null);
+
+      sendActiveTabRequest(activeTab, controllerId);
 
       getVariablesByType(controllerId, activeTab)
         .then((data) => {
@@ -61,12 +79,17 @@ const variableList = ({ controllerId }: { controllerId: string }) => {
     }
   }, [controllerId, activeTab]);
 
+  const handleTabChange = (value: string) => {
+    isFirstRender.current = true;
+    setActiveTab(value);
+  };
+
   return (
     <Tabs
       defaultValue="byte"
       className="grid grid-cols-5 gap-3"
       orientation="vertical"
-      onValueChange={(value) => setActiveTab(value)}
+      onValueChange={handleTabChange}
     >
       <TabsList className="flex flex-col h-fit border-2 gap-1">
         {tabItems.map((item) => (

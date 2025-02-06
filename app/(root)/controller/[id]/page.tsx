@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { Controller } from "@/types/controller.types";
 import { getControllerById } from "@/utils/service/controller";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -17,6 +17,7 @@ import Utilization from "@/components/controller/utilization/utilization";
 import Files from "@/components/controller/files/files";
 import Job from "@/components/controller/job/job";
 import Timer from "@/components/shared/timer";
+import { sendTabExitCommand } from "@/utils/service/tab-exit";
 
 const tabItems = [
   {
@@ -68,6 +69,7 @@ const tabItems = [
 const Page = ({ params }: { params: { id: string } }) => {
   const queryClient = useQueryClient();
   const [activeTab, setActiveTab] = useState("alarm");
+  const previousTab = useRef<string | null>(null);
 
   const { data: controller } = useQuery<Controller>({
     queryFn: async () => await getControllerById(params.id),
@@ -75,6 +77,26 @@ const Page = ({ params }: { params: { id: string } }) => {
     enabled: params.id != "0",
     gcTime: 0,
   });
+
+  const handleTabChange = async (value: string) => {
+    // Önceki tab I/O, Variable veya Job ise çıkış bilgisi gönder
+    if (
+      previousTab.current &&
+      ["inputOutput", "variable", "job"].includes(previousTab.current)
+    ) {
+      try {
+        await sendTabExitCommand({
+          exitedTab: previousTab.current,
+          controllerId: params.id,
+        });
+      } catch (error) {
+        console.error(`Failed to send ${previousTab.current} exit:`, error);
+      }
+    }
+
+    setActiveTab(value);
+    previousTab.current = value;
+  };
 
   const handleTimerCallback = () => {
     if (params.id !== "0") {
@@ -148,7 +170,7 @@ const Page = ({ params }: { params: { id: string } }) => {
         <Tabs
           defaultValue={params.id == "0" ? "create" : "alarm"}
           className="mt-5"
-          onValueChange={(value) => setActiveTab(value)}
+          onValueChange={handleTabChange}
         >
           <TabsList className="w-full flex">
             {modifiedTabs?.map((item) => (

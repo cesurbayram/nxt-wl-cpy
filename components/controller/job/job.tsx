@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Job } from "@/types/job.types";
-import { getJobsByControllerId } from "@/utils/service/job";
+import { getJobsByControllerId, sendJobCommand } from "@/utils/service/job";
 
 interface JobTabProps {
   controllerId: string;
@@ -12,8 +12,21 @@ const JobComponent = ({ controllerId }: JobTabProps) => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const isFirstRender = useRef(true);
+
+  const sendJobRequest = async (controllerId: string) => {
+    try {
+      await sendJobCommand({ controllerId });
+    } catch (error) {
+      console.error("Failed to send command to controller: ", error);
+    }
+  };
 
   useEffect(() => {
+    if (controllerId && isFirstRender.current) {
+      isFirstRender.current = false;
+      sendJobRequest(controllerId);
+    }
     const fetchJobs = async () => {
       try {
         const data = await getJobsByControllerId(controllerId);
