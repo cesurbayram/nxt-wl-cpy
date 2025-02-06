@@ -2,7 +2,7 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import InputOutputList from "./input-output-list";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import type { InputOutput } from "@/types/inputOutput.types";
 import {
   getInputOutputType,
@@ -70,6 +70,7 @@ const InputOutputTabs = ({ controllerId }: { controllerId: string }) => {
   const [inputoutput, setInputOutput] = useState<InputOutput[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
+  const isFirstRender = useRef(true);
 
   const sendActiveTabRequest = async (
     activeTab: string,
@@ -83,7 +84,8 @@ const InputOutputTabs = ({ controllerId }: { controllerId: string }) => {
   };
 
   useEffect(() => {
-    if (controllerId && activeTab) {
+    if (controllerId && activeTab && isFirstRender.current) {
+      isFirstRender.current = false;
       setIsLoading(true);
       setError(null);
 
@@ -101,12 +103,17 @@ const InputOutputTabs = ({ controllerId }: { controllerId: string }) => {
     }
   }, [controllerId, activeTab]);
 
+  const handleTabChange = (value: string) => {
+    isFirstRender.current = true;
+    setActiveTab(value);
+  };
+
   return (
     <Tabs
       defaultValue="extInput"
       className="grid grid-cols-5 gap-3"
       orientation="vertical"
-      onValueChange={(value) => setActiveTab(value)}
+      onValueChange={handleTabChange}
     >
       <TabsList className="flex flex-col h-fit border-2 gap-1">
         {tabItems.map((item) => (
@@ -134,24 +141,3 @@ const InputOutputTabs = ({ controllerId }: { controllerId: string }) => {
 };
 
 export default InputOutputTabs;
-
-// const InputOutput = ({ controllerId }: { controllerId: string }) => {
-//     return (
-//       <Tabs defaultValue="extInput" className="grid grid-cols-7 gap-3" orientation="vertical">
-//         <TabsList className="flex flex-col h-fit border-2 gap-1">
-//           {inputOutputMenu.map((item) => (
-//             <TabsTrigger key={item.value} value={item.value} className="w-full">
-//               {item.label}
-//             </TabsTrigger>
-//           ))}
-//         </TabsList>
-//         <TabsContent value="extInput" className="col-span-6 grid grid-cols-2">
-//           <div className="col-span-4">
-//             <InputOutputList controllerId={controllerId} inputOutputType="External Input" />
-//           </div>
-//         </TabsContent>
-//       </Tabs>
-//     );
-//   };
-
-// export default InputOutput;

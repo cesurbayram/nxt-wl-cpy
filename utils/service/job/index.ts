@@ -56,4 +56,29 @@ const updateJobLine = async (
   return result;
 };
 
-export { getJobsByControllerId, getJobById, updateJobLine };
+const sendJobCommand = async ({
+  controllerId,
+}: {
+  controllerId: string;
+}): Promise<boolean> => {
+  const apiRes = await fetch("http://localhost:8082/api/job-socket", {
+    method: "POST",
+    body: JSON.stringify({ controllerId }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!apiRes.ok) {
+    const errorData = await apiRes.json();
+    throw new Error(
+      `An error occurred when sending job command: ${
+        errorData.message || "Unknown error"
+      }`
+    );
+  }
+
+  return true;
+};
+
+export { getJobsByControllerId, getJobById, updateJobLine, sendJobCommand };
