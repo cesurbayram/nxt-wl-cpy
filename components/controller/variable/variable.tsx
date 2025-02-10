@@ -9,6 +9,7 @@ import {
   sendVariableCommand,
 } from "@/utils/service/variable";
 import { Variable } from "@/types/variable.types";
+import Timer from "@/components/shared/timer";
 
 const tabItems = [
   {
@@ -31,14 +32,6 @@ const tabItems = [
     label: "STRING",
     value: "string",
   },
-  {
-    label: "POSITION",
-    value: "position",
-  },
-  {
-    label: "VAR.DAT",
-    value: "vardat",
-  },
 ];
 
 const variableList = ({ controllerId }: { controllerId: string }) => {
@@ -47,6 +40,21 @@ const variableList = ({ controllerId }: { controllerId: string }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
   const isFirstRender = useRef(true);
+
+  const fetchData = async () => {
+    if (controllerId && activeTab) {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const data = await getVariablesByType(controllerId, activeTab);
+        setVariables(data);
+        setIsLoading(false);
+      } catch (err) {
+        setError(error);
+        setIsLoading(false);
+      }
+    }
+  };
 
   const sendActiveTabRequest = async (
     activeTab: string,
@@ -62,20 +70,8 @@ const variableList = ({ controllerId }: { controllerId: string }) => {
   useEffect(() => {
     if (controllerId && activeTab && isFirstRender.current) {
       isFirstRender.current = false;
-      setIsLoading(true);
-      setError(null);
-
       sendActiveTabRequest(activeTab, controllerId);
-
-      getVariablesByType(controllerId, activeTab)
-        .then((data) => {
-          setVariables(data);
-          setIsLoading(false);
-        })
-        .catch((err) => {
-          setError(err);
-          setIsLoading(false);
-        });
+      fetchData();
     }
   }, [controllerId, activeTab]);
 
@@ -85,32 +81,41 @@ const variableList = ({ controllerId }: { controllerId: string }) => {
   };
 
   return (
-    <Tabs
-      defaultValue="byte"
-      className="grid grid-cols-5 gap-3"
-      orientation="vertical"
-      onValueChange={handleTabChange}
-    >
-      <TabsList className="flex flex-col h-fit border-2 gap-1">
-        {tabItems.map((item) => (
-          <TabsTrigger key={item.value} value={item.value} className="w-full">
-            {item.label}
-          </TabsTrigger>
-        ))}
-      </TabsList>
+    <div className="space-y-4">
+      <div className="flex justify-end">
+        <Timer callback={fetchData} />
+      </div>
+      <Tabs
+        defaultValue="byte"
+        className="grid grid-cols-5 gap-3"
+        orientation="vertical"
+        onValueChange={handleTabChange}
+      >
+        <TabsList className="flex flex-col h-fit border-2 gap-1">
+          {tabItems.map((item) => (
+            <TabsTrigger key={item.value} value={item.value} className="w-full">
+              {item.label}
+            </TabsTrigger>
+          ))}
+        </TabsList>
 
-      {tabItems.map((item) => (
-        <TabsContent value={item.value} key={item.value} className="col-span-4">
-          {activeTab === item.value && (
-            <>
-              {isLoading && <p>Loading...</p>}
-              {error && <p>Error: {error.message}</p>}
-              {!isLoading && !error && <VariableList variables={variables} />}
-            </>
-          )}
-        </TabsContent>
-      ))}
-    </Tabs>
+        {tabItems.map((item) => (
+          <TabsContent
+            value={item.value}
+            key={item.value}
+            className="col-span-4"
+          >
+            {activeTab === item.value && (
+              <>
+                {isLoading && <p>Loading...</p>}
+                {error && <p>Error: {error.message}</p>}
+                {!isLoading && !error && <VariableList variables={variables} />}
+              </>
+            )}
+          </TabsContent>
+        ))}
+      </Tabs>
+    </div>
   );
 };
 

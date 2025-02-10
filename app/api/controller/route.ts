@@ -156,8 +156,8 @@ export async function POST(request: NextRequest) {
       },
       {
         name: "Universal Input",
-        start_byte: 10,
-        end_byte: 5127,
+        start_byte: 1,
+        end_byte: 512,
         shortName: "UI",
         bitType: "I",
       },
@@ -182,13 +182,13 @@ export async function POST(request: NextRequest) {
         shortName: "SO",
         bitType: "O",
       },
-      {
-        name: "Interface Panel",
-        start_byte: 6001,
-        end_byte: 6064,
-        shortName: "IP",
-        bitType: "P",
-      },
+      // {
+      //   name: "Interface Panel",
+      //   start_byte: 6001,
+      //   end_byte: 6064,
+      //   shortName: "IP",
+      //   bitType: "P",
+      // },
       {
         name: "Auxiliary Relay",
         start_byte: 7001,

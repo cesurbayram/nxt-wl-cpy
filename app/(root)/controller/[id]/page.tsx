@@ -16,7 +16,7 @@ import Maintenance from "@/components/controller/maintenance/maintenance";
 import Utilization from "@/components/controller/utilization/utilization";
 import Files from "@/components/controller/files/files";
 import Job from "@/components/controller/job/job";
-import Timer from "@/components/shared/timer";
+//import Timer from "@/components/shared/timer";
 import { sendTabExitCommand } from "@/utils/service/tab-exit";
 
 const tabItems = [
@@ -159,9 +159,9 @@ const Page = ({ params }: { params: { id: string } }) => {
       >
         {params.id != "0" && controller?.controllerStatus && (
           <>
-            <div className="flex justify-between items-center w-full px-6 mb-2">
+            {/* <div className="flex justify-between items-center w-full px-6 mb-2">
               <Timer callback={handleTimerCallback} />
-            </div>
+            </div> */}
             <ControllerStatusBar
               controllerStatus={controller?.controllerStatus}
             />
