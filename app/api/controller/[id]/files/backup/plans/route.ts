@@ -7,7 +7,6 @@ export async function POST(
 ) {
   try {
     const controllerId = params.id;
-    console.log("API - Received Controller ID:", controllerId);
 
     if (!controllerId) {
       return NextResponse.json(
@@ -17,7 +16,6 @@ export async function POST(
     }
 
     const body = await request.json();
-    console.log("API - Request Body:", body);
 
     const controllerCheck = await dbPool.query(
       "SELECT id FROM controller WHERE id = $1",

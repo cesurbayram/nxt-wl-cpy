@@ -40,8 +40,8 @@ const JobComponent = ({ controllerId }: JobTabProps) => {
     };
 
     fetchJobs();
-    const interval = setInterval(fetchJobs, 5000);
-    return () => clearInterval(interval);
+    // const interval = setInterval(fetchJobs, 5000);
+    // return () => clearInterval(interval);
   }, [controllerId]);
 
   return (

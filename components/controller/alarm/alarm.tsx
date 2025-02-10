@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { getAlarmsByControllerId } from "@/utils/service/alarm";
 import AlarmList from "./alarm-list";
 import { Alarm } from "@/types/alarm.types";
+import Timer from "@/components/shared/timer";
 
 const tabItems = [
   {
@@ -33,81 +34,89 @@ const AlarmTabs = ({ controllerId }: { controllerId: string }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
 
-  useEffect(() => {
+  const fetchData = async () => {
     if (controllerId && activeTab) {
       setIsLoading(true);
       setError(null);
-
-      const fetchData = async () => {
-        try {
-          if (activeTab === "almhist") {
-            const data = await getAlarmsByControllerId(
-              controllerId,
-              activeTab,
-              activeType
-            );
-            setAlarms(data);
-          } else {
-            const data = await getAlarmsByControllerId(controllerId, activeTab);
-            setAlarms(data);
-          }
-          setIsLoading(false);
-        } catch (err) {
-          setError(
-            err instanceof Error ? err : new Error("Unknown error occurred")
+      try {
+        if (activeTab === "almhist") {
+          const data = await getAlarmsByControllerId(
+            controllerId,
+            activeTab,
+            activeType
           );
-          setIsLoading(false);
+          setAlarms(data);
+        } else {
+          const data = await getAlarmsByControllerId(controllerId, activeTab);
+          setAlarms(data);
         }
-      };
-
-      fetchData();
+        setIsLoading(false);
+      } catch (err) {
+        setError(
+          err instanceof Error ? err : new Error("Unknown error occurred")
+        );
+        setIsLoading(false);
+      }
     }
+  };
+
+  useEffect(() => {
+    fetchData();
   }, [controllerId, activeTab, activeType]);
 
   return (
-    <Tabs
-      defaultValue="detected"
-      className="grid grid-cols-5 gap-3"
-      orientation="vertical"
-      onValueChange={(value) => setActiveTab(value)}
-    >
-      <TabsList className="flex flex-col h-fit border-2 gap-1">
-        {tabItems.map((item) => (
-          <TabsTrigger key={item.value} value={item.value} className="w-full">
-            {item.label}
-          </TabsTrigger>
-        ))}
-        {activeTab === "almhist" && (
-          <div className="flex flex-col mt-2">
-            {almhistTypes.map((type) => (
-              <button
-                key={type.value}
-                className={`w-full py-2 px-4 border ${
-                  activeType === type.value ? "bg-gray-200" : ""
-                }`}
-                onClick={() => setActiveType(type.value)}
-              >
-                {type.label}
-              </button>
-            ))}
-          </div>
-        )}
-      </TabsList>
-
-      {tabItems.map((item) => (
-        <TabsContent value={item.value} key={item.value} className="col-span-4">
-          {activeTab === item.value && (
-            <>
-              {isLoading && <p>Loading...</p>}
-              {error && <p>Error: {error.message}</p>}
-              {!isLoading && !error && (
-                <AlarmList alarms={alarms} activeTab={activeTab} />
-              )}
-            </>
+    <div className="space-y-4">
+      <div className="flex justify-end">
+        <Timer callback={fetchData} />
+      </div>
+      <Tabs
+        defaultValue="detected"
+        className="grid grid-cols-5 gap-3"
+        orientation="vertical"
+        onValueChange={(value) => setActiveTab(value)}
+      >
+        <TabsList className="flex flex-col h-fit border-2 gap-1">
+          {tabItems.map((item) => (
+            <TabsTrigger key={item.value} value={item.value} className="w-full">
+              {item.label}
+            </TabsTrigger>
+          ))}
+          {activeTab === "almhist" && (
+            <div className="flex flex-col mt-2">
+              {almhistTypes.map((type) => (
+                <button
+                  key={type.value}
+                  className={`w-full py-2 px-4 border ${
+                    activeType === type.value ? "bg-gray-200" : ""
+                  }`}
+                  onClick={() => setActiveType(type.value)}
+                >
+                  {type.label}
+                </button>
+              ))}
+            </div>
           )}
-        </TabsContent>
-      ))}
-    </Tabs>
+        </TabsList>
+
+        {tabItems.map((item) => (
+          <TabsContent
+            value={item.value}
+            key={item.value}
+            className="col-span-4"
+          >
+            {activeTab === item.value && (
+              <>
+                {isLoading && <p>Loading...</p>}
+                {error && <p>Error: {error.message}</p>}
+                {!isLoading && !error && (
+                  <AlarmList alarms={alarms} activeTab={activeTab} />
+                )}
+              </>
+            )}
+          </TabsContent>
+        ))}
+      </Tabs>
+    </div>
   );
 };
 

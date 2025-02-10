@@ -1,13 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import TimePicker from "./ui/time-picker";
 import { BackupPlan } from "@/types/files.types";
 import { createBackupPlan } from "@/utils/service/files";
@@ -85,7 +78,7 @@ export default function Plans({
     },
   ]);
 
-  const fileTypes = [".jbi", ".dat", ".cnd", ".prm", ".sys", ".lst"];
+  const fileTypes = [".jbi", ".dat", ".cnd", ".prm", ".sys", ".lst", ".log"];
   const [isSaving, setIsSaving] = useState(false);
 
   const handleDayToggle = (dayId: number) => {
@@ -151,6 +144,8 @@ export default function Plans({
           selectedFiles: [],
         }))
       );
+
+      onClose?.();
     } catch (error) {
       console.error("Plan kaydedilirken hata oluştu:", error);
     } finally {
@@ -159,34 +154,22 @@ export default function Plans({
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-end items-center space-x-2">
-        <span className="text-sm font-medium">Copy plan:</span>
-        <Select>
-          <SelectTrigger className="w-[200px]">
-            <SelectValue placeholder="Select device" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="device1">Device 1</SelectItem>
-            <SelectItem value="device2">Device 2</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-
+    <div className="space-y-4">
       <div className="border rounded-md">
         <table className="w-full">
           <thead>
             <tr className="border-b">
-              <th className="p-4 text-left text-sm font-medium">Day</th>
-              <th className="p-4 text-left text-sm font-medium">Time</th>
-              <th className="p-4 text-left text-sm font-medium">File types</th>
-              <th className="p-4 text-left text-sm font-medium">Tools</th>
+              <th className="p-2 text-left text-sm font-medium">Day</th>
+              <th className="p-2 text-left text-sm font-medium">Time</th>
+              <th className="p-2 text-left text-sm font-medium pl-8">
+                File Types
+              </th>
             </tr>
           </thead>
           <tbody>
             {dayPlans.map((day) => (
               <tr key={day.id} className="border-b">
-                <td className="p-4">
+                <td className="p-2">
                   <div className="flex items-center space-x-2">
                     <Checkbox
                       id={`day-${day.id}`}
@@ -201,13 +184,13 @@ export default function Plans({
                     </label>
                   </div>
                 </td>
-                <td className="p-4">
+                <td className="p-2">
                   <TimePicker
                     defaultValue={day.time}
                     onChange={(time) => handleTimeChange(day.id, time)}
                   />
                 </td>
-                <td className="p-4">
+                <td className="p-2 pl-8">
                   <div className="flex flex-wrap gap-2">
                     {fileTypes.map((type) => (
                       <div
@@ -226,18 +209,13 @@ export default function Plans({
                     ))}
                   </div>
                 </td>
-                <td className="p-4">
-                  <Button variant="ghost" size="sm">
-                    +
-                  </Button>
-                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
 
-      <div className="flex space-x-2">
+      <div className="flex justify-end mt-2">
         <Button
           onClick={handleSave}
           disabled={
@@ -246,11 +224,10 @@ export default function Plans({
               (day) => day.isSelected && day.selectedFiles.length > 0
             )
           }
+          variant="default"
+          className="rounded-xl bg-[#6950e8] hover:bg-[#592be7] transition-colors text-white font-semibold px-6 py-1.5 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isSaving ? "Kaydediliyor..." : "Kaydet"}
-        </Button>
-        <Button variant="outline" onClick={onClose}>
-          Kapat
+          {isSaving ? "Saving..." : "Save"}
         </Button>
       </div>
     </div>

@@ -44,9 +44,9 @@ const Timer = ({ callback }: { callback: any }) => {
             <SelectGroup>
               <SelectLabel>Times</SelectLabel>
               <SelectItem value="false">Disable</SelectItem>
-              <SelectItem value={"100"}>100ms</SelectItem>
-              <SelectItem value={"200"}>200ms</SelectItem>
-              <SelectItem value={"300"}>1000ms</SelectItem>
+              <SelectItem value={"1000"}>1000ms</SelectItem>
+              <SelectItem value={"2000"}>2000ms</SelectItem>
+              <SelectItem value={"3000"}>3000ms</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
