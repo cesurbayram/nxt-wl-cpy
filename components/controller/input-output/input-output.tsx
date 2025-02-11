@@ -8,7 +8,7 @@ import {
   getInputOutputType,
   sendInputOutputCommand,
 } from "@/utils/service/input-output";
-import Timer from "@/components/shared/timer";
+import { send } from "process";
 
 const tabItems = [
   {
@@ -23,10 +23,6 @@ const tabItems = [
     label: "Universal Input",
     value: "univInput",
   },
-  // {
-  //   label: "Interface Panel",
-  //   value: "interPanel",
-  // },
   {
     label: "Universal Output",
     value: "univOutput",
@@ -39,6 +35,10 @@ const tabItems = [
     label: "Spesific Output",
     value: "spesOutput",
   },
+  // {
+  //   label: "Interface Panel",
+  //   value: "interPanel",
+  // },
   {
     label: "Auxiliary Relay",
     value: "auxRel",
@@ -72,21 +72,6 @@ const InputOutputTabs = ({ controllerId }: { controllerId: string }) => {
   const [error, setError] = useState<Error | null>(null);
   const isFirstRender = useRef(true);
 
-  const fetchData = async () => {
-    if (controllerId && activeTab) {
-      setIsLoading(true);
-      setError(null);
-      try {
-        const data = await getInputOutputType(controllerId, activeTab);
-        setInputOutput(data);
-        setIsLoading(false);
-      } catch (err) {
-        setError(error);
-        setIsLoading(false);
-      }
-    }
-  };
-
   const sendActiveTabRequest = async (
     activeTab: string,
     controllerId: string
@@ -101,8 +86,20 @@ const InputOutputTabs = ({ controllerId }: { controllerId: string }) => {
   useEffect(() => {
     if (controllerId && activeTab && isFirstRender.current) {
       isFirstRender.current = false;
+      setIsLoading(true);
+      setError(null);
+
       sendActiveTabRequest(activeTab, controllerId);
-      fetchData();
+
+      getInputOutputType(controllerId, activeTab)
+        .then((data) => {
+          setInputOutput(data);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          setError(err);
+          setIsLoading(false);
+        });
     }
   }, [controllerId, activeTab]);
 
@@ -112,43 +109,34 @@ const InputOutputTabs = ({ controllerId }: { controllerId: string }) => {
   };
 
   return (
-    <div className="space-y-4">
-      <div className="flex justify-end">
-        <Timer callback={fetchData} />
-      </div>
-      <Tabs
-        defaultValue="extInput"
-        className="grid grid-cols-5 gap-3"
-        orientation="vertical"
-        onValueChange={handleTabChange}
-      >
-        <TabsList className="flex flex-col h-fit border-2 gap-1">
-          {tabItems.map((item) => (
-            <TabsTrigger key={item.value} value={item.value} className="w-full">
-              {item.label}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-
+    <Tabs
+      defaultValue="extInput"
+      className="grid grid-cols-5 gap-3"
+      orientation="vertical"
+      onValueChange={handleTabChange}
+    >
+      <TabsList className="flex flex-col h-fit border-2 gap-1">
         {tabItems.map((item) => (
-          <TabsContent
-            value={item.value}
-            key={item.value}
-            className="col-span-4"
-          >
-            {activeTab === item.value && (
-              <>
-                {isLoading && <p>Loading...</p>}
-                {error && <p>Error: {error.message}</p>}
-                {!isLoading && !error && (
-                  <InputOutputList inputOutput={inputoutput} />
-                )}
-              </>
-            )}
-          </TabsContent>
+          <TabsTrigger key={item.value} value={item.value} className="w-full">
+            {item.label}
+          </TabsTrigger>
         ))}
-      </Tabs>
-    </div>
+      </TabsList>
+
+      {tabItems.map((item) => (
+        <TabsContent value={item.value} key={item.value} className="col-span-4">
+          {activeTab === item.value && (
+            <>
+              {isLoading && <p>Loading...</p>}
+              {error && <p>Error: {error.message}</p>}
+              {!isLoading && !error && (
+                <InputOutputList inputOutput={inputoutput} />
+              )}
+            </>
+          )}
+        </TabsContent>
+      ))}
+    </Tabs>
   );
 };
 

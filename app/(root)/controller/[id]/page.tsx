@@ -16,7 +16,6 @@ import Maintenance from "@/components/controller/maintenance/maintenance";
 import Utilization from "@/components/controller/utilization/utilization";
 import Files from "@/components/controller/files/files";
 import Job from "@/components/controller/job/job";
-//import Timer from "@/components/shared/timer";
 import { sendTabExitCommand } from "@/utils/service/tab-exit";
 
 const tabItems = [
@@ -98,42 +97,6 @@ const Page = ({ params }: { params: { id: string } }) => {
     previousTab.current = value;
   };
 
-  const handleTimerCallback = () => {
-    if (params.id !== "0") {
-      switch (activeTab) {
-        case "alarm":
-          queryClient.invalidateQueries({ queryKey: ["alarms", params.id] });
-          break;
-        case "inputOutput":
-          queryClient.invalidateQueries({ queryKey: ["io", params.id] });
-          break;
-        case "variable":
-          queryClient.invalidateQueries({ queryKey: ["variables", params.id] });
-          break;
-        case "maintenance":
-          queryClient.invalidateQueries({
-            queryKey: ["maintenance", params.id],
-          });
-          break;
-        case "util":
-          queryClient.invalidateQueries({
-            queryKey: ["utilization", params.id],
-          });
-          break;
-        case "file":
-          queryClient.invalidateQueries({ queryKey: ["files", params.id] });
-          break;
-        case "job":
-          queryClient.invalidateQueries({ queryKey: ["jobs", params.id] });
-          break;
-        default:
-          queryClient.invalidateQueries({
-            queryKey: ["controller", params.id],
-          });
-      }
-    }
-  };
-
   const modifiedTabs = useMemo(() => {
     if (params.id != "0") {
       return [...tabItems, { label: "Update Controller", value: "update" }];
@@ -158,14 +121,9 @@ const Page = ({ params }: { params: { id: string } }) => {
         }
       >
         {params.id != "0" && controller?.controllerStatus && (
-          <>
-            {/* <div className="flex justify-between items-center w-full px-6 mb-2">
-              <Timer callback={handleTimerCallback} />
-            </div> */}
-            <ControllerStatusBar
-              controllerStatus={controller?.controllerStatus}
-            />
-          </>
+          <ControllerStatusBar
+            controllerStatus={controller?.controllerStatus}
+          />
         )}
         <Tabs
           defaultValue={params.id == "0" ? "create" : "alarm"}
