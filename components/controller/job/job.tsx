@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Job } from "@/types/job.types";
 import { getJobsByControllerId, sendJobCommand } from "@/utils/service/job";
+import Timer from "@/components/shared/timer";
 
 interface JobTabProps {
   controllerId: string;
@@ -14,6 +15,13 @@ const JobComponent = ({ controllerId }: JobTabProps) => {
   const [error, setError] = useState<string | null>(null);
   const isFirstRender = useRef(true);
 
+  const findExecutableLines = (content: string) => {
+    const lines = content.split("\n");
+    const nopIndex = lines.findIndex((line) => line.trim() === "NOP");
+    const endIndex = lines.findIndex((line) => line.trim() === "END");
+    return { nopIndex, endIndex };
+  };
+
   const sendJobRequest = async (controllerId: string) => {
     try {
       await sendJobCommand({ controllerId });
@@ -22,27 +30,59 @@ const JobComponent = ({ controllerId }: JobTabProps) => {
     }
   };
 
+  const fetchJobs = async () => {
+    try {
+      const data = await getJobsByControllerId(controllerId);
+      setJobs(data);
+      if (selectedJob) {
+        const updatedSelectedJob = data.find(
+          (job) => job.id === selectedJob.id
+        );
+        setSelectedJob(updatedSelectedJob || null);
+      }
+      setError(null);
+    } catch (err) {
+      console.error("Error fetching jobs:", err);
+      setError("Error loading jobs");
+      setJobs([]);
+    }
+  };
+
   useEffect(() => {
     if (controllerId && isFirstRender.current) {
       isFirstRender.current = false;
       sendJobRequest(controllerId);
     }
-    const fetchJobs = async () => {
-      try {
-        const data = await getJobsByControllerId(controllerId);
-        setJobs(data);
-        setError(null);
-      } catch (err) {
-        console.error("Error fetching jobs:", err);
-        setError("Error loading jobs");
-        setJobs([]);
-      }
-    };
-
     fetchJobs();
-    // const interval = setInterval(fetchJobs, 5000);
-    // return () => clearInterval(interval);
   }, [controllerId]);
+
+  // Sağ panel render kısmı
+  const renderJobContent = () => {
+    if (!selectedJob) return null;
+
+    const { nopIndex, endIndex } = findExecutableLines(selectedJob.job_content);
+    const lines = selectedJob.job_content.split("\n");
+
+    return lines.map((line, index) => {
+      const isExecutableLine = index >= nopIndex && index <= endIndex;
+
+      return (
+        <div
+          key={index}
+          className={`py-1 px-2 ${
+            isExecutableLine && index + 1 === selectedJob.current_line
+              ? "bg-yellow-100 dark:bg-yellow-900"
+              : ""
+          }`}
+        >
+          <span className="text-gray-400 dark:text-gray-500 mr-4">
+            {index + 1}
+          </span>
+          <span className="dark:text-gray-200">{line}</span>
+        </div>
+      );
+    });
+  };
 
   return (
     <div className="grid grid-cols-12 gap-4 h-full">
@@ -80,36 +120,29 @@ const JobComponent = ({ controllerId }: JobTabProps) => {
 
       {/* Sağ Panel - Job İçeriği */}
       <div className="col-span-8 bg-white dark:bg-gray-800 rounded-lg shadow">
-        {selectedJob ? (
-          <div className="p-4">
-            <div className="mb-4">
-              <div className="text-sm font-medium dark:text-white">
-                {selectedJob.job_name}
+        <div className="p-4">
+          {/* Timer */}
+          <div className="mb-4">
+            <Timer callback={fetchJobs} />
+          </div>
+
+          {selectedJob ? (
+            <div>
+              <div className="mb-4">
+                <div className="text-sm font-medium dark:text-white">
+                  {selectedJob.job_name}
+                </div>
+              </div>
+              <div className="font-mono bg-gray-50 dark:bg-gray-900 p-4 rounded-lg overflow-auto h-[400px] border border-gray-200 dark:border-gray-700">
+                {renderJobContent()}
               </div>
             </div>
-            <div className="font-mono bg-gray-50 dark:bg-gray-900 p-4 rounded-lg overflow-auto h-[400px] border border-gray-200 dark:border-gray-700">
-              {selectedJob.job_content.split("\n").map((line, index) => (
-                <div
-                  key={index}
-                  className={`py-1 px-2 ${
-                    index + 1 === selectedJob.current_line
-                      ? "bg-yellow-100 dark:bg-yellow-900"
-                      : ""
-                  }`}
-                >
-                  <span className="text-gray-400 dark:text-gray-500 mr-4">
-                    {index + 1}
-                  </span>
-                  <span className="dark:text-gray-200">{line}</span>
-                </div>
-              ))}
+          ) : (
+            <div className="h-full flex items-center justify-center text-gray-500 dark:text-gray-400">
+              Select a job from the left panel
             </div>
-          </div>
-        ) : (
-          <div className="h-full flex items-center justify-center text-gray-500 dark:text-gray-400">
-            Select a job from the left panel
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
