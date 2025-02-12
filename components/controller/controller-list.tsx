@@ -39,7 +39,7 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
           <div className="flex gap-1 items-center">
             <RiAlarmWarningLine
               title="alarm"
-              color={row.original.controllerStatus?.alarm ? "green" : "gray"}
+              color={row.original.controllerStatus?.alarm ? "red" : "gray"}
               size={30}
             />
             <BsDoorOpen
@@ -54,7 +54,7 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
             />
             <MdOutlinePlayCircle
               title="hold"
-              color={row.original.controllerStatus?.hold ? "green" : "gray"}
+              color={row.original.controllerStatus?.hold ? "yellow" : "gray"}
               size={30}
             />
             <GiRobotLeg
@@ -87,7 +87,7 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
               <BsTropicalStorm title="play" color="green" size={30} />
             )}
             {row.original.controllerStatus?.teach === "REMOTE" && (
-              <FaExternalLinkAlt title="remote" color="purple" size={30} />
+              <FaExternalLinkAlt title="remote" color="green" size={30} />
             )}
             {row.original.controllerStatus?.cycle === "CYCLE" && (
               <GrPowerCycle title="cycle" color="green" size={30} />

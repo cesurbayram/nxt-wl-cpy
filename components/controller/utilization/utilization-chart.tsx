@@ -80,13 +80,13 @@ const UtilizationChart = ({ data, viewType }: UtilizationChartProps) => {
             stroke="#96CEB4"
             dot={false}
           />
-          <Line
+          {/* <Line
             type="monotone"
             dataKey="operating_time"
             name="Operating Time"
             stroke="#D4A5A5"
             dot={false}
-          />
+          /> */}
         </LineChart>
       </ResponsiveContainer>
     </div>
@@ -118,7 +118,7 @@ const UtilizationChart = ({ data, viewType }: UtilizationChartProps) => {
           />
           <Bar dataKey="playback_time" name="Playback Time" fill="#45B7D1" />
           <Bar dataKey="moving_time" name="Moving Time" fill="#96CEB4" />
-          <Bar dataKey="operating_time" name="Operating Time" fill="#D4A5A5" />
+          {/* <Bar dataKey="operating_time" name="Operating Time" fill="#D4A5A5" /> */}
         </BarChart>
       </ResponsiveContainer>
     </div>
@@ -134,7 +134,7 @@ const UtilizationChart = ({ data, viewType }: UtilizationChartProps) => {
             <TableHead>Servo Power Time</TableHead>
             <TableHead>Playback Time</TableHead>
             <TableHead>Moving Time</TableHead>
-            <TableHead>Operating Time</TableHead>
+            {/* <TableHead>Operating Time</TableHead> */}
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -145,7 +145,7 @@ const UtilizationChart = ({ data, viewType }: UtilizationChartProps) => {
               <TableCell>{item.servo_power_time}</TableCell>
               <TableCell>{item.playback_time}</TableCell>
               <TableCell>{item.moving_time}</TableCell>
-              <TableCell>{item.operating_time}</TableCell>
+              {/* <TableCell>{item.operating_time}</TableCell> */}
             </TableRow>
           ))}
         </TableBody>
@@ -183,10 +183,10 @@ const UtilizationChart = ({ data, viewType }: UtilizationChartProps) => {
               <TableCell>Moving Time</TableCell>
               <TableCell>{lastData?.moving_time || 0}</TableCell>
             </TableRow>
-            <TableRow>
+            {/* <TableRow>
               <TableCell>Operating Time</TableCell>
               <TableCell>{lastData?.operating_time || 0}</TableCell>
-            </TableRow>
+            </TableRow> */}
           </TableBody>
         </Table>
       </div>

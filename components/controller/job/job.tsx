@@ -17,9 +17,27 @@ const JobComponent = ({ controllerId }: JobTabProps) => {
 
   const findExecutableLines = (content: string) => {
     const lines = content.split("\n");
-    const nopIndex = lines.findIndex((line) => line.trim() === "NOP");
-    const endIndex = lines.findIndex((line) => line.trim() === "END");
-    return { nopIndex, endIndex };
+    const executableLines: number[] = [];
+    let isExecutableSection = false;
+    let lineCount = -1;
+
+    lines.forEach((line) => {
+      const trimmedLine = line.trim();
+
+      if (trimmedLine === "NOP") {
+        isExecutableSection = true;
+        lineCount = 0;
+        executableLines.push(lineCount);
+      } else if (trimmedLine === "END") {
+        isExecutableSection = false;
+        executableLines.push(lineCount + 1);
+      } else if (isExecutableSection) {
+        lineCount++;
+        executableLines.push(lineCount);
+      }
+    });
+
+    return executableLines;
   };
 
   const sendJobRequest = async (controllerId: string) => {
@@ -60,23 +78,48 @@ const JobComponent = ({ controllerId }: JobTabProps) => {
   const renderJobContent = () => {
     if (!selectedJob) return null;
 
-    const { nopIndex, endIndex } = findExecutableLines(selectedJob.job_content);
+    const executableLines = findExecutableLines(selectedJob.job_content);
     const lines = selectedJob.job_content.split("\n");
+    let lineCount = -1;
+    let isExecutableSection = false;
 
-    return lines.map((line, index) => {
-      const isExecutableLine = index >= nopIndex && index <= endIndex;
+    return lines.map((line) => {
+      const trimmedLine = line.trim();
+
+      if (trimmedLine === "NOP") {
+        lineCount = 0;
+        isExecutableSection = true;
+      } else if (trimmedLine === "END") {
+        lineCount++;
+        isExecutableSection = false;
+      } else if (isExecutableSection) {
+        lineCount++;
+      } else {
+        return (
+          <div key={lineCount} className="py-1 px-2">
+            <span className="text-gray-400 dark:text-gray-500 mr-4">
+              {lineCount >= 0 ? lineCount : ""}
+            </span>
+            <span className="dark:text-gray-200">{line}</span>
+          </div>
+        );
+      }
+
+      const isCurrentLine = selectedJob.current_line === lineCount;
 
       return (
         <div
-          key={index}
+          key={lineCount}
           className={`py-1 px-2 ${
-            isExecutableLine && index + 1 === selectedJob.current_line
+            isCurrentLine
               ? "bg-yellow-100 dark:bg-yellow-900"
+              : isExecutableSection
+              ? "bg-gray-50 dark:bg-gray-800"
               : ""
           }`}
         >
           <span className="text-gray-400 dark:text-gray-500 mr-4">
-            {index + 1}
+            {lineCount >= 0 ? lineCount : ""}
           </span>
           <span className="dark:text-gray-200">{line}</span>
         </div>
