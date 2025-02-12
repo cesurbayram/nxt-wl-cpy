@@ -37,7 +37,7 @@ export async function GET(
       FROM utilization_data 
       WHERE controller_id = $1 
       ${timeFilter}
-      ORDER BY timestamp ASC
+      ORDER BY timestamp DESC
     `;
 
     const result = await client.query(query, [params.id]);

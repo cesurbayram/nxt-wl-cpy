@@ -40,7 +40,8 @@ export async function GET(
            mode, 
            type
          FROM ${tableName}
-         WHERE controller_id = $1 AND type = $2`,
+         WHERE controller_id = $1 AND type = $2
+         ORDER BY origin_date DESC`,
         [id, alarmType]
       );
 
@@ -60,7 +61,8 @@ export async function GET(
          text, 
          origin_date AS "originDate"
        FROM ${tableName}
-       WHERE controller_id = $1`,
+       WHERE controller_id = $1
+       ORDER BY origin_date DESC`,
       [id]
     );
 

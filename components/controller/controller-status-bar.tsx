@@ -77,14 +77,14 @@ const ControllerStatusBar = ({
       )}
       <div className="flex flex-col items-center">
         <MdOutlinePlayCircle
-          color={controllerStatus?.hold ? "green" : "gray"}
+          color={controllerStatus?.hold ? "yellow" : "gray"}
           size={26}
         />
         <p className="text-xs">Hold</p>
       </div>
       <div className="flex flex-col items-center">
         <RiAlarmWarningLine
-          color={controllerStatus?.alarm ? "green" : "gray"}
+          color={controllerStatus?.alarm ? "red" : "gray"}
           size={26}
         />
         <p className="text-xs">Alarm</p>

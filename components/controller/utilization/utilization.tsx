@@ -20,10 +20,10 @@ const tabItems = [
     label: "Chart",
     value: "chart",
   },
-  {
-    label: "Live",
-    value: "live",
-  },
+  // {
+  //   label: "Live",
+  //   value: "live",
+  // },
 ];
 
 const timeRanges = [
