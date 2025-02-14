@@ -110,13 +110,13 @@ const ControllerStatusBar = ({
         />
         <p className="text-xs">Door Opened</p>
       </div>
-      <div className="flex flex-col items-center">
+      {/* <div className="flex flex-col items-center">
         <MdOutlineSignalCellularAlt
           color={controllerStatus?.safeSpeed ? "green" : "gray"}
           size={26}
         />
         <p className="text-xs">Safe Speed</p>
-      </div>
+      </div> */}
     </div>
   );
 };
