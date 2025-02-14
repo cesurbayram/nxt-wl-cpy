@@ -17,7 +17,6 @@ import Utilization from "@/components/controller/utilization/utilization";
 import Files from "@/components/controller/files/files";
 import Job from "@/components/controller/job/job";
 import { sendTabExitCommand } from "@/utils/service/tab-exit";
-import Timer from "@/components/shared/timer";
 
 const tabItems = [
   {
@@ -78,17 +77,6 @@ const Page = ({ params }: { params: { id: string } }) => {
     gcTime: 0,
   });
 
-  const refreshAll = () => {
-    queryClient.invalidateQueries({ queryKey: ["controller", params.id] });
-    queryClient.invalidateQueries({ queryKey: ["alarms", params.id] });
-    queryClient.invalidateQueries({ queryKey: ["io", params.id] });
-    queryClient.invalidateQueries({ queryKey: ["variables", params.id] });
-    queryClient.invalidateQueries({ queryKey: ["maintenance", params.id] });
-    queryClient.invalidateQueries({ queryKey: ["utilization", params.id] });
-    queryClient.invalidateQueries({ queryKey: ["files", params.id] });
-    queryClient.invalidateQueries({ queryKey: ["jobs", params.id] });
-  };
-
   const handleTabChange = async (value: string) => {
     // Önceki tab I/O, Variable veya Job ise çıkış bilgisi gönder
     if (
@@ -133,14 +121,9 @@ const Page = ({ params }: { params: { id: string } }) => {
         }
       >
         {params.id != "0" && controller?.controllerStatus && (
-          <>
-            <ControllerStatusBar
-              controllerStatus={controller?.controllerStatus}
-            />
-            <div className="w-1/3 px-6 mb-2 mt-4">
-              <Timer callback={refreshAll} />
-            </div>
-          </>
+          <ControllerStatusBar
+            controllerStatus={controller?.controllerStatus}
+          />
         )}
         <Tabs
           defaultValue={params.id == "0" ? "create" : "alarm"}

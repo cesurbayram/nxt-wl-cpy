@@ -61,7 +61,7 @@ export async function GET(
          text, 
          origin_date AS "originDate"
        FROM ${tableName}
-       WHERE controller_id = $1
+       WHERE controller_id = $1 AND is_active = true
        ORDER BY origin_date DESC`,
       [id]
     );

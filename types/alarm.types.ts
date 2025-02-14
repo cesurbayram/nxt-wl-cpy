@@ -9,4 +9,5 @@ export interface Alarm {
   text?: string;
   originDate?: string;
   priority?: number;
+  is_active?: boolean;
 }

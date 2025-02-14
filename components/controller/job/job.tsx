@@ -12,7 +12,8 @@ interface JobTabProps {
 const JobComponent = ({ controllerId }: JobTabProps) => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<Error | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const isFirstRender = useRef(true);
 
   const findExecutableLines = (content: string) => {
@@ -48,8 +49,11 @@ const JobComponent = ({ controllerId }: JobTabProps) => {
     }
   };
 
-  const fetchJobs = async () => {
+  const fetchJobs = async (isInitialLoad: boolean = false) => {
     try {
+      if (isInitialLoad) {
+        setIsLoading(true);
+      }
       const data = await getJobsByControllerId(controllerId);
       setJobs(data);
       if (selectedJob) {
@@ -61,8 +65,12 @@ const JobComponent = ({ controllerId }: JobTabProps) => {
       setError(null);
     } catch (err) {
       console.error("Error fetching jobs:", err);
-      setError("Error loading jobs");
+      setError(err as Error);
       setJobs([]);
+    } finally {
+      if (isInitialLoad) {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -70,11 +78,10 @@ const JobComponent = ({ controllerId }: JobTabProps) => {
     if (controllerId && isFirstRender.current) {
       isFirstRender.current = false;
       sendJobRequest(controllerId);
+      fetchJobs(true);
     }
-    fetchJobs();
   }, [controllerId]);
 
-  // Sağ panel render kısmı
   const renderJobContent = () => {
     if (!selectedJob) return null;
 
@@ -136,7 +143,7 @@ const JobComponent = ({ controllerId }: JobTabProps) => {
         </div>
         <div className="p-2">
           {error ? (
-            <div className="text-red-500 p-3">{error}</div>
+            <div className="text-red-500 p-3">{error.message}</div>
           ) : jobs.length === 0 ? (
             <div className="text-gray-500 dark:text-gray-400 p-3">
               No jobs found yet
@@ -164,27 +171,30 @@ const JobComponent = ({ controllerId }: JobTabProps) => {
       {/* Sağ Panel - Job İçeriği */}
       <div className="col-span-8 bg-white dark:bg-gray-800 rounded-lg shadow">
         <div className="p-4">
-          {/* Timer */}
-          <div className="mb-4">
-            <Timer callback={fetchJobs} />
-          </div>
+          <div className="flex flex-col gap-4">
+            <div className="w-full">
+              <Timer callback={() => fetchJobs(false)} />
+            </div>
 
-          {selectedJob ? (
-            <div>
-              <div className="mb-4">
-                <div className="text-sm font-medium dark:text-white">
-                  {selectedJob.job_name}
+            {isLoading ? (
+              <p>Loading...</p>
+            ) : selectedJob ? (
+              <div>
+                <div className="mb-4">
+                  <div className="text-sm font-medium dark:text-white">
+                    {selectedJob.job_name}
+                  </div>
+                </div>
+                <div className="font-mono bg-gray-50 dark:bg-gray-900 p-4 rounded-lg overflow-auto h-[400px] border border-gray-200 dark:border-gray-700">
+                  {renderJobContent()}
                 </div>
               </div>
-              <div className="font-mono bg-gray-50 dark:bg-gray-900 p-4 rounded-lg overflow-auto h-[400px] border border-gray-200 dark:border-gray-700">
-                {renderJobContent()}
+            ) : (
+              <div className="h-full flex items-center justify-center text-gray-500 dark:text-gray-400">
+                Select a job from the left panel
               </div>
-            </div>
-          ) : (
-            <div className="h-full flex items-center justify-center text-gray-500 dark:text-gray-400">
-              Select a job from the left panel
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </div>

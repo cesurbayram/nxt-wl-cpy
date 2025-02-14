@@ -8,7 +8,7 @@ import {
   getInputOutputType,
   sendInputOutputCommand,
 } from "@/utils/service/input-output";
-import { send } from "process";
+import Timer from "@/components/shared/timer";
 
 const tabItems = [
   {
@@ -71,6 +71,7 @@ const InputOutputTabs = ({ controllerId }: { controllerId: string }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
   const isFirstRender = useRef(true);
+  const currentTabRef = useRef(activeTab);
 
   const sendActiveTabRequest = async (
     activeTab: string,
@@ -83,23 +84,34 @@ const InputOutputTabs = ({ controllerId }: { controllerId: string }) => {
     }
   };
 
+  const fetchInputOutput = async (isInitialLoad: boolean = false) => {
+    try {
+      if (isInitialLoad) {
+        setIsLoading(true);
+      }
+      const data = await getInputOutputType(
+        controllerId,
+        currentTabRef.current
+      );
+      setInputOutput(data);
+      setError(null);
+    } catch (err) {
+      console.error("Error fetching input/output:", err);
+      setError(err as Error);
+    } finally {
+      if (isInitialLoad) {
+        setIsLoading(false);
+      }
+    }
+  };
+
   useEffect(() => {
+    currentTabRef.current = activeTab;
+
     if (controllerId && activeTab && isFirstRender.current) {
       isFirstRender.current = false;
-      setIsLoading(true);
-      setError(null);
-
       sendActiveTabRequest(activeTab, controllerId);
-
-      getInputOutputType(controllerId, activeTab)
-        .then((data) => {
-          setInputOutput(data);
-          setIsLoading(false);
-        })
-        .catch((err) => {
-          setError(err);
-          setIsLoading(false);
-        });
+      fetchInputOutput(true);
     }
   }, [controllerId, activeTab]);
 
@@ -115,13 +127,18 @@ const InputOutputTabs = ({ controllerId }: { controllerId: string }) => {
       orientation="vertical"
       onValueChange={handleTabChange}
     >
-      <TabsList className="flex flex-col h-fit border-2 gap-1">
-        {tabItems.map((item) => (
-          <TabsTrigger key={item.value} value={item.value} className="w-full">
-            {item.label}
-          </TabsTrigger>
-        ))}
-      </TabsList>
+      <div className="flex flex-col gap-4">
+        <TabsList className="flex flex-col h-fit border-2 gap-1">
+          {tabItems.map((item) => (
+            <TabsTrigger key={item.value} value={item.value} className="w-full">
+              {item.label}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+        <div className="w-full px-6 mb-2">
+          <Timer callback={() => fetchInputOutput(false)} />
+        </div>
+      </div>
 
       {tabItems.map((item) => (
         <TabsContent value={item.value} key={item.value} className="col-span-4">
