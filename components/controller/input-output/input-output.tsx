@@ -59,10 +59,10 @@ const tabItems = [
     label: "Network Output",
     value: "netOutput",
   },
-  {
-    label: "Registers",
-    value: "register",
-  },
+  // {
+  //   label: "Registers",
+  //   value: "register",
+  // },
 ];
 
 const InputOutputTabs = ({ controllerId }: { controllerId: string }) => {
