@@ -22,24 +22,6 @@ export interface Controller {
 
 export async function GET(request: NextRequest) {
   try {
-    // const controllerDbResp = await dbPool.query(`
-    //     SELECT
-    //         r.id,
-    //         r.name,
-    //         r.model,
-    //         r.application,
-    //         r.ip_address AS "ipAddress",
-    //         r.status,
-    //         r.serial_number AS "serialNumber",
-    //         r.interval_ms AS "intervalMs",
-    //         r.max_connection AS "maxConnection",
-    //         r.location,
-    //         r.created_at AS "createdAt",
-    //         r.updated_at AS "updatedAt"
-    //     FROM
-    //         "controller" r
-    // `);
-
     const controllerDbResp = await dbPool.query(`
             SELECT
     c.id,
@@ -224,13 +206,13 @@ export async function POST(request: NextRequest) {
         shortName: "NO",
         bitType: "O",
       },
-      {
-        name: "Registers",
-        start_byte: 100000,
-        end_byte: 100559,
-        shortName: "R",
-        bitType: "R",
-      },
+      // {
+      //   name: "Registers",
+      //   start_byte: 100000,
+      //   end_byte: 100559,
+      //   shortName: "R",
+      //   bitType: "R",
+      // },
     ];
 
     for (const group of ioGroups) {
