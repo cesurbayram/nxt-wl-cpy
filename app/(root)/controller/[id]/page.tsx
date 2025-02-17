@@ -17,6 +17,7 @@ import Utilization from "@/components/controller/utilization/utilization";
 import Files from "@/components/controller/files/files";
 import Job from "@/components/controller/job/job";
 import { sendTabExitCommand } from "@/utils/service/tab-exit";
+import Timer from "@/components/shared/timer";
 
 const tabItems = [
   {
@@ -77,8 +78,21 @@ const Page = ({ params }: { params: { id: string } }) => {
     gcTime: 0,
   });
 
+  const handleStatusRefresh = async () => {
+    if (params.id !== "0") {
+      try {
+        const updatedController = await getControllerById(params.id);
+        queryClient.setQueryData(["controller", params.id], {
+          ...controller,
+          controllerStatus: updatedController.controllerStatus,
+        });
+      } catch (error) {
+        console.error("Failed to update status:", error);
+      }
+    }
+  };
+
   const handleTabChange = async (value: string) => {
-    // Önceki tab I/O, Variable veya Job ise çıkış bilgisi gönder
     if (
       previousTab.current &&
       ["inputOutput", "variable", "job"].includes(previousTab.current)
@@ -121,9 +135,14 @@ const Page = ({ params }: { params: { id: string } }) => {
         }
       >
         {params.id != "0" && controller?.controllerStatus && (
-          <ControllerStatusBar
-            controllerStatus={controller?.controllerStatus}
-          />
+          <div className="flex items-center justify-between">
+            <ControllerStatusBar
+              controllerStatus={controller.controllerStatus}
+            />
+            <div className="w-1/3 px-6">
+              <Timer callback={handleStatusRefresh} />
+            </div>
+          </div>
         )}
         <Tabs
           defaultValue={params.id == "0" ? "create" : "alarm"}

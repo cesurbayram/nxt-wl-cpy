@@ -41,7 +41,7 @@ export async function GET(
            type
          FROM ${tableName}
          WHERE controller_id = $1 AND type = $2
-         ORDER BY origin_date DESC`,
+         ORDER BY origin_date DESC NULLS LAST`,
         [id, alarmType]
       );
 
