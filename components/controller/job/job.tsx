@@ -56,17 +56,24 @@ const JobComponent = ({ controllerId }: JobTabProps) => {
       }
       const data = await getJobsByControllerId(controllerId);
       setJobs(data);
-      if (selectedJob) {
+
+      // Eğer seçili job yoksa ve data varsa ilk job'u seç
+      if (!selectedJob && data.length > 0) {
+        setSelectedJob(data[0]);
+      } else if (selectedJob) {
+        // Eğer seçili job varsa onu güncelle
         const updatedSelectedJob = data.find(
           (job) => job.id === selectedJob.id
         );
-        setSelectedJob(updatedSelectedJob || null);
+        setSelectedJob(updatedSelectedJob || data[0]); // Eğer seçili job bulunamazsa ilk job'u seç
       }
+
       setError(null);
     } catch (err) {
       console.error("Error fetching jobs:", err);
       setError(err as Error);
       setJobs([]);
+      setSelectedJob(null);
     } finally {
       if (isInitialLoad) {
         setIsLoading(false);

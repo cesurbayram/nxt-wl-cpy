@@ -19,7 +19,7 @@ export async function GET(
           created_at
         FROM jobs 
         WHERE controller_id = $1 
-        ORDER BY created_at ASC
+        ORDER BY created_at DESC
       `,
       [params.id]
     );

@@ -37,49 +37,6 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
       cell: ({ row }) => {
         return (
           <div className="flex gap-1 items-center">
-            <RiAlarmWarningLine
-              title="alarm"
-              color={row.original.controllerStatus?.alarm ? "red" : "gray"}
-              size={30}
-            />
-            <BsDoorOpen
-              title="door open"
-              color={row.original.controllerStatus?.doorOpen ? "green" : "gray"}
-              size={30}
-            />
-            <MdErrorOutline
-              title="error"
-              color={row.original.controllerStatus?.error ? "red" : "gray"}
-              size={30}
-            />
-            <MdOutlinePlayCircle
-              title="hold"
-              color={row.original.controllerStatus?.hold ? "yellow" : "gray"}
-              size={30}
-            />
-            <GiRobotLeg
-              title="operating"
-              color={
-                row.original.controllerStatus?.operating ? "green" : "gray"
-              }
-              size={30}
-            />
-            {/* <MdOutlineSignalCellularAlt
-              color={
-                row.original.controllerStatus?.safeSpeed ? "green" : "gray"
-              }
-              size={30}
-            /> */}
-            <PiLightning
-              title="servo"
-              color={row.original.controllerStatus?.servo ? "green" : "gray"}
-              size={30}
-            />
-            <IoWarningOutline
-              title="stop"
-              color={row.original.controllerStatus?.stop ? "green" : "gray"}
-              size={30}
-            />
             {row.original.controllerStatus?.teach === "TEACH" && (
               <FaRegHandLizard title="teach" color="green" size={30} />
             )}
@@ -89,6 +46,18 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
             {row.original.controllerStatus?.teach === "REMOTE" && (
               <FaExternalLinkAlt title="remote" color="green" size={30} />
             )}
+            <PiLightning
+              title="servo"
+              color={row.original.controllerStatus?.servo ? "green" : "gray"}
+              size={30}
+            />
+            <GiRobotLeg
+              title="operating"
+              color={
+                row.original.controllerStatus?.operating ? "green" : "gray"
+              }
+              size={30}
+            />
             {row.original.controllerStatus?.cycle === "CYCLE" && (
               <GrPowerCycle title="cycle" color="green" size={30} />
             )}
@@ -98,6 +67,37 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
             {row.original.controllerStatus?.cycle === "AUTO" && (
               <MdOutlineHdrAuto title="auto" color="green" size={30} />
             )}
+            <MdOutlinePlayCircle
+              title="hold"
+              color={row.original.controllerStatus?.hold ? "#F1C40F" : "gray"}
+              size={30}
+            />
+            <RiAlarmWarningLine
+              title="alarm"
+              color={row.original.controllerStatus?.alarm ? "red" : "gray"}
+              size={30}
+            />
+            <MdErrorOutline
+              title="error"
+              color={row.original.controllerStatus?.error ? "red" : "gray"}
+              size={30}
+            />
+            <IoWarningOutline
+              title="stop"
+              color={row.original.controllerStatus?.stop ? "green" : "gray"}
+              size={30}
+            />
+            <BsDoorOpen
+              title="door open"
+              color={row.original.controllerStatus?.doorOpen ? "green" : "gray"}
+              size={30}
+            />
+            {/* <MdOutlineSignalCellularAlt
+              color={
+                row.original.controllerStatus?.safeSpeed ? "green" : "gray"
+              }
+              size={30}
+            /> */}
           </div>
         );
       },
