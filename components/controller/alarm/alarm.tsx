@@ -84,19 +84,6 @@ const AlarmTabs = ({ controllerId }: { controllerId: string }) => {
     setActiveTab(value);
   };
 
-  const handleTypeChange = (value: string) => {
-    setActiveType(value);
-    isFirstRender.current = true;
-    fetchAlarms(true);
-  };
-
-  const handleTimerCallback = () => {
-    if (alarms.length === 0) {
-      return;
-    }
-    fetchAlarms(false);
-  };
-
   return (
     <Tabs
       defaultValue="detected"
@@ -119,7 +106,7 @@ const AlarmTabs = ({ controllerId }: { controllerId: string }) => {
                   className={`w-full py-2 px-4 border ${
                     activeType === type.value ? "bg-gray-200" : ""
                   }`}
-                  onClick={() => handleTypeChange(type.value)}
+                  onClick={() => setActiveType(type.value)}
                 >
                   {type.label}
                 </button>
@@ -128,7 +115,7 @@ const AlarmTabs = ({ controllerId }: { controllerId: string }) => {
           )}
         </TabsList>
         <div className="w-full px-6 mb-2">
-          <Timer callback={handleTimerCallback} />
+          <Timer callback={() => fetchAlarms(false)} />
         </div>
       </div>
 

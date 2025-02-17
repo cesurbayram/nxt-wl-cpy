@@ -92,48 +92,37 @@ const JobComponent = ({ controllerId }: JobTabProps) => {
   const renderJobContent = () => {
     if (!selectedJob) return null;
 
-    const executableLines = findExecutableLines(selectedJob.job_content);
     const lines = selectedJob.job_content.split("\n");
     let lineCount = -1;
     let isExecutableSection = false;
 
-    return lines.map((line) => {
+    return lines.map((line, index) => {
       const trimmedLine = line.trim();
 
       if (trimmedLine === "NOP") {
         lineCount = 0;
         isExecutableSection = true;
       } else if (trimmedLine === "END") {
-        lineCount++;
         isExecutableSection = false;
       } else if (isExecutableSection) {
         lineCount++;
-      } else {
-        return (
-          <div key={lineCount} className="py-1 px-2">
-            <span className="text-gray-400 dark:text-gray-500 mr-4">
-              {lineCount >= 0 ? lineCount : ""}
-            </span>
-            <span className="dark:text-gray-200">{line}</span>
-          </div>
-        );
       }
 
       const isCurrentLine = selectedJob.current_line === lineCount;
 
       return (
         <div
-          key={lineCount}
+          key={index}
           className={`py-1 px-2 ${
-            isCurrentLine
-              ? "bg-yellow-100 dark:bg-yellow-900"
-              : isExecutableSection
-              ? "bg-gray-50 dark:bg-gray-800"
+            isExecutableSection
+              ? isCurrentLine
+                ? "bg-yellow-100 dark:bg-yellow-900"
+                : "bg-gray-50 dark:bg-gray-800"
               : ""
           }`}
         >
           <span className="text-gray-400 dark:text-gray-500 mr-4">
-            {lineCount >= 0 ? lineCount : ""}
+            {isExecutableSection ? lineCount : ""}
           </span>
           <span className="dark:text-gray-200">{line}</span>
         </div>
