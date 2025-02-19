@@ -39,7 +39,8 @@ export async function GET(request: NextRequest) {
         'operating', ct.operating,
         'servo', ct.servo,
         'stop', ct.stop,
-        'teach', ct.teach
+        'teach', ct.teach,
+        'cBackup', ct.c_backup
     ) AS "controllerStatus"
     FROM
     controller c
@@ -94,7 +95,7 @@ export async function POST(request: NextRequest) {
     );
 
     await client.query(
-      `INSERT INTO controller_status (id, ip_address, controller_id, teach, servo, operating, cycle,  hold, alarm, error, stop, door_opened ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,
+      `INSERT INTO controller_status (id, ip_address, controller_id, teach, servo, operating, cycle,  hold, alarm, error, stop, door_opened, c_backup ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`,
       [
         newRobotStatusId,
         ipAddress,
@@ -103,6 +104,7 @@ export async function POST(request: NextRequest) {
         false,
         false,
         "CYCLE",
+        false,
         false,
         false,
         false,

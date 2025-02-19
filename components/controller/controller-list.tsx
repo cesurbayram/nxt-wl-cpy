@@ -18,6 +18,7 @@ import { MdOutlineHdrAuto } from "react-icons/md";
 import { DiSublime } from "react-icons/di";
 import { BsTropicalStorm } from "react-icons/bs";
 import { FaExternalLinkAlt } from "react-icons/fa";
+import { DiBootstrap } from "react-icons/di";
 import Link from "next/link";
 
 interface ControllerListProps {
@@ -75,7 +76,7 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
             <RiAlarmWarningLine
               title="alarm"
               color={row.original.controllerStatus?.alarm ? "red" : "gray"}
-              size={30}
+              size={35}
             />
             <MdErrorOutline
               title="error"
@@ -98,6 +99,13 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
               }
               size={30}
             /> */}
+            <DiBootstrap
+              title="backup"
+              color={
+                row.original.controllerStatus?.cBackup ? "green" : "lightgray"
+              }
+              size={40}
+            />
           </div>
         );
       },

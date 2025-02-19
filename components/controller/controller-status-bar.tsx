@@ -13,6 +13,7 @@ import { MdOutlineHdrAuto } from "react-icons/md";
 import { DiSublime } from "react-icons/di";
 import { BsTropicalStorm } from "react-icons/bs";
 import { FaExternalLinkAlt } from "react-icons/fa";
+import { DiBootstrap } from "react-icons/di";
 
 interface ControllerStatusBarProps {
   controllerStatus: ControllerStatus;
@@ -117,6 +118,13 @@ const ControllerStatusBar = ({
         />
         <p className="text-xs">Safe Speed</p>
       </div> */}
+      <div className="flex flex-col items-center">
+        <DiBootstrap
+          color={controllerStatus?.cBackup ? "green" : "lightgray"}
+          size={32}
+        />
+        <p className="text-xs">Backup</p>
+      </div>
     </div>
   );
 };

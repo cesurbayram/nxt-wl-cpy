@@ -27,7 +27,8 @@ export async function GET(
         'operating', ct.operating,
         'servo', ct.servo,
         'stop', ct.stop,
-        'teach', ct.teach
+        'teach', ct.teach,
+        'cBackup', ct.c_backup
     ) AS "controllerStatus"           
             FROM controller c INNER JOIN controller_status ct ON c.id=ct.controller_id WHERE c.id = $1`,
       [params.id]
