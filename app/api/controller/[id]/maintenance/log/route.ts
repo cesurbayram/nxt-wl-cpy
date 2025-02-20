@@ -4,11 +4,11 @@ import { v4 as uuidv4 } from "uuid";
 
 export interface MaintenanceLog {
   id: string;
-  maintenanceId: string;
-  maintenanceTime: string;
+  maintenance_id: string; // maintenanceId yerine maintenance_id
+  maintenance_time: string; // maintenanceTime yerine maintenance_time
   technician: string;
   description?: string;
-  createdAt?: string;
+  created_at?: string; // createdAt yerine created_at
   plan_name?: string;
 }
 
@@ -41,17 +41,26 @@ export async function GET(
 
 export async function POST(request: NextRequest) {
   const client = await dbPool.connect();
-  const { maintenanceId, maintenanceTime, technician, description } =
-    await request.json();
-  const newLogId = uuidv4();
 
   try {
+    const body = await request.json();
+    const { maintenance_id, maintenance_time, technician, description } = body;
+
+    if (!maintenance_id) {
+      return NextResponse.json(
+        { message: "maintenance_id is required" },
+        { status: 400 }
+      );
+    }
+
+    const newLogId = uuidv4();
+
     await client.query("BEGIN");
 
     await client.query(
       `INSERT INTO maintenance_log (id, maintenance_id, maintenance_time, technician, description) 
        VALUES ($1, $2, $3, $4, $5)`,
-      [newLogId, maintenanceId, maintenanceTime, technician, description]
+      [newLogId, maintenance_id, maintenance_time, technician, description]
     );
 
     await client.query(
@@ -59,7 +68,7 @@ export async function POST(request: NextRequest) {
        SET last_maintenance = $1,
            total_elapsed_time = 0
        WHERE id = $2`,
-      [maintenanceTime, maintenanceId]
+      [maintenance_time, maintenance_id]
     );
 
     await client.query("COMMIT");
@@ -81,16 +90,17 @@ export async function POST(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
   const client = await dbPool.connect();
-  const { id, maintenanceId, maintenanceTime, technician, description } =
-    await request.json();
 
   try {
+    const { id, maintenance_id, maintenance_time, technician, description } =
+      await request.json();
+
     await client.query("BEGIN");
     const result = await client.query(
       `UPDATE maintenance_log 
        SET maintenance_id = $1, maintenance_time = $2, technician = $3, description = $4 
        WHERE id = $5`,
-      [maintenanceId, maintenanceTime, technician, description, id]
+      [maintenance_id, maintenance_time, technician, description, id]
     );
 
     if (result.rowCount === 0) {

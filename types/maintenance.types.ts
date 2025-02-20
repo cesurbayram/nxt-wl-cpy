@@ -1,23 +1,23 @@
+// types/maintenance.types.ts
 export interface MaintenancePlan {
   id?: string;
   controllerId: string;
   name: string;
   operationTime: string;
-  maxOperationTime: string;
-  overallTime?: string;
-  lastMaintenance?: string;
-  totalElapsedTime?: string;
-  nextMaintenance?: string;
+  companyName: string;
+  maintenanceDate: string;
+  servoPowerTime: string;
+  nextMaintenanceTime?: string;
   createdAt?: string;
   updatedAt?: string;
 }
 
+// MaintenanceLog interface'i aynı kalabilir
 export interface MaintenanceLog {
-  id?: string;
-  maintenanceId: string;
-  maintenanceTime: string;
+  id?: string; // id opsiyonel olmalı çünkü yeni log oluştururken id olmayacak
+  maintenance_id: string;
+  maintenance_time: string;
   technician: string;
-  description?: string;
-  createdAt?: string;
-  plan_name?: string;
+  description?: string | null;
+  created_at?: string; // created_at opsiyonel olmalı çünkü yeni log oluştururken olmayacak
 }

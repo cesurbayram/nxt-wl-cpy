@@ -1,76 +1,126 @@
 "use client";
 
-import React from "react";
-import { MaintenancePlan, MaintenanceLog } from "@/types/maintenance.types";
+import React, { useState, useRef } from "react";
+import { MaintenancePlan } from "@/types/maintenance.types";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "../../shared/data-table";
 import { Button } from "../../ui/button";
-import { MdDelete } from "react-icons/md";
-import {
-  BsCheckCircleFill,
-  BsExclamationCircleFill,
-  BsXCircleFill,
-} from "react-icons/bs";
+import { MdDelete, MdOutlineSettings } from "react-icons/md";
+import { getUtilizationData } from "@/utils/service/utilization";
+import Timer from "@/components/shared/timer";
 
 interface MaintenanceListProps {
-  data: MaintenancePlan[] | MaintenanceLog[];
-  activeTab: "plans" | "logs";
+  data: MaintenancePlan[];
   deleteItem: (id: string) => void;
   onAddNew: () => void;
 }
 
 const MaintenanceList = ({
   data,
-  activeTab,
   deleteItem,
   onAddNew,
 }: MaintenanceListProps) => {
-  const planColumns: ColumnDef<MaintenancePlan>[] = [
+  const [servoPowerTimes, setServoPowerTimes] = useState<{
+    [key: string]: number;
+  }>({});
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<Error | null>(null);
+
+  const fetchUtilizationData = async (isInitialLoad: boolean = false) => {
+    try {
+      if (isInitialLoad) {
+        setIsLoading(true);
+      }
+
+      // Düzeltilmiş kod
+      const uniqueControllerIds = Array.from(
+        new Set(data.map((plan) => plan.controllerId))
+      );
+
+      const newServoPowerTimes: { [key: string]: number } = {};
+
+      for (const controllerId of uniqueControllerIds) {
+        const utilizationData = await getUtilizationData(
+          controllerId,
+          "7d",
+          "1d"
+        );
+        if (utilizationData && utilizationData.length > 0) {
+          newServoPowerTimes[controllerId] =
+            utilizationData[0].servo_power_time;
+        }
+      }
+
+      setServoPowerTimes(newServoPowerTimes);
+      setError(null);
+    } catch (error) {
+      console.error("Error fetching utilization data:", error);
+      setError(error as Error);
+    } finally {
+      if (isInitialLoad) {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  const getMaintenanceStatus = (
+    controllerId: string,
+    servoPowerTime: string,
+    nextMaintenanceTime: string | undefined
+  ) => {
+    const currentHours =
+      servoPowerTimes[controllerId] || parseInt(servoPowerTime);
+    const targetHours = parseInt(nextMaintenanceTime || "0") - 12000;
+    const remainingHours = 12000 - (currentHours - targetHours);
+
+    if (!currentHours || !nextMaintenanceTime) {
+      return {
+        icon: <MdOutlineSettings className="text-gray-500 text-2xl" />,
+        text: "No Data",
+        color: "text-gray-500",
+      };
+    }
+
+    if (remainingHours <= 0) {
+      return {
+        icon: <MdOutlineSettings className="text-red-600 text-2xl" />,
+        text: `${Math.abs(remainingHours)}h exceeded`,
+        color: "text-red-600",
+      };
+    } else if (remainingHours <= 2000) {
+      return {
+        icon: <MdOutlineSettings className="text-orange-600 text-2xl" />,
+        text: `${remainingHours}h left`,
+        color: "text-orange-600",
+      };
+    }
+
+    return {
+      icon: <MdOutlineSettings className="text-green-600 text-2xl" />,
+      text: `${remainingHours}h left`,
+      color: "text-green-600",
+    };
+  };
+
+  const columns: ColumnDef<MaintenancePlan>[] = [
     {
       id: "status",
       header: "Status",
       cell: ({ row }) => {
         const plan = row.original;
+        const status = getMaintenanceStatus(
+          plan.controllerId,
+          plan.servoPowerTime,
+          plan.nextMaintenanceTime
+        );
 
-        if (!plan?.operationTime || !plan?.totalElapsedTime) {
-          return (
-            <div className="flex items-center gap-2">
-              <BsCheckCircleFill className="text-gray-400 text-xl" />
-              <span className="text-xs text-gray-500">No data</span>
-            </div>
-          );
-        }
-
-        const operationHours = parseInt(plan.operationTime.toString());
-        const totalElapsed = parseInt(plan.totalElapsedTime.toString());
-
-        const percentage =
-          operationHours > 0 ? (totalElapsed / operationHours) * 100 : 0;
-
-        if (percentage >= 100) {
-          return (
-            <div className="flex items-center gap-2">
-              <BsXCircleFill className="text-red-500 text-xl" />
-              <span className="text-xs text-red-500">
-                Maintenance Required ({percentage.toFixed(0)}%)
-              </span>
-            </div>
-          );
-        } else if (percentage >= 90) {
-          return (
-            <div className="flex items-center gap-2">
-              <BsExclamationCircleFill className="text-orange-500 text-xl" />
-              <span className="text-xs text-orange-500">
-                Maintenance Soon ({percentage.toFixed(0)}%)
-              </span>
-            </div>
-          );
-        }
         return (
-          <div className="flex items-center gap-2">
-            <BsCheckCircleFill className="text-green-500 text-xl" />
-            <span className="text-xs text-green-500">
-              OK ({percentage.toFixed(0)}%)
+          <div className="flex flex-col items-center justify-center w-28 -ml-2">
+            {status.icon}
+            <span
+              className={`text-xs ${status.color} mt-0.5 text-center font-medium`}
+            >
+              {status.text}
             </span>
           </div>
         );
@@ -81,113 +131,70 @@ const MaintenanceList = ({
       header: "Plan Name",
     },
     {
-      accessorKey: "operation_time",
-      header: "Operation Time",
+      accessorKey: "companyName",
+      header: "Company/Authority",
     },
     {
-      accessorKey: "max_operation_time",
-      header: "Max Operation Time",
-    },
-    {
-      accessorKey: "overall_time",
-      header: "Overall Time",
-    },
-    {
-      accessorKey: "last_maintenance",
-      header: "Last Maintenance",
+      accessorKey: "maintenanceDate",
+      header: "Maintenance Date",
       cell: ({ getValue }) =>
-        getValue() ? new Date(getValue() as string).toLocaleString() : "N/A",
+        new Date(getValue() as string).toLocaleDateString(),
     },
     {
-      accessorKey: "total_elapsed_time",
-      header: "Total Elapsed Time",
-    },
-    {
-      accessorKey: "next_maintenance",
-      header: "Next Maintenance",
-      cell: ({ getValue }) =>
-        getValue() ? new Date(getValue() as string).toLocaleString() : "N/A",
-    },
-    {
-      id: "actions",
-      header: "Actions",
-      cell: ({ row }) => (
-        <div className="flex gap-2">
-          <Button
-            variant="ghost"
-            onClick={() => {
-              if (row.original.id) {
-                deleteItem(row.original.id);
-              }
-            }}
-          >
-            <MdDelete className="text-red-500" />
-          </Button>
-        </div>
-      ),
-    },
-  ];
-
-  const logColumns: ColumnDef<MaintenanceLog>[] = [
-    {
-      accessorKey: "plan_name",
-      header: "Plan Name",
-    },
-    {
-      accessorKey: "maintenance_time",
-      header: "Maintenance Time",
-      cell: ({ getValue }) => {
-        const value = getValue();
-        try {
-          return value ? new Date(value as string).toLocaleString() : "N/A";
-        } catch {
-          return "Invalid Date";
-        }
+      accessorKey: "servoPowerTime",
+      header: "Current Hours",
+      cell: ({ row }) => {
+        const currentHours =
+          servoPowerTimes[row.original.controllerId] ||
+          parseInt(row.original.servoPowerTime);
+        return `${currentHours} hours`;
       },
     },
     {
-      accessorKey: "technician",
-      header: "Technician",
+      accessorKey: "nextMaintenanceTime",
+      header: "Next Maintenance At",
+      cell: ({ getValue }) => `${getValue()} hours`,
     },
     {
-      accessorKey: "description",
-      header: "Description",
+      accessorKey: "createdAt",
+      header: "Created Date",
+      cell: ({ getValue }) =>
+        getValue() ? new Date(getValue() as string).toLocaleDateString() : "-",
     },
     {
       id: "actions",
       header: "Actions",
       cell: ({ row }) => (
-        <div className="flex gap-2">
-          <Button
-            variant="ghost"
-            onClick={() => {
-              if (row.original.id) {
-                deleteItem(row.original.id);
-              }
-            }}
-          >
-            <MdDelete className="text-red-500" />
-          </Button>
-        </div>
+        <Button
+          variant="ghost"
+          onClick={() => row.original.id && deleteItem(row.original.id)}
+          className="hover:bg-red-50"
+        >
+          <MdDelete className="text-red-500" />
+        </Button>
       ),
     },
   ];
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-end">
+      <div className="flex justify-between items-center">
+        <div className="w-full px-6 mb-2">
+          <Timer callback={() => fetchUtilizationData(false)} />
+        </div>
         <Button
           onClick={onAddNew}
           className="rounded-xl bg-[#6950e8] text-white"
         >
-          + Add New {activeTab === "plans" ? "Plan" : "Log"}
+          + Add New Plan
         </Button>
       </div>
-      {activeTab === "plans" && (
-        <DataTable columns={planColumns} data={data as MaintenancePlan[]} />
-      )}
-      {activeTab === "logs" && (
-        <DataTable columns={logColumns} data={data as MaintenanceLog[]} />
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : error ? (
+        <p>Error: {error.message}</p>
+      ) : (
+        <DataTable columns={columns} data={data} />
       )}
     </div>
   );

@@ -1,8 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getUtilizationData } from "@/utils/service/utilization";
+import { useState, useEffect } from "react";
 import UtilizationChart from "./utilization-chart";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -14,6 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { getControllerById } from "@/utils/service/controller";
+import { getUtilizationData } from "@/utils/service/utilization";
 
 const tabItems = [
   {
@@ -57,15 +56,45 @@ const Utilization = ({ controllerId }: UtilizationProps) => {
   const [interval, setInterval] = useState("5min");
   const [viewType, setViewType] = useState("line");
 
-  const { data: controller } = useQuery({
-    queryKey: ["controller", controllerId],
-    queryFn: () => getControllerById(controllerId),
-  });
+  // React Query yerine useState kullanımı
+  const [controller, setController] = useState<any>(null);
+  const [utilizationData, setUtilizationData] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["utilization", controllerId, timeRange, interval],
-    queryFn: () => getUtilizationData(controllerId, timeRange, interval),
-  });
+  // Controller verilerini getir
+  useEffect(() => {
+    const fetchController = async () => {
+      try {
+        const data = await getControllerById(controllerId);
+        setController(data);
+      } catch (error) {
+        console.error("Error fetching controller:", error);
+      }
+    };
+
+    fetchController();
+  }, [controllerId]);
+
+  // Utilization verilerini getir
+  useEffect(() => {
+    const fetchUtilizationData = async () => {
+      setIsLoading(true);
+      try {
+        const data = await getUtilizationData(
+          controllerId,
+          timeRange,
+          interval
+        );
+        setUtilizationData(data);
+      } catch (error) {
+        console.error("Error fetching utilization data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchUtilizationData();
+  }, [controllerId, timeRange, interval]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -136,7 +165,9 @@ const Utilization = ({ controllerId }: UtilizationProps) => {
             </div>
           </CardHeader>
           <CardContent>
-            {data && <UtilizationChart data={data} viewType={viewType} />}
+            {utilizationData && (
+              <UtilizationChart data={utilizationData} viewType={viewType} />
+            )}
           </CardContent>
         </Card>
       </TabsContent>
