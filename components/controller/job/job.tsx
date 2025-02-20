@@ -57,15 +57,13 @@ const JobComponent = ({ controllerId }: JobTabProps) => {
       const data = await getJobsByControllerId(controllerId);
       setJobs(data);
 
-      // Eğer seçili job yoksa ve data varsa ilk job'u seç
       if (!selectedJob && data.length > 0) {
         setSelectedJob(data[0]);
       } else if (selectedJob) {
-        // Eğer seçili job varsa onu güncelle
         const updatedSelectedJob = data.find(
           (job) => job.id === selectedJob.id
         );
-        setSelectedJob(updatedSelectedJob || data[0]); // Eğer seçili job bulunamazsa ilk job'u seç
+        setSelectedJob(updatedSelectedJob || data[0]);
       }
 
       setError(null);
@@ -135,7 +133,6 @@ const JobComponent = ({ controllerId }: JobTabProps) => {
 
   return (
     <div className="grid grid-cols-12 gap-4 h-full">
-      {/* Sol Panel - Job Listesi */}
       <div className="col-span-4 bg-white dark:bg-gray-800 rounded-lg shadow">
         <div className="p-4 border-b dark:border-gray-700">
           <div className="text-sm font-medium dark:text-white">Jobs</div>
@@ -167,7 +164,6 @@ const JobComponent = ({ controllerId }: JobTabProps) => {
         </div>
       </div>
 
-      {/* Sağ Panel - Job İçeriği */}
       <div className="col-span-8 bg-white dark:bg-gray-800 rounded-lg shadow">
         <div className="p-4">
           <div className="flex flex-col gap-4">

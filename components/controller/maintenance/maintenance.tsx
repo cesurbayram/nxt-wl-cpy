@@ -1,10 +1,11 @@
 "use client";
 
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TabsContent } from "@radix-ui/react-tabs";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { useState, useEffect } from "react";
 import MaintenanceList from "./maintenance-list";
+import MaintenanceLogList from "./maintenance-log-list";
 import MaintenanceForm from "./maintenance-form";
+import MaintenanceLogForm from "./maintenance-log-form";
 import {
   getMaintenancePlans,
   getMaintenanceLogs,
@@ -20,40 +21,50 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { toast } from "sonner";
 
 const Maintenance = ({ controllerId }: { controllerId: string }) => {
   const [activeTab, setActiveTab] = useState<"plans" | "logs">("plans");
-  const [data, setData] = useState<MaintenancePlan[] | MaintenanceLog[]>([]);
+  const [planData, setPlanData] = useState<MaintenancePlan[]>([]);
+  const [logData, setLogData] = useState<MaintenanceLog[]>([]);
+  const [maintenancePlans, setMaintenancePlans] = useState<MaintenancePlan[]>(
+    []
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isPlan, setIsPlan] = useState(true);
 
+  const fetchData = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      if (activeTab === "plans") {
+        const fetchedPlans = await getMaintenancePlans(controllerId);
+        setPlanData(fetchedPlans);
+        setMaintenancePlans(fetchedPlans);
+      } else {
+        const [fetchedLogs, fetchedPlans] = await Promise.all([
+          getMaintenanceLogs(controllerId),
+          getMaintenancePlans(controllerId),
+        ]);
+        setLogData(fetchedLogs);
+        setMaintenancePlans(fetchedPlans);
+      }
+    } catch (err) {
+      console.error("Fetch error:", err);
+      setError(
+        err instanceof Error ? err : new Error("Unknown error occurred")
+      );
+      toast.error("Failed to fetch data");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (!controllerId || !activeTab) return;
-
-    setIsLoading(true);
-    setError(null);
-
-    const fetchData = async () => {
-      try {
-        if (activeTab === "plans") {
-          const fetchedPlans = await getMaintenancePlans(controllerId);
-          setData(fetchedPlans);
-        } else if (activeTab === "logs") {
-          const fetchedLogs = await getMaintenanceLogs(controllerId);
-          setData(fetchedLogs);
-        }
-      } catch (err) {
-        console.error("Fetch error:", err);
-        setError(
-          err instanceof Error ? err : new Error("Unknown error occurred")
-        );
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchData();
   }, [controllerId, activeTab]);
 
@@ -61,17 +72,16 @@ const Maintenance = ({ controllerId }: { controllerId: string }) => {
     try {
       if (activeTab === "plans") {
         await deleteMaintenancePlan(controllerId, id);
-        setData((prev) =>
-          (prev as MaintenancePlan[]).filter((item) => item.id !== id)
-        );
-      } else if (activeTab === "logs") {
+        setPlanData((prev) => prev.filter((item) => item.id !== id));
+        toast.success("Plan deleted successfully");
+      } else {
         await deleteMaintenanceLog(controllerId, id);
-        setData((prev) =>
-          (prev as MaintenanceLog[]).filter((item) => item.id !== id)
-        );
+        setLogData((prev) => prev.filter((item) => item.id !== id));
+        toast.success("Log deleted successfully");
       }
     } catch (err) {
-      console.error("Failed to delete", err);
+      console.error("Failed to delete:", err);
+      toast.error("Failed to delete item");
     }
   };
 
@@ -84,34 +94,38 @@ const Maintenance = ({ controllerId }: { controllerId: string }) => {
     try {
       setIsLoading(true);
       if (isPlan) {
-        const planData = {
+        await createMaintenancePlan(controllerId, {
           controllerId,
           name: formData.name,
           operationTime: formData.operationTime,
-          maxOperationTime: formData.maxOperationTime,
-          nextMaintenance: formData.nextMaintenance || null,
-          overallTime: formData.overallTime || null,
-        };
+          companyName: formData.companyName,
+          maintenanceDate: formData.maintenanceDate,
+          servoPowerTime: formData.servoPowerTime,
+          nextMaintenanceTime: formData.nextMaintenanceTime,
+        });
 
-        await createMaintenancePlan(controllerId, planData);
+        const updatedPlans = await getMaintenancePlans(controllerId);
+        setPlanData(updatedPlans);
+        setMaintenancePlans(updatedPlans);
+        toast.success("Plan created successfully");
       } else {
-        const logData = {
-          maintenanceId: formData.maintenanceId,
-          maintenanceTime: formData.maintenanceTime,
-          technician: formData.technician,
-          description: formData.description || null,
-        };
-        await createMaintenanceLog(controllerId, logData);
+        console.log("Sending log data:", formData);
+
+        await createMaintenanceLog(controllerId, formData);
+
+        const [updatedLogs, updatedPlans] = await Promise.all([
+          getMaintenanceLogs(controllerId),
+          getMaintenancePlans(controllerId),
+        ]);
+        setLogData(updatedLogs);
+        setMaintenancePlans(updatedPlans);
+        toast.success("Log created successfully");
       }
 
-      const updatedData = isPlan
-        ? await getMaintenancePlans(controllerId)
-        : await getMaintenanceLogs(controllerId);
-
-      setData(updatedData);
       setIsDialogOpen(false);
     } catch (error) {
-      console.error("Form sent:", error);
+      console.error("Form submission error:", error);
+      toast.error("Failed to save data");
     } finally {
       setIsLoading(false);
     }
@@ -139,8 +153,7 @@ const Maintenance = ({ controllerId }: { controllerId: string }) => {
           {error && <p>Error: {error.message}</p>}
           {!isLoading && !error && (
             <MaintenanceList
-              data={data as MaintenancePlan[]}
-              activeTab={activeTab}
+              data={planData}
               deleteItem={(id) => handleDelete(id)}
               onAddNew={handleAddNew}
             />
@@ -151,11 +164,11 @@ const Maintenance = ({ controllerId }: { controllerId: string }) => {
           {isLoading && <p>Loading Logs...</p>}
           {error && <p>Error: {error.message}</p>}
           {!isLoading && !error && (
-            <MaintenanceList
-              data={data as MaintenanceLog[]}
-              activeTab={activeTab}
+            <MaintenanceLogList
+              data={logData}
               deleteItem={(id) => handleDelete(id)}
               onAddNew={handleAddNew}
+              maintenancePlans={maintenancePlans}
             />
           )}
         </TabsContent>
@@ -166,11 +179,19 @@ const Maintenance = ({ controllerId }: { controllerId: string }) => {
           <DialogHeader>
             <DialogTitle>{isPlan ? "Add New Plan" : "Add New Log"}</DialogTitle>
           </DialogHeader>
-          <MaintenanceForm
-            onSubmit={handleSubmit}
-            isPlan={isPlan}
-            controllerId={controllerId}
-          />
+          {isPlan ? (
+            <MaintenanceForm
+              onSubmit={handleSubmit}
+              controllerId={controllerId}
+              onCancel={() => setIsDialogOpen(false)}
+            />
+          ) : (
+            <MaintenanceLogForm
+              onSubmit={handleSubmit}
+              maintenancePlans={maintenancePlans.filter((plan) => plan.id)}
+              onCancel={() => setIsDialogOpen(false)}
+            />
+          )}
         </DialogContent>
       </Dialog>
     </>

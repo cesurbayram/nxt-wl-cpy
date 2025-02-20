@@ -1,20 +1,7 @@
+// app/api/controller/[id]/maintenance/plan/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { dbPool } from "@/utils/dbUtil";
 import { v4 as uuidv4 } from "uuid";
-
-export interface MaintenancePlan {
-  id: string;
-  controllerId: string;
-  name: string;
-  operationTime: string;
-  overallTime?: string;
-  lastMaintenance?: string;
-  totalElapsedTime?: string;
-  maxOperationTime: string;
-  nextMaintenance?: string;
-  createdAt?: string;
-  updatedAt?: string;
-}
 
 export async function GET(
   request: NextRequest,
@@ -23,7 +10,18 @@ export async function GET(
   try {
     const client = await dbPool.connect();
     const result = await client.query(
-      `SELECT * FROM maintenance_plan WHERE controller_id = $1`,
+      `SELECT 
+        id, controller_id as "controllerId", name,
+        operation_time as "operationTime",
+        company_name as "companyName",
+        maintenance_date as "maintenanceDate",
+        servo_power_time as "servoPowerTime",
+        next_maintenance_time as "nextMaintenanceTime",
+        created_at as "createdAt",
+        updated_at as "updatedAt"
+      FROM maintenance_plan 
+      WHERE controller_id = $1
+      ORDER BY created_at DESC`,
       [params.id]
     );
     client.release();
@@ -42,15 +40,35 @@ export async function POST(
   { params }: { params: { id: string } }
 ) {
   const client = await dbPool.connect();
-  const { name, operationTime, maxOperationTime } = await request.json();
+  const {
+    name,
+    operationTime,
+    companyName,
+    maintenanceDate,
+    servoPowerTime,
+    nextMaintenanceTime,
+  } = await request.json();
   const newPlanId = uuidv4();
 
   try {
     await client.query("BEGIN");
     await client.query(
-      `INSERT INTO maintenance_plan (id, controller_id, name, operation_time, max_operation_time) 
-       VALUES ($1, $2, $3, $4, $5)`,
-      [newPlanId, params.id, name, operationTime, maxOperationTime]
+      `INSERT INTO maintenance_plan (
+        id, controller_id, name, operation_time, 
+        company_name, maintenance_date, servo_power_time, 
+        next_maintenance_time
+      ) 
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+      [
+        newPlanId,
+        params.id,
+        name,
+        operationTime,
+        companyName,
+        maintenanceDate,
+        servoPowerTime,
+        nextMaintenanceTime,
+      ]
     );
     await client.query("COMMIT");
     return NextResponse.json(
@@ -75,28 +93,31 @@ export async function PUT(request: NextRequest) {
     id,
     name,
     operationTime,
-    overallTime,
-    lastMaintenance,
-    totalElapsedTime,
-    maxOperationTime,
-    nextMaintenance,
+    companyName,
+    maintenanceDate,
+    servoPowerTime,
+    nextMaintenanceTime,
   } = await request.json();
 
   try {
     await client.query("BEGIN");
     const result = await client.query(
       `UPDATE maintenance_plan
-       SET name = $1, operation_time = $2, overall_time = $3, last_maintenance = $4, 
-           total_elapsed_time = $5, max_operation_time = $6, next_maintenance = $7, updated_at = now()
-       WHERE id = $8`,
+       SET name = $1, 
+           operation_time = $2, 
+           company_name = $3,
+           maintenance_date = $4,
+           servo_power_time = $5,
+           next_maintenance_time = $6,
+           updated_at = now()
+       WHERE id = $7`,
       [
         name,
         operationTime,
-        overallTime || null,
-        lastMaintenance || null,
-        totalElapsedTime || null,
-        maxOperationTime,
-        nextMaintenance || null,
+        companyName,
+        maintenanceDate,
+        servoPowerTime,
+        nextMaintenanceTime,
         id,
       ]
     );
