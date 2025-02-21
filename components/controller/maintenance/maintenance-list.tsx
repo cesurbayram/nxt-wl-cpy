@@ -8,6 +8,7 @@ import { Button } from "../../ui/button";
 import { MdDelete, MdOutlineSettings } from "react-icons/md";
 import { getUtilizationData } from "@/utils/service/utilization";
 import Timer from "@/components/shared/timer";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 interface MaintenanceListProps {
   data: MaintenancePlan[];
@@ -106,7 +107,8 @@ const MaintenanceList = ({
   const columns: ColumnDef<MaintenancePlan>[] = [
     {
       id: "status",
-      header: "Status",
+      header: () => <div className="w-full px-4">Status</div>,
+      size: 120,
       cell: ({ row }) => {
         const plan = row.original;
         const status = getMaintenanceStatus(
@@ -116,7 +118,7 @@ const MaintenanceList = ({
         );
 
         return (
-          <div className="flex flex-col items-center justify-center w-28 -ml-2">
+          <div className="flex flex-col items-center justify-center w-full">
             {status.icon}
             <span
               className={`text-xs ${status.color} mt-0.5 text-center font-medium`}
@@ -129,58 +131,91 @@ const MaintenanceList = ({
     },
     {
       accessorKey: "name",
-      header: "Plan Name",
+      header: () => <div className="w-full px-4">Name</div>,
+      size: 180,
+      cell: ({ getValue }) => (
+        <div className="px-4">{getValue() as string}</div>
+      ),
     },
     {
       accessorKey: "companyName",
-      header: "Company/Authority",
+      header: () => <div className="w-full px-4">Authority</div>,
+      size: 180,
+      cell: ({ getValue }) => (
+        <div className="px-4">{getValue() as string}</div>
+      ),
     },
     {
       accessorKey: "maintenanceDate",
-      header: "Maintenance Date",
-      cell: ({ getValue }) =>
-        new Date(getValue() as string).toLocaleDateString(),
+      header: () => <div className="w-full px-4">Date</div>,
+      size: 150,
+      cell: ({ getValue }) => (
+        <div className="px-4">
+          {new Date(getValue() as string).toLocaleDateString("tr-TR", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+          })}
+        </div>
+      ),
     },
     {
       accessorKey: "servoPowerTime",
-      header: "Current Hours",
+      header: () => <div className="w-full px-4">Current Hours</div>,
+      size: 150,
       cell: ({ row }) => {
         const currentHours =
           servoPowerTimes[row.original.controllerId] ||
           parseInt(row.original.servoPowerTime);
-        return `${currentHours} hours`;
+        return <div className="px-4">{`${currentHours} hours`}</div>;
       },
     },
     {
       accessorKey: "nextMaintenanceTime",
-      header: "Next Maintenance At",
-      cell: ({ getValue }) => `${getValue()} hours`,
+      header: () => <div className="w-full px-4">Next Maintenance</div>,
+      size: 150,
+      cell: ({ getValue }) => (
+        <div className="px-4">{`${getValue()} hours`}</div>
+      ),
     },
-    {
-      accessorKey: "createdAt",
-      header: "Created Date",
-      cell: ({ getValue }) =>
-        getValue() ? new Date(getValue() as string).toLocaleDateString() : "-",
-    },
+    // {
+    //   accessorKey: "createdAt",
+    //   header: "Created Date",
+    //   size: 150,
+    //   cell: ({ getValue }) => (
+    //     <div className="flex items-center px-4">
+    //       {getValue()
+    //         ? new Date(getValue() as string).toLocaleDateString("tr-TR", {
+    //             year: "numeric",
+    //             month: "2-digit",
+    //             day: "2-digit",
+    //           })
+    //         : "-"}
+    //     </div>
+    //   ),
+    // },
     {
       id: "actions",
-      header: "Actions",
+      header: () => <div className="text-center w-full">Actions</div>,
+      size: 100,
       cell: ({ row }) => (
-        <Button
-          variant="ghost"
-          onClick={() => row.original.id && deleteItem(row.original.id)}
-          className="hover:bg-red-50"
-        >
-          <MdDelete className="text-red-500" />
-        </Button>
+        <div className="flex justify-center w-full">
+          <Button
+            variant="ghost"
+            onClick={() => row.original.id && deleteItem(row.original.id)}
+            className="hover:bg-red-50"
+          >
+            <MdDelete className="text-red-500" />
+          </Button>
+        </div>
       ),
     },
   ];
 
   return (
-    <div className="h-[calc(100vh-16rem)]">
-      <div className="flex justify-between items-center mb-4">
-        <div className="w-full px-6">
+    <Card>
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <div className="flex-1">
           <Timer callback={() => fetchUtilizationData(false)} />
         </div>
         <Button
@@ -189,17 +224,17 @@ const MaintenanceList = ({
         >
           + Add New Plan
         </Button>
-      </div>
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p>Error: {error.message}</p>
-      ) : (
-        <div className="h-[calc(100%-4rem)] overflow-auto">
+      </CardHeader>
+      <CardContent>
+        {isLoading ? (
+          <p className="p-4">Loading...</p>
+        ) : error ? (
+          <p className="p-4">Error: {error.message}</p>
+        ) : (
           <DataTable columns={columns} data={data} />
-        </div>
-      )}
-    </div>
+        )}
+      </CardContent>
+    </Card>
   );
 };
 
