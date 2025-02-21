@@ -144,7 +144,7 @@ const MaintenanceForm = ({
           name="servoPowerTime"
           render={({ field }) => (
             <FormItem>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
                 Servo Power Time (hours)
               </label>
               <FormControl>
@@ -152,10 +152,10 @@ const MaintenanceForm = ({
                   {...field}
                   type="number"
                   disabled
-                  className="bg-gray-100"
+                  className="bg-gray-100 dark:bg-gray-800 dark:text-gray-100 disabled:opacity-70"
                 />
               </FormControl>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-gray-500 dark:text-gray-400">
                 Current servo power time from utilization data
               </p>
               <FormMessage />
