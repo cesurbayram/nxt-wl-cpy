@@ -67,7 +67,7 @@ const MaintenanceForm = ({
 
   const calculateNextMaintenance = (servoPowerTime: string) => {
     const currentTime = parseInt(servoPowerTime) || 0;
-    return (currentTime + 12000).toString();
+    return (currentTime + 6000).toString();
   };
 
   const handleFormSubmit = async (data: MaintenancePlanFormValues) => {

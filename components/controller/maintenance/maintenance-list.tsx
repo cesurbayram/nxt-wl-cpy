@@ -32,7 +32,6 @@ const MaintenanceList = ({
         setIsLoading(true);
       }
 
-      // Düzeltilmiş kod
       const uniqueControllerIds = Array.from(
         new Set(data.map((plan) => plan.controllerId))
       );
@@ -70,8 +69,10 @@ const MaintenanceList = ({
   ) => {
     const currentHours =
       servoPowerTimes[controllerId] || parseInt(servoPowerTime);
-    const targetHours = parseInt(nextMaintenanceTime || "0") - 12000;
-    const remainingHours = 12000 - (currentHours - targetHours);
+
+    const nextMaintenance = parseInt(nextMaintenanceTime || "0");
+
+    const remainingHours = nextMaintenance - currentHours;
 
     if (!currentHours || !nextMaintenanceTime) {
       return {
@@ -89,9 +90,9 @@ const MaintenanceList = ({
       };
     } else if (remainingHours <= 2000) {
       return {
-        icon: <MdOutlineSettings className="text-orange-600 text-2xl" />,
+        icon: <MdOutlineSettings className="text-yellow-600 text-2xl" />,
         text: `${remainingHours}h left`,
-        color: "text-orange-600",
+        color: "text-yellow-600",
       };
     }
 
@@ -177,9 +178,9 @@ const MaintenanceList = ({
   ];
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <div className="w-full px-6 mb-2">
+    <div className="h-[calc(100vh-16rem)]">
+      <div className="flex justify-between items-center mb-4">
+        <div className="w-full px-6">
           <Timer callback={() => fetchUtilizationData(false)} />
         </div>
         <Button
@@ -194,7 +195,9 @@ const MaintenanceList = ({
       ) : error ? (
         <p>Error: {error.message}</p>
       ) : (
-        <DataTable columns={columns} data={data} />
+        <div className="h-[calc(100%-4rem)] overflow-auto">
+          <DataTable columns={columns} data={data} />
+        </div>
       )}
     </div>
   );
