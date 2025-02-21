@@ -6,7 +6,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "../../shared/data-table";
 import { Button } from "../../ui/button";
 import { MdDelete } from "react-icons/md";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 interface MaintenanceLogListProps {
   data: MaintenanceLog[];
@@ -23,60 +23,74 @@ const MaintenanceLogList = ({
 }: MaintenanceLogListProps) => {
   const columns: ColumnDef<MaintenanceLog>[] = [
     {
-      accessorKey: "maintenance_id", // maintenance_id olarak değiştirdik
-      header: "Plan Name",
+      accessorKey: "maintenance_id",
+      header: () => <div className="w-full px-4">Plan Name</div>,
+      size: 180,
       cell: ({ row }) => {
         const log = row.original;
-        // maintenance_id kullanarak plan'ı bul
         const plan = maintenancePlans.find((p) => p.id === log.maintenance_id);
-        return plan ? plan.name : "Unknown Plan";
+        return <div className="px-4">{plan ? plan.name : "Unknown Plan"}</div>;
       },
     },
     {
-      accessorKey: "maintenance_time", // maintenance_time olarak değiştirdik
-      header: "Maintenance Time",
+      accessorKey: "maintenance_time",
+      header: () => <div className="w-full px-4">Maintenance Time</div>,
+      size: 150,
       cell: ({ row }) => {
         const date = row.original.maintenance_time;
-        if (!date) return "-";
+        if (!date) return <div className="px-4">-</div>;
         try {
-          return new Date(date).toLocaleDateString("tr-TR", {
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-          });
+          return (
+            <div className="px-4">
+              {new Date(date).toLocaleDateString("tr-TR", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+              })}
+            </div>
+          );
         } catch {
-          return "Invalid Date";
+          return <div className="px-4">Invalid Date</div>;
         }
       },
     },
     {
       accessorKey: "technician",
-      header: "Technician",
+      header: () => <div className="w-full px-4">Technician</div>,
+      size: 150,
+      cell: ({ getValue }) => (
+        <div className="px-4">{getValue() as string}</div>
+      ),
     },
     {
       accessorKey: "description",
-      header: "Description",
-      cell: ({ row }) => row.original.description || "-",
+      header: () => <div className="w-full px-4">Description</div>,
+      size: 200,
+      cell: ({ row }) => (
+        <div className="px-4">{row.original.description || "-"}</div>
+      ),
     },
     {
       id: "actions",
-      header: "Actions",
+      header: () => <div className="text-center w-full">Actions</div>,
+      size: 100,
       cell: ({ row }) => (
-        <Button
-          variant="ghost"
-          onClick={() => row.original.id && deleteItem(row.original.id)}
-          className="hover:bg-red-50"
-        >
-          <MdDelete className="text-red-500" />
-        </Button>
+        <div className="flex justify-center w-full">
+          <Button
+            variant="ghost"
+            onClick={() => row.original.id && deleteItem(row.original.id)}
+            className="hover:bg-red-50"
+          >
+            <MdDelete className="text-red-500" />
+          </Button>
+        </div>
       ),
     },
   ];
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle>Maintenance Logs</CardTitle>
+      <CardHeader className="flex flex-row items-center justify-end space-y-0 pb-2">
         <Button
           onClick={onAddNew}
           className="rounded-xl bg-[#6950e8] text-white"
