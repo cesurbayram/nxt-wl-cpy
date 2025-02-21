@@ -62,7 +62,6 @@ const createMaintenancePlan = async (
   const utilizationData = await utilizationRes.json();
   const currentServoPowerTime = utilizationData[0]?.servo_power_time || 0;
 
-  // Plan oluştur
   const apiRes = await fetch(
     `/api/controller/${controllerId}/maintenance/plan`,
     {
@@ -70,7 +69,7 @@ const createMaintenancePlan = async (
       body: JSON.stringify({
         ...values,
         servoPowerTime: currentServoPowerTime,
-        nextMaintenanceTime: currentServoPowerTime + 12000,
+        nextMaintenanceTime: currentServoPowerTime + 6000,
         maintenanceDate: new Date().toISOString(),
       }),
       headers: {
@@ -118,7 +117,7 @@ const updateMaintenancePlan = async (
       body: JSON.stringify({
         ...values,
         servoPowerTime: currentServoPowerTime,
-        nextMaintenanceTime: currentServoPowerTime + 12000,
+        nextMaintenanceTime: currentServoPowerTime + 6000,
       }),
       headers: {
         "Content-Type": "application/json",

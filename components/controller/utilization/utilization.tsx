@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/select";
 import { getControllerById } from "@/utils/service/controller";
 import { getUtilizationData } from "@/utils/service/utilization";
+import Timer from "@/components/shared/timer";
 
 const tabItems = [
   {
@@ -56,44 +57,41 @@ const Utilization = ({ controllerId }: UtilizationProps) => {
   const [interval, setInterval] = useState("5min");
   const [viewType, setViewType] = useState("line");
 
-  // React Query yerine useState kullanımı
   const [controller, setController] = useState<any>(null);
   const [utilizationData, setUtilizationData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Controller verilerini getir
-  useEffect(() => {
-    const fetchController = async () => {
-      try {
-        const data = await getControllerById(controllerId);
-        setController(data);
-      } catch (error) {
-        console.error("Error fetching controller:", error);
-      }
-    };
+  const fetchController = async () => {
+    try {
+      const data = await getControllerById(controllerId);
+      setController(data);
+    } catch (error) {
+      console.error("Error fetching controller:", error);
+    }
+  };
 
+  const fetchUtilizationData = async (isInitialLoad: boolean = false) => {
+    if (isInitialLoad) {
+      setIsLoading(true);
+    }
+    try {
+      const data = await getUtilizationData(controllerId, timeRange, interval);
+      setUtilizationData(data);
+    } catch (error) {
+      console.error("Error fetching utilization data:", error);
+    } finally {
+      if (isInitialLoad) {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  useEffect(() => {
     fetchController();
   }, [controllerId]);
 
-  // Utilization verilerini getir
   useEffect(() => {
-    const fetchUtilizationData = async () => {
-      setIsLoading(true);
-      try {
-        const data = await getUtilizationData(
-          controllerId,
-          timeRange,
-          interval
-        );
-        setUtilizationData(data);
-      } catch (error) {
-        console.error("Error fetching utilization data:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchUtilizationData();
+    fetchUtilizationData(true);
   }, [controllerId, timeRange, interval]);
 
   if (isLoading) {
@@ -107,13 +105,18 @@ const Utilization = ({ controllerId }: UtilizationProps) => {
       orientation="vertical"
       onValueChange={(value) => setActiveTab(value)}
     >
-      <TabsList className="flex flex-col h-fit border-2 gap-1">
-        {tabItems.map((item) => (
-          <TabsTrigger key={item.value} value={item.value} className="w-full">
-            {item.label}
-          </TabsTrigger>
-        ))}
-      </TabsList>
+      <div className="flex flex-col gap-4">
+        <TabsList className="flex flex-col h-fit border-2 gap-1">
+          {tabItems.map((item) => (
+            <TabsTrigger key={item.value} value={item.value} className="w-full">
+              {item.label}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+        <div className="w-full px-6 mb-2">
+          <Timer callback={() => fetchUtilizationData(false)} />
+        </div>
+      </div>
 
       <TabsContent value="chart" className="col-span-4">
         <Card>
