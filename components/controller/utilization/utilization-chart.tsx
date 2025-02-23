@@ -23,12 +23,10 @@ interface UtilizationChartProps {
 }
 
 const UtilizationChart = ({ data, viewType }: UtilizationChartProps) => {
-  // Veriyi tarihe göre sırala (en eskiden en yeniye)
   const sortedData = [...data].sort(
     (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
   );
 
-  // Tablo için sütun tanımlamaları
   const tableColumns: ColumnDef<UtilizationData>[] = [
     {
       accessorKey: "timestamp",
@@ -53,7 +51,6 @@ const UtilizationChart = ({ data, viewType }: UtilizationChartProps) => {
     },
   ];
 
-  // Total görünümü için sütun tanımlamaları
   const totalColumns: ColumnDef<{ metric: string; value: number }>[] = [
     {
       accessorKey: "metric",
@@ -121,7 +118,7 @@ const UtilizationChart = ({ data, viewType }: UtilizationChartProps) => {
             type="monotone"
             dataKey="control_power_time"
             name="Control Power Time"
-            stroke="#7C3AED"
+            stroke="#16C47F"
             strokeWidth={2}
             dot={false}
           />
@@ -129,7 +126,7 @@ const UtilizationChart = ({ data, viewType }: UtilizationChartProps) => {
             type="monotone"
             dataKey="servo_power_time"
             name="Servo Power Time"
-            stroke="#06B6D4"
+            stroke="#074799"
             strokeWidth={2}
             dot={false}
           />
@@ -137,7 +134,7 @@ const UtilizationChart = ({ data, viewType }: UtilizationChartProps) => {
             type="monotone"
             dataKey="playback_time"
             name="Playback Time"
-            stroke="#2563EB"
+            stroke="#FF9D23"
             strokeWidth={2}
             dot={false}
           />
@@ -145,7 +142,7 @@ const UtilizationChart = ({ data, viewType }: UtilizationChartProps) => {
             type="monotone"
             dataKey="moving_time"
             name="Moving Time"
-            stroke="#10B981"
+            stroke="#e61502"
             strokeWidth={2}
             dot={false}
           />
@@ -172,15 +169,15 @@ const UtilizationChart = ({ data, viewType }: UtilizationChartProps) => {
           <Bar
             dataKey="control_power_time"
             name="Control Power Time"
-            fill="#7C3AED"
+            fill="#16C47F"
           />
           <Bar
             dataKey="servo_power_time"
             name="Servo Power Time"
-            fill="#06B6D4"
+            fill="#074799"
           />
-          <Bar dataKey="playback_time" name="Playback Time" fill="#2563EB" />
-          <Bar dataKey="moving_time" name="Moving Time" fill="#10B981" />
+          <Bar dataKey="playback_time" name="Playback Time" fill="#FF9D23" />
+          <Bar dataKey="moving_time" name="Moving Time" fill="#e61502" />
         </BarChart>
       </ResponsiveContainer>
     </div>
@@ -189,7 +186,6 @@ const UtilizationChart = ({ data, viewType }: UtilizationChartProps) => {
   const renderTable = () => <DataTable columns={tableColumns} data={data} />;
 
   const renderTotal = () => {
-    // En son veriyi al (en yeni tarihli veri)
     const latestData = [...data].sort(
       (a, b) =>
         new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()

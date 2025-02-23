@@ -3,7 +3,7 @@ import { BsDoorOpen } from "react-icons/bs";
 import { MdErrorOutline } from "react-icons/md";
 import { MdOutlinePlayCircle } from "react-icons/md";
 import { GiRobotLeg } from "react-icons/gi";
-import { MdOutlineSignalCellularAlt } from "react-icons/md";
+//import { MdOutlineSignalCellularAlt } from "react-icons/md";
 import { PiLightning } from "react-icons/pi";
 import { IoWarningOutline } from "react-icons/io5";
 import { FaRegHandLizard } from "react-icons/fa6";
@@ -14,6 +14,8 @@ import { DiSublime } from "react-icons/di";
 import { BsTropicalStorm } from "react-icons/bs";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { DiBootstrap } from "react-icons/di";
+import { BsSignStopFill } from "react-icons/bs";
+import { GrConnect } from "react-icons/gr";
 
 interface ControllerStatusBarProps {
   controllerStatus: ControllerStatus;
@@ -50,6 +52,13 @@ const ControllerStatusBar = ({
 
   return (
     <div className="flex gap-6 items-center px-5 -mt-1">
+      <div className="flex flex-col items-center">
+        <GrConnect
+          color={controllerStatus?.connection ? "green" : "red"}
+          size={26}
+        />
+        <p className="text-xs">Connection</p>
+      </div>
       {getTeachIcon() && (
         <div className="flex flex-col items-center">
           {getTeachIcon()}
@@ -98,8 +107,8 @@ const ControllerStatusBar = ({
         <p className="text-xs">Error</p>
       </div>
       <div className="flex flex-col items-center">
-        <IoWarningOutline
-          color={controllerStatus?.stop ? "green" : "gray"}
+        <BsSignStopFill
+          color={controllerStatus?.stop ? "red" : "lightgray"}
           size={26}
         />
         <p className="text-xs">Stop</p>
