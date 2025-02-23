@@ -11,4 +11,5 @@ export interface ControllerStatus {
   safeSpeed: boolean;
   maintenance: number;
   cBackup: boolean;
+  connection: boolean;
 }

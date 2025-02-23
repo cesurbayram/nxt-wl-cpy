@@ -19,6 +19,8 @@ import { DiSublime } from "react-icons/di";
 import { BsTropicalStorm } from "react-icons/bs";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { DiBootstrap } from "react-icons/di";
+import { BsSignStopFill } from "react-icons/bs";
+import { GrConnect } from "react-icons/gr";
 import Link from "next/link";
 
 interface ControllerListProps {
@@ -38,6 +40,13 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
       cell: ({ row }) => {
         return (
           <div className="flex gap-1 items-center">
+            <GrConnect
+              title="connection"
+              color={
+                row.original.controllerStatus?.connection ? "green" : "red"
+              }
+              size={30}
+            />
             {row.original.controllerStatus?.teach === "TEACH" && (
               <FaRegHandLizard title="teach" color="green" size={30} />
             )}
@@ -83,9 +92,9 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
               color={row.original.controllerStatus?.error ? "red" : "gray"}
               size={30}
             />
-            <IoWarningOutline
+            <BsSignStopFill
               title="stop"
-              color={row.original.controllerStatus?.stop ? "green" : "gray"}
+              color={row.original.controllerStatus?.stop ? "red" : "lightgray"}
               size={30}
             />
             <BsDoorOpen
