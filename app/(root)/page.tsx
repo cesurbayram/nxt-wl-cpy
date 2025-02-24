@@ -6,9 +6,11 @@ import { getUserAfterAuth } from "@/utils/service/auth";
 import { getController } from "@/utils/service/controller";
 import { useEffect, useState } from "react";
 import { Controller } from "@/types/controller.types";
+import { UtilizationData } from "@/types/utilization.types";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+import { getUtilizationData } from "@/utils/service/utilization";
 
-// Controller tiplerine göre resim mapping'i
 const controllerImages: { [key: string]: string } = {
   yrc1000: "/yrc1000.png",
   yrc1000micro: "/yrc1000m.png",
@@ -17,11 +19,19 @@ const controllerImages: { [key: string]: string } = {
   fs100: "/fs100.jpg",
 };
 
+// Dinamik import ile UtilizationChart'ı client-side'da yükle
+const UtilizationChart = dynamic(
+  () => import("@/components/controller/utilization/utilization-chart"),
+  { ssr: false }
+);
+
 export default function Page() {
   const [loading, setLoading] = useState<boolean>(false);
   const [controllers, setControllers] = useState<Controller[]>([]);
   const [selectedController, setSelectedController] =
     useState<Controller | null>(null);
+  const [utilizationData, setUtilizationData] = useState<UtilizationData[]>([]);
+  const [utilizationLoading, setUtilizationLoading] = useState<boolean>(false);
 
   const getUserInfAfterAuth = async () => {
     try {
@@ -44,6 +54,41 @@ export default function Page() {
       console.error("Error fetching controllers:", error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchUtilizationData = async (controllerId: string) => {
+    try {
+      setUtilizationLoading(true);
+      setUtilizationData([]); // Önceki verileri temizle
+      const data = await getUtilizationData(controllerId, "7d", "1h");
+
+      if (data && Array.isArray(data) && data.length > 0) {
+        const formattedData = data.map((item: any, index: number) => ({
+          id: index.toString(),
+          controller_id: controllerId,
+          control_power_time: item.control_power_time || 0,
+          servo_power_time: item.servo_power_time || 0,
+          playback_time: item.playback_time || 0,
+          moving_time: item.moving_time || 0,
+          operating_time: item.operating_time || 0,
+          timestamp: item.timestamp || new Date().toISOString(),
+          created_at: new Date().toISOString(),
+        }));
+        setUtilizationData(formattedData);
+      }
+    } catch (error) {
+      console.error("Error fetching utilization data:", error);
+      setUtilizationData([]);
+    } finally {
+      setUtilizationLoading(false);
+    }
+  };
+
+  const handleControllerSelect = async (controller: Controller) => {
+    setSelectedController(controller);
+    if (controller.id) {
+      await fetchUtilizationData(controller.id);
     }
   };
 
@@ -77,7 +122,7 @@ export default function Page() {
 
       {/* Controller Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Controller List */}
+        {/* Controller List - Sol Panel */}
         <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
           <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
             Controllers
@@ -86,7 +131,7 @@ export default function Page() {
             {controllers.map((controller) => (
               <div
                 key={controller.id}
-                onClick={() => setSelectedController(controller)}
+                onClick={() => handleControllerSelect(controller)}
                 className={`flex items-center p-4 rounded-lg cursor-pointer transition-all
                   ${
                     selectedController?.id === controller.id
@@ -139,6 +184,105 @@ export default function Page() {
             ))}
           </div>
         </div>
+
+        {/* Controller Details - Sağ Panel */}
+        {selectedController ? (
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                Controller Details
+              </h2>
+              <div className="flex items-center">
+                <p className="text-sm text-gray-500 dark:text-gray-400 w-1/2">
+                  {selectedController.name}
+                </p>
+                <div className="flex items-center">
+                  <span className="text-sm text-gray-500 dark:text-gray-400 mr-2">
+                    Status:
+                  </span>
+                  <div className="flex items-center">
+                    <span
+                      className={`w-2 h-2 rounded-full mr-2 ${
+                        selectedController.controllerStatus?.connection
+                          ? "bg-green-500"
+                          : "bg-red-500"
+                      }`}
+                    />
+                    <span
+                      className={`text-sm font-medium ${
+                        selectedController.controllerStatus?.connection
+                          ? "text-green-500"
+                          : "text-red-500"
+                      }`}
+                    >
+                      {selectedController.controllerStatus?.connection
+                        ? "Connected"
+                        : "Disconnected"}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Temel Bilgiler */}
+            <div className="grid grid-cols-2 gap-y-6 gap-x-12 mb-8">
+              <div>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
+                  Model
+                </p>
+                <p className="text-gray-900 dark:text-white">
+                  {selectedController.model?.toUpperCase()}
+                </p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
+                  Application
+                </p>
+                <p className="text-gray-900 dark:text-white">
+                  {selectedController.application?.toLowerCase()}
+                </p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
+                  Serial Number
+                </p>
+                <p className="text-gray-900 dark:text-white">
+                  {selectedController.serialNumber || "-"}
+                </p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
+                  Location
+                </p>
+                <p className="text-gray-900 dark:text-white">
+                  {selectedController.location || "-"}
+                </p>
+              </div>
+            </div>
+
+            {/* Utilization Chart */}
+            <div className="mt-6">
+              <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
+                Utilization Data
+              </h3>
+              {utilizationLoading ? (
+                <div className="flex items-center justify-center p-8">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#6950e8]"></div>
+                </div>
+              ) : utilizationData.length > 0 ? (
+                <UtilizationChart data={utilizationData} viewType="bar" />
+              ) : (
+                <div className="text-center p-4 text-gray-500">
+                  No utilization data available
+                </div>
+              )}
+            </div>
+          </div>
+        ) : (
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm flex items-center justify-center text-gray-500 dark:text-gray-400">
+            Select a controller from the left panel
+          </div>
+        )}
       </div>
     </main>
   );
