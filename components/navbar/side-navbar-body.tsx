@@ -7,8 +7,15 @@ import { FaLocationDot } from "react-icons/fa6";
 import { MdFactory } from "react-icons/md";
 import { FaLinesLeaning } from "react-icons/fa6";
 import { FaTableCellsLarge } from "react-icons/fa6";
+import { IoMdHome } from "react-icons/io";
 
 const sideMenuItems = [
+  {
+    title: "Home",
+    icon: <IoMdHome size={15} />,
+    link: "/",
+    childPages: [],
+  },
   {
     title: "Users",
     icon: <FaUser size={15} />,
@@ -23,17 +30,17 @@ const sideMenuItems = [
       {
         title: "Factory",
         link: "/factory",
-        icon: <MdFactory size={15} />
+        icon: <MdFactory size={15} />,
       },
       {
         title: "Line",
         link: "/line",
-        icon: <FaLinesLeaning size={15} />
+        icon: <FaLinesLeaning size={15} />,
       },
       {
         title: "Cell",
         link: "/cell",
-        icon: <FaTableCellsLarge size={15} />
+        icon: <FaTableCellsLarge size={15} />,
       },
     ],
   },
@@ -43,7 +50,6 @@ const sideMenuItems = [
     link: "/controller",
     childPages: [],
   },
-  
 ];
 
 const SideNavbarBody = () => {
@@ -60,7 +66,7 @@ const SideNavbarBody = () => {
               parentTitle={item.title}
               childPages={item.childPages}
             />
-          )
+          );
         } else {
           return (
             <Button
