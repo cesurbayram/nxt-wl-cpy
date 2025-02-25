@@ -1,10 +1,10 @@
 export interface InputOutput {
-  signalBitNumber: string; // Byte numarası
-  name: string; // Byte açıklaması
+  signalBitNumber: string;
+  displayByte?: string;
+  name: string;
   bits: {
-    // Bit bilgileri
-    bitNumber: number; // Bit numarası
-    name: string; // Bit adı
-    isActive: boolean; // Bit durumu
+    bitNumber: number;
+    name: string;
+    isActive: boolean;
   }[];
 }

@@ -97,7 +97,7 @@ export default function PlansList({ controllerId }: PlansListProps) {
     },
     {
       accessorKey: "created_at",
-      header: "Date",
+      header: "Created Date",
       cell: ({ row }) => {
         return new Date(row.original.created_at).toLocaleDateString();
       },
