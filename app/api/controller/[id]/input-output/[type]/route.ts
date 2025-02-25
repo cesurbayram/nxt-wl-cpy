@@ -67,11 +67,15 @@ export async function GET(
       `,
       queryParams
     );
+
     const signals = signalRes.rows.reduce((acc: any[], row) => {
+      const byteNumber = row.signalBitNumber?.toString() || "";
+
       let signal = acc.find((s) => s.signalBitNumber === row.signalBitNumber);
       if (!signal) {
         signal = {
           signalBitNumber: row.signalBitNumber,
+          displayByte: `${byteNumber}X`,
           name: row.name,
           bits: [],
         };
@@ -93,7 +97,10 @@ export async function GET(
   } catch (error) {
     console.error("DB Error:", error);
     return NextResponse.json(
-      { message: "Internal Server Error" },
+      {
+        message: "Internal Server Error",
+        details: error instanceof Error ? error.message : "Unknown error",
+      },
       { status: 500 }
     );
   }
