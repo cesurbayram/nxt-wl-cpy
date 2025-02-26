@@ -70,7 +70,7 @@ export default function PlansList({ controllerId }: PlansListProps) {
     updatePlan({ planId, updates: editForm });
   };
 
-  const fileTypes = [".jbi", ".dat", ".cnd", ".prm", ".sys", ".lst"];
+  const fileTypes = ["CMOS", ".jbi", ".dat", ".cnd", ".prm", ".sys", ".lst"];
 
   const columns: ColumnDef<BackupPlan>[] = [
     {
@@ -124,8 +124,26 @@ export default function PlansList({ controllerId }: PlansListProps) {
         const plan = row.original;
         return editingPlan === plan.id ? (
           <div className="flex flex-wrap gap-2">
+            {/* All seçeneği */}
+            <div className="flex items-center space-x-1 px-2 py-1 bg-[#6950e8] bg-opacity-10 rounded cursor-pointer">
+              <Checkbox
+                checked={editForm.file_types?.length === fileTypes.length}
+                onCheckedChange={(checked) => {
+                  setEditForm((prev) => ({
+                    ...prev,
+                    file_types: checked ? [...fileTypes] : [],
+                  }));
+                }}
+              />
+              <span className="text-sm">All</span>
+            </div>
+
+            {/* Dosya tipleri */}
             {fileTypes.map((type) => (
-              <label key={type} className="flex items-center space-x-2">
+              <div
+                key={type}
+                className="flex items-center space-x-1 px-2 py-1 bg-[#6950e8] bg-opacity-10 rounded cursor-pointer"
+              >
                 <Checkbox
                   checked={(editForm.file_types || []).includes(type)}
                   onCheckedChange={(checked) => {
@@ -139,7 +157,7 @@ export default function PlansList({ controllerId }: PlansListProps) {
                   }}
                 />
                 <span className="text-sm">{type}</span>
-              </label>
+              </div>
             ))}
           </div>
         ) : (

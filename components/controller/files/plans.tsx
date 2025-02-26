@@ -78,7 +78,16 @@ export default function Plans({
     },
   ]);
 
-  const fileTypes = [".jbi", ".dat", ".cnd", ".prm", ".sys", ".lst", ".log"];
+  const fileTypes = [
+    "CMOS",
+    ".jbi",
+    ".dat",
+    ".cnd",
+    ".prm",
+    ".sys",
+    ".lst",
+    ".log",
+  ];
   const [isSaving, setIsSaving] = useState(false);
 
   const handleDayToggle = (dayId: number) => {
@@ -191,20 +200,55 @@ export default function Plans({
                   />
                 </td>
                 <td className="p-2 pl-8">
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-1">
+                    {/* All seçeneği */}
+                    <div className="flex items-center space-x-1 px-2 py-1 bg-[#6950e8] bg-opacity-10 rounded cursor-pointer">
+                      <Checkbox
+                        checked={day.selectedFiles.length === fileTypes.length}
+                        onCheckedChange={() => {
+                          const shouldSelectAll =
+                            day.selectedFiles.length !== fileTypes.length;
+                          setDayPlans((prev) =>
+                            prev.map((d) =>
+                              d.id === day.id
+                                ? {
+                                    ...d,
+                                    selectedFiles: shouldSelectAll
+                                      ? [...fileTypes]
+                                      : [],
+                                  }
+                                : d
+                            )
+                          );
+                        }}
+                      />
+                      <span className="text-xs">All</span>
+                    </div>
                     {fileTypes.map((type) => (
                       <div
                         key={type}
                         className="flex items-center space-x-1 px-2 py-1 bg-[#6950e8] bg-opacity-10 rounded cursor-pointer"
-                        onClick={() => handleFileTypeToggle(day.id, type)}
                       >
                         <Checkbox
                           checked={day.selectedFiles.includes(type)}
-                          onCheckedChange={() =>
-                            handleFileTypeToggle(day.id, type)
-                          }
+                          onCheckedChange={(checked) => {
+                            setDayPlans((prev) =>
+                              prev.map((d) =>
+                                d.id === day.id
+                                  ? {
+                                      ...d,
+                                      selectedFiles: checked
+                                        ? [...d.selectedFiles, type]
+                                        : d.selectedFiles.filter(
+                                            (t) => t !== type
+                                          ),
+                                    }
+                                  : d
+                              )
+                            );
+                          }}
                         />
-                        <span className="text-sm">{type}</span>
+                        <span className="text-xs">{type}</span>
                       </div>
                     ))}
                   </div>
