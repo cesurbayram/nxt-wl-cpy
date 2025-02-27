@@ -139,7 +139,7 @@ const Page = ({ params }: { params: { id: string } }) => {
             <ControllerStatusBar
               controllerStatus={controller.controllerStatus}
             />
-            <div className="w-1/3 px-6">
+            <div className="w-1/4 flex justify-end px-6">
               <Timer callback={handleStatusRefresh} />
             </div>
           </div>

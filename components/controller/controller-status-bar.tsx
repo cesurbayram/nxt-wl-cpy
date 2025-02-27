@@ -18,6 +18,7 @@ import { BsSignStopFill } from "react-icons/bs";
 import { GrConnect } from "react-icons/gr";
 import { BiError } from "react-icons/bi";
 import { GiRobotGrab } from "react-icons/gi";
+import { FaRegStopCircle } from "react-icons/fa";
 
 interface ControllerStatusBarProps {
   controllerStatus: ControllerStatus;
@@ -88,7 +89,7 @@ const ControllerStatusBar = ({
         </div>
       )}
       <div className="flex flex-col items-center">
-        <MdOutlinePlayCircle
+        <FaRegStopCircle
           color={controllerStatus?.hold ? "#F1C40F" : "gray"}
           size={26}
         />
@@ -114,7 +115,7 @@ const ControllerStatusBar = ({
       </div>
       <div className="flex flex-col items-center">
         <BsDoorOpen
-          color={controllerStatus?.doorOpen ? "green" : "gray"}
+          color={controllerStatus?.doorOpen ? "red" : "gray"}
           size={26}
         />
         <p className="text-xs">Door Opened</p>
