@@ -13,11 +13,10 @@ interface FilesProps {
 }
 
 export function Files({ controllerId }: FilesProps) {
-  // Plans için gerekli veriyi çekelim
   const { data: plans, isLoading } = useQuery({
     queryKey: ["backup-plans", controllerId],
     queryFn: () => getBackupPlans(controllerId),
-    staleTime: 1000 * 60, // 1 dakika
+    staleTime: 1000 * 60,
   });
 
   return (
@@ -56,16 +55,7 @@ export function Files({ controllerId }: FilesProps) {
           </TabsContent>
 
           <TabsContent value="list">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-sm font-medium">
-                  Backup Plans
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <PlansList controllerId={controllerId} />
-              </CardContent>
-            </Card>
+            <PlansList controllerId={controllerId} />
           </TabsContent>
         </div>
       </Tabs>

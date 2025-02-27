@@ -32,7 +32,7 @@ export default function RootLayout({
               <div className="w-64 pr-4 pl-7 border-r-2 h-screen">
                 <SideNavbar />
               </div>
-              <div className="flex-grow px-6 bg-[#fdfdff] flex flex-col items-center h-screen !overflow-y-hidden">
+              <div className="flex-grow px-6 bg-background flex flex-col items-center h-screen ">
                 <div className="max-w-6xl w-full">
                   <TopNavbar />
                   <main className="mt-4 mb-8">{children}</main>

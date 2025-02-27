@@ -1,6 +1,6 @@
 import { RiAlarmWarningLine } from "react-icons/ri";
 import { BsDoorOpen } from "react-icons/bs";
-import { MdErrorOutline } from "react-icons/md";
+//import { MdErrorOutline } from "react-icons/md";
 import { MdOutlinePlayCircle } from "react-icons/md";
 import { GiRobotLeg } from "react-icons/gi";
 //import { MdOutlineSignalCellularAlt } from "react-icons/md";
@@ -16,6 +16,8 @@ import { FaExternalLinkAlt } from "react-icons/fa";
 import { DiBootstrap } from "react-icons/di";
 import { BsSignStopFill } from "react-icons/bs";
 import { GrConnect } from "react-icons/gr";
+import { BiError } from "react-icons/bi";
+import { GiRobotGrab } from "react-icons/gi";
 
 interface ControllerStatusBarProps {
   controllerStatus: ControllerStatus;
@@ -73,7 +75,7 @@ const ControllerStatusBar = ({
         <p className="text-xs">Servo</p>
       </div>
       <div className="flex flex-col items-center">
-        <GiRobotLeg
+        <GiRobotGrab
           color={controllerStatus?.operating ? "green" : "gray"}
           size={26}
         />
@@ -100,10 +102,7 @@ const ControllerStatusBar = ({
         <p className="text-xs">Alarm</p>
       </div>
       <div className="flex flex-col items-center">
-        <MdErrorOutline
-          color={controllerStatus?.error ? "red" : "gray"}
-          size={26}
-        />
+        <BiError color={controllerStatus?.error ? "red" : "gray"} size={26} />
         <p className="text-xs">Error</p>
       </div>
       <div className="flex flex-col items-center">

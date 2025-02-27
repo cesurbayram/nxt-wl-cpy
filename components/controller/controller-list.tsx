@@ -22,6 +22,8 @@ import { DiBootstrap } from "react-icons/di";
 import { BsSignStopFill } from "react-icons/bs";
 import { GrConnect } from "react-icons/gr";
 import Link from "next/link";
+import { BiError } from "react-icons/bi";
+import { GiRobotGrab } from "react-icons/gi";
 
 interface ControllerListProps {
   controller: Controller[];
@@ -61,7 +63,7 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
               color={row.original.controllerStatus?.servo ? "green" : "gray"}
               size={30}
             />
-            <GiRobotLeg
+            <GiRobotGrab
               title="operating"
               color={
                 row.original.controllerStatus?.operating ? "green" : "gray"
@@ -87,7 +89,7 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
               color={row.original.controllerStatus?.alarm ? "red" : "gray"}
               size={35}
             />
-            <MdErrorOutline
+            <BiError
               title="error"
               color={row.original.controllerStatus?.error ? "red" : "gray"}
               size={30}
@@ -99,7 +101,7 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
             />
             <BsDoorOpen
               title="door open"
-              color={row.original.controllerStatus?.doorOpen ? "green" : "gray"}
+              color={row.original.controllerStatus?.doorOpen ? "red" : "gray"}
               size={30}
             />
             {/* <MdOutlineSignalCellularAlt

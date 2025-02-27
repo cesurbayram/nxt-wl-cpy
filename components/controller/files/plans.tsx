@@ -168,9 +168,13 @@ export default function Plans({
         <table className="w-full">
           <thead>
             <tr className="border-b">
-              <th className="p-2 text-left text-sm font-medium">Day</th>
-              <th className="p-2 text-left text-sm font-medium">Time</th>
-              <th className="p-2 text-left text-sm font-medium pl-8">
+              <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                Day
+              </th>
+              <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                Time
+              </th>
+              <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0 pl-8">
                 File Types
               </th>
             </tr>
