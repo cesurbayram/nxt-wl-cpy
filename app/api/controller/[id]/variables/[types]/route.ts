@@ -7,8 +7,8 @@ const tableMap: { [key: string]: string } = {
   double: "d_read",
   real: "r_read",
   string: "s_read",
-//   position: "p_read", // Position türü için tablo adı
-//   vardat: "v_read",   // Var.dat türü için tablo adı
+  //   position: "p_read", // Position türü için tablo adı
+  //   vardat: "v_read",   // Var.dat türü için tablo adı
 };
 
 export async function GET(
@@ -29,7 +29,7 @@ export async function GET(
       `
       SELECT no, name, value
       FROM ${tableName}
-      WHERE controller_id = $1 ORDER BY CAST(no AS INTEGER) ASC
+      WHERE controller_id = $1 ORDER BY no ASC
       `,
       [params.id]
     );
