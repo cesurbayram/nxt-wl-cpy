@@ -116,11 +116,23 @@ export async function POST(request: NextRequest) {
     );
 
     const tables = ["b_read", "d_read", "s_read", "i_read", "r_read"];
+
+    const prefixes: { [key: string]: string } = {
+      b_read: "B",
+      i_read: "I",
+      d_read: "D",
+      r_read: "R",
+      s_read: "S",
+    };
+
     for (const table of tables) {
       for (let i = 0; i < 100; i++) {
+        const formattedNo = `${prefixes[table]}${i
+          .toString()
+          .padStart(3, "0")}`;
         await client.query(
           `INSERT INTO ${table} (id, ip_address, no, name, value, controller_id) VALUES ($1, $2, $3, $4, $5, $6)`,
-          [uuidv4(), ipAddress, i, null, "0", newRobotId]
+          [uuidv4(), ipAddress, formattedNo, null, "0", newRobotId]
         );
       }
     }

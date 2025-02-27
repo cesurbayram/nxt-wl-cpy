@@ -18,6 +18,10 @@ const getAlarmsByControllerId = async (
     },
   });
 
+  if (apiRes.status === 404) {
+    return [];
+  }
+
   if (!apiRes.ok) {
     throw new Error(`Failed to fetch alarms for controllerId: ${alarmType}`);
   }
