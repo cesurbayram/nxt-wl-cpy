@@ -215,7 +215,7 @@ export default function PlansList({ controllerId }: PlansListProps) {
   if (isLoading) return <LoadingUi isLoading={isLoading} />;
 
   return (
-    <div className="space-y-4">
+    <div>
       <DataTable columns={columns} data={plans || []} />
     </div>
   );
