@@ -24,6 +24,7 @@ import { GrConnect } from "react-icons/gr";
 import Link from "next/link";
 import { BiError } from "react-icons/bi";
 import { GiRobotGrab } from "react-icons/gi";
+import { FaRegStopCircle } from "react-icons/fa";
 
 interface ControllerListProps {
   controller: Controller[];
@@ -79,7 +80,7 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
             {row.original.controllerStatus?.cycle === "AUTO" && (
               <MdOutlineHdrAuto title="auto" color="green" size={30} />
             )}
-            <MdOutlinePlayCircle
+            <FaRegStopCircle
               title="hold"
               color={row.original.controllerStatus?.hold ? "#F1C40F" : "gray"}
               size={30}
