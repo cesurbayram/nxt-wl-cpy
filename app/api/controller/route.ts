@@ -29,6 +29,7 @@ export async function GET(request: NextRequest) {
     c.name,
     c.model,
     c.application,
+    c.location,
     c.status,
     json_build_object(
         'alarm', ct.alarm,

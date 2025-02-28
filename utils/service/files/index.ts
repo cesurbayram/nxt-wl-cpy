@@ -2,7 +2,7 @@ import { BackupPlan } from "@/types/files.types";
 
 const getBackupPlans = async (controllerId: string): Promise<BackupPlan[]> => {
   const res = await fetch(`/api/controller/${controllerId}/files/backup/plans`);
-  if (!res.ok) throw new Error("Backup planları alınamadı");
+  if (!res.ok) throw new Error("Backup plan dont get");
   return res.json();
 };
 
@@ -23,7 +23,7 @@ const createBackupPlan = async (
       body: JSON.stringify(plan),
     }
   );
-  if (!res.ok) throw new Error("Backup planı oluşturulamadı");
+  if (!res.ok) throw new Error("Backup plan dont post");
   return res.json();
 };
 
@@ -46,7 +46,7 @@ const updateBackupPlan = async (
       body: JSON.stringify(plan),
     }
   );
-  if (!res.ok) throw new Error("Backup planı güncellenemedi");
+  if (!res.ok) throw new Error("Backup plan dont edit");
   return res.json();
 };
 
@@ -60,7 +60,7 @@ const deleteBackupPlan = async (
       method: "DELETE",
     }
   );
-  if (!res.ok) throw new Error("Backup planı silinemedi");
+  if (!res.ok) throw new Error("Backup plan dont edit");
 };
 
 export { getBackupPlans, createBackupPlan, updateBackupPlan, deleteBackupPlan };

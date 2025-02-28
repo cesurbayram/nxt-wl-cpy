@@ -28,14 +28,18 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <ReactQueryProvider>
-            <div className="flex">
-              <div className="w-64 pr-4 pl-7 border-r-2 h-screen">
+            <div className="flex h-screen overflow-hidden">
+              <div className="w-64 pr-4 pl-7 border-r-2 overflow-y-auto fixed h-full">
                 <SideNavbar />
               </div>
-              <div className="flex-grow px-6 bg-background flex flex-col items-center h-screen ">
-                <div className="max-w-6xl w-full">
-                  <TopNavbar />
-                  <main className="mt-4 mb-8">{children}</main>
+              <div className="flex-1 ml-64">
+                <div className="h-screen overflow-y-auto">
+                  <div className="px-6 bg-background">
+                    <div className="max-w-7xl w-full mx-auto">
+                      <TopNavbar />
+                      <main className="mt-4 mb-8">{children}</main>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

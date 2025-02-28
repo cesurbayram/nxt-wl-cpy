@@ -54,7 +54,7 @@ const InputOutputList = ({ inputOutput }: InputOutputListProps) => {
           <div className="border rounded">
             <input
               type="text"
-              className="w-full p-2 border-b focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-full p-2 border-b focus:outline-none focus:ring-1 focus:ring-blue-500 dark:bg-[#0A0F1C] dark:text-white dark:placeholder-gray-400"
               placeholder="Search byte number..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -62,7 +62,7 @@ const InputOutputList = ({ inputOutput }: InputOutputListProps) => {
             <div
               className="overflow-y-auto"
               style={{
-                height: "450px", // Scroll alanı yüksekliği artırıldı
+                height: "450px",
                 scrollbarWidth: "thin",
                 scrollbarColor: "#CBD5E0 #EDF2F7",
               }}
@@ -70,8 +70,10 @@ const InputOutputList = ({ inputOutput }: InputOutputListProps) => {
               {filteredBytes.map((byte) => (
                 <div
                   key={byte.value}
-                  className={`p-2 cursor-pointer hover:bg-gray-100 ${
-                    selectedByte === byte.value ? "bg-blue-50" : ""
+                  className={`p-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-[#1E2433] ${
+                    selectedByte === byte.value
+                      ? "bg-blue-50 dark:bg-[#2C3444] dark:text-white"
+                      : "dark:text-white"
                   }`}
                   onClick={() => setSelectedByte(byte.value)}
                 >
@@ -93,14 +95,16 @@ const InputOutputList = ({ inputOutput }: InputOutputListProps) => {
           <div className="text-sm font-medium">
             Bits for {selectedByte && `${selectedByte}X`}
           </div>
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-1">
-              <span className="inline-block w-4 h-4 bg-green-500 rounded-full"></span>
-              <span>Active</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <span className="inline-block w-4 h-4 bg-gray-300 rounded-full"></span>
-              <span>Inactive</span>
+          <div className="flex items-center mb-2">
+            <div className="flex items-center gap-4 ml-auto mr-8">
+              <div className="flex items-center gap-1">
+                <span className="inline-block w-4 h-4 bg-green-500 rounded-full"></span>
+                <span>Active</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <span className="inline-block w-4 h-4 bg-gray-300 rounded-full"></span>
+                <span>Inactive</span>
+              </div>
             </div>
           </div>
         </div>

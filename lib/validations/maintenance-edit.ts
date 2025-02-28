@@ -23,11 +23,11 @@ export const MaintenanceLogValidation = z.object({
   id: z.string().optional(),
   maintenance_id: z
     .string()
-    .min(1, { message: "Maintenance plan is required!" }), // maintenanceId yerine maintenance_id
+    .min(1, { message: "Maintenance plan is required!" }),
   maintenance_time: z
     .string()
-    .min(1, { message: "Maintenance time is required!" }), // maintenanceTime yerine maintenance_time
+    .min(1, { message: "Maintenance time is required!" }),
   technician: z.string().min(1, { message: "Technician name is required!" }),
   description: z.string().optional(),
-  created_at: z.string().optional(), // createdAt yerine created_at
+  created_at: z.string().optional(),
 });
