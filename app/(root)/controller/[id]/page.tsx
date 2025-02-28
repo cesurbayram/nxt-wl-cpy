@@ -170,7 +170,10 @@ const Page = ({ params }: { params: { id: string } }) => {
           {params.id != "0" && (
             <>
               <TabsContent value="alarm">
-                <Alarm controllerId={params.id} />
+                <Alarm
+                  controllerId={params.id}
+                  ipAddress={controller?.ipAddress || ""}
+                />
               </TabsContent>
               <TabsContent value="inputOutput">
                 <InputOutput controllerId={params.id} />

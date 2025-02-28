@@ -16,6 +16,7 @@ import { getBackupPlans } from "@/utils/service/files";
 import { getJobsByControllerId } from "@/utils/service/job";
 import { getAlarmsByControllerId } from "@/utils/service/alarm";
 import Timer from "@/components/shared/timer";
+import { FaSwatchbook } from "react-icons/fa";
 
 const Page = ({ params }: { params: { id: string } }) => {
   const [selectedControllerId, setSelectedControllerId] = useState<
@@ -167,7 +168,7 @@ const Page = ({ params }: { params: { id: string } }) => {
     <PageWrapper
       shownHeaderButton={false}
       pageTitle="WatchLog"
-      icon={<LiaEditSolid size={24} color="#6950e8" />}
+      icon={<FaSwatchbook size={24} color="#6950e8" />}
     >
       <Card className="mb-6">
         <CardHeader>
@@ -187,13 +188,20 @@ const Page = ({ params }: { params: { id: string } }) => {
               >
                 <div className="flex items-center justify-between mb-2">
                   <div className="font-medium">{ctrl.name}</div>
-                  <div
-                    className={`h-2 w-2 rounded-full ${
-                      ctrl.controllerStatus?.connection
-                        ? "bg-green-500"
-                        : "bg-red-500"
-                    }`}
-                  />
+                  <div className="flex flex-col items-end gap-2">
+                    <div
+                      className={`h-2 w-2 rounded-full ${
+                        ctrl.controllerStatus?.connection
+                          ? "bg-green-500"
+                          : "bg-red-500"
+                      }`}
+                    />
+                    <img
+                      src="/yrc1000.png"
+                      alt="Controller Model"
+                      className="w-12 h-12 object-contain"
+                    />
+                  </div>
                 </div>
                 <div className="text-sm text-muted-foreground">
                   Model: {ctrl.model}

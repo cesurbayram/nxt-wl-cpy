@@ -7,9 +7,16 @@ import * as XLSX from "xlsx";
 interface AlarmListProps {
   alarms: Alarm[];
   activeTab: string;
+  ipAddress: string;
+  activeType?: string;
 }
 
-const AlarmList = ({ alarms, activeTab }: AlarmListProps) => {
+const AlarmList = ({
+  alarms,
+  activeTab,
+  ipAddress,
+  activeType,
+}: AlarmListProps) => {
   const columns: ColumnDef<Alarm>[] = [
     {
       accessorKey: "code",
@@ -68,7 +75,14 @@ const AlarmList = ({ alarms, activeTab }: AlarmListProps) => {
     XLSX.utils.book_append_sheet(workbook, worksheet, "Alarms");
 
     const timestamp = new Date().toISOString().split("T")[0];
-    const fileName = `alarms_${activeTab}_${timestamp}.xlsx`;
+    let fileName = "";
+
+    if (activeTab === "almhist") {
+      fileName = `${ipAddress}_${timestamp}_${activeType?.toLowerCase()}_${activeTab}.xlsx`;
+    } else {
+      fileName = `${ipAddress}_${timestamp}_${activeTab}.xlsx`;
+    }
+
     XLSX.writeFile(workbook, fileName);
   };
 
