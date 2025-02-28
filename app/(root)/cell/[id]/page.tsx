@@ -17,13 +17,18 @@ import { createCell, getCellById, updateCell } from "@/utils/service/cell";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
 import PageWrapper from "@/components/shared/page-wrapper";
 import { AiOutlineAppstoreAdd } from "react-icons/ai";
 import { LiaEditSolid } from "react-icons/lia";
-import { useEffect } from "react";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useEffect, useState } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const initialValues = {
   name: "",
@@ -31,42 +36,59 @@ const initialValues = {
 };
 
 const Page = ({ params }: { params: { id: string } }) => {
-  const queryClient = useQueryClient();
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [cell, setCell] = useState<Cell | null>(null);
+  const [isLoadingFetchCell, setIsLoadingFetchCell] = useState(false);
+
   const form = useForm<z.infer<typeof CellEditValidation>>({
     resolver: zodResolver(CellEditValidation),
     defaultValues: initialValues,
   });
 
-  const { mutateAsync: updateMutation, isPending: isUpdateLoading } = useMutation({
-    mutationFn: (values: Cell) => updateCell(values),
-    onSuccess: async () => {
-      queryClient.invalidateQueries({ queryKey: ["cell"] });
+  const updateMutation = async (values: Cell) => {
+    setIsLoading(true);
+    try {
+      await updateCell(values);
       router.push("/cell");
-    },
-  });
+    } catch (error) {
+      console.error("Failed to update cell:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-  const { mutateAsync: createMutation, isPending: isCreateloading } = useMutation({
-    mutationFn: (values: Cell) => createCell(values),
-    onSuccess: async () => {
-      queryClient.invalidateQueries({ queryKey: ["cell"] });
+  const createMutation = async (values: Cell) => {
+    setIsLoading(true);
+    try {
+      await createCell(values);
       router.push("/cell");
-    },
-  });
-
-  const { data: cell, isLoading: isLoadingFetchCell, isSuccess } = useQuery<Cell>({
-    queryFn: async () => await getCellById(params.id),
-    queryKey: ["cell", params.id],
-    enabled: params.id != "0",
-    gcTime: 0,
-  });
+    } catch (error) {
+      console.error("Failed to create cell:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    if (isSuccess && params.id != "0") {
-      form.setValue("name", cell.name as string);
-      form.setValue("status", cell.status as string);
-    }
-  }, [isSuccess, cell, params.id, form]);
+    const fetchCell = async () => {
+      if (params.id !== "0") {
+        setIsLoadingFetchCell(true);
+        try {
+          const data = await getCellById(params.id);
+          setCell(data);
+          form.setValue("name", data.name as string);
+          form.setValue("status", data.status as string);
+        } catch (error) {
+          console.error("Failed to fetch cell:", error);
+        } finally {
+          setIsLoadingFetchCell(false);
+        }
+      }
+    };
+
+    fetchCell();
+  }, [params.id, form]);
 
   const onSubmit = async (values: z.infer<typeof CellEditValidation>) => {
     if (params.id == "0") {
@@ -79,9 +101,7 @@ const Page = ({ params }: { params: { id: string } }) => {
 
   return (
     <>
-      <LoadingUi
-        isLoading={isCreateloading || isLoadingFetchCell || isUpdateLoading}
-      />
+      <LoadingUi isLoading={isLoading || isLoadingFetchCell} />
       <PageWrapper
         shownHeaderButton={false}
         pageTitle={params.id != "0" ? "Update Cell" : "Create Cell"}

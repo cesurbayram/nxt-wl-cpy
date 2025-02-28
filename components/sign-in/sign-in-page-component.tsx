@@ -3,14 +3,19 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginValidation } from "@/lib/validations/login";
 import { z } from "zod";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { useMutation } from "@tanstack/react-query";
 import { Login } from "@/types/login.types";
 import { userLogin } from "@/utils/service/auth";
 import { useRouter } from "next/navigation";
-
+import { useState } from "react";
 
 const initialValues = {
   email: "",
@@ -18,23 +23,25 @@ const initialValues = {
 };
 
 const SignInPageComponent = () => {
-    const router = useRouter();
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+
   const form = useForm<z.infer<typeof LoginValidation>>({
     defaultValues: initialValues,
     resolver: zodResolver(LoginValidation),
   });
 
-  const { mutateAsync: loginMutation, isPending: isSingInLoading, isSuccess } = useMutation({
-    mutationFn: (values: Login) => userLogin(values),
-    onSuccess: () => {
-        router.push('/')
-    }
-  })
-
   const onSubmit = async (values: z.infer<typeof LoginValidation>) => {
-    await loginMutation(values);
+    setIsLoading(true);
+    try {
+      await userLogin(values);
+      router.push("/");
+    } catch (error) {
+      console.error("Login failed:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
-
 
   return (
     <div className="flex flex-col justify-center h-full px-[25%]">
@@ -65,7 +72,7 @@ const SignInPageComponent = () => {
             />
             <FormField
               control={form.control}
-              name="password"              
+              name="password"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
@@ -84,8 +91,12 @@ const SignInPageComponent = () => {
                 </FormItem>
               )}
             />
-            <Button className="mt-6 w-full bg-[#6950e8] hover:bg-[#4e2eeb] transition-all duration-500 text-white hover:text-white" variant={'outline'} >
-                Sign In
+            <Button
+              className="mt-6 w-full bg-[#6950e8] hover:bg-[#4e2eeb] transition-all duration-500 text-white hover:text-white"
+              variant={"outline"}
+              disabled={isLoading}
+            >
+              Sign In
             </Button>
           </form>
         </Form>

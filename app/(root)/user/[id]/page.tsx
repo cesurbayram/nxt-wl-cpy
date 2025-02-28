@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import LoadingUi from "@/components/shared/loading-ui";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
@@ -17,7 +17,6 @@ import { createUser, getUserById, updateUser } from "@/utils/service/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
 import PageWrapper from "@/components/shared/page-wrapper";
 import { AiOutlineUserAdd } from "react-icons/ai";
@@ -33,49 +32,62 @@ const initialValues = {
 };
 
 const Page = ({ params }: { params: { id: string } }) => {
-  const queryClient = useQueryClient();
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoadingFetchUser, setIsLoadingFetchUser] = useState(false);
+
   const form = useForm<z.infer<typeof UserEditValidation>>({
     resolver: zodResolver(UserEditValidation),
     defaultValues: initialValues,
   });
 
-  const { mutateAsync: createMutation, isPending: isCreateloading } =
-    useMutation({
-      mutationFn: (values: User) => createUser(values),
-      onSuccess: async () => {
-        queryClient.invalidateQueries({ queryKey: ["users"] });
-        router.push("/user");
-      },
-    });
+  const createMutation = async (values: User) => {
+    setIsLoading(true);
+    try {
+      await createUser(values);
+      router.push("/user");
+    } catch (error) {
+      console.error("Failed to create user:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-  const { mutateAsync: updateMutation, isPending: isUpdateLoading } =
-    useMutation({
-      mutationFn: (values: User) => updateUser(values),
-      onSuccess: async () => {
-        queryClient.invalidateQueries({ queryKey: ["users"] });
-        router.push("/user");
-      },
-    });
+  const updateMutation = async (values: User) => {
+    setIsLoading(true);
+    try {
+      await updateUser(values);
+      router.push("/user");
+    } catch (error) {
+      console.error("Failed to update user:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-  const {
-    data: user,
-    isLoading: isLoadingFetchUser,
-    isSuccess,
-  } = useQuery<User>({
-    queryFn: async () => await getUserById({ id: params.id }),
-    queryKey: ["user"],
-    enabled: params.id != "0",
-    gcTime: 0,
-  });
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (params.id !== "0") {
+        setIsLoadingFetchUser(true);
+        try {
+          const data = await getUserById({ id: params.id });
+          setUser(data);
+          form.setValue("name", data.name as string);
+          form.setValue("lastName", data.lastName as string);
+          form.setValue("email", data.email as string);
+          form.setValue("role", data.role as string);
+          form.setValue("userName", data.userName as string);
+        } catch (error) {
+          console.error("Failed to fetch user:", error);
+        } finally {
+          setIsLoadingFetchUser(false);
+        }
+      }
+    };
 
-  if (isSuccess && params.id != "0") {    
-    form.setValue("name", user.name as string),
-    form.setValue("lastName", user.lastName as string),
-    form.setValue("email", user.email as string),
-    form.setValue("role", user.role as string),
-    form.setValue("userName", user.userName as string);
-  }
+    fetchUser();
+  }, [params.id, form]);
 
   const onSubmit = async (values: z.infer<typeof UserEditValidation>) => {
     const newValues: User = {
@@ -92,9 +104,7 @@ const Page = ({ params }: { params: { id: string } }) => {
 
   return (
     <>
-      <LoadingUi
-        isLoading={isCreateloading || isLoadingFetchUser || isUpdateLoading}
-      />
+      <LoadingUi isLoading={isLoading || isLoadingFetchUser} />
 
       <PageWrapper
         shownHeaderButton={false}

@@ -4,7 +4,6 @@ import ControllerList from "@/components/controller/controller-list";
 import LoadingUi from "@/components/shared/loading-ui";
 import PageWrapper from "@/components/shared/page-wrapper";
 import { useRouter } from "next/navigation";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { GiRobotGrab } from "react-icons/gi";
 import { deleteController, getController } from "@/utils/service/controller";
 import { Controller } from "@/types/controller.types";
@@ -12,10 +11,10 @@ import Timer from "@/components/shared/timer";
 
 const Page = () => {
   const router = useRouter();
-  const queryClient = useQueryClient();
   const [controller, setController] = useState<Controller[]>([]);
-  const [loading, setLoading] = useState<boolean>(true); // Başlangıçta true
-  const [initialLoadDone, setInitialLoadDone] = useState<boolean>(false); // Yeni state
+  const [loading, setLoading] = useState<boolean>(true);
+  const [initialLoadDone, setInitialLoadDone] = useState<boolean>(false);
+  const [isPending, setIsPending] = useState(false);
 
   const listController = async () => {
     try {
@@ -33,12 +32,17 @@ const Page = () => {
     listController();
   }, []);
 
-  const { mutateAsync: deleteMutation, isPending } = useMutation({
-    mutationFn: ({ id }: Controller) => deleteController({ id }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["controller"] });
-    },
-  });
+  const deleteMutation = async ({ id }: Controller) => {
+    setIsPending(true);
+    try {
+      await deleteController({ id });
+      await listController();
+    } catch (error) {
+      console.error("Error deleting controller:", error);
+    } finally {
+      setIsPending(false);
+    }
+  };
 
   const handleRouteControllerCreate = () => {
     router.push("/controller/0");

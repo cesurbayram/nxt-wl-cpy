@@ -1,8 +1,7 @@
 "use client";
-import React, { useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef, useState, useEffect } from "react";
 import { Controller } from "@/types/controller.types";
 import { getControllerById } from "@/utils/service/controller";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
 import PageWrapper from "@/components/shared/page-wrapper";
 import { LiaEditSolid } from "react-icons/lia";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -67,25 +66,33 @@ const tabItems = [
 ];
 
 const Page = ({ params }: { params: { id: string } }) => {
-  const queryClient = useQueryClient();
   const [activeTab, setActiveTab] = useState("alarm");
   const previousTab = useRef<string | null>(null);
+  const [controller, setController] = useState<Controller | null>(null);
 
-  const { data: controller } = useQuery<Controller>({
-    queryFn: async () => await getControllerById(params.id),
-    queryKey: ["controller", params.id],
-    enabled: params.id != "0",
-    gcTime: 0,
-  });
+  const fetchController = async () => {
+    if (params.id !== "0") {
+      try {
+        const data = await getControllerById(params.id);
+        setController(data);
+      } catch (error) {
+        console.error("Failed to fetch controller:", error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchController();
+  }, [params.id]);
 
   const handleStatusRefresh = async () => {
     if (params.id !== "0") {
       try {
         const updatedController = await getControllerById(params.id);
-        queryClient.setQueryData(["controller", params.id], {
-          ...controller,
+        setController((prev) => ({
+          ...prev,
           controllerStatus: updatedController.controllerStatus,
-        });
+        }));
       } catch (error) {
         console.error("Failed to update status:", error);
       }

@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import "../globals.css";
 import SideNavbar from "@/components/navbar/side-navbar";
 import TopNavbar from "@/components/navbar/top-navbar";
-import ReactQueryProvider from "@/utils/providers/react-query-provider";
 import { ThemeProvider } from "next-themes";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -27,23 +26,21 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ReactQueryProvider>
-            <div className="flex h-screen overflow-hidden">
-              <div className="w-64 pr-4 pl-7 border-r-2 overflow-y-auto fixed h-full">
-                <SideNavbar />
-              </div>
-              <div className="flex-1 ml-64">
-                <div className="h-screen overflow-y-auto">
-                  <div className="px-6 bg-background">
-                    <div className="max-w-7xl w-full mx-auto">
-                      <TopNavbar />
-                      <main className="mt-4 mb-8">{children}</main>
-                    </div>
+          <div className="flex h-screen overflow-hidden">
+            <div className="w-64 pr-4 pl-7 border-r-2 overflow-y-auto fixed h-full">
+              <SideNavbar />
+            </div>
+            <div className="flex-1 ml-64">
+              <div className="h-screen overflow-y-auto">
+                <div className="px-6 bg-background">
+                  <div className="max-w-7xl w-full mx-auto">
+                    <TopNavbar />
+                    <main className="mt-4 mb-8">{children}</main>
                   </div>
                 </div>
               </div>
             </div>
-          </ReactQueryProvider>
+          </div>
         </ThemeProvider>
       </body>
     </html>

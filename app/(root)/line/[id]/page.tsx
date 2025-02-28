@@ -18,7 +18,6 @@ import { getCell } from "@/utils/service/cell";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
 import PageWrapper from "@/components/shared/page-wrapper";
 import { AiOutlineAppstoreAdd } from "react-icons/ai";
@@ -39,46 +38,78 @@ const initialValues = {
 };
 
 const Page = ({ params }: { params: { id: string } }) => {
-  const queryClient = useQueryClient();
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [line, setLine] = useState<Line | null>(null);
+  const [cell, setCell] = useState<any[]>([]);
+  const [isLoadingFetchLine, setIsLoadingFetchLine] = useState(false);
+  const [isLoadingCells, setIsLoadingCells] = useState(false);
+
   const form = useForm<z.infer<typeof LineEditValidation>>({
     resolver: zodResolver(LineEditValidation),
     defaultValues: initialValues,
   });
 
-  const { mutateAsync: updateMutation, isPending: isUpdateLoading } =
-    useMutation({
-      mutationFn: (values: Line) => updateLine(values),
-      onSuccess: async () => {
-        queryClient.invalidateQueries({ queryKey: ["line"] });
-        router.push("/line");
-      },
-    });
+  const updateMutation = async (values: Line) => {
+    setIsLoading(true);
+    try {
+      await updateLine(values);
+      router.push("/line");
+    } catch (error) {
+      console.error("Failed to update line:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-  const { mutateAsync: createMutation, isPending: isCreateloading } =
-    useMutation({
-      mutationFn: (values: Line) => createLine(values),
-      onSuccess: async () => {
-        queryClient.invalidateQueries({ queryKey: ["line"] });
-        router.push("/line");
-      },
-    });
+  const createMutation = async (values: Line) => {
+    setIsLoading(true);
+    try {
+      await createLine(values);
+      router.push("/line");
+    } catch (error) {
+      console.error("Failed to create line:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-  const {
-    data: line,
-    isLoading: isLoadingFetchLine,
-    isSuccess,
-  } = useQuery<Line>({
-    queryFn: async () => await getLineById(params.id),
-    queryKey: ["line", params.id],
-    enabled: params.id != "0",
-    gcTime: 0,
-  });
+  useEffect(() => {
+    const fetchLine = async () => {
+      if (params.id !== "0") {
+        setIsLoadingFetchLine(true);
+        try {
+          const data = await getLineById(params.id);
+          setLine(data);
+          form.setValue("name", data.name as string);
+          form.setValue("status", data.status as string);
+          form.setValue("cellIds", data.cellIds as [string, ...string[]]);
+        } catch (error) {
+          console.error("Failed to fetch line:", error);
+        } finally {
+          setIsLoadingFetchLine(false);
+        }
+      }
+    };
 
-  const { data: cell, isLoading: isLoadingCells } = useQuery({
-    queryFn: async () => await getCell(), // Tüm cell'leri getiren fonksiyon
-    queryKey: ["cell"],
-  });
+    fetchLine();
+  }, [params.id, form]);
+
+  useEffect(() => {
+    const fetchCells = async () => {
+      setIsLoadingCells(true);
+      try {
+        const data = await getCell();
+        setCell(data);
+      } catch (error) {
+        console.error("Failed to fetch cells:", error);
+      } finally {
+        setIsLoadingCells(false);
+      }
+    };
+
+    fetchCells();
+  }, []);
 
   const formattedCell = useMemo(() => {
     if (cell && cell?.length > 0) {
@@ -90,14 +121,6 @@ const Page = ({ params }: { params: { id: string } }) => {
       });
     }
   }, [cell]);
-
-  useEffect(() => {
-    if (isSuccess && params.id != "0") {
-      form.setValue("name", line.name as string);
-      form.setValue("status", line.status as string);
-      form.setValue("cellIds", line.cellIds as [string, ...string[]]);
-    }
-  }, [isSuccess, line, params.id, form]);
 
   const onSubmit = async (values: z.infer<typeof LineEditValidation>) => {
     if (params.id == "0") {
@@ -111,12 +134,7 @@ const Page = ({ params }: { params: { id: string } }) => {
   return (
     <>
       <LoadingUi
-        isLoading={
-          isCreateloading ||
-          isLoadingFetchLine ||
-          isUpdateLoading ||
-          isLoadingCells
-        }
+        isLoading={isLoading || isLoadingFetchLine || isLoadingCells}
       />
       <PageWrapper
         shownHeaderButton={false}
@@ -195,7 +213,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                           <MultiSelect
                             options={formattedCell ? formattedCell : []}
                             onValueChange={(value) => {
-                              controllerField.onChange(value)
+                              controllerField.onChange(value);
                             }}
                             defaultValue={controllerField.value}
                             placeholder="Select cells"
