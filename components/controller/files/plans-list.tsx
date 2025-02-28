@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
 import {
   getBackupPlans,
   deleteBackupPlan,
@@ -21,40 +20,50 @@ interface PlansListProps {
 }
 
 export default function PlansList({ controllerId }: PlansListProps) {
-  const queryClient = useQueryClient();
   const [editingPlan, setEditingPlan] = useState<string | null>(null);
   const [editForm, setEditForm] = useState<Partial<BackupPlan>>({});
+  const [plans, setPlans] = useState<BackupPlan[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
 
-  const { data: plans, isLoading } = useQuery({
-    queryKey: ["backup-plans", controllerId],
-    queryFn: () => getBackupPlans(controllerId),
-  });
+  useEffect(() => {
+    const fetchPlans = async () => {
+      setIsLoading(true);
+      try {
+        const data = await getBackupPlans(controllerId);
+        setPlans(data);
+      } catch (error) {
+        console.error("Error fetching plans:", error);
+      }
+      setIsLoading(false);
+    };
 
-  const { mutate: deletePlan } = useMutation({
-    mutationFn: (planId: string) => deleteBackupPlan(controllerId, planId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["backup-plans", controllerId],
-      });
-    },
-  });
+    fetchPlans();
+  }, [controllerId]);
 
-  const { mutate: updatePlan, isPending: isUpdating } = useMutation({
-    mutationFn: ({
-      planId,
-      updates,
-    }: {
-      planId: string;
-      updates: Partial<BackupPlan>;
-    }) => updateBackupPlan(controllerId, planId, updates),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["backup-plans", controllerId],
-      });
+  const deletePlan = async (planId: string) => {
+    try {
+      await deleteBackupPlan(controllerId, planId);
+      const data = await getBackupPlans(controllerId);
+      setPlans(data);
+    } catch (error) {
+      console.error("Error deleting plan:", error);
+    }
+  };
+
+  const handleUpdate = async (planId: string) => {
+    setIsUpdating(true);
+    try {
+      await updateBackupPlan(controllerId, planId, editForm);
+      const data = await getBackupPlans(controllerId);
+      setPlans(data);
       setEditingPlan(null);
       setEditForm({});
-    },
-  });
+    } catch (error) {
+      console.error("Error updating plan:", error);
+    }
+    setIsUpdating(false);
+  };
 
   const startEditing = (plan: BackupPlan) => {
     setEditingPlan(plan.id);
@@ -64,10 +73,6 @@ export default function PlansList({ controllerId }: PlansListProps) {
   const cancelEditing = () => {
     setEditingPlan(null);
     setEditForm({});
-  };
-
-  const handleUpdate = (planId: string) => {
-    updatePlan({ planId, updates: editForm });
   };
 
   const fileTypes = ["CMOS", ".jbi", ".dat", ".cnd", ".prm", ".sys", ".lst"];
@@ -124,7 +129,6 @@ export default function PlansList({ controllerId }: PlansListProps) {
         const plan = row.original;
         return editingPlan === plan.id ? (
           <div className="flex flex-wrap gap-2">
-            {/* All seçeneği */}
             <div className="flex items-center space-x-1 px-2 py-1 bg-[#6950e8] bg-opacity-10 rounded cursor-pointer">
               <Checkbox
                 checked={editForm.file_types?.length === fileTypes.length}
@@ -138,7 +142,6 @@ export default function PlansList({ controllerId }: PlansListProps) {
               <span className="text-sm">All</span>
             </div>
 
-            {/* Dosya tipleri */}
             {fileTypes.map((type) => (
               <div
                 key={type}

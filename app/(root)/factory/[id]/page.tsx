@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import LoadingUi from "@/components/shared/loading-ui";
 import { Button } from "@/components/ui/button";
 import { CardContent, CardFooter } from "@/components/ui/card";
@@ -13,17 +13,26 @@ import {
 import { Input } from "@/components/ui/input";
 import { FactoryEditValidation } from "@/lib/validations/factory-edit";
 import { Factory } from "@/types/factory.types";
-import { createFactory, getFactoryById, updateFactory } from "@/utils/service/factory";
-import { getLine} from "@/utils/service/line";
+import {
+  createFactory,
+  getFactoryById,
+  updateFactory,
+} from "@/utils/service/factory";
+import { getLine } from "@/utils/service/line";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
 import PageWrapper from "@/components/shared/page-wrapper";
 import { MdOutlineFactory } from "react-icons/md";
 import { LiaEditSolid } from "react-icons/lia";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { MultiSelect } from "@/components/shared/multi-select";
 
 const initialValues = {
@@ -33,40 +42,78 @@ const initialValues = {
 };
 
 const Page = ({ params }: { params: { id: string } }) => {
-  const queryClient = useQueryClient();
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [factory, setFactory] = useState<Factory | null>(null);
+  const [line, setLine] = useState<any[]>([]);
+  const [isLoadingFetchFactory, setIsLoadingFetchFactory] = useState(false);
+  const [isLoadingFactorys, setIsLoadingFactorys] = useState(false);
+
   const form = useForm<z.infer<typeof FactoryEditValidation>>({
     resolver: zodResolver(FactoryEditValidation),
     defaultValues: initialValues,
   });
 
-  const { mutateAsync: updateMutation, isPending: isUpdateLoading } = useMutation({
-    mutationFn: (values: Factory) => updateFactory(values),
-    onSuccess: async () => {
-      queryClient.invalidateQueries({ queryKey: ["factory"] });
+  const updateMutation = async (values: Factory) => {
+    setIsLoading(true);
+    try {
+      await updateFactory(values);
       router.push("/factory");
-    },
-  });
+    } catch (error) {
+      console.error("Failed to update factory:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-  const { mutateAsync: createMutation, isPending: isCreateloading } = useMutation({
-    mutationFn: (values: Factory) => createFactory(values),
-    onSuccess: async () => {
-      queryClient.invalidateQueries({ queryKey: ["factory"] });
+  const createMutation = async (values: Factory) => {
+    setIsLoading(true);
+    try {
+      await createFactory(values);
       router.push("/factory");
-    },
-  });
+    } catch (error) {
+      console.error("Failed to create factory:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-  const { data: factory, isLoading: isLoadingFetchFactory, isSuccess } = useQuery<Factory>({
-    queryFn: async () => await getFactoryById(params.id),
-    queryKey: ["factory", params.id],
-    enabled: params.id != "0",
-    gcTime: 0,
-  });
+  useEffect(() => {
+    const fetchFactory = async () => {
+      if (params.id !== "0") {
+        setIsLoadingFetchFactory(true);
+        try {
+          const data = await getFactoryById(params.id);
+          setFactory(data);
+          form.setValue("name", data.name as string);
+          form.setValue("status", data.status as string);
+          form.setValue("lineIds", data.lineIds as [string, ...string[]]);
+        } catch (error) {
+          console.error("Failed to fetch factory:", error);
+        } finally {
+          setIsLoadingFetchFactory(false);
+        }
+      }
+    };
 
-  const { data: line, isLoading: isLoadingFactorys } = useQuery({
-    queryFn: async () => await getLine(),  // Tüm line getiren fonksiyon
-    queryKey: ["line"],
-  });
+    fetchFactory();
+  }, [params.id, form]);
+
+  useEffect(() => {
+    const fetchLines = async () => {
+      setIsLoadingFactorys(true);
+      try {
+        const data = await getLine();
+        setLine(data);
+      } catch (error) {
+        console.error("Failed to fetch lines:", error);
+      } finally {
+        setIsLoadingFactorys(false);
+      }
+    };
+
+    fetchLines();
+  }, []);
 
   const formattedLines = useMemo(() => {
     if (line && line?.length > 0) {
@@ -78,14 +125,6 @@ const Page = ({ params }: { params: { id: string } }) => {
       });
     }
   }, [line]);
-  
-  useEffect(() => {
-    if (isSuccess && params.id != "0") {
-      form.setValue("name", factory.name as string);
-      form.setValue("status", factory.status as string);
-      form.setValue("lineIds", factory.lineIds as [string, ...string[]]);
-    }
-  }, [isSuccess, factory, params.id, form]);
 
   const onSubmit = async (values: z.infer<typeof FactoryEditValidation>) => {
     if (params.id == "0") {
@@ -99,7 +138,7 @@ const Page = ({ params }: { params: { id: string } }) => {
   return (
     <>
       <LoadingUi
-        isLoading={isCreateloading || isLoadingFetchFactory || isUpdateLoading || isLoadingFactorys}
+        isLoading={isLoading || isLoadingFetchFactory || isLoadingFactorys}
       />
       <PageWrapper
         shownHeaderButton={false}
@@ -174,19 +213,19 @@ const Page = ({ params }: { params: { id: string } }) => {
                         control={form.control}
                         name="lineIds"
                         defaultValue={field.value}
-                        render={({field: controllerField}) => (
+                        render={({ field: controllerField }) => (
                           <MultiSelect
                             options={formattedLines ? formattedLines : []}
                             onValueChange={(value) => {
-                              controllerField.onChange(value)
+                              controllerField.onChange(value);
                             }}
                             defaultValue={controllerField.value}
                             placeholder="Select Lines"
                             variant={"secondary"}
                             animation={2}
-                            maxCount={3} 
+                            maxCount={3}
                           />
-                        )} 
+                        )}
                       />
                     </FormControl>
                     <FormMessage />

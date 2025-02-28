@@ -3,7 +3,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import VariableList from "./variable-list";
 import { useState, useEffect, useRef } from "react";
-import { useQuery } from "@tanstack/react-query";
 import {
   getVariablesByType,
   sendVariableCommand,

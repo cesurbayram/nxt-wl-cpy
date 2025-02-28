@@ -21,7 +21,6 @@ import { useForm } from "react-hook-form";
 import { ControllerEditValidation } from "@/lib/validations/controller-edit";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Controller } from "@/types/controller.types";
 import {
   createController,
@@ -35,7 +34,7 @@ import { getFactory } from "@/utils/service/factory";
 import { Cell } from "@/types/cell.types";
 import { Line } from "@/types/line.types";
 import { Factory } from "@/types/factory.types";
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 
 interface ControllerFormProps {
   controllerId: string;
@@ -52,49 +51,67 @@ const initialValues = {
 };
 
 const ControllerForm = ({ controllerId }: ControllerFormProps) => {
-  const queryClient = useQueryClient();
   const router = useRouter();
 
-  const {
-    data: controller,
-    isLoading: isLoadingFetchController,
-    isSuccess,
-  } = useQuery<Controller>({
-    queryFn: async () => await getControllerById(controllerId),
-    queryKey: ["controller", controllerId],
-    enabled: controllerId != "0",
-  });
-
-  const { data: cells } = useQuery<Cell[]>({
-    queryFn: getCell,
-    queryKey: ["cell"],
-  });
-
-  const { data: lines } = useQuery<Line[]>({
-    queryFn: getLine,
-    queryKey: ["line"],
-  });
-
-  const { data: factories } = useQuery<Factory[]>({
-    queryFn: getFactory,
-    queryKey: ["factory"],
-  });
+  const [controller, setController] = useState<Controller | null>(null);
+  const [isLoadingFetchController, setIsLoadingFetchController] =
+    useState(false);
+  const [cells, setCells] = useState<Cell[]>([]);
+  const [lines, setLines] = useState<Line[]>([]);
+  const [factories, setFactories] = useState<Factory[]>([]);
+  const [isUpdateLoading, setIsUpdateLoading] = useState(false);
+  const [isCreateLoading, setIsCreateLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const form = useForm<z.infer<typeof ControllerEditValidation>>({
     resolver: zodResolver(ControllerEditValidation),
-    defaultValues:
-      controllerId === "0"
-        ? initialValues
-        : {
-            name: controller?.name || "",
-            status: controller?.status?.toLowerCase() || "",
-            model: controller?.model?.toLowerCase() || "",
-            location: controller?.location || "",
-            ipAddress: controller?.ipAddress || "",
-            application: controller?.application?.toLowerCase() || "",
-            serialNumber: controller?.serialNumber || "",
-          },
+    defaultValues: initialValues,
   });
+
+  useEffect(() => {
+    if (controller && controllerId !== "0") {
+      form.reset({
+        name: controller.name || "",
+        status: controller.status?.toLowerCase() || "",
+        model: controller.model?.toLowerCase() || "",
+        location: controller.location || "",
+        ipAddress: controller.ipAddress || "",
+        application: controller.application?.toLowerCase() || "",
+        serialNumber: controller.serialNumber || "",
+      });
+    }
+  }, [controller, controllerId, form]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (controllerId !== "0") {
+        setIsLoadingFetchController(true);
+        try {
+          const data = await getControllerById(controllerId);
+          setController(data);
+          setIsSuccess(true);
+        } catch (error) {
+          console.error("Error fetching controller:", error);
+        }
+        setIsLoadingFetchController(false);
+      }
+
+      try {
+        const [cellsData, linesData, factoriesData] = await Promise.all([
+          getCell(),
+          getLine(),
+          getFactory(),
+        ]);
+        setCells(cellsData);
+        setLines(linesData);
+        setFactories(factoriesData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [controllerId]);
 
   const locationOptions = useMemo(() => {
     if (!cells?.length || !lines?.length || !factories?.length) {
@@ -122,24 +139,27 @@ const ControllerForm = ({ controllerId }: ControllerFormProps) => {
     return options;
   }, [cells, lines, factories]);
 
-  const { mutateAsync: updateMutation, isPending: isUpdateLoading } =
-    useMutation({
-      mutationFn: (values: Controller) => updateController(values),
-      onSuccess: async (_, variables) => {
-        queryClient.invalidateQueries({ queryKey: ["controller"] });
-        queryClient.setQueryData(["controller", variables.id], variables);
-        router.push("/controller");
-      },
-    });
+  const updateMutation = async (values: Controller) => {
+    setIsUpdateLoading(true);
+    try {
+      await updateController(values);
+      router.push("/controller");
+    } catch (error) {
+      console.error("Error updating controller:", error);
+    }
+    setIsUpdateLoading(false);
+  };
 
-  const { mutateAsync: createMutation, isPending: isCreateloading } =
-    useMutation({
-      mutationFn: (values: Controller) => createController(values),
-      onSuccess: async () => {
-        queryClient.invalidateQueries({ queryKey: ["controller"] });
-        router.push("/controller");
-      },
-    });
+  const createMutation = async (values: Controller) => {
+    setIsCreateLoading(true);
+    try {
+      await createController(values);
+      router.push("/controller");
+    } catch (error) {
+      console.error("Error creating controller:", error);
+    }
+    setIsCreateLoading(false);
+  };
 
   const onSubmit = async (values: z.infer<typeof ControllerEditValidation>) => {
     if (controllerId == "0") {
@@ -154,7 +174,7 @@ const ControllerForm = ({ controllerId }: ControllerFormProps) => {
     <>
       <LoadingUi
         isLoading={
-          isCreateloading || isLoadingFetchController || isUpdateLoading
+          isCreateLoading || isLoadingFetchController || isUpdateLoading
         }
       />
       <Form {...form}>

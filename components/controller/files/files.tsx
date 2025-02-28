@@ -4,20 +4,33 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import Plans from "./plans";
 import PlansList from "./plans-list";
-import { useQuery } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
 import { getBackupPlans } from "@/utils/service/files";
 import LoadingUi from "@/components/shared/loading-ui";
+import { BackupPlan } from "@/types/files.types";
 
 interface FilesProps {
   controllerId: string;
 }
 
 export function Files({ controllerId }: FilesProps) {
-  const { data: plans, isLoading } = useQuery({
-    queryKey: ["backup-plans", controllerId],
-    queryFn: () => getBackupPlans(controllerId),
-    staleTime: 1000 * 60,
-  });
+  const [plans, setPlans] = useState<BackupPlan[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchPlans = async () => {
+      setIsLoading(true);
+      try {
+        const data = await getBackupPlans(controllerId);
+        setPlans(data);
+      } catch (error) {
+        console.error("Error fetching backup plans:", error);
+      }
+      setIsLoading(false);
+    };
+
+    fetchPlans();
+  }, [controllerId]);
 
   return (
     <>
@@ -47,7 +60,7 @@ export function Files({ controllerId }: FilesProps) {
               <CardContent>
                 <Plans
                   controllerId={controllerId}
-                  plans={plans || []}
+                  plans={plans}
                   isLoading={isLoading}
                 />
               </CardContent>
