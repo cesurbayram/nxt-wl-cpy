@@ -66,7 +66,7 @@ const UtilizationChart = ({ data, viewType }: UtilizationChartProps) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-white p-4 border rounded-lg shadow-lg">
-          <p className="text-sm font-medium mb-2">
+          <p className="text-sm font-medium text-muted-foreground mb-2">
             {new Date(label).toLocaleString()}
           </p>
           {payload.map((entry: any, index: number) => (

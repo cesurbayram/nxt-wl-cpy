@@ -166,6 +166,10 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
       header: () => <div className="text-sm font-medium">IP Address</div>,
     },
     {
+      accessorKey: "location",
+      header: () => <div className="text-sm font-medium">Location</div>,
+    },
+    {
       accessorKey: "status",
       header: () => <div className="text-sm font-medium">Status</div>,
       cell: ({ row }) => {

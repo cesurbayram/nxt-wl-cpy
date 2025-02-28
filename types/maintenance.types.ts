@@ -12,12 +12,11 @@ export interface MaintenancePlan {
   updatedAt?: string;
 }
 
-// MaintenanceLog interface'i aynı kalabilir
 export interface MaintenanceLog {
-  id?: string; // id opsiyonel olmalı çünkü yeni log oluştururken id olmayacak
+  id?: string;
   maintenance_id: string;
   maintenance_time: string;
   technician: string;
   description?: string | null;
-  created_at?: string; // created_at opsiyonel olmalı çünkü yeni log oluştururken olmayacak
+  created_at?: string;
 }

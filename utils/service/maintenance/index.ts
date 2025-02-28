@@ -92,7 +92,6 @@ const updateMaintenancePlan = async (
   controllerId: string,
   values: MaintenancePlan
 ): Promise<boolean> => {
-  // Güncel utilization verilerini al
   const utilizationRes = await fetch(
     `/api/controller/${controllerId}/utilization?timeRange=7d`,
     {

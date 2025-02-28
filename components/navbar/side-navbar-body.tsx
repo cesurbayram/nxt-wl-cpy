@@ -8,6 +8,12 @@ import { MdFactory } from "react-icons/md";
 import { FaLinesLeaning } from "react-icons/fa6";
 import { FaTableCellsLarge } from "react-icons/fa6";
 import { IoMdHome } from "react-icons/io";
+import { FaHubspot } from "react-icons/fa";
+import { GiLightningArc } from "react-icons/gi";
+import { GiAutomaticSas } from "react-icons/gi";
+import { MdProductionQuantityLimits } from "react-icons/md";
+import { IoIosSettings } from "react-icons/io";
+import { IoIosNotifications } from "react-icons/io";
 
 const sideMenuItems = [
   {
@@ -50,6 +56,42 @@ const sideMenuItems = [
     link: "/controller",
     childPages: [],
   },
+  {
+    title: "Arc Welding",
+    icon: <GiLightningArc size={15} />,
+    link: "#",
+    childPages: [],
+  },
+  {
+    title: "Spot Welding",
+    icon: <FaHubspot size={15} />,
+    link: "#",
+    childPages: [],
+  },
+  {
+    title: "Automated QSet",
+    icon: <GiAutomaticSas size={15} />,
+    link: "#",
+    childPages: [],
+  },
+  {
+    title: "Product",
+    icon: <MdProductionQuantityLimits size={15} />,
+    link: "#",
+    childPages: [],
+  },
+  {
+    title: "Notification",
+    icon: <IoIosNotifications size={15} />,
+    link: "#",
+    childPages: [],
+  },
+  {
+    title: "Setting",
+    icon: <IoIosSettings size={15} />,
+    link: "#",
+    childPages: [],
+  },
 ];
 
 const SideNavbarBody = () => {
@@ -83,10 +125,14 @@ const SideNavbarBody = () => {
                           hover:text-[#6950e8]
                           text-sm
                           text-[#6B7280]
-      
+                          ${
+                            item.link === "#"
+                              ? "pointer-events-none opacity-70"
+                              : ""
+                          }
                       `}
             >
-              <Link href={item.link}>
+              <Link href={item.link || "#"}>
                 {item.icon}
                 {item.title}
               </Link>
