@@ -27,7 +27,13 @@ const almhistTypes = [
   { label: "OFF-LINE", value: "OFF-LINE" },
 ];
 
-const AlarmTabs = ({ controllerId }: { controllerId: string }) => {
+const AlarmTabs = ({
+  controllerId,
+  ipAddress,
+}: {
+  controllerId: string;
+  ipAddress: string;
+}) => {
   const [activeTab, setActiveTab] = useState("detected");
   const [activeType, setActiveType] = useState("MAJOR");
   const [alarms, setAlarms] = useState<Alarm[]>([]);
@@ -126,7 +132,12 @@ const AlarmTabs = ({ controllerId }: { controllerId: string }) => {
               {isLoading && <p>Loading...</p>}
               {error && <p>Error: {error.message}</p>}
               {!isLoading && !error && (
-                <AlarmList alarms={alarms} activeTab={activeTab} />
+                <AlarmList
+                  alarms={alarms}
+                  activeTab={activeTab}
+                  ipAddress={ipAddress}
+                  activeType={activeType}
+                />
               )}
             </>
           )}
