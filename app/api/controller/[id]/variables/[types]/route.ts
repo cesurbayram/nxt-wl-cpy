@@ -29,7 +29,7 @@ export async function GET(
       `
       SELECT no, name, value
       FROM ${tableName}
-      WHERE controller_id = $1 ORDER BY no ASC
+      WHERE controller_id = $1 ORDER BY CAST(no AS INTEGER) ASC
       `,
       [params.id]
     );
