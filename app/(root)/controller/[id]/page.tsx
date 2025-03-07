@@ -17,6 +17,7 @@ import Files from "@/components/controller/files/files";
 import Job from "@/components/controller/job/job";
 import { sendTabExitCommand } from "@/utils/service/tab-exit";
 import Timer from "@/components/shared/timer";
+import { Teaching } from "@/components/controller/data-analysis/teaching/teaching";
 
 const tabItems = [
   {
@@ -38,6 +39,10 @@ const tabItems = [
   {
     label: "Data",
     value: "data",
+  },
+  {
+    label: "Data Analysis",
+    value: "datanal",
   },
   {
     label: "Job",
@@ -192,6 +197,9 @@ const Page = ({ params }: { params: { id: string } }) => {
               </TabsContent>
               <TabsContent value="job">
                 <Job controllerId={params.id} />
+              </TabsContent>
+              <TabsContent value="datanal">
+                <Teaching controllerId={params.id} />
               </TabsContent>
             </>
           )}
