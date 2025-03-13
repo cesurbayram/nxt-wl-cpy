@@ -1,268 +1,263 @@
-import React, { useState } from "react";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
-import { diffLines } from "diff";
-import { FilePreview } from "./file-preview";
-import { Statistics } from "./comparison-statistics";
-import { ComparisonHistory } from "./comparison-history";
+import React, { useState, useEffect } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import FileComparison from "./file-comparison";
+import FSUComparison from "./fsu-comparison";
 import {
-  getFileFormat,
-  isValidFormat,
-  generateFilePreview,
-  calculateStatistics,
-} from "@/utils/common/teaching-utils";
-import { saveComparisonResult } from "@/utils/service/teaching";
-import {
-  ComparisonResult,
-  FilePreview as FilePreviewInterface,
-  ComparisonStatistics,
+  FileType,
+  FSUSubType,
+  FILE_TYPE_CONFIGS,
+  FSU_SUBTYPE_CONFIGS,
+  FileSystemDirectoryHandle,
 } from "@/types/teaching.types";
+import { Button } from "@/components/ui/button";
+import { FolderOpen } from "lucide-react";
+import { toast } from "sonner";
 
 interface TeachingProps {
   controllerId: string;
 }
 
-interface ProcessedDiffLine {
-  content: string;
-  type: "added" | "removed" | "normal";
-  lineNumber: number;
-}
-
 export const Teaching: React.FC<TeachingProps> = ({ controllerId }) => {
-  const [file1, setFile1] = useState<File | null>(null);
-  const [file2, setFile2] = useState<File | null>(null);
-  const [filePreview1, setFilePreview1] = useState<FilePreviewInterface | null>(
-    null
+  const [selectedFileType, setSelectedFileType] = useState<FileType>(
+    FileType.JOB
   );
-  const [filePreview2, setFilePreview2] = useState<FilePreviewInterface | null>(
-    null
-  );
-  const [differences, setDifferences] = useState<ProcessedDiffLine[]>([]);
-  const [isComparing, setIsComparing] = useState(false);
-  const [statistics, setStatistics] = useState<ComparisonStatistics | null>(
-    null
-  );
-  const [showHistory, setShowHistory] = useState(false);
+  const [selectedFSUSubType, setSelectedFSUSubType] =
+    useState<FSUSubType | null>(FSUSubType.AXIS_RANGE_LIMIT);
+  const [activeTab, setActiveTab] = useState<string>(FileType.JOB);
 
-  const handleFileChange = async (file: File | null, isFirstFile: boolean) => {
-    if (!file) return;
+  const [folder1, setFolder1] = useState<any | null>(null);
+  const [folder2, setFolder2] = useState<any | null>(null);
+  const [folder1Name, setFolder1Name] = useState<string>("");
+  const [folder2Name, setFolder2Name] = useState<string>("");
+  const [folder1Files, setFolder1Files] = useState<File[]>([]);
+  const [folder2Files, setFolder2Files] = useState<File[]>([]);
 
-    const format = getFileFormat(file.name);
-    if (!isValidFormat(format)) {
-      toast.error(`Invalid file format.`);
+  const handleFileTypeChange = (value: string) => {
+    console.log("Tab changed to:", value);
+
+    setActiveTab(value);
+
+    if (value.startsWith("fsu-")) {
+      const subType = value.replace("fsu-", "") as FSUSubType;
+      setSelectedFSUSubType(subType);
+      setSelectedFileType(FileType.FSU);
       return;
     }
 
-    const preview = await generateFilePreview(file);
+    if (value === FileType.FSU) {
+      const firstSubType = FSU_SUBTYPE_CONFIGS[0].type;
+      setSelectedFileType(FileType.FSU);
+      setSelectedFSUSubType(firstSubType);
+      setTimeout(() => {
+        setActiveTab(`fsu-${firstSubType}`);
+      }, 0);
+      return;
+    }
 
-    if (isFirstFile) {
-      setFile1(file);
-      setFilePreview1(preview);
-    } else {
-      setFile2(file);
-      setFilePreview2(preview);
+    setSelectedFileType(value as FileType);
+    if (value !== FileType.FSU) {
+      setSelectedFSUSubType(null);
     }
   };
 
-  const handleCompare = async () => {
-    if (!file1 || !file2) return;
-    setIsComparing(true);
+  const handleSelectFolder = async (isFirstFolder: boolean) => {
+    try {
+      const dirHandle = await window.showDirectoryPicker();
+
+      if (isFirstFolder) {
+        setFolder1(dirHandle);
+        setFolder1Name(dirHandle.name);
+        await loadFilesFromFolder(dirHandle, true);
+      } else {
+        setFolder2(dirHandle);
+        setFolder2Name(dirHandle.name);
+        await loadFilesFromFolder(dirHandle, false);
+      }
+
+      toast.success(`Folder selected: ${dirHandle.name}`);
+    } catch (error) {
+      console.error("Folder selection error:", error);
+      toast.error("Folder could not be selected");
+    }
+  };
+
+  const loadFilesFromFolder = async (
+    folderHandle: any,
+    isFirstFolder: boolean
+  ) => {
+    const files: File[] = [];
 
     try {
-      const text1 = await file1.text();
-      const text2 = await file2.text();
-
-      const diff = diffLines(text1, text2);
-
-      let lineNumber = 1;
-      const processedDiff: ProcessedDiffLine[] = [];
-
-      const file1Lines = text1.split("\n");
-      const file2Lines = text2.split("\n");
-      const maxLines = Math.max(file1Lines.length, file2Lines.length);
-
-      for (let i = 0; i < maxLines; i++) {
-        const line1 = file1Lines[i] || "";
-        const line2 = file2Lines[i] || "";
-
-        if (line1 === line2) {
-          processedDiff.push({
-            content: line1,
-            type: "normal",
-            lineNumber: i + 1,
-          });
-        } else {
-          processedDiff.push({
-            content: line1,
-            type: "removed",
-            lineNumber: i + 1,
-          });
-          processedDiff.push({
-            content: line2,
-            type: "added",
-            lineNumber: i + 1,
-          });
+      for await (const entry of folderHandle.values()) {
+        if (entry.kind === "file") {
+          const file = await entry.getFile();
+          files.push(file);
         }
       }
 
-      setDifferences(processedDiff);
-
-      const stats = calculateStatistics(diff);
-      setStatistics(stats);
-
-      const result: ComparisonResult = {
-        file1Name: file1.name,
-        file2Name: file2.name,
-        file1Format: getFileFormat(file1.name),
-        file2Format: getFileFormat(file2.name),
-        comparisonDate: new Date().toISOString(),
-        differences: diff,
-        statistics: stats,
-      };
-
-      await saveComparisonResult(controllerId, result);
-      toast.success("Comparison saved successfully");
+      if (isFirstFolder) {
+        setFolder1Files(files);
+      } else {
+        setFolder2Files(files);
+      }
     } catch (error) {
-      console.error("Error comparing files:", error);
-      toast.error("Error comparing files");
-    } finally {
-      setIsComparing(false);
+      console.error("Error reading files:", error);
+      toast.error("Unable to read files in folder");
     }
   };
 
-  const handleHistorySelect = async (id: string) => {
-    toast.info("Loading historical comparisons...");
-  };
+  useEffect(() => {
+    if (
+      selectedFileType === FileType.FSU &&
+      selectedFSUSubType &&
+      activeTab === FileType.FSU
+    ) {
+      console.log("FSU subtype selected:", selectedFSUSubType);
+      setActiveTab(`fsu-${selectedFSUSubType}`);
+    }
+  }, [selectedFileType, selectedFSUSubType]);
 
   return (
-    <Card>
-      <CardHeader>
-        <h2 className="text-2xl font-bold">File Comparison</h2>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-6">
-          {(filePreview1 || filePreview2) && (
-            <div className="grid grid-cols-2 gap-6">
-              {filePreview1 && <FilePreview preview={filePreview1} />}
-              {filePreview2 && <FilePreview preview={filePreview2} />}
-            </div>
-          )}
-
-          <div className="grid grid-cols-2 gap-6">
-            <div>
-              <input
-                type="file"
-                onChange={(e) =>
-                  handleFileChange(e.target.files?.[0] || null, true)
-                }
-                className="w-full"
-              />
-            </div>
-            <div>
-              <input
-                type="file"
-                onChange={(e) =>
-                  handleFileChange(e.target.files?.[0] || null, false)
-                }
-                className="w-full"
-              />
-            </div>
+    <div className="space-y-4">
+      <div className="grid grid-cols-2 gap-4 mb-4">
+        <div className="border rounded-lg p-4">
+          <div className="flex justify-between items-center mb-2">
+            <h3 className="text-lg font-medium">Folder 1</h3>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => handleSelectFolder(true)}
+            >
+              <FolderOpen className="mr-2 h-4 w-4" />
+              Select Folder
+            </Button>
           </div>
-
-          <Button
-            onClick={handleCompare}
-            disabled={!file1 || !file2 || isComparing}
-            className="w-full"
-          >
-            {isComparing ? "Comparing..." : "Compare Files"}
-          </Button>
-
-          {statistics && <Statistics statistics={statistics} />}
-
-          <Button
-            variant="outline"
-            onClick={() => setShowHistory(!showHistory)}
-            className="w-full"
-          >
-            {showHistory ? "Hide History" : "Show Comparison History"}
-          </Button>
-
-          {showHistory && (
-            <ComparisonHistory
-              controllerId={controllerId}
-              onSelect={handleHistorySelect}
-            />
-          )}
-
-          {/* Comparison Results */}
-          {differences.length > 0 && (
-            <div className="border rounded-lg p-4">
-              <h3 className="text-lg font-semibold mb-4">Comparison Results</h3>
-              <div className="grid grid-cols-2 gap-4">
-                {/* Sol Dosya */}
-                <div className="border rounded">
-                  <div className="font-medium p-2 border-b text-sm">
-                    {file1?.name}
-                  </div>
-                  <div className="p-2">
-                    {differences.map(
-                      (line, index) =>
-                        line.type !== "added" && (
-                          <div
-                            key={`left-${index}`}
-                            className={`flex hover:bg-gray-100 ${
-                              line.type === "removed"
-                                ? "bg-red-100"
-                                : "bg-gray-50"
-                            }`}
-                          >
-                            <span className="w-[50px] text-gray-400 select-none text-right pr-3 font-mono text-xs border-r mr-3">
-                              {line.lineNumber}
-                            </span>
-                            <pre className="whitespace-pre flex-1 text-xs">
-                              {line.content || " "}
-                            </pre>
-                          </div>
-                        )
-                    )}
-                  </div>
-                </div>
-
-                {/* Sağ Dosya */}
-                <div className="border rounded">
-                  <div className="font-medium p-2 border-b text-sm">
-                    {file2?.name}
-                  </div>
-                  <div className="p-2">
-                    {differences.map(
-                      (line, index) =>
-                        line.type !== "removed" && (
-                          <div
-                            key={`right-${index}`}
-                            className={`flex hover:bg-gray-100 ${
-                              line.type === "added"
-                                ? "bg-red-100"
-                                : "bg-gray-50"
-                            }`}
-                          >
-                            <span className="w-[50px] text-gray-400 select-none text-right pr-3 font-mono text-xs border-r mr-3">
-                              {line.lineNumber}
-                            </span>
-                            <pre className="whitespace-pre flex-1 text-xs">
-                              {line.content || " "}
-                            </pre>
-                          </div>
-                        )
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
+          {folder1Name ? (
+            <p className="text-sm text-gray-600">Chosen: {folder1Name}</p>
+          ) : (
+            <p className="text-sm text-gray-400">No folder selected yet</p>
           )}
         </div>
-      </CardContent>
-    </Card>
+
+        <div className="border rounded-lg p-4">
+          <div className="flex justify-between items-center mb-2">
+            <h3 className="text-lg font-medium">Folder 2</h3>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => handleSelectFolder(false)}
+            >
+              <FolderOpen className="mr-2 h-4 w-4" />
+              Select Folder
+            </Button>
+          </div>
+          {folder2Name ? (
+            <p className="text-sm text-gray-600">Chosen: {folder2Name}</p>
+          ) : (
+            <p className="text-sm text-gray-400">No folder selected yet</p>
+          )}
+        </div>
+      </div>
+
+      <Tabs
+        defaultValue={FileType.JOB}
+        value={activeTab}
+        onValueChange={handleFileTypeChange}
+        className="grid grid-cols-5 gap-3"
+      >
+        <div className="col-span-1">
+          <TabsList className="flex flex-col h-fit border-2 gap-0">
+            {FILE_TYPE_CONFIGS.filter(
+              (config) => config.type !== FileType.FSU
+            ).map((fileTypeConfig) => (
+              <TabsTrigger
+                key={fileTypeConfig.type}
+                value={fileTypeConfig.type}
+                className="w-full text-sm font-medium mb-1"
+              >
+                {fileTypeConfig.label}
+              </TabsTrigger>
+            ))}
+
+            <TabsTrigger
+              key={FileType.FSU}
+              value={FileType.FSU}
+              className={`w-full text-sm font-bold mb-0 ${
+                selectedFileType === FileType.FSU
+                  ? "bg-primary text-primary-foreground"
+                  : ""
+              }`}
+            >
+              FSU
+            </TabsTrigger>
+
+            {selectedFileType === FileType.FSU && (
+              <div className="border-t-0 border-b border-l border-r border-gray-200 bg-gray-50 overflow-hidden">
+                {FSU_SUBTYPE_CONFIGS.map((fsuSubTypeConfig, index) => (
+                  <TabsTrigger
+                    key={`fsu-${fsuSubTypeConfig.type}`}
+                    value={`fsu-${fsuSubTypeConfig.type}`}
+                    className={`w-full text-sm pl-6 border-l-4 rounded-none ${
+                      activeTab === `fsu-${fsuSubTypeConfig.type}`
+                        ? "bg-white text-primary border-primary"
+                        : "bg-gray-50 text-gray-700 border-gray-200"
+                    } ${index !== 0 ? "border-t border-gray-200" : ""}`}
+                  >
+                    {fsuSubTypeConfig.label}
+                  </TabsTrigger>
+                ))}
+              </div>
+            )}
+          </TabsList>
+        </div>
+
+        <div className="col-span-4">
+          {FILE_TYPE_CONFIGS.filter(
+            (config) => config.type !== FileType.FSU
+          ).map((fileTypeConfig) => (
+            <TabsContent key={fileTypeConfig.type} value={fileTypeConfig.type}>
+              <FileComparison
+                controllerId={controllerId}
+                fileType={fileTypeConfig.type}
+                folder1Files={folder1Files}
+                folder2Files={folder2Files}
+                folder1Name={folder1Name}
+                folder2Name={folder2Name}
+              />
+            </TabsContent>
+          ))}
+
+          <TabsContent value={FileType.FSU}>
+            {selectedFSUSubType && (
+              <FSUComparison
+                controllerId={controllerId}
+                selectedSubType={selectedFSUSubType}
+                folder1Files={folder1Files}
+                folder2Files={folder2Files}
+                folder1Name={folder1Name}
+                folder2Name={folder2Name}
+              />
+            )}
+          </TabsContent>
+
+          {FSU_SUBTYPE_CONFIGS.map((fsuSubTypeConfig) => (
+            <TabsContent
+              key={`fsu-${fsuSubTypeConfig.type}`}
+              value={`fsu-${fsuSubTypeConfig.type}`}
+            >
+              <FSUComparison
+                controllerId={controllerId}
+                selectedSubType={fsuSubTypeConfig.type}
+                folder1Files={folder1Files}
+                folder2Files={folder2Files}
+                folder1Name={folder1Name}
+                folder2Name={folder2Name}
+              />
+            </TabsContent>
+          ))}
+        </div>
+      </Tabs>
+    </div>
   );
 };
 
