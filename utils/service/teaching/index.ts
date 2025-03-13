@@ -78,7 +78,6 @@ export const deleteComparison = async (
   comparisonId: string
 ): Promise<void> => {
   try {
-    // URL'yi query parameter olarak gönder
     const response = await fetch(
       `/api/controller/${controllerId}/teaching/compare?comparisonId=${comparisonId}`,
       {

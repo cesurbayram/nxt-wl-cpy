@@ -2,6 +2,10 @@ import {
   FilePreview,
   DiffResult,
   ComparisonStatistics,
+  FileType,
+  FSUSubType,
+  FILE_TYPE_CONFIGS,
+  FSU_SUBTYPE_CONFIGS,
 } from "@/types/teaching.types";
 
 export const getFileFormat = (fileName: string): string => {
@@ -10,22 +14,7 @@ export const getFileFormat = (fileName: string): string => {
 };
 
 export const isValidFormat = (format: string): boolean => {
-  const allowedFormats = [
-    // "txt",
-    // "js",
-    // "ts",
-    // "json",
-    // "html",
-    // "css",
-    // "md",
-    "jbi",
-    "dat",
-    "cnd",
-    "prm",
-    "sys",
-    "lst",
-    "log",
-  ];
+  const allowedFormats = ["jbi", "dat", "cnd", "prm", "sys", "lst", "log"];
   return allowedFormats.includes(format);
 };
 
@@ -72,4 +61,65 @@ export const calculateStatistics = (
     unchangedLines,
     similarityPercentage,
   };
+};
+
+export const isFileMatchingType = (
+  fileName: string,
+  fileType: FileType
+): boolean => {
+  const config = FILE_TYPE_CONFIGS.find((config) => config.type === fileType);
+  if (!config) return false;
+
+  if (config.specificFiles) {
+    return config.specificFiles.some(
+      (specificFile) => fileName.toLowerCase() === specificFile.toLowerCase()
+    );
+  }
+
+  if (config.fileExtensions) {
+    return config.fileExtensions.some((ext) =>
+      fileName.toLowerCase().endsWith(ext.toLowerCase())
+    );
+  }
+
+  return false;
+};
+
+export const isFileMatchingFSUSubType = (
+  fileName: string,
+  subType: FSUSubType
+): boolean => {
+  const config = FSU_SUBTYPE_CONFIGS.find((config) => config.type === subType);
+  if (!config) return false;
+
+  return (
+    config.specificFiles?.some(
+      (specificFile) => fileName.toLowerCase() === specificFile.toLowerCase()
+    ) || false
+  );
+};
+
+export const filterFilesByType = (
+  files: File[],
+  fileType: FileType
+): File[] => {
+  if (fileType === FileType.FSU) {
+    return files.filter((file) =>
+      FSU_SUBTYPE_CONFIGS.some((config) =>
+        config.specificFiles?.some(
+          (specificFile) =>
+            file.name.toLowerCase() === specificFile.toLowerCase()
+        )
+      )
+    );
+  }
+
+  return files.filter((file) => isFileMatchingType(file.name, fileType));
+};
+
+export const filterFilesByFSUSubType = (
+  files: File[],
+  subType: FSUSubType
+): File[] => {
+  return files.filter((file) => isFileMatchingFSUSubType(file.name, subType));
 };
