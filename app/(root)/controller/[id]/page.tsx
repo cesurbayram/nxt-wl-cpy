@@ -18,6 +18,7 @@ import Job from "@/components/controller/job/job";
 import { sendTabExitCommand } from "@/utils/service/tab-exit";
 import Timer from "@/components/shared/timer";
 import { Teaching } from "@/components/controller/data-analysis/teaching/teaching";
+import Monitoring from "@/components/controller/monitoring/monitoring";
 
 const tabItems = [
   {
@@ -107,7 +108,9 @@ const Page = ({ params }: { params: { id: string } }) => {
   const handleTabChange = async (value: string) => {
     if (
       previousTab.current &&
-      ["inputOutput", "variable", "job"].includes(previousTab.current)
+      ["inputOutput", "variable", "job", "monitoring"].includes(
+        previousTab.current
+      )
     ) {
       try {
         await sendTabExitCommand({
@@ -197,6 +200,9 @@ const Page = ({ params }: { params: { id: string } }) => {
               </TabsContent>
               <TabsContent value="job">
                 <Job controllerId={params.id} />
+              </TabsContent>
+              <TabsContent value="monitoring">
+                <Monitoring controllerId={params.id} />
               </TabsContent>
               <TabsContent value="datanal">
                 <Teaching controllerId={params.id} />
