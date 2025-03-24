@@ -39,5 +39,33 @@ const sendTorkCommand = async (controllerId: string): Promise<boolean> => {
 
   return true;
 };
+const clearTorkData = async (controllerId: string): Promise<void> => {
+  console.log(`Attempting to clear tork data for controller: ${controllerId}`);
+  try {
+    const response = await fetch(
+      `/api/controller/${controllerId}/monitoring/tork/clear`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-export { getTorkData, sendTorkCommand };
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error(
+        `Clear tork data failed with status: ${response.status}, error: ${errorText}`
+      );
+      throw new Error(`Failed to clear tork data: ${errorText}`);
+    }
+
+    const result = await response.json();
+    console.log("Clear tork data response:", result);
+  } catch (error) {
+    console.error("Exception clearing tork data:", error);
+    throw error;
+  }
+};
+
+export { getTorkData, sendTorkCommand, clearTorkData };
