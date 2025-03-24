@@ -4,7 +4,11 @@ import { useState, useEffect, useRef } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import TorkChart from "@/components/controller/monitoring/tork/tork-chart";
 import Timer from "@/components/shared/timer";
-import { getTorkData, sendTorkCommand } from "@/utils/service/monitoring/tork";
+import {
+  getTorkData,
+  sendTorkCommand,
+  clearTorkData,
+} from "@/utils/service/monitoring/tork";
 import { TorkData } from "@/types/tork.types";
 
 interface TorkProps {
@@ -58,6 +62,18 @@ const Tork = ({ controllerId }: TorkProps) => {
       sendTorkRequest(controllerId);
       fetchTorkData(true);
     }
+
+    return () => {
+      const cleanup = async () => {
+        try {
+          await clearTorkData(controllerId);
+          console.log("Tork data cleared on component unmount");
+        } catch (error) {
+          console.error("Failed to clear tork data on unmount:", error);
+        }
+      };
+      cleanup();
+    };
   }, [controllerId]);
 
   if (isLoading) {

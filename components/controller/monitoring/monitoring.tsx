@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Tork from "./tork/tork";
+import { clearTorkData } from "@/utils/service/monitoring/tork";
 
 const tabItems = [
   {
@@ -17,6 +18,23 @@ interface MonitoringProps {
 
 const Monitoring = ({ controllerId }: MonitoringProps) => {
   const [activeTab, setActiveTab] = useState("tork");
+  const [prevActiveTab, setPrevActiveTab] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (prevActiveTab === "tork" && activeTab !== "tork") {
+      const clearData = async () => {
+        try {
+          await clearTorkData(controllerId);
+          console.log("Tork data cleared successfully");
+        } catch (error) {
+          console.error("Failed to clear tork data:", error);
+        }
+      };
+      clearData();
+    }
+
+    setPrevActiveTab(activeTab);
+  }, [activeTab, controllerId, prevActiveTab]);
 
   return (
     <Tabs
