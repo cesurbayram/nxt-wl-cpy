@@ -8,6 +8,7 @@ interface AlarmListProps {
   alarms: Alarm[];
   activeTab: string;
   ipAddress: string;
+  name: string;
   activeType?: string;
 }
 
@@ -15,6 +16,7 @@ const AlarmList = ({
   alarms,
   activeTab,
   ipAddress,
+  name,
   activeType,
 }: AlarmListProps) => {
   const columns: ColumnDef<Alarm>[] = [
@@ -78,9 +80,9 @@ const AlarmList = ({
     let fileName = "";
 
     if (activeTab === "almhist") {
-      fileName = `${ipAddress}_${timestamp}_${activeType?.toLowerCase()}_${activeTab}.xlsx`;
+      fileName = `${name}_${ipAddress}_${timestamp}_${activeType?.toLowerCase()}_${activeTab}.xlsx`;
     } else {
-      fileName = `${ipAddress}_${timestamp}_${activeTab}.xlsx`;
+      fileName = `${name}_${ipAddress}_${timestamp}_${activeTab}.xlsx`;
     }
 
     XLSX.writeFile(workbook, fileName);

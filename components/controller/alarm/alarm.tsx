@@ -4,6 +4,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TabsContent } from "@radix-ui/react-tabs";
 import { useState, useEffect, useRef } from "react";
 import { getAlarmsByControllerId } from "@/utils/service/alarm";
+import { getControllerById } from "@/utils/service/controller";
 import AlarmList from "./alarm-list";
 import { Alarm } from "@/types/alarm.types";
 import Timer from "@/components/shared/timer";
@@ -27,21 +28,38 @@ const almhistTypes = [
   { label: "OFF-LINE", value: "OFF-LINE" },
 ];
 
-const AlarmTabs = ({
-  controllerId,
-  ipAddress,
-}: {
-  controllerId: string;
-  ipAddress: string;
-}) => {
+const AlarmTabs = ({ controllerId }: { controllerId: string }) => {
   const [activeTab, setActiveTab] = useState("detected");
   const [activeType, setActiveType] = useState("MAJOR");
   const [alarms, setAlarms] = useState<Alarm[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
+  const [controllerInfo, setControllerInfo] = useState({
+    name: "",
+    ipAddress: "",
+  });
   const isFirstRender = useRef(true);
   const currentTabRef = useRef(activeTab);
   const currentTypeRef = useRef(activeType);
+
+  useEffect(() => {
+    const fetchControllerInfo = async () => {
+      try {
+        const controller = await getControllerById(controllerId);
+        setControllerInfo({
+          name: controller.name || "",
+          ipAddress: controller.ipAddress || "",
+        });
+      } catch (error) {
+        console.error("Error fetching controller info:", error);
+        setControllerInfo({ name: "", ipAddress: "" });
+      }
+    };
+
+    if (controllerId) {
+      fetchControllerInfo();
+    }
+  }, [controllerId]);
 
   const fetchAlarms = async (isInitialLoad: boolean = false) => {
     try {
@@ -135,7 +153,8 @@ const AlarmTabs = ({
                 <AlarmList
                   alarms={alarms}
                   activeTab={activeTab}
-                  ipAddress={ipAddress}
+                  ipAddress={controllerInfo.ipAddress}
+                  name={controllerInfo.name}
                   activeType={activeType}
                 />
               )}
