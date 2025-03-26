@@ -569,10 +569,10 @@ const TorkChart = ({
       return;
     }
 
-    const getControllerInfo = async () => {
+    const getControllerName = async () => {
       try {
         if (!controllerId) {
-          createPDF("Unknown Controller", "Unknown IP");
+          createPDF("Unknown Controller");
           return;
         }
 
@@ -584,22 +584,19 @@ const TorkChart = ({
         });
 
         if (!response.ok) {
-          createPDF("Unknown Controller", "Unknown IP");
+          createPDF("Unknown Controller");
           return;
         }
 
         const controller = await response.json();
-        createPDF(
-          controller.name || "Unknown Controller",
-          controller.ipAddress || "Unknown IP"
-        );
+        createPDF(controller.name || "Unknown Controller");
       } catch (error) {
-        console.error("Error fetching controller info:", error);
-        createPDF("Unknown Controller", "Unknown IP");
+        console.error("Error fetching controller name:", error);
+        createPDF("Unknown Controller");
       }
     };
 
-    const createPDF = (controllerName: string, ipAddress: string) => {
+    const createPDF = (controllerName: string) => {
       // Create a new PDF document
       const doc = new jsPDF();
       const pageWidth = doc.internal.pageSize.getWidth();
@@ -614,10 +611,6 @@ const TorkChart = ({
       // Add controller name
       doc.setFontSize(12);
       doc.text(`Controller: ${controllerName}`, pageWidth / 2, 25, {
-        align: "center",
-      });
-
-      doc.text(`IP Address: ${ipAddress}`, pageWidth / 2, 35, {
         align: "center",
       });
 
@@ -834,12 +827,6 @@ const TorkChart = ({
           addIndividualAxisTables(doc, finalY, exceededAxes, controllerName);
         }
       }
-
-      doc.save(
-        `${controllerName}_${ipAddress}_Torque_Report_${
-          new Date().toISOString().split("T")[0]
-        }.pdf`
-      );
     };
 
     // Helper function to add individual axis tables
@@ -1233,7 +1220,7 @@ const TorkChart = ({
     };
 
     // Start the process by getting the controller name
-    getControllerInfo();
+    getControllerName();
   };
 
   return (

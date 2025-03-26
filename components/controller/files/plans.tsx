@@ -4,6 +4,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import TimePicker from "./ui/time-picker";
 import { BackupPlan } from "@/types/files.types";
 import { createBackupPlan } from "@/utils/service/files";
+import { Save, Clock, Database } from "lucide-react";
 
 interface PlansProps {
   controllerId: string;
@@ -89,6 +90,10 @@ export default function Plans({
     ".log",
   ];
   const [isSaving, setIsSaving] = useState(false);
+  const [showInstantModal, setShowInstantModal] = useState(false);
+  const [instantSelectedFiles, setInstantSelectedFiles] = useState<string[]>(
+    []
+  );
 
   const handleDayToggle = (dayId: number) => {
     setDayPlans((prev) =>
@@ -116,6 +121,71 @@ export default function Plans({
         return day;
       })
     );
+  };
+
+  const handleInstantFileToggle = (fileType: string) => {
+    setInstantSelectedFiles((prev) =>
+      prev.includes(fileType)
+        ? prev.filter((f) => f !== fileType)
+        : [...prev, fileType]
+    );
+  };
+
+  const handleInstantSelectAll = () => {
+    setInstantSelectedFiles(
+      instantSelectedFiles.length === fileTypes.length ? [] : [...fileTypes]
+    );
+  };
+
+  const handleInstantSave = async () => {
+    try {
+      if (!controllerId) {
+        throw new Error("Controller ID is required");
+      }
+
+      if (instantSelectedFiles.length === 0) {
+        alert("Please select at least one file type");
+        return;
+      }
+
+      setIsSaving(true);
+
+      const now = new Date();
+      now.setMinutes(now.getMinutes() + 1);
+
+      const dayId = now.getDay() === 0 ? 7 : now.getDay();
+      const currentTime = `${now.getHours().toString().padStart(2, "0")}:${now
+        .getMinutes()
+        .toString()
+        .padStart(2, "0")}`;
+      const dayNames = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ];
+      const dayName = dayNames[now.getDay()];
+
+      const instantPlan = {
+        name: `Instant Backup ${dayName}`,
+        days: [dayId],
+        time: currentTime,
+        file_types: instantSelectedFiles,
+      };
+
+      await createBackupPlan(controllerId, instantPlan);
+      setShowInstantModal(false);
+      setInstantSelectedFiles([]);
+
+      onClose?.();
+    } catch (error) {
+      console.error("Instant backup creation error:", error);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleSave = async () => {
@@ -164,6 +234,92 @@ export default function Plans({
 
   return (
     <div className="space-y-4">
+      <div className="flex justify-end gap-2 mb-4">
+        <Button
+          onClick={() => setShowInstantModal(true)}
+          variant="outline"
+          className="rounded-xl bg-[#6950e8] bg-opacity-10 hover:bg-opacity-20 transition-colors text-[#6950e8] font-semibold px-6 py-1.5 shadow-sm hover:shadow-md flex items-center gap-2"
+        >
+          <Clock className="h-4 w-4" />
+          Instant Backup
+        </Button>
+      </div>
+
+      {showInstantModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-md w-full">
+            <div className="flex items-center gap-2 mb-4">
+              <Database className="h-5 w-5 text-[#6950e8]" />
+              <h3 className="text-lg font-semibold">Instant Backup</h3>
+            </div>
+            <p className="text-sm text-gray-500 mb-4 flex items-center gap-2">
+              <Clock className="h-4 w-4 text-gray-500" />
+              Creating backup for today ({new Date().toLocaleDateString()}) at
+              current time (
+              {new Date().toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+              )
+            </p>
+
+            <div className="mb-4">
+              <h4 className="text-sm font-medium mb-2">Select File Types:</h4>
+              <div className="flex flex-wrap gap-2">
+                <div className="flex items-center space-x-1 px-2 py-1 bg-[#6950e8] bg-opacity-10 rounded cursor-pointer">
+                  <Checkbox
+                    checked={instantSelectedFiles.length === fileTypes.length}
+                    onCheckedChange={handleInstantSelectAll}
+                  />
+                  <span className="text-xs">All</span>
+                </div>
+
+                {fileTypes.map((type) => (
+                  <div
+                    key={type}
+                    className="flex items-center space-x-1 px-2 py-1 bg-[#6950e8] bg-opacity-10 rounded cursor-pointer"
+                  >
+                    <Checkbox
+                      checked={instantSelectedFiles.includes(type)}
+                      onCheckedChange={() => handleInstantFileToggle(type)}
+                    />
+                    <span className="text-xs">{type}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex justify-end gap-2">
+              <Button
+                onClick={() => {
+                  setShowInstantModal(false);
+                  setInstantSelectedFiles([]);
+                }}
+                variant="outline"
+                size="sm"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleInstantSave}
+                disabled={isSaving || instantSelectedFiles.length === 0}
+                variant="default"
+                className="rounded-xl bg-[#6950e8] hover:bg-[#592be7] transition-colors text-white font-semibold flex items-center gap-2"
+                size="sm"
+              >
+                {isSaving ? (
+                  "Creating..."
+                ) : (
+                  <>
+                    <Save className="h-4 w-4" /> Create Backup
+                  </>
+                )}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="border rounded-md">
         <table className="w-full">
           <thead>
@@ -205,7 +361,6 @@ export default function Plans({
                 </td>
                 <td className="p-2 pl-8">
                   <div className="flex flex-wrap gap-1">
-                    {/* All seçeneği */}
                     <div className="flex items-center space-x-1 px-2 py-1 bg-[#6950e8] bg-opacity-10 rounded cursor-pointer">
                       <Checkbox
                         checked={day.selectedFiles.length === fileTypes.length}
