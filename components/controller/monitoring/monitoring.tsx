@@ -3,12 +3,17 @@
 import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Tork from "./tork/tork";
+import TorkExamination from "./tork-examination/tork-examination";
 import { clearTorkData } from "@/utils/service/monitoring/tork";
 
 const tabItems = [
   {
-    label: "Tork",
+    label: "Current Tork",
     value: "tork",
+  },
+  {
+    label: "Tork Examination",
+    value: "tork-examination",
   },
 ];
 
@@ -55,6 +60,10 @@ const Monitoring = ({ controllerId }: MonitoringProps) => {
 
       <TabsContent value="tork" className="col-span-4">
         <Tork controllerId={controllerId} />
+      </TabsContent>
+
+      <TabsContent value="tork-examination" className="col-span-4">
+        <TorkExamination controllerId={controllerId} />
       </TabsContent>
     </Tabs>
   );
