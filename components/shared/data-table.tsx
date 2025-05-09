@@ -18,11 +18,15 @@ import DataTablePagination from "./pagination";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  onRowClick?: (row: TData) => void;
+  selectedRowId?: string;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  onRowClick,
+  selectedRowId,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data: data ?? [],
@@ -58,6 +62,13 @@ export function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  className={`cursor-pointer ${
+                    // @ts-ignore - we know that our data has an id property
+                    selectedRowId && (row.original as any).id === selectedRowId
+                      ? "bg-blue-50"
+                      : ""
+                  }`}
+                  onClick={() => onRowClick && onRowClick(row.original)}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

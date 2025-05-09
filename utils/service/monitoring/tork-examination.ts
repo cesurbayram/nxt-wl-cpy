@@ -314,7 +314,7 @@ const sendTorkExaminationCommand = async (
         }
       }
     } else if (messageType === "Start") {
-      console.log("Start command için hazırlanan komut:", commandData);
+      console.log("Start command:", commandData);
       payload.data.values = [
         {
           duration: commandData?.duration || 5,
