@@ -14,6 +14,7 @@ import { GiAutomaticSas } from "react-icons/gi";
 import { MdProductionQuantityLimits } from "react-icons/md";
 import { IoIosSettings } from "react-icons/io";
 import { IoIosNotifications } from "react-icons/io";
+import { MdCalendarViewWeek } from "react-icons/md";
 
 const sideMenuItems = [
   {
@@ -54,6 +55,12 @@ const sideMenuItems = [
     title: "Controllers",
     icon: <GiRobotGrab size={15} />,
     link: "/controller",
+    childPages: [],
+  },
+  {
+    title: "Shifts",
+    icon: <MdCalendarViewWeek size={15} />,
+    link: "/shift",
     childPages: [],
   },
   {
