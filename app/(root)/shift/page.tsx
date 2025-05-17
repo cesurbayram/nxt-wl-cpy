@@ -24,6 +24,8 @@ import {
 import { Button } from "@/components/ui/button";
 import ShiftForm from "@/components/shift/shift-form";
 import { toast } from "sonner";
+import ProductionValueForm from "@/components/shift/production-value/production-value-form";
+import ProductionValueList from "@/components/shift/production-value/production-value-list";
 
 const tabItems = [
   {
@@ -62,6 +64,7 @@ export default function ShiftPage() {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState("shifts");
   const [selectedShift, setSelectedShift] = useState<Shift | null>(null);
+  const [productionValueRefresh, setProductionValueRefresh] = useState(0);
 
   const fetchData = async () => {
     try {
@@ -126,6 +129,10 @@ export default function ShiftPage() {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleProductionValueSuccess = () => {
+    setProductionValueRefresh((prev) => prev + 1);
   };
 
   if (loading) {
@@ -222,19 +229,23 @@ export default function ShiftPage() {
         </TabsContent>
 
         <TabsContent value="production">
-          <Card className="mb-6">
-            <CardContent className="py-6">
-              <div className="flex flex-col items-center justify-center p-8">
-                <MdCalendarViewWeek size={48} className="text-gray-400 mb-4" />
-                <h3 className="text-xl font-semibold text-gray-700">
-                  Production Values
-                </h3>
-                <p className="text-gray-500 mt-2">
-                  This feature will be available soon
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+          <div className="grid grid-cols-1 gap-6">
+            <Card className="mb-6">
+              <CardContent className="py-6">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-base text-gray-600 font-medium">
+                    Add Production Value
+                  </h3>
+                </div>
+                <ProductionValueForm onSuccess={handleProductionValueSuccess} />
+              </CardContent>
+            </Card>
+
+            <ProductionValueList
+              onDeleteSuccess={handleProductionValueSuccess}
+              refresh={productionValueRefresh}
+            />
+          </div>
         </TabsContent>
 
         <TabsContent value="maintenances">
