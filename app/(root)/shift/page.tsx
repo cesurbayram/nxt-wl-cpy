@@ -33,7 +33,7 @@ const tabItems = [
     value: "shifts",
   },
   {
-    label: "Production Values",
+    label: "Production Volume",
     value: "production",
   },
   {
@@ -234,7 +234,7 @@ export default function ShiftPage() {
               <CardContent className="py-6">
                 <div className="flex justify-between items-center mb-4">
                   <h3 className="text-base text-gray-600 font-medium">
-                    Add Production Value
+                    Add Production Volume
                   </h3>
                 </div>
                 <ProductionValueForm onSuccess={handleProductionValueSuccess} />

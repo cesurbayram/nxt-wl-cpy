@@ -90,6 +90,27 @@ const Page = ({ params }: { params: { id: string } }) => {
 
   useEffect(() => {
     fetchController();
+
+    return () => {
+      if (
+        previousTab.current &&
+        ["inputOutput", "variable", "job", "monitoring", "data"].includes(
+          previousTab.current
+        )
+      ) {
+        try {
+          sendTabExitCommand({
+            exitedTab: previousTab.current,
+            controllerId: params.id,
+          });
+        } catch (error) {
+          console.error(
+            `Failed to send ${previousTab.current} exit on page unmount:`,
+            error
+          );
+        }
+      }
+    };
   }, [params.id]);
 
   const handleStatusRefresh = async () => {
