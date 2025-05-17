@@ -8,13 +8,13 @@ import { clearTorkData } from "@/utils/service/monitoring/tork";
 
 const tabItems = [
   {
-    label: "Current Tork",
+    label: "Current Torq",
     value: "tork",
   },
-  {
-    label: "Tork Examination",
-    value: "tork-examination",
-  },
+  // {
+  //   label: "Tork Examination",
+  //   value: "tork-examination",
+  // },
 ];
 
 interface MonitoringProps {

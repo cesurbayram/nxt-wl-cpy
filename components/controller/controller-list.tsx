@@ -25,6 +25,7 @@ import Link from "next/link";
 import { BiError } from "react-icons/bi";
 import { GiRobotGrab } from "react-icons/gi";
 import { FaRegStopCircle } from "react-icons/fa";
+import { Card, CardContent } from "../ui/card";
 
 interface ControllerListProps {
   controller: Controller[];
@@ -206,7 +207,11 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
     },
   ];
 
-  return <DataTable columns={columns} data={controller} />;
+  return (
+    <div className="overflow-auto">
+      <DataTable columns={columns} data={controller} />
+    </div>
+  );
 };
 
 export default ControllerList;
