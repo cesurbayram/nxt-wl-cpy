@@ -1,10 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-    output: 'standalone',
-    // PostgreSQL bağlantısında sorun olmaması için
-    experimental: {
-        serverComponentsExternalPackages: ['pg']
-    }
-};
+const nextConfig = {};
 
 export default nextConfig;
