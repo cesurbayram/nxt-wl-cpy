@@ -10,7 +10,6 @@ export async function GET(
     const { searchParams } = new URL(request.url);
     const timeRange = searchParams.get("timeRange") || "7d";
 
-    // Zaman aralığı filtresini oluştur
     let timeFilter;
     switch (timeRange) {
       case "30d":
@@ -19,7 +18,7 @@ export async function GET(
       case "3m":
         timeFilter = "AND timestamp >= NOW() - INTERVAL '3 months'";
         break;
-      default: // '7d'
+      default:
         timeFilter = "AND timestamp >= NOW() - INTERVAL '7 days'";
         break;
     }
@@ -63,7 +62,7 @@ export async function POST(
   try {
     await client.query("BEGIN");
 
-    const newUtilizationId = uuidv4(); // Benzersiz ID oluşturma
+    const newUtilizationId = uuidv4();
 
     const query = `
       INSERT INTO utilization_data 
@@ -73,7 +72,7 @@ export async function POST(
     `;
 
     const values = [
-      newUtilizationId, // UUID
+      newUtilizationId,
       params.id,
       data.controlPowerTime,
       data.servoPowerTime,

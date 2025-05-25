@@ -4,11 +4,11 @@ import { v4 as uuidv4 } from "uuid";
 
 export interface MaintenanceLog {
   id: string;
-  maintenance_id: string; // maintenanceId yerine maintenance_id
-  maintenance_time: string; // maintenanceTime yerine maintenance_time
+  maintenance_id: string;
+  maintenance_time: string;
   technician: string;
   description?: string;
-  created_at?: string; // createdAt yerine created_at
+  created_at?: string;
   plan_name?: string;
 }
 

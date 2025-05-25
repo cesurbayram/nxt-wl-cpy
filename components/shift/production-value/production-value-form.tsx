@@ -46,7 +46,6 @@ interface ProductionValueFormProps {
   initialShiftId?: string;
 }
 
-// İş ve ürün sayısını bir arada tutmak için interface
 interface JobProductCount {
   jobId: string;
   productCount: number;
@@ -79,9 +78,6 @@ export default function ProductionValueForm({
       try {
         console.log("Fetching controllers, shifts, and jobs...");
 
-        // API isteklerini ayrı ayrı yapalım ve her birisini console'a yazdıralım
-
-        // Controllers
         console.log("Fetching controllers...");
         let controllersData: Array<{ id: string; name: string }> = [];
         try {
@@ -104,7 +100,6 @@ export default function ProductionValueForm({
           setControllers([]);
         }
 
-        // Shifts
         console.log("Fetching shifts...");
         let shiftsData: Array<{ id: string; name: string }> = [];
         try {
@@ -121,7 +116,6 @@ export default function ProductionValueForm({
           setShifts([]);
         }
 
-        // Jobs
         console.log("Fetching jobs...");
         let jobsData: Array<{ id: string; name: string }> = [];
         try {
@@ -141,7 +135,6 @@ export default function ProductionValueForm({
         console.error("Error fetching form data:", error);
         toast.error("Failed to load form data");
 
-        // Hata durumunda boş listeler
         setControllers([]);
         setShifts([]);
         setJobs([]);
@@ -154,14 +147,12 @@ export default function ProductionValueForm({
   const onSubmit = async (data: FormValues) => {
     setIsLoading(true);
     try {
-      // Seçilen işler boşsa hata göster
       if (selectedJobs.length === 0) {
         toast.error("En az bir iş seçmelisiniz");
         setIsLoading(false);
         return;
       }
 
-      // Üretim sayısı girilmemiş iş var mı kontrol et
       const invalidJob = selectedJobs.find((job) => job.productCount <= 0);
       if (invalidJob) {
         const jobName =
@@ -171,7 +162,6 @@ export default function ProductionValueForm({
         return;
       }
 
-      // Her bir seçilen iş için üretim değeri kaydet
       for (const job of selectedJobs) {
         const productionValue: ProductionValue = {
           controllerId: data.controllerId,
@@ -191,7 +181,6 @@ export default function ProductionValueForm({
         note: "",
       });
 
-      // Seçili işleri temizle
       setSelectedJobs([]);
 
       if (onSuccess) {
@@ -205,23 +194,18 @@ export default function ProductionValueForm({
     }
   };
 
-  // İş seçimini işle
   const handleJobToggle = (jobId: string) => {
     setSelectedJobs((prev) => {
-      // İş daha önce seçilmiş mi kontrol et
       const existingJobIndex = prev.findIndex((item) => item.jobId === jobId);
 
       if (existingJobIndex >= 0) {
-        // Seçilmiş ise listeden kaldır
         return prev.filter((item) => item.jobId !== jobId);
       } else {
-        // Seçilmemiş ise listeye ekle (ürün sayısı 0 olarak başla)
         return [...prev, { jobId, productCount: 0 }];
       }
     });
   };
 
-  // Ürün sayısını güncelle
   const updateProductCount = (jobId: string, count: number) => {
     setSelectedJobs((prev) =>
       prev.map((item) =>

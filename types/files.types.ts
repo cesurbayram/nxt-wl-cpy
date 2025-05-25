@@ -1,4 +1,3 @@
-// types/files.types.ts
 export interface BackupPlan {
   id: string;
   controller_id: string;

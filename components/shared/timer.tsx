@@ -11,7 +11,7 @@ import {
 } from "../ui/select";
 
 const Timer = ({ callback }: { callback: any }) => {
-  const [selectedVal, setSelectedVal] = useState<string>("1000"); // Burayı "false" yerine "1000" yaptık
+  const [selectedVal, setSelectedVal] = useState<string>("1000");
 
   const handleChange = (value: string) => {
     setSelectedVal(value);

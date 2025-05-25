@@ -1,4 +1,3 @@
-// types/maintenance.types.ts
 export interface MaintenancePlan {
   id?: string;
   controllerId: string;

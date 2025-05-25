@@ -1,4 +1,3 @@
-// services/maintenance/index.ts
 import { MaintenancePlan, MaintenanceLog } from "@/types/maintenance.types";
 
 const getMaintenancePlans = async (

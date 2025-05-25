@@ -91,7 +91,6 @@ export async function PUT(request: NextRequest) {
       [name, status, id]
     );
 
-    //Öncelikle cell içindeki line_id ler null a çekildi.
     await client.query(
       ` 
             UPDATE cell SET line_id = $1 WHERE line_id = $2

@@ -1,4 +1,3 @@
-// types/teaching.types.ts
 export interface ComparisonResult {
   id?: string;
   file1Name: string;

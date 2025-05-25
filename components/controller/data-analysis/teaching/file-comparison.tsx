@@ -75,7 +75,6 @@ const FileComparison: React.FC<FileComparisonProps> = ({
   const [filteredFiles1, setFilteredFiles1] = useState<File[]>([]);
   const [filteredFiles2, setFilteredFiles2] = useState<File[]>([]);
 
-  // Scroll senkronizasyonu için referanslar
   const leftPanelRef = useRef<HTMLDivElement>(null);
   const rightPanelRef = useRef<HTMLDivElement>(null);
 
@@ -117,7 +116,6 @@ const FileComparison: React.FC<FileComparisonProps> = ({
     }
   }, [folder1Files, folder2Files, fileType]);
 
-  // Scroll senkronizasyonu için useEffect
   useEffect(() => {
     const leftPanel = leftPanelRef.current;
     const rightPanel = rightPanelRef.current;
@@ -128,20 +126,17 @@ const FileComparison: React.FC<FileComparisonProps> = ({
       const source = e.target as HTMLDivElement;
       const target = source === leftPanel ? rightPanel : leftPanel;
 
-      // Scroll pozisyonunu senkronize et
       target.scrollTop = source.scrollTop;
     };
 
-    // Her iki panele de scroll olayı ekle
     leftPanel.addEventListener("scroll", syncScroll);
     rightPanel.addEventListener("scroll", syncScroll);
 
-    // Temizleme fonksiyonu
     return () => {
       leftPanel.removeEventListener("scroll", syncScroll);
       rightPanel.removeEventListener("scroll", syncScroll);
     };
-  }, [differences]); // differences değiştiğinde yeniden bağla
+  }, [differences]);
 
   const handleFileChange = async (file: File | null, isFirstFile: boolean) => {
     if (!file) return;

@@ -1,4 +1,3 @@
-// components/controller/data-analysis/teaching/comparison-history.tsx
 import { useState, useEffect, useRef } from "react";
 import {
   getComparisonHistory,

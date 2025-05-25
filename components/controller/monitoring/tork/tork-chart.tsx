@@ -597,31 +597,26 @@ const TorkChart = ({
     };
 
     const createPDF = (controllerName: string) => {
-      // Create a new PDF document
       const doc = new jsPDF();
       const pageWidth = doc.internal.pageSize.getWidth();
       const pageHeight = doc.internal.pageSize.getHeight();
 
-      // Add title
       doc.setFontSize(18);
       doc.text("Torque Sensor Status Report", pageWidth / 2, 15, {
         align: "center",
       });
 
-      // Add controller name
       doc.setFontSize(12);
       doc.text(`Controller: ${controllerName}`, pageWidth / 2, 25, {
         align: "center",
       });
 
-      // Add date
       const currentDate = new Date().toLocaleString();
       doc.setFontSize(10);
       doc.text(`Generated on: ${currentDate}`, pageWidth / 2, 35, {
         align: "center",
       });
 
-      // Add axis visibility information
       doc.setFontSize(12);
       doc.text("Axis Visibility:", 14, 45);
 
@@ -635,7 +630,6 @@ const TorkChart = ({
       doc.setFontSize(10);
       doc.text(visibilityText, 14, 52);
 
-      // Add time range information
       doc.setFontSize(12);
       doc.text(
         `Time Range: ${
@@ -647,15 +641,12 @@ const TorkChart = ({
         60
       );
 
-      // Add record count
       doc.text(`Total Records: ${recordCount}`, 14, 68);
 
-      // Prepare table data
       const lastData =
         chartData.length > 0 ? chartData[chartData.length - 1] : null;
 
       if (lastData) {
-        // Calculate max values
         const maxValues: Record<string, number> = {};
         Object.keys(thresholds).forEach((axis) => {
           const axisValues = chartData
@@ -665,10 +656,8 @@ const TorkChart = ({
           maxValues[axis] = axisValues.length > 0 ? Math.max(...axisValues) : 0;
         });
 
-        // Track axes that exceed threshold
         const exceededAxes: string[] = [];
 
-        // Prepare table data for general overview
         const tableData = Object.keys(thresholds).map((axis) => {
           const axisValue = lastData[axis as keyof TorkData];
           const isExceeded =
@@ -701,7 +690,6 @@ const TorkChart = ({
           ];
         });
 
-        // Add general table to PDF
         doc.setFontSize(14);
         doc.text("General Torque Status Overview", pageWidth / 2, 75, {
           align: "center",
@@ -732,7 +720,6 @@ const TorkChart = ({
             5: { cellWidth: 10 },
           },
           didDrawCell: (data) => {
-            // Add warning icon for exceeded thresholds
             if (
               data.column.index === 5 &&
               data.cell.section === "body" &&
@@ -746,36 +733,28 @@ const TorkChart = ({
           },
         });
 
-        // Get the Y position after the general table
         let finalY = (doc as any).lastAutoTable.finalY || 150;
 
-        // Add chart to PDF
-        // First, get the chart container element
         const chartContainer = document.querySelector(".recharts-wrapper");
         if (chartContainer) {
           try {
-            // Use html2canvas to capture the chart
             html2canvas(chartContainer as HTMLElement, {
               backgroundColor: "#ffffff",
               logging: false,
-              scale: 2, // Higher scale for better quality
+              scale: 2,
             })
               .then((canvas) => {
-                // Convert canvas to image data
                 const imgData = canvas.toDataURL("image/png");
 
-                // Add chart title
                 doc.setFontSize(14);
                 doc.text("Torque Values Chart", pageWidth / 2, finalY + 20, {
                   align: "center",
                 });
 
-                // Calculate dimensions to fit the chart on the page with margins
                 const margin = 20;
                 const availableWidth = pageWidth - 2 * margin;
-                const availableHeight = 180; // Limit height to leave space for individual tables
+                const availableHeight = 180;
 
-                // Calculate scaling to fit the chart
                 const scale = Math.min(
                   availableWidth / canvas.width,
                   availableHeight / canvas.height
@@ -784,10 +763,8 @@ const TorkChart = ({
                 const scaledWidth = canvas.width * scale;
                 const scaledHeight = canvas.height * scale;
 
-                // Center the chart horizontally
                 const xPos = (pageWidth - scaledWidth) / 2;
 
-                // Add the chart image
                 doc.addImage(
                   imgData,
                   "PNG",
@@ -799,7 +776,6 @@ const TorkChart = ({
 
                 finalY += 30 + scaledHeight + 20;
 
-                // Add individual tables for each axis
                 addIndividualAxisTables(
                   doc,
                   finalY,
@@ -809,7 +785,7 @@ const TorkChart = ({
               })
               .catch((error) => {
                 console.error("Error capturing chart with html2canvas:", error);
-                finalY += 20; // Add some space
+                finalY += 20;
                 addIndividualAxisTables(
                   doc,
                   finalY,
@@ -819,17 +795,16 @@ const TorkChart = ({
               });
           } catch (error) {
             console.error("Error generating chart image:", error);
-            finalY += 20; // Add some space
+            finalY += 20;
             addIndividualAxisTables(doc, finalY, exceededAxes, controllerName);
           }
         } else {
-          finalY += 20; // Add some space
+          finalY += 20;
           addIndividualAxisTables(doc, finalY, exceededAxes, controllerName);
         }
       }
     };
 
-    // Helper function to add individual axis tables
     const addIndividualAxisTables = (
       doc: jsPDF,
       startY: number,
@@ -839,13 +814,11 @@ const TorkChart = ({
       const pageWidth = doc.internal.pageSize.getWidth();
       const pageHeight = doc.internal.pageSize.getHeight();
 
-      // Check if we need to add a new page
       if (startY > pageHeight - 100) {
         doc.addPage();
         startY = 20;
       }
 
-      // Add title for individual axis data
       doc.setFontSize(14);
       doc.text("Individual Axis Data", pageWidth / 2, startY, {
         align: "center",
@@ -853,15 +826,12 @@ const TorkChart = ({
 
       let currentY = startY + 10;
 
-      // Create individual sections for each axis
       Object.keys(thresholds).forEach((axis, index) => {
-        // Check if we need to add a new page
         if (currentY > pageHeight - 100) {
           doc.addPage();
           currentY = 20;
         }
 
-        // Find all records where this axis exceeds threshold
         const exceededRecords = chartData.filter((item) => {
           const value = item[axis as keyof TorkData] as number;
           return (
@@ -870,10 +840,8 @@ const TorkChart = ({
           );
         });
 
-        // Check if this axis has any exceeded values
         const hasExceededValues = exceededRecords.length > 0;
 
-        // Add axis title with warning if any value exceeded
         doc.setFontSize(12);
         if (hasExceededValues) {
           doc.setTextColor(255, 0, 0);
@@ -883,7 +851,6 @@ const TorkChart = ({
           doc.text(`${axis}-Axis Data`, 14, currentY);
         }
 
-        // Get the last value and max value
         const lastValue =
           chartData.length > 0
             ? (chartData[chartData.length - 1][
@@ -891,14 +858,12 @@ const TorkChart = ({
               ] as number)
             : 0;
 
-        // Calculate max value
         const axisValues = chartData
           .map((item) => Math.abs(item[axis as keyof TorkData] as number))
           .filter((val) => typeof val === "number" && !isNaN(val));
 
         const maxValue = axisValues.length > 0 ? Math.max(...axisValues) : 0;
 
-        // Add threshold information
         doc.setFontSize(10);
         doc.text(
           `Threshold: ${
@@ -912,13 +877,11 @@ const TorkChart = ({
 
         currentY += 15;
 
-        // If there are exceeded values, show them in a table
         if (hasExceededValues) {
           doc.setFontSize(10);
           doc.text("Records exceeding threshold:", 14, currentY);
           currentY += 8;
 
-          // Prepare table data for exceeded records (limit to 10 most recent)
           const tableData = exceededRecords
             .slice(-10)
             .map((record) => [
@@ -930,7 +893,6 @@ const TorkChart = ({
                 : "0",
             ]);
 
-          // Add table with exceeded records
           autoTable(doc, {
             head: [["Timestamp", "Value [Nm]"]],
             body: tableData,
@@ -949,32 +911,26 @@ const TorkChart = ({
           currentY += 10;
         }
 
-        // Create a small chart for this axis
         try {
-          // Create a canvas for this axis chart
           const canvas = document.createElement("canvas");
           canvas.width = 600;
           canvas.height = 300;
           const ctx = canvas.getContext("2d");
 
           if (ctx) {
-            // Draw background
             ctx.fillStyle = "#ffffff";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Draw chart
             ctx.strokeStyle = "#000000";
             ctx.lineWidth = 1;
 
-            // Draw axes
             ctx.beginPath();
             ctx.moveTo(50, 250);
-            ctx.lineTo(550, 250); // x-axis
+            ctx.lineTo(550, 250);
             ctx.moveTo(50, 250);
-            ctx.lineTo(50, 50); // y-axis
+            ctx.lineTo(50, 50);
             ctx.stroke();
 
-            // Draw axis labels
             ctx.fillStyle = "#000000";
             ctx.font = "12px Arial";
             ctx.fillText("Time", 300, 280);
@@ -984,8 +940,7 @@ const TorkChart = ({
             ctx.fillText("Torque [Nm]", 0, 0);
             ctx.restore();
 
-            // Calculate scales
-            const dataPoints = chartData; // Use all data points
+            const dataPoints = chartData;
             const values = dataPoints.map(
               (item) => item[axis as keyof TorkData] as number
             );
@@ -994,7 +949,6 @@ const TorkChart = ({
               thresholds[axis as keyof ThresholdValues] * 1.2
             );
 
-            // Draw threshold line
             const thresholdY =
               250 - (thresholds[axis as keyof ThresholdValues] / maxVal) * 200;
             ctx.strokeStyle = "#ff0000";
@@ -1010,7 +964,6 @@ const TorkChart = ({
               thresholdY - 5
             );
 
-            // Draw data points
             ctx.strokeStyle =
               axis === "S"
                 ? "#8884d8"
@@ -1037,7 +990,6 @@ const TorkChart = ({
                 ctx.lineTo(x, y);
               }
 
-              // Mark exceeded points
               if (
                 typeof value === "number" &&
                 Math.abs(value) > thresholds[axis as keyof ThresholdValues]
@@ -1051,16 +1003,13 @@ const TorkChart = ({
 
             ctx.stroke();
 
-            // Convert canvas to image
             const imgData = canvas.toDataURL("image/png");
 
-            // Check if we need a new page for the chart
             if (currentY + 150 > pageHeight) {
               doc.addPage();
               currentY = 20;
             }
 
-            // Add chart title
             doc.setFontSize(10);
             doc.text(
               `${axis}-Axis Torque Chart (All Records - ${chartData.length})`,
@@ -1071,7 +1020,6 @@ const TorkChart = ({
               }
             );
 
-            // Add the chart image
             doc.addImage(imgData, "PNG", 14, currentY + 5, 180, 90);
 
             currentY += 100;
@@ -1083,12 +1031,9 @@ const TorkChart = ({
           currentY += 10;
         }
 
-        // Add some space between axes
         currentY += 20;
       });
 
-      // Add exceeded axes summary at the bottom
-      // Check if we need to add a new page
       if (currentY > pageHeight - 60) {
         doc.addPage();
         currentY = 20;
@@ -1101,7 +1046,6 @@ const TorkChart = ({
 
       currentY += 10;
 
-      // Update exceeded axes based on the actual data
       const updatedExceededAxes: string[] = [];
       const exceededDetails: {
         axis: string;
@@ -1111,7 +1055,6 @@ const TorkChart = ({
       }[] = [];
 
       Object.keys(thresholds).forEach((axis) => {
-        // Find all records where this axis exceeds threshold
         const exceededRecords = chartData.filter((item) => {
           const value = item[axis as keyof TorkData] as number;
           return (
@@ -1123,14 +1066,12 @@ const TorkChart = ({
         if (exceededRecords.length > 0) {
           updatedExceededAxes.push(`${axis}-Axis`);
 
-          // Calculate max value
           const axisValues = chartData
             .map((item) => Math.abs(item[axis as keyof TorkData] as number))
             .filter((val) => typeof val === "number" && !isNaN(val));
 
           const maxValue = axisValues.length > 0 ? Math.max(...axisValues) : 0;
 
-          // Get dates when threshold was exceeded (limit to 5 most recent)
           const dates = exceededRecords
             .slice(-5)
             .map((record) => new Date(record.timestamp).toLocaleString());
@@ -1151,7 +1092,6 @@ const TorkChart = ({
 
         currentY += 8;
 
-        // List each exceeded axis with its value and threshold
         exceededDetails.forEach((detail, index) => {
           doc.text(
             `${index + 1}. ${
@@ -1165,7 +1105,6 @@ const TorkChart = ({
 
           currentY += 6;
 
-          // Add dates when threshold was exceeded
           doc.setFontSize(9);
           doc.text("    Exceeded on dates:", 24, currentY);
           currentY += 5;
@@ -1179,7 +1118,6 @@ const TorkChart = ({
           currentY += 3;
         });
 
-        // Add recommendation
         currentY += 4;
         doc.text(
           "Recommendation: Calibration operation is required for the above axes.",
@@ -1197,7 +1135,6 @@ const TorkChart = ({
         );
       }
 
-      // Save the PDF
       doc.save(
         `Torque_Report_${controllerName}_${
           new Date().toISOString().split("T")[0]
@@ -1205,27 +1142,22 @@ const TorkChart = ({
       );
     };
 
-    // Helper function to finalize PDF without chart
     const finalizePDFWithoutChart = (
       doc: jsPDF,
       finalY: number,
       exceededAxes: string[],
       controllerName: string
     ) => {
-      // Add some space
       finalY += 20;
 
-      // Add individual tables for each axis
       addIndividualAxisTables(doc, finalY, exceededAxes, controllerName);
     };
 
-    // Start the process by getting the controller name
     getControllerName();
   };
 
   return (
     <Card className="p-4 overflow-hidden">
-      {/* Üst kısım - Başlık ve kontroller */}
       <CardHeader className="pb-2">
         <div className="flex justify-between items-center">
           <CardTitle>
@@ -1255,7 +1187,6 @@ const TorkChart = ({
       </CardHeader>
 
       <CardContent>
-        {/* Eşik değerlerini düzenleme formu */}
         {isEditingThresholds && (
           <div className="mb-4 p-4 border rounded-md bg-gray-50 dark:bg-gray-800">
             <h4 className="font-medium mb-2 text-foreground">
@@ -1294,16 +1225,12 @@ const TorkChart = ({
           </div>
         )}
 
-        {/* Eksen görünürlük kontrolleri */}
         {renderAxisVisibilityControls()}
 
-        {/* Zaman aralığı seçimi */}
         {renderTimeRangeSelector()}
 
-        {/* Tork sensör durumu tablosu */}
         {renderTorkTable()}
 
-        {/* Grafik */}
         {renderTorkChart()}
       </CardContent>
     </Card>
