@@ -63,7 +63,6 @@ const variableList = ({ controllerId }: { controllerId: string }) => {
 
   const listVariables = async (isInitialLoad: boolean = false) => {
     try {
-      // Sadece ilk yüklemede loading göster
       if (isInitialLoad) {
         setIsLoading(true);
       }
@@ -89,7 +88,7 @@ const variableList = ({ controllerId }: { controllerId: string }) => {
     if (controllerId && activeTab && isFirstRender.current) {
       isFirstRender.current = false;
       sendActiveTabRequest(activeTab, controllerId);
-      // İlk yüklemede loading göster
+
       listVariables(true);
     }
   }, [controllerId, activeTab]);

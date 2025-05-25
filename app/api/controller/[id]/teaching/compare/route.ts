@@ -1,4 +1,3 @@
-// app/api/controllers/[id]/teaching/compare/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { dbPool } from "@/utils/dbUtil";
 import { v4 as uuidv4 } from "uuid";
@@ -143,7 +142,6 @@ export async function DELETE(
   const client = await dbPool.connect();
 
   try {
-    // URL'den comparisonId'yi al
     const url = new URL(request.url);
     const comparisonId = url.searchParams.get("comparisonId");
 

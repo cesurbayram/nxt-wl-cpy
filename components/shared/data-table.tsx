@@ -64,7 +64,6 @@ export function DataTable<TData, TValue>({
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
                     className={`cursor-pointer ${
-                      // @ts-ignore - we know that our data has an id property
                       selectedRowId &&
                       (row.original as any).id === selectedRowId
                         ? "bg-blue-50"

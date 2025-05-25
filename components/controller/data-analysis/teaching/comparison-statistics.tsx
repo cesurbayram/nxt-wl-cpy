@@ -1,4 +1,3 @@
-// components/controller/job/teaching/comparison-statistics.tsx
 import { ComparisonStatistics } from "@/types/teaching.types";
 
 interface StatisticsProps {

@@ -100,7 +100,6 @@ const AbsoDataComponent = ({ controllerId }: AbsoDataProps) => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {/* Her zaman en son veriyi göster */}
               {[
                 { axis: "S", value: absoData[0].S },
                 { axis: "L", value: absoData[0].L },

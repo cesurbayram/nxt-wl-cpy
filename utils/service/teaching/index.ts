@@ -1,4 +1,3 @@
-// utils/service/teaching.ts
 import {
   ComparisonResult,
   ComparisonHistoryItem,

@@ -117,11 +117,9 @@ const Page = ({ params }: { params: { id: string } }) => {
   const refreshData = async () => {
     if (selectedControllerId) {
       try {
-        // Önce controller status'ı güncelle
         const controllerData = await getControllerById(selectedControllerId);
         setSelectedController(controllerData);
 
-        // Sonra utilization verilerini güncelle
         const utilizationResult = await getUtilizationData(
           selectedControllerId,
           "7d",
@@ -129,7 +127,6 @@ const Page = ({ params }: { params: { id: string } }) => {
         );
         setUtilizationData(utilizationResult);
 
-        // En son diğer verileri güncelle
         await fetchCurrentStatus(selectedControllerId);
       } catch (error) {
         console.error("Error refreshing data:", error);
@@ -143,7 +140,6 @@ const Page = ({ params }: { params: { id: string } }) => {
 
       setIsLoading(true);
       try {
-        // İlk yüklemede de aynı sırayla verileri al
         const controllerData = await getControllerById(selectedControllerId);
         setSelectedController(controllerData);
 

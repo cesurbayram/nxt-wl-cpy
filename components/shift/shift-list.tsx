@@ -69,7 +69,6 @@ const ShiftList = ({
                 if (onEditClick) {
                   onEditClick(row.original);
                 } else if (onShiftSelect) {
-                  // Otherwise just select the shift in the current view
                   onShiftSelect(row.original);
                 }
               }}

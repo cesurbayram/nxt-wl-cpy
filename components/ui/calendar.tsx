@@ -1,4 +1,3 @@
-// components/ui/calendar.tsx
 import * as React from "react";
 import { DayPicker } from "react-day-picker";
 import { cn } from "@/utils/common/cn";

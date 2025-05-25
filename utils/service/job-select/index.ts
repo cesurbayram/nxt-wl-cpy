@@ -40,7 +40,6 @@ const getJobSelectById = async (id: string): Promise<JobSelect | null> => {
   }
 };
 
-// Function for fetching jobs for production value form
 const getJobs = async () => {
   try {
     const apiRes = await fetch("/api/job-select", {

@@ -8,7 +8,6 @@ import {
   FSUSubType,
 } from "@/types/teaching.types";
 
-// Dosya adından klasör yolunu ve dosya adını ayırma
 const extractPathAndName = (
   fullPath: string
 ): { path: string; name: string } => {
@@ -18,7 +17,6 @@ const extractPathAndName = (
   return { path, name };
 };
 
-// PDF rapor oluşturma fonksiyonu
 export const generateComparisonReport = (
   comparisonResult: ComparisonResult,
   fileType: FileType | FSUSubType,
@@ -31,29 +29,23 @@ export const generateComparisonReport = (
     comparisonResult;
   const currentDate = new Date().toLocaleString();
 
-  // Dosya yollarını ve adlarını ayır
   const file1Info = extractPathAndName(file1Name);
   const file2Info = extractPathAndName(file2Name);
 
-  // Dosya adları aynı mı kontrol et
   const sameFileName = file1Info.name === file2Info.name;
 
-  // Başlık
   doc.setFontSize(18);
   doc.text(`File Comparison Report - ${typeName}`, 14, 20);
 
-  // Tarih
   doc.setFontSize(10);
   doc.text(`Creation Date: ${currentDate}`, 14, 30);
 
-  // Yönetici Özeti (Executive Summary)
   doc.setFontSize(14);
   doc.setTextColor(0, 102, 204);
   doc.text("Executive Summary", 14, 40);
   doc.setTextColor(0, 0, 0);
   doc.setFontSize(10);
 
-  // Özet metni oluştur
   const totalChanges = statistics.addedLines + statistics.removedLines;
   const changePercentage = Math.round(
     (totalChanges / statistics.totalLines) * 100
@@ -83,17 +75,14 @@ export const generateComparisonReport = (
     yPos += 5;
   });
 
-  // Görsel grafik - Benzerlik göstergesi
   const gaugeStartY = yPos + 5;
   doc.setFontSize(12);
   doc.text("Similarity Gauge:", 14, gaugeStartY);
 
-  // Gösterge çerçevesi
   doc.setDrawColor(200, 200, 200);
   doc.setLineWidth(0.5);
   doc.rect(14, gaugeStartY + 5, 100, 10);
 
-  // Benzerlik yüzdesi için dolgu
   doc.setFillColor(
     statistics.similarityPercentage < 50
       ? 220
@@ -113,40 +102,33 @@ export const generateComparisonReport = (
   );
   doc.rect(14, gaugeStartY + 5, statistics.similarityPercentage, 10, "F");
 
-  // Yüzde etiketleri
   doc.setFontSize(8);
   doc.text("0%", 14, gaugeStartY + 20);
   doc.text("50%", 64, gaugeStartY + 20);
   doc.text("100%", 114, gaugeStartY + 20);
 
-  // Benzerlik yüzdesi
   doc.setFontSize(10);
   doc.setTextColor(0, 0, 0);
   doc.text(`${statistics.similarityPercentage}%`, 118, gaugeStartY + 10);
 
-  // Değişiklik dağılımı pasta grafiği
   const pieStartY = gaugeStartY + 25;
   doc.setFontSize(12);
   doc.text("Change Distribution:", 14, pieStartY);
 
-  // Pasta grafiği yerine basit bir çubuk grafik çizelim (jsPDF'de doğrudan pasta grafiği yok)
   const barStartX = 14;
   const barWidth = 100;
   const barHeight = 10;
   const barY = pieStartY + 5;
 
-  // Değişmeyen satırlar (gri)
   const unchangedWidth =
     (statistics.unchangedLines / statistics.totalLines) * barWidth;
   doc.setFillColor(200, 200, 200);
   doc.rect(barStartX, barY, unchangedWidth, barHeight, "F");
 
-  // Eklenen satırlar (yeşil)
   const addedWidth = (statistics.addedLines / statistics.totalLines) * barWidth;
   doc.setFillColor(40, 167, 69);
   doc.rect(barStartX + unchangedWidth, barY, addedWidth, barHeight, "F");
 
-  // Silinen satırlar (kırmızı)
   const removedWidth =
     (statistics.removedLines / statistics.totalLines) * barWidth;
   doc.setFillColor(220, 53, 69);
@@ -158,7 +140,6 @@ export const generateComparisonReport = (
     "F"
   );
 
-  // Grafik açıklaması
   doc.setFontSize(8);
   doc.setFillColor(200, 200, 200);
   doc.rect(14, barY + 15, 5, 5, "F");
@@ -172,25 +153,19 @@ export const generateComparisonReport = (
   doc.rect(104, barY + 15, 5, 5, "F");
   doc.text("Removed", 112, barY + 19);
 
-  // Dosya bilgileri
   const fileInfoStartY = barY + 30;
   doc.setFontSize(12);
   doc.setTextColor(0, 0, 0);
 
-  // Klasör ve dosya bilgilerini daha anlamlı bir şekilde göster
   if (folder1Name && folder2Name) {
-    // Klasör isimleri varsa, onları kullan
     doc.text(`Source Folder: ${folder1Name}`, 14, fileInfoStartY);
     doc.text(`Target Folder: ${folder2Name}`, 14, fileInfoStartY + 8);
 
-    // Dosya isimleri
     doc.text(`File 1: ${file1Info.name}`, 14, fileInfoStartY + 16);
     doc.text(`File 2: ${file2Info.name}`, 14, fileInfoStartY + 24);
 
-    // İstatistikler tablosu için Y pozisyonunu ayarla
     var statsStartY = fileInfoStartY + 32;
   } else if (sameFileName) {
-    // Dosya adları aynıysa
     doc.text(`File: ${file1Info.name}`, 14, fileInfoStartY);
     doc.setFontSize(10);
     doc.text(
@@ -204,7 +179,6 @@ export const generateComparisonReport = (
       fileInfoStartY + 16
     );
 
-    // Dosya zaman bilgisi varsa göster
     if (
       file1Name.match(/\d{4}[-\/]\d{2}[-\/]\d{2}/) ||
       file2Name.match(/\d{4}[-\/]\d{2}[-\/]\d{2}/)
@@ -216,21 +190,17 @@ export const generateComparisonReport = (
       );
     }
 
-    // İstatistikler tablosu için Y pozisyonunu ayarla
     var statsStartY = fileInfoStartY + 32;
   } else {
-    // Farklı dosya adları
     const file1DisplayName = folder1Name ? `${file1Info.name}` : file1Name;
     const file2DisplayName = folder2Name ? `${file2Info.name}` : file2Name;
 
     doc.text(`File 1: ${file1DisplayName}`, 14, fileInfoStartY);
     doc.text(`File 2: ${file2DisplayName}`, 14, fileInfoStartY + 8);
 
-    // İstatistikler tablosu için Y pozisyonunu ayarla
     var statsStartY = fileInfoStartY + 16;
   }
 
-  // İstatistikler tablosu
   autoTable(doc, {
     startY: statsStartY,
     head: [["Statistics", "Value"]],
@@ -246,34 +216,31 @@ export const generateComparisonReport = (
     alternateRowStyles: { fillColor: [240, 240, 240] },
   });
 
-  // Değişiklik önem derecesi analizi
   const currentY = (doc as any).lastAutoTable.finalY + 10;
   doc.setFontSize(14);
   doc.setTextColor(0, 102, 204);
   doc.text("Change Impact Analysis", 14, currentY);
   doc.setTextColor(0, 0, 0);
 
-  // Değişiklik önem derecesini belirle
   let impactLevel = "Low";
-  let impactColor = [40, 167, 69]; // Yeşil
+  let impactColor = [40, 167, 69];
   let impactDescription = "Minor changes with minimal impact on functionality.";
 
   if (statistics.similarityPercentage < 50) {
     impactLevel = "Critical";
-    impactColor = [220, 53, 69]; // Kırmızı
+    impactColor = [220, 53, 69];
     impactDescription = "Major changes that significantly alter functionality.";
   } else if (statistics.similarityPercentage < 70) {
     impactLevel = "High";
-    impactColor = [255, 193, 7]; // Sarı
+    impactColor = [255, 193, 7];
     impactDescription = "Substantial changes that may affect functionality.";
   } else if (statistics.similarityPercentage < 90) {
     impactLevel = "Medium";
-    impactColor = [0, 123, 255]; // Mavi
+    impactColor = [0, 123, 255];
     impactDescription =
       "Moderate changes with potential impact on some functions.";
   }
 
-  // Önem derecesi tablosu
   autoTable(doc, {
     startY: currentY + 5,
     head: [["Impact Level", "Description", "Recommendation"]],
@@ -298,7 +265,6 @@ export const generateComparisonReport = (
     },
   });
 
-  // Değişiklik özeti
   if (statistics.addedLines > 0 || statistics.removedLines > 0) {
     const currentY2 = (doc as any).lastAutoTable.finalY + 10;
     doc.setFontSize(14);
@@ -306,7 +272,6 @@ export const generateComparisonReport = (
     doc.text("Changes Summary", 14, currentY2);
     doc.setTextColor(0, 0, 0);
 
-    // Dosya isimlerini kısaltmak için yardımcı fonksiyon
     const getShortFileName = (fileName: string) => {
       const info = extractPathAndName(fileName);
       return info.name;
@@ -315,7 +280,6 @@ export const generateComparisonReport = (
     const file1ShortName = getShortFileName(file1Name);
     const file2ShortName = getShortFileName(file2Name);
 
-    // Değişiklik özeti tablosu
     autoTable(doc, {
       startY: currentY2 + 5,
       head: [["Change Type", "Count", "Details"]],
@@ -344,30 +308,24 @@ export const generateComparisonReport = (
       alternateRowStyles: { fillColor: [240, 240, 240] },
     });
 
-    // Detaylı değişiklik tablosu
     doc.addPage();
     doc.setFontSize(16);
     doc.text("Detailed Changes", 14, 20);
 
-    // Eklenen ve silinen satırları takip etmek için diziler
     const addedRows: string[][] = [];
     const removedRows: string[][] = [];
 
-    // Satır numaralarını takip etmek için değişkenler
     let file1LineNumber = 1;
     let file2LineNumber = 1;
 
-    // Değişiklikleri işle
     differences.forEach((diff) => {
       const lines = diff.value.split("\n");
 
-      // Boş satırları atla (son satır genellikle boş olur)
       const validLines = lines.filter((line) => line.length > 0);
 
       if (validLines.length === 0) return;
 
       if (diff.added) {
-        // Eklenen satırlar için
         validLines.forEach((line) => {
           addedRows.push([
             file2LineNumber.toString(),
@@ -379,7 +337,6 @@ export const generateComparisonReport = (
           file2LineNumber++;
         });
       } else if (diff.removed) {
-        // Silinen satırlar için
         validLines.forEach((line) => {
           removedRows.push([
             file1LineNumber.toString(),
@@ -391,16 +348,14 @@ export const generateComparisonReport = (
           file1LineNumber++;
         });
       } else {
-        // Değişmeyen satırlar için sadece satır numaralarını güncelle
         file1LineNumber += validLines.length;
         file2LineNumber += validLines.length;
       }
     });
 
-    // Silinen satırlar tablosu
     if (removedRows.length > 0) {
       doc.setFontSize(14);
-      doc.setTextColor(220, 53, 69); // Kırmızı renk
+      doc.setTextColor(220, 53, 69);
 
       if (folder1Name && folder2Name) {
         doc.text(`Removed Lines (from ${folder1Name})`, 14, 30);
@@ -410,7 +365,7 @@ export const generateComparisonReport = (
         doc.text(`Removed Lines (from ${file1ShortName})`, 14, 30);
       }
 
-      doc.setTextColor(0, 0, 0); // Siyah renge geri dön
+      doc.setTextColor(0, 0, 0);
 
       autoTable(doc, {
         startY: 35,
@@ -431,16 +386,14 @@ export const generateComparisonReport = (
       });
     }
 
-    // Eklenen satırlar tablosu
     if (addedRows.length > 0) {
       const startY =
         removedRows.length > 0 ? (doc as any).lastAutoTable.finalY + 15 : 35;
 
-      // Eğer önceki tablo sayfanın çoğunu kapladıysa yeni sayfa ekle
       if (startY > 200) {
         doc.addPage();
         doc.setFontSize(14);
-        doc.setTextColor(40, 167, 69); // Yeşil renk
+        doc.setTextColor(40, 167, 69);
 
         if (folder1Name && folder2Name) {
           doc.text(`Added Lines (to ${folder2Name})`, 14, 20);
@@ -450,7 +403,7 @@ export const generateComparisonReport = (
           doc.text(`Added Lines (to ${file2ShortName})`, 14, 20);
         }
 
-        doc.setTextColor(0, 0, 0); // Siyah renge geri dön
+        doc.setTextColor(0, 0, 0);
 
         autoTable(doc, {
           startY: 25,
@@ -471,7 +424,7 @@ export const generateComparisonReport = (
         });
       } else {
         doc.setFontSize(14);
-        doc.setTextColor(40, 167, 69); // Yeşil renk
+        doc.setTextColor(40, 167, 69);
 
         if (folder1Name && folder2Name) {
           doc.text(`Added Lines (to ${folder2Name})`, 14, startY);
@@ -481,7 +434,7 @@ export const generateComparisonReport = (
           doc.text(`Added Lines (to ${file2ShortName})`, 14, startY);
         }
 
-        doc.setTextColor(0, 0, 0); // Siyah renge geri dön
+        doc.setTextColor(0, 0, 0);
 
         autoTable(doc, {
           startY: startY + 5,
@@ -503,23 +456,19 @@ export const generateComparisonReport = (
       }
     }
 
-    // Toplam değişiklik sayısı
     const totalChanges = addedRows.length + removedRows.length;
     const currentY3 = (doc as any).lastAutoTable.finalY + 10;
 
     if (currentY3 < 270) {
-      // Sayfanın altına yakın değilse
       doc.setFontSize(10);
       doc.text(`Total changes: ${totalChanges} lines`, 14, currentY3);
     }
   } else {
-    // Eğer değişiklik yoksa bilgi ver
     const currentY = (doc as any).lastAutoTable.finalY + 15;
     doc.setFontSize(12);
     doc.text("No differences found between the files.", 14, currentY);
   }
 
-  // Önemli değişiklik örnekleri sayfası ekle
   if (statistics.addedLines > 0 || statistics.removedLines > 0) {
     doc.addPage();
 
@@ -539,22 +488,19 @@ export const generateComparisonReport = (
     let exampleCount = 0;
     const maxExamples = 5;
 
-    // Dosya isimlerini al
     const exampleFile1Name = extractPathAndName(file1Name).name;
     const exampleFile2Name = extractPathAndName(file2Name).name;
 
-    // Önemli değişiklik örnekleri
     for (const diff of differences) {
       if (exampleCount >= maxExamples) break;
 
       if (diff.added || diff.removed) {
         const lines = diff.value.split("\n");
-        // Boş satırları atla
+
         const validLines = lines.filter((line) => line.trim().length > 0);
 
         if (validLines.length === 0) continue;
 
-        // Sadece ilk satırı göster
         const sampleLine =
           validLines[0].length > 80
             ? validLines[0].substring(0, 80) + "..."
@@ -563,10 +509,10 @@ export const generateComparisonReport = (
         doc.setFontSize(10);
 
         if (diff.added) {
-          doc.setTextColor(40, 167, 69); // Yeşil
+          doc.setTextColor(40, 167, 69);
           doc.text(`+ Added in ${exampleFile2Name}:`, 14, exampleYPos);
         } else {
-          doc.setTextColor(220, 53, 69); // Kırmızı
+          doc.setTextColor(220, 53, 69);
           doc.text(`- Removed from ${exampleFile1Name}:`, 14, exampleYPos);
         }
 
@@ -597,7 +543,6 @@ export const generateComparisonReport = (
       );
     }
 
-    // Tam Karşılaştırma Sayfası
     doc.addPage();
 
     doc.setFontSize(18);
@@ -612,7 +557,6 @@ export const generateComparisonReport = (
       30
     );
 
-    // Dosya başlıkları
     const comparisonFile1Name = extractPathAndName(file1Name).name;
     const comparisonFile2Name = extractPathAndName(file2Name).name;
 
@@ -623,7 +567,6 @@ export const generateComparisonReport = (
     doc.setFontSize(10);
     doc.setTextColor(0, 0, 0);
 
-    // Klasör isimleri varsa göster
     if (folder1Name && folder2Name) {
       doc.text(`${folder1Name} / ${comparisonFile1Name}`, 56, 41, {
         align: "center",
@@ -636,27 +579,23 @@ export const generateComparisonReport = (
       doc.text(comparisonFile2Name, 147, 41, { align: "center" });
     }
 
-    // Dosya içeriklerini yan yana göster
     let comparisonYPos = 50;
     const lineHeight = 6;
     const maxLinesPerPage = 35;
     let lineCount = 0;
 
-    // Dosya içeriklerini satır satır karşılaştır
-    const file1Lines = getFileLines(differences, false); // removed veya unchanged
-    const file2Lines = getFileLines(differences, true); // added veya unchanged
+    const file1Lines = getFileLines(differences, false);
+    const file2Lines = getFileLines(differences, true);
 
     const totalLines = Math.max(file1Lines.length, file2Lines.length);
     let currentLine = 0;
 
     while (currentLine < totalLines) {
-      // Sayfa doluysa yeni sayfa ekle
       if (lineCount >= maxLinesPerPage) {
         doc.addPage();
         comparisonYPos = 20;
         lineCount = 0;
 
-        // Yeni sayfada başlıkları tekrar göster
         doc.setFillColor(240, 240, 240);
         doc.rect(14, comparisonYPos, 85, 10, "F");
         doc.rect(105, comparisonYPos, 85, 10, "F");
@@ -689,27 +628,22 @@ export const generateComparisonReport = (
         comparisonYPos += 15;
       }
 
-      // Satır numarası
       doc.setFontSize(8);
       doc.setTextColor(150, 150, 150);
       doc.text(`${currentLine + 1}`, 10, comparisonYPos + 4);
       doc.text(`${currentLine + 1}`, 101, comparisonYPos + 4);
 
-      // Sol dosya satırı
       if (currentLine < file1Lines.length) {
         const line1 = file1Lines[currentLine];
 
-        // Arka plan rengi (silinen satırlar için açık kırmızı)
         if (line1.removed) {
           doc.setFillColor(255, 200, 200);
           doc.rect(14, comparisonYPos, 85, lineHeight, "F");
         }
 
-        // Satır içeriği
         doc.setFontSize(8);
         doc.setTextColor(line1.removed ? 220 : 0, 0, 0);
 
-        // Satırı kısalt
         const displayText1 =
           line1.text.length > 40
             ? line1.text.substring(0, 40) + "..."
@@ -717,21 +651,17 @@ export const generateComparisonReport = (
         doc.text(displayText1, 16, comparisonYPos + 4);
       }
 
-      // Sağ dosya satırı
       if (currentLine < file2Lines.length) {
         const line2 = file2Lines[currentLine];
 
-        // Arka plan rengi (eklenen satırlar için açık yeşil)
         if (line2.added) {
           doc.setFillColor(200, 255, 200);
           doc.rect(105, comparisonYPos, 85, lineHeight, "F");
         }
 
-        // Satır içeriği
         doc.setFontSize(8);
         doc.setTextColor(0, line2.added ? 150 : 0, 0);
 
-        // Satırı kısalt
         const displayText2 =
           line2.text.length > 40
             ? line2.text.substring(0, 40) + "..."
@@ -745,7 +675,6 @@ export const generateComparisonReport = (
     }
   }
 
-  // Sayfa numarası ekle
   const pageCount = doc.getNumberOfPages();
   for (let i = 1; i <= pageCount; i++) {
     doc.setPage(i);
@@ -761,12 +690,10 @@ export const generateComparisonReport = (
   return doc;
 };
 
-// PDF'i indirme fonksiyonu
 export const downloadPDF = (doc: jsPDF, fileName: string): void => {
   doc.save(fileName);
 };
 
-// Karşılaştırma sonucundan PDF oluşturup indirme
 export const generateAndDownloadReport = (
   comparisonResult: ComparisonResult,
   fileType: FileType | FSUSubType,
@@ -782,13 +709,9 @@ export const generateAndDownloadReport = (
     folder2Name
   );
 
-  // Dosya adını daha anlamlı hale getir
   let fileName = "";
 
-  // Dosya adını oluştur
   if (folder1Name && folder2Name) {
-    // Klasör isimlerini kullan
-    // Tarih formatını YYYY-MM-DD_HH-MM şeklinde oluştur
     const now = new Date();
     const formattedDate = `${now.getFullYear()}-${String(
       now.getMonth() + 1
@@ -797,8 +720,6 @@ export const generateAndDownloadReport = (
     ).padStart(2, "0")}-${String(now.getMinutes()).padStart(2, "0")}`;
     fileName = `${folder1Name}_vs_${folder2Name}_${typeName}_${formattedDate}.pdf`;
   } else {
-    // Dosya tipini kullan
-    // Tarih formatını YYYY-MM-DD_HH-MM şeklinde oluştur
     const now = new Date();
     const formattedDate = `${now.getFullYear()}-${String(
       now.getMonth() + 1
@@ -808,13 +729,11 @@ export const generateAndDownloadReport = (
     fileName = `analysis_${fileType}_${formattedDate}.pdf`;
   }
 
-  // Dosya adındaki boşlukları ve özel karakterleri temizle
   fileName = fileName.replace(/\s+/g, "_").replace(/[^\w.-]/g, "_");
 
   downloadPDF(doc, fileName);
 };
 
-// Önem derecesine göre tavsiye oluşturan yardımcı fonksiyon
 function getRecommendation(
   impactLevel: string,
   fileType: FileType | FSUSubType
@@ -833,7 +752,6 @@ function getRecommendation(
   }
 }
 
-// Dosya içeriğini satır satır almak için yardımcı fonksiyon
 function getFileLines(
   differences: DiffResult[],
   isSecondFile: boolean
@@ -863,11 +781,9 @@ function getFileLines(
   return lines;
 }
 
-// Parametre değişikliklerini analiz eden yardımcı fonksiyon
 function analyzeParameterChanges(differences: DiffResult[]): string[] {
   const changes: string[] = [];
 
-  // Parametre değişikliklerini bul
   const parameterPattern = /OT#\((\d+)\)/g;
   const oldParams: { [key: string]: string } = {};
   const newParams: { [key: string]: string } = {};
@@ -883,7 +799,6 @@ function analyzeParameterChanges(differences: DiffResult[]): string[] {
     }
   });
 
-  // Değişen parametreleri belirle
   for (const oldKey in oldParams) {
     if (!newParams[oldKey]) {
       changes.push(`Parameter ${oldParams[oldKey]} has been removed`);
@@ -900,9 +815,7 @@ function analyzeParameterChanges(differences: DiffResult[]): string[] {
     }
   }
 
-  // Eğer değişiklik yoksa veya çok fazla değişiklik varsa
   if (changes.length === 0) {
-    // Genel değişiklik açıklamaları ekle
     if (
       Object.keys(oldParams).length > 0 ||
       Object.keys(newParams).length > 0
@@ -910,7 +823,6 @@ function analyzeParameterChanges(differences: DiffResult[]): string[] {
       changes.push("Parameter values have been updated");
     }
   } else if (changes.length > 5) {
-    // Çok fazla değişiklik varsa özet göster
     changes.splice(
       0,
       changes.length,
@@ -922,14 +834,12 @@ function analyzeParameterChanges(differences: DiffResult[]): string[] {
   return changes;
 }
 
-// Operasyonel etkileri belirleyen yardımcı fonksiyon
 function getOperationalImpacts(
   fileType: FileType | FSUSubType,
   statistics: ComparisonStatistics
 ): string[] {
   const impacts: string[] = [];
 
-  // Değişiklik oranına göre etki belirle
   const changeRatio =
     (statistics.addedLines + statistics.removedLines) / statistics.totalLines;
 
@@ -949,7 +859,6 @@ function getOperationalImpacts(
     );
   }
 
-  // Dosya tipine göre özel etkiler
   switch (fileType) {
     case FileType.JOB:
       impacts.push(

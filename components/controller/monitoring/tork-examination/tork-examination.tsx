@@ -228,7 +228,6 @@ const TorkExamination: React.FC<TorkExaminationProps> = ({ controllerId }) => {
     setIsRefreshingSignals(true);
 
     try {
-      // 1. Önce sinyal durumlarını güncelle
       if (savedSignals.length > 0) {
         const updatedSignals = await getSavedSignals(controllerId);
 
@@ -251,7 +250,6 @@ const TorkExamination: React.FC<TorkExaminationProps> = ({ controllerId }) => {
         }
       }
 
-      // 2. Tork verilerini güncelle
       const data = await getSavedTorkExaminationData(controllerId);
 
       if (data && data.length > 0) {

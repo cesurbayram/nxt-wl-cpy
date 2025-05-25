@@ -1,4 +1,3 @@
-// app/api/controller/[id]/jobs/route.ts
 import { NextResponse } from "next/server";
 import { dbPool } from "@/utils/dbUtil";
 

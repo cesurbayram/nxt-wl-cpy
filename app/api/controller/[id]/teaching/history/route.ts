@@ -1,4 +1,3 @@
-// app/api/controllers/[id]/teaching/history/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { dbPool } from "@/utils/dbUtil";
 import { ComparisonHistoryItem } from "@/types/teaching.types";
