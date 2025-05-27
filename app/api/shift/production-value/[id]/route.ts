@@ -32,7 +32,7 @@ export async function GET(
 
     if (result.rows.length === 0) {
       return NextResponse.json(
-        { message: "Production value not found" },
+        { message: "Production volume not found" },
         { status: 404 }
       );
     }

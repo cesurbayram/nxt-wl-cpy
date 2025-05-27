@@ -188,7 +188,7 @@ export default function ProductionValueForm({
       }
     } catch (error) {
       console.error("Error saving production values:", error);
-      toast.error("Üretim değerlerini kaydetme başarısız oldu");
+      toast.error("Poduction values could not be saved. Please try again.");
     } finally {
       setIsLoading(false);
     }
