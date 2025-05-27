@@ -59,8 +59,8 @@ export default function ProductionValueList({
       const data = await getProductionValues();
       setProductionValues(data);
     } catch (error) {
-      console.error("Error fetching production values:", error);
-      toast.error("Failed to fetch production values");
+      console.error("Error fetching production volume:", error);
+      toast.error("Failed to fetch production volume data");
     } finally {
       setIsLoading(false);
     }
@@ -88,8 +88,8 @@ export default function ProductionValueList({
         onDeleteSuccess();
       }
     } catch (error) {
-      console.error("Error deleting production value:", error);
-      toast.error("Failed to delete production value");
+      console.error("Error deleting production volume:", error);
+      toast.error("Failed to delete production volume");
     } finally {
       setIsDeleting(false);
       setShowDeleteDialog(false);
@@ -100,14 +100,14 @@ export default function ProductionValueList({
     <>
       <Card>
         <CardHeader>
-          <CardTitle>Production Values</CardTitle>
+          <CardTitle>Production Volume</CardTitle>
         </CardHeader>
         <CardContent>
           {isLoading ? (
             <div className="flex justify-center py-4">Loading...</div>
           ) : productionValues.length === 0 ? (
             <div className="text-center py-6">
-              <p className="text-gray-500">No production values found</p>
+              <p className="text-gray-500">No production volume found</p>
             </div>
           ) : (
             <Table>
@@ -160,7 +160,7 @@ export default function ProductionValueList({
             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
             <AlertDialogDescription>
               This action cannot be undone. This will permanently delete the
-              production value record.
+              production volume record.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

@@ -37,7 +37,7 @@ const tabItems = [
     value: "shifts",
   },
   {
-    label: "Production Values",
+    label: "Production Volume",
     value: "production",
   },
   {
@@ -285,7 +285,7 @@ export default function ShiftDetailsPage({
                   className="text-gray-400 mb-4"
                 />
                 <h3 className="text-xl font-semibold text-gray-700">
-                  Shift Production Value
+                  Shift Production Volume
                 </h3>
                 <p className="text-gray-500 mt-2">
                   This feature will be available soon

@@ -58,7 +58,7 @@ const sideMenuItems = [
     childPages: [],
   },
   {
-    title: "Shift Management",
+    title: "Process",
     icon: <MdCalendarViewWeek size={15} />,
     link: "/shift",
     childPages: [],
