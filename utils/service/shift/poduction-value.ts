@@ -1,4 +1,5 @@
 import { ProductionValue } from "@/types/production-value.types";
+import { ProductionComparison } from "@/types/job-status.types";
 
 const getProductionValues = async (): Promise<ProductionValue[]> => {
   const apiRes = await fetch("/api/shift/production-value", {
@@ -122,6 +123,27 @@ const updateProductionValue = async (
   return true;
 };
 
+const compareProductionValues = async (
+  controllerId: string,
+  shiftId: string
+): Promise<ProductionComparison[]> => {
+  const apiRes = await fetch(
+    `/api/shift/production-value/compare?controllerId=${controllerId}&shiftId=${shiftId}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  if (apiRes.ok !== true)
+    throw new Error("An error occurred when comparing production values");
+
+  const result = await apiRes.json();
+  return result;
+};
+
 export {
   getProductionValues,
   getProductionValueById,
@@ -130,4 +152,5 @@ export {
   deleteProductionValue,
   createProductionValue,
   updateProductionValue,
+  compareProductionValues,
 };
