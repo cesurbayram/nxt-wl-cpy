@@ -35,7 +35,7 @@ const SignInPageComponent = () => {
     setIsLoading(true);
     try {
       await userLogin(values);
-      router.push("/");
+      window.location.href = "/";
     } catch (error) {
       console.error("Login failed:", error);
     } finally {
