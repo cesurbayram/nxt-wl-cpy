@@ -8,10 +8,10 @@ const userLogin = async (values: Login): Promise<boolean> => {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
   });
 
-  if (!apiRes.ok) throw new Error("An error occured when login user.");
-
+  if (!apiRes.ok) throw new Error("An error occurred when login user.");
   return true;
 };
 
@@ -21,10 +21,10 @@ const userLogout = async (): Promise<boolean> => {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
   });
 
-  if (apiRes.ok !== true) throw new Error("An error occured when logout");
-
+  if (!apiRes.ok) throw new Error("An error occurred when logout.");
   return true;
 };
 
@@ -34,11 +34,11 @@ const getUserAfterAuth = async (): Promise<User> => {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
   });
 
-  if (apiRes.ok !== true) throw new Error("An error occured when fetch user");
-  const result = await apiRes.json();
-  return result;
+  if (!apiRes.ok) throw new Error("An error occurred when fetching user.");
+  return await apiRes.json();
 };
 
 export { userLogin, userLogout, getUserAfterAuth };
