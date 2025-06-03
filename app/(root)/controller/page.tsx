@@ -1,6 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import ControllerList from "@/components/controller/controller-list";
+import ControllerCardGrid from "@/components/controller/controller-card-grid";
+import ControllerMetrics from "@/components/controller/controller-metric";
+import ControllerFilters, {
+  FilterOptions,
+} from "@/components/controller/controller-filters";
 import LoadingUi from "@/components/shared/loading-ui";
 import PageWrapper from "@/components/shared/page-wrapper";
 import { useRouter } from "next/navigation";
@@ -9,6 +14,9 @@ import { deleteController, getController } from "@/utils/service/controller";
 import { Controller } from "@/types/controller.types";
 import Timer from "@/components/shared/timer";
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Grid, Table } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 const Page = () => {
   const router = useRouter();
@@ -16,6 +24,17 @@ const Page = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [initialLoadDone, setInitialLoadDone] = useState<boolean>(false);
   const [isPending, setIsPending] = useState(false);
+  const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
+  const [filters, setFilters] = useState<FilterOptions>({
+    search: "",
+    model: "",
+    application: "",
+    status: "",
+    connection: "",
+    location: "",
+    serialNumber: "",
+    ipAddress: "",
+  });
 
   const listController = async () => {
     try {
@@ -33,6 +52,63 @@ const Page = () => {
     listController();
   }, []);
 
+  const filteredControllers = React.useMemo(() => {
+    return controller.filter((controllerItem) => {
+      if (filters.search) {
+        const searchTerm = filters.search.toLowerCase();
+        const matchesSearch =
+          controllerItem.name?.toLowerCase().includes(searchTerm) ||
+          controllerItem.ipAddress?.toLowerCase().includes(searchTerm) ||
+          controllerItem.location?.toLowerCase().includes(searchTerm) ||
+          controllerItem.serialNumber?.toLowerCase().includes(searchTerm);
+        if (!matchesSearch) return false;
+      }
+
+      if (filters.model && controllerItem.model !== filters.model) {
+        return false;
+      }
+
+      if (
+        filters.application &&
+        controllerItem.application !== filters.application
+      ) {
+        return false;
+      }
+
+      if (filters.status && controllerItem.status !== filters.status) {
+        return false;
+      }
+
+      if (filters.connection) {
+        const isConnected = controllerItem.controllerStatus?.connection;
+        if (filters.connection === "connected" && !isConnected) return false;
+        if (filters.connection === "disconnected" && isConnected) return false;
+      }
+
+      if (filters.location && controllerItem.location !== filters.location) {
+        return false;
+      }
+
+      if (filters.ipAddress) {
+        const ipTerm = filters.ipAddress.toLowerCase();
+        const matchesIP = controllerItem.ipAddress
+          ?.toLowerCase()
+          .includes(ipTerm);
+        if (!matchesIP) return false;
+      }
+
+      if (filters.serialNumber) {
+        const serialTerm = filters.serialNumber.toLowerCase();
+        const matchesSerial = controllerItem.serialNumber
+          ?.toLowerCase()
+          .includes(serialTerm);
+        if (!matchesSerial) return false;
+      }
+
+      return true;
+    });
+  }, [controller, filters]);
+
   const deleteMutation = async ({ id }: Controller) => {
     setIsPending(true);
     try {
@@ -49,6 +125,44 @@ const Page = () => {
     router.push("/controller/0");
   };
 
+  const handleFilterChange = (newFilters: FilterOptions) => {
+    setFilters(newFilters);
+  };
+
+  const handleFilterReset = () => {
+    setFilters({
+      search: "",
+      model: "",
+      application: "",
+      status: "",
+      connection: "",
+      location: "",
+      serialNumber: "",
+      ipAddress: "",
+    });
+  };
+
+  const ViewToggle = () => (
+    <div className="flex items-center gap-1 p-1 bg-muted rounded-lg">
+      <Button
+        variant={viewMode === "grid" ? "default" : "ghost"}
+        size="sm"
+        onClick={() => setViewMode("grid")}
+        className="h-8"
+      >
+        <Grid className="h-4 w-4" />
+      </Button>
+      <Button
+        variant={viewMode === "table" ? "default" : "ghost"}
+        size="sm"
+        onClick={() => setViewMode("table")}
+        className="h-8"
+      >
+        <Table className="h-4 w-4" />
+      </Button>
+    </div>
+  );
+
   return (
     <>
       <LoadingUi isLoading={loading || isPending} />
@@ -57,8 +171,9 @@ const Page = () => {
         pageTitle="Controllers"
         icon={<GiRobotGrab size={24} color="#6950e8" />}
         buttonAction={handleRouteControllerCreate}
+        headerActions={<ViewToggle />}
       >
-        <div className="grid grid-cols-1 gap-6">
+        <div className="space-y-6">
           {initialLoadDone && controller.length === 0 ? (
             <Card className="mb-6">
               <CardContent className="py-6">
@@ -75,15 +190,44 @@ const Page = () => {
             </Card>
           ) : (
             <>
+              <ControllerMetrics controllers={controller} />
+
+              <ControllerFilters
+                controllers={controller}
+                onFilterChange={handleFilterChange}
+                onReset={handleFilterReset}
+              />
+
               {controller.length > 0 && (
-                <div className="w-1/3 px-6 mb-2">
-                  <Timer callback={listController} />
+                <div className="flex justify-between items-center">
+                  <div className="w-1/3">
+                    <Timer callback={listController} />
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-muted-foreground">
+                      Showing {filteredControllers.length} of{" "}
+                      {controller.length} controllers
+                    </span>
+                    {filteredControllers.length !== controller.length && (
+                      <Badge variant="secondary" className="text-xs">
+                        Filtered
+                      </Badge>
+                    )}
+                  </div>
                 </div>
               )}
-              <ControllerList
-                controller={controller || []}
-                deleteClick={deleteMutation}
-              />
+
+              {viewMode === "grid" ? (
+                <ControllerCardGrid
+                  controllers={filteredControllers}
+                  deleteClick={deleteMutation}
+                />
+              ) : (
+                <ControllerList
+                  controller={filteredControllers}
+                  deleteClick={deleteMutation}
+                />
+              )}
             </>
           )}
         </div>
