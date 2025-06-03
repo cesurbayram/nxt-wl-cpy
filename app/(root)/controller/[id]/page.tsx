@@ -20,6 +20,7 @@ import Timer from "@/components/shared/timer";
 import { Teaching } from "@/components/controller/data-analysis/teaching/teaching";
 import Monitoring from "@/components/controller/monitoring/monitoring";
 import Data from "@/components/controller/data/data";
+import { useSearchParams } from "next/navigation";
 
 const tabItems = [
   {
@@ -73,7 +74,11 @@ const tabItems = [
 ];
 
 const Page = ({ params }: { params: { id: string } }) => {
-  const [activeTab, setActiveTab] = useState("alarm");
+  const searchParams = useSearchParams();
+  const initialTab =
+    searchParams.get("tab") || (params.id === "0" ? "create" : "alarm");
+
+  const [activeTab, setActiveTab] = useState(initialTab);
   const previousTab = useRef<string | null>(null);
   const [controller, setController] = useState<Controller | null>(null);
 
@@ -112,6 +117,13 @@ const Page = ({ params }: { params: { id: string } }) => {
       }
     };
   }, [params.id]);
+
+  useEffect(() => {
+    const tabParam = searchParams.get("tab");
+    if (tabParam && tabParam !== activeTab) {
+      setActiveTab(tabParam);
+    }
+  }, [searchParams, activeTab]);
 
   const handleStatusRefresh = async () => {
     if (params.id !== "0") {
@@ -182,7 +194,7 @@ const Page = ({ params }: { params: { id: string } }) => {
           </div>
         )}
         <Tabs
-          defaultValue={params.id == "0" ? "create" : "alarm"}
+          value={activeTab}
           className="mt-5"
           onValueChange={handleTabChange}
         >
