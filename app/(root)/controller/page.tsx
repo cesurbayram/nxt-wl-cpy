@@ -52,8 +52,10 @@ const Page = () => {
     listController();
   }, []);
 
+  // Filter controllers based on current filters
   const filteredControllers = React.useMemo(() => {
     return controller.filter((controllerItem) => {
+      // Search filter
       if (filters.search) {
         const searchTerm = filters.search.toLowerCase();
         const matchesSearch =
@@ -143,20 +145,28 @@ const Page = () => {
   };
 
   const ViewToggle = () => (
-    <div className="flex items-center gap-1 p-1 bg-muted rounded-lg">
+    <div className="flex items-center gap-1 p-1 bg-slate-100 rounded-lg">
       <Button
-        variant={viewMode === "grid" ? "default" : "ghost"}
+        variant="ghost"
         size="sm"
         onClick={() => setViewMode("grid")}
-        className="h-8"
+        className={`h-8 ${
+          viewMode === "grid"
+            ? "bg-[#6950e8] text-white hover:bg-[#6950e8]/90"
+            : "hover:bg-[#6950e8]/10 hover:text-[#6950e8]"
+        }`}
       >
         <Grid className="h-4 w-4" />
       </Button>
       <Button
-        variant={viewMode === "table" ? "default" : "ghost"}
+        variant="ghost"
         size="sm"
         onClick={() => setViewMode("table")}
-        className="h-8"
+        className={`h-8 ${
+          viewMode === "table"
+            ? "bg-[#6950e8] text-white hover:bg-[#6950e8]/90"
+            : "hover:bg-[#6950e8]/10 hover:text-[#6950e8]"
+        }`}
       >
         <Table className="h-4 w-4" />
       </Button>

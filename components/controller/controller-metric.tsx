@@ -63,10 +63,10 @@ const ControllerMetrics = ({ controllers }: ControllerMetricsProps) => {
     percentage?: number;
   }) => {
     const colorClasses = {
-      default: "text-blue-500 bg-blue-50 dark:bg-blue-950",
+      default: "text-[#6950e8] bg-[#6950e8]/10 dark:bg-[#6950e8]/20",
       success: "text-green-500 bg-green-50 dark:bg-green-950",
       danger: "text-red-500 bg-red-50 dark:bg-red-950",
-      warning: "text-yellow-500 bg-yellow-50 dark:bg-yellow-950",
+      warning: "text-amber-500 bg-amber-50 dark:bg-amber-950",
     };
 
     return (

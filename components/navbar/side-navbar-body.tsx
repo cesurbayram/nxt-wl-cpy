@@ -1,3 +1,4 @@
+"use client";
 import { FaUser } from "react-icons/fa";
 import { Button } from "../ui/button";
 import { GiRobotGrab } from "react-icons/gi";
@@ -15,24 +16,25 @@ import { MdProductionQuantityLimits } from "react-icons/md";
 import { IoIosSettings } from "react-icons/io";
 import { IoIosNotifications } from "react-icons/io";
 import { MdCalendarViewWeek } from "react-icons/md";
+import { usePathname } from "next/navigation";
 
 const sideMenuItems = [
   {
     title: "Home",
-    icon: <IoMdHome size={15} />,
+    icon: <IoMdHome size={16} />,
     link: "/",
     childPages: [],
   },
   {
     title: "Users",
-    icon: <FaUser size={15} />,
+    icon: <FaUser size={16} />,
     link: "/user",
     childPages: [],
   },
   {
     title: "Location",
     link: "",
-    icon: <FaLocationDot size={15} />,
+    icon: <FaLocationDot size={16} />,
     childPages: [
       {
         title: "Factory",
@@ -53,58 +55,73 @@ const sideMenuItems = [
   },
   {
     title: "Controllers",
-    icon: <GiRobotGrab size={15} />,
+    icon: <GiRobotGrab size={16} />,
     link: "/controller",
     childPages: [],
   },
   {
     title: "Process",
-    icon: <MdCalendarViewWeek size={15} />,
+    icon: <MdCalendarViewWeek size={16} />,
     link: "/shift",
     childPages: [],
   },
   {
     title: "Arc Welding",
-    icon: <GiLightningArc size={15} />,
+    icon: <GiLightningArc size={16} />,
     link: "#",
     childPages: [],
+    isDisabled: true,
   },
   {
     title: "Spot Welding",
-    icon: <FaHubspot size={15} />,
+    icon: <FaHubspot size={16} />,
     link: "#",
     childPages: [],
+    isDisabled: true,
   },
   {
     title: "Automated QSet",
-    icon: <GiAutomaticSas size={15} />,
+    icon: <GiAutomaticSas size={16} />,
     link: "#",
     childPages: [],
+    isDisabled: true,
   },
   {
     title: "Product",
-    icon: <MdProductionQuantityLimits size={15} />,
+    icon: <MdProductionQuantityLimits size={16} />,
     link: "#",
     childPages: [],
+    isDisabled: true,
   },
   {
     title: "Notification",
-    icon: <IoIosNotifications size={15} />,
+    icon: <IoIosNotifications size={16} />,
     link: "#",
     childPages: [],
   },
   {
     title: "Setting",
-    icon: <IoIosSettings size={15} />,
+    icon: <IoIosSettings size={16} />,
     link: "#",
     childPages: [],
   },
 ];
 
 const SideNavbarBody = () => {
+  const pathname = usePathname();
+
+  const isActive = (link: string) => {
+    if (link === "/") return pathname === "/";
+    return pathname.startsWith(link);
+  };
+
   return (
-    <div className="flex flex-col">
-      <p className="text-sm font-semibold mb-3">DASHBOARD</p>
+    <div className="flex flex-col space-y-1">
+      <div className="mb-6">
+        <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">
+          Dashboard
+        </h3>
+      </div>
 
       {sideMenuItems.map((item) => {
         if (item.childPages?.length > 0) {
@@ -117,33 +134,57 @@ const SideNavbarBody = () => {
             />
           );
         } else {
+          const active = isActive(item.link);
+          const disabled = item.isDisabled || item.link === "#";
+
           return (
-            <Button
-              asChild
-              key={item.title}
-              variant={"ghost"}
-              className={`                    
-                          flex
-                          mb-1 
-                          justify-start
-                          items-center
-                          gap-3
-                          rounded-lg
-                          hover:text-[#6950e8]
-                          text-sm
-                          text-[#6B7280]
-                          ${
-                            item.link === "#"
-                              ? "pointer-events-none opacity-70"
-                              : ""
-                          }
-                      `}
-            >
-              <Link href={item.link || "#"}>
-                {item.icon}
-                {item.title}
-              </Link>
-            </Button>
+            <div key={item.title} className="relative">
+              <Button
+                asChild
+                variant={"ghost"}
+                className={`
+                  group relative w-full h-11 px-3 mb-1
+                  flex justify-start items-center gap-3
+                  rounded-xl transition-all duration-200
+                  text-sm font-medium
+                  ${
+                    active
+                      ? "bg-gradient-to-r from-[#6950e8]/10 to-[#6950e8]/5 text-[#6950e8] border-r-2 border-[#6950e8]"
+                      : disabled
+                      ? "text-slate-400 cursor-not-allowed opacity-60"
+                      : "text-slate-600 hover:text-[#6950e8] hover:bg-slate-50"
+                  }
+                  ${
+                    !disabled && !active
+                      ? "hover:translate-x-1 hover:shadow-sm"
+                      : ""
+                  }
+                `}
+              >
+                <Link
+                  href={disabled ? "#" : item.link || "#"}
+                  className={`flex items-center gap-3 w-full ${
+                    disabled ? "pointer-events-none" : ""
+                  }`}
+                >
+                  <div
+                    className={`
+                    flex items-center justify-center w-5 h-5
+                    transition-all duration-200
+                    ${active ? "scale-110" : "group-hover:scale-105"}
+                  `}
+                  >
+                    {item.icon}
+                  </div>
+
+                  <span className="flex-1">{item.title}</span>
+
+                  {active && (
+                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-[#6950e8] rounded-r-full" />
+                  )}
+                </Link>
+              </Button>
+            </div>
           );
         }
       })}
