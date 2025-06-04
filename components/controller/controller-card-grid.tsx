@@ -177,7 +177,7 @@ const ControllerCardGrid = ({
                     variant="ghost"
                     size="sm"
                     asChild
-                    className="hover:bg-primary hover:text-primary-foreground"
+                    className="hover:bg-[#6950e8] hover:text-white"
                   >
                     <Link href={`/controller/${controller.id}`}>
                       View Details
@@ -189,7 +189,7 @@ const ControllerCardGrid = ({
                     variant="ghost"
                     size="sm"
                     asChild
-                    className="hover:bg-blue-500 hover:text-white"
+                    className="hover:bg-[#6950e8]/80 hover:text-white"
                   >
                     <Link href={`/controller/${controller.id}?tab=update`}>
                       <Settings className="h-4 w-4 mr-1" />
