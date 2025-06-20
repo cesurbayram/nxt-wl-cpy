@@ -26,6 +26,7 @@ import ShiftForm from "@/components/shift/shift-form";
 import { toast } from "sonner";
 import ProductionValueForm from "@/components/shift/production-value/production-value-form";
 import ProductionValueList from "@/components/shift/production-value/production-value-list";
+import ShiftMaintenance from "@/components/shift/maintenance/shift-maintenance";
 
 const tabItems = [
   {
@@ -249,19 +250,7 @@ export default function ShiftPage() {
         </TabsContent>
 
         <TabsContent value="maintenances">
-          <Card className="mb-6">
-            <CardContent className="py-6">
-              <div className="flex flex-col items-center justify-center p-8">
-                <MdCalendarViewWeek size={48} className="text-gray-400 mb-4" />
-                <h3 className="text-xl font-semibold text-gray-700">
-                  Maintenance
-                </h3>
-                <p className="text-gray-500 mt-2">
-                  This feature will be available soon
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+          <ShiftMaintenance />
         </TabsContent>
 
         <TabsContent value="reports">

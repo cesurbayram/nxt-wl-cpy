@@ -52,10 +52,8 @@ const Page = () => {
     listController();
   }, []);
 
-  // Filter controllers based on current filters
   const filteredControllers = React.useMemo(() => {
     return controller.filter((controllerItem) => {
-      // Search filter
       if (filters.search) {
         const searchTerm = filters.search.toLowerCase();
         const matchesSearch =

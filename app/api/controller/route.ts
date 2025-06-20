@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { dbPool } from "@/utils/dbUtil";
 import { v4 as uuidv4 } from "uuid";
-//import { Robot } from '@/types/robot.types';
-//import { Controller } from '@/types/controller.types';
 
 export interface Controller {
   id: string;
