@@ -3,6 +3,8 @@ import { dbPool } from "@/utils/dbUtil";
 import { v4 as uuidv4 } from "uuid";
 import { ProductionValue } from "@/types/production-value.types";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);

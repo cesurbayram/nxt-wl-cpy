@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { dbPool } from "@/utils/dbUtil";
 
+export const dynamic = "force-dynamic";
+
 const alarmTableMap: { [key: string]: string } = {
   detected: "alarm",
   almhist: "almhist",
