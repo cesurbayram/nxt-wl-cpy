@@ -16,6 +16,7 @@ import { MdProductionQuantityLimits } from "react-icons/md";
 import { IoIosSettings } from "react-icons/io";
 import { IoIosNotifications } from "react-icons/io";
 import { MdCalendarViewWeek } from "react-icons/md";
+import { HiDocumentReport } from "react-icons/hi";
 import { usePathname } from "next/navigation";
 
 const sideMenuItems = [
@@ -62,8 +63,19 @@ const sideMenuItems = [
   {
     title: "Process",
     icon: <MdCalendarViewWeek size={16} />,
-    link: "/shift",
-    childPages: [],
+    link: "",
+    childPages: [
+      {
+        title: "Shift",
+        link: "/shift",
+        icon: <MdCalendarViewWeek size={15} />,
+      },
+      {
+        title: "Reports",
+        link: "/shift/reports",
+        icon: <HiDocumentReport size={15} />,
+      },
+    ],
   },
   {
     title: "Arc Welding",
