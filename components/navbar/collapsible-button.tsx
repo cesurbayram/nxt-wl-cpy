@@ -25,16 +25,19 @@ const CollapsibleButton = ({
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
-  const hasActiveChild = childPages.some((child) =>
-    pathname.startsWith(child.link)
-  );
+  const hasActiveChild = childPages.some((child) => {
+    if (child.link === "/shift") {
+      return pathname === "/shift";
+    }
+    return pathname.startsWith(child.link);
+  });
   const isParentActive = hasActiveChild;
 
   useEffect(() => {
-    if (hasActiveChild && !isOpen) {
+    if (hasActiveChild) {
       setIsOpen(true);
     }
-  }, [hasActiveChild, isOpen]);
+  }, [hasActiveChild]);
 
   return (
     <>
@@ -89,7 +92,10 @@ const CollapsibleButton = ({
       >
         <div className="pl-3 pr-3 py-1 space-y-1">
           {childPages.map((item) => {
-            const isChildActive = pathname.startsWith(item.link);
+            const isChildActive =
+              item.link === "/shift"
+                ? pathname === "/shift"
+                : pathname.startsWith(item.link);
 
             return (
               <div key={item.title} className="relative">
