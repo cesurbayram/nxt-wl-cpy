@@ -17,6 +17,7 @@ import { IoIosSettings } from "react-icons/io";
 import { IoIosNotifications } from "react-icons/io";
 import { MdCalendarViewWeek } from "react-icons/md";
 import { HiDocumentReport } from "react-icons/hi";
+import { MdEmail } from "react-icons/md";
 import { usePathname } from "next/navigation";
 
 const sideMenuItems = [
@@ -74,6 +75,11 @@ const sideMenuItems = [
         title: "Reports",
         link: "/shift/reports",
         icon: <HiDocumentReport size={15} />,
+      },
+      {
+        title: "Mail Schedule",
+        link: "/mail-schedule",
+        icon: <MdEmail size={15} />,
       },
     ],
   },
