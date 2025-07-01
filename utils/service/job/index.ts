@@ -61,13 +61,16 @@ const sendJobCommand = async ({
 }: {
   controllerId: string;
 }): Promise<boolean> => {
-  const apiRes = await fetch("https://savola.fabricademo.com/api/job-socket", {
-    method: "POST",
-    body: JSON.stringify({ controllerId }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  const apiRes = await fetch(
+    "https://savolanode.fabricademo.com/api/job-socket",
+    {
+      method: "POST",
+      body: JSON.stringify({ controllerId }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 
   if (!apiRes.ok) {
     const errorData = await apiRes.json();

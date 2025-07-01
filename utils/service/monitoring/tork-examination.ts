@@ -327,7 +327,7 @@ const sendTorkExaminationCommand = async (
     console.log("Sending to tork-examination socket:", payload);
 
     const apiRes = await fetch(
-      "https://savola.fabricademo.com/api/tork-examination-socket",
+      "https://savolanode.fabricademo.com/api/tork-examination-socket",
       {
         method: "POST",
         body: JSON.stringify(payload),

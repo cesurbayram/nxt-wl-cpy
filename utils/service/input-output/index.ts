@@ -31,7 +31,7 @@ const sendInputOutputCommand = async ({
   controllerId: string;
 }): Promise<boolean> => {
   const apiRes = await fetch(
-    "https://savola.fabricademo.com/api/input-output-socket",
+    "https://savolanode.fabricademo.com/api/input-output-socket",
     {
       method: "POST",
       body: JSON.stringify({ activeInputOutput: activeTab, controllerId }),

@@ -5,13 +5,16 @@ const sendTabExitCommand = async ({
   exitedTab: string;
   controllerId: string;
 }): Promise<boolean> => {
-  const apiRes = await fetch("https://savola.fabricademo.com/api/tab-exit", {
-    method: "POST",
-    body: JSON.stringify({ exitedTab, controllerId }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  const apiRes = await fetch(
+    "https://savolanode.fabricademo.com/api/tab-exit",
+    {
+      method: "POST",
+      body: JSON.stringify({ exitedTab, controllerId }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 
   if (!apiRes.ok) {
     const errorData = await apiRes.json();

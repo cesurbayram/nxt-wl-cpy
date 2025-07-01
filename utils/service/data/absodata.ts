@@ -18,7 +18,7 @@ const getAbsoData = async (controllerId: string): Promise<AbsoData[]> => {
 
 const sendAbsoDataCommand = async (controllerId: string): Promise<boolean> => {
   const apiRes = await fetch(
-    "https://savola.fabricademo.com/api/absodata-socket",
+    "https://savolanode.fabricademo.com/api/absodata-socket",
     {
       method: "POST",
       body: JSON.stringify({ controllerId }),
