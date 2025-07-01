@@ -32,7 +32,7 @@ const sendVariableCommand = async ({
   controllerId: string;
 }): Promise<boolean> => {
   const apiRes = await fetch(
-    "https://savolanode.fabricademo.com/api/variable-socket",
+    "wss://savolanode.fabricademo.com/api/variable-socket",
     {
       method: "POST",
       body: JSON.stringify({ activeVariable: activeTab, controllerId }),
