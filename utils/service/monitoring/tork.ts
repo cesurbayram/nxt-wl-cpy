@@ -21,7 +21,7 @@ const getTorkData = async (controllerId: string): Promise<TorkData[]> => {
 
 const sendTorkCommand = async (controllerId: string): Promise<boolean> => {
   const apiRes = await fetch(
-    "wss://savolanode.fabricademo.com/api/tork-socket",
+    "https://savolanode.fabricademo.com/api/tork-socket",
     {
       method: "POST",
       body: JSON.stringify({ controllerId }),
