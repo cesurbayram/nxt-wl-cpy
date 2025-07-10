@@ -18,6 +18,34 @@ export interface Controller {
   deletedAt: string;
 }
 
+async function bulkInsert(
+  client: any,
+  tableName: string,
+  columns: string[],
+  dataRows: any[][],
+  batchSize: number = 1000
+) {
+  for (let i = 0; i < dataRows.length; i += batchSize) {
+    const batch = dataRows.slice(i, i + batchSize);
+    const values = [];
+    const params = [];
+
+    for (let j = 0; j < batch.length; j++) {
+      const row = batch[j];
+      const paramIndexes = row.map(
+        (_, colIndex) => `$${j * row.length + colIndex + 1}`
+      );
+      values.push(`(${paramIndexes.join(", ")})`);
+      params.push(...row);
+    }
+
+    const query = `INSERT INTO ${tableName} (${columns.join(
+      ", "
+    )}) VALUES ${values.join(", ")}`;
+    await client.query(query, params);
+  }
+}
+
 export async function GET(request: NextRequest) {
   try {
     const controllerDbResp = await dbPool.query(`
@@ -116,12 +144,16 @@ export async function POST(request: NextRequest) {
 
     const tables = ["b_read", "d_read", "s_read", "i_read", "r_read"];
     for (const table of tables) {
+      const readData = [];
       for (let i = 0; i < 100; i++) {
-        await client.query(
-          `INSERT INTO ${table} (id, ip_address, no, name, value, controller_id) VALUES ($1, $2, $3, $4, $5, $6)`,
-          [uuidv4(), ipAddress, i, null, "0", newRobotId]
-        );
+        readData.push([uuidv4(), ipAddress, i, null, "0", newRobotId]);
       }
+      await bulkInsert(
+        client,
+        table,
+        ["id", "ip_address", "no", "name", "value", "controller_id"],
+        readData
+      );
     }
 
     const ioGroups = [
@@ -218,37 +250,52 @@ export async function POST(request: NextRequest) {
       // },
     ];
 
+    const groupsData = [];
+    const signalsData = [];
+    const bitsData = [];
+
     for (const group of ioGroups) {
       const groupId = uuidv4();
-
-      await client.query(
-        `INSERT INTO io_group (id, name, start_byte, end_byte, controller_id)
-         VALUES ($1, $2, $3, $4, $5)`,
-        [groupId, group.name, group.start_byte, group.end_byte, newRobotId]
-      );
+      groupsData.push([
+        groupId,
+        group.name,
+        group.start_byte,
+        group.end_byte,
+        newRobotId,
+      ]);
 
       for (let byte = group.start_byte; byte <= group.end_byte; byte++) {
         const signalId = uuidv4();
-
-        await client.query(
-          `INSERT INTO io_signal (id, group_id, byte_number, description)
-           VALUES ($1, $2, $3, $4)`,
-          [signalId, groupId, byte, `${group.name} #${byte}`]
-        );
+        signalsData.push([signalId, groupId, byte, `${group.name} #${byte}`]);
 
         for (let bit = 0; bit < 8; bit++) {
           const formattedBitNumber = `#${byte}${bit} (${group.shortName} ${
             group.bitType
           }${bit + 1})`;
-
-          await client.query(
-            `INSERT INTO io_bit (id, signal_id, bit_number, name, is_active)
-             VALUES ($1, $2, $3, $4, $5)`,
-            [uuidv4(), signalId, formattedBitNumber, null, false]
-          );
+          bitsData.push([uuidv4(), signalId, formattedBitNumber, null, false]);
         }
       }
     }
+
+    await bulkInsert(
+      client,
+      "io_group",
+      ["id", "name", "start_byte", "end_byte", "controller_id"],
+      groupsData
+    );
+    await bulkInsert(
+      client,
+      "io_signal",
+      ["id", "group_id", "byte_number", "description"],
+      signalsData
+    );
+    await bulkInsert(
+      client,
+      "io_bit",
+      ["id", "signal_id", "bit_number", "name", "is_active"],
+      bitsData,
+      2000
+    );
 
     await client.query("COMMIT");
     return NextResponse.json(
@@ -322,7 +369,9 @@ export async function DELETE(request: NextRequest) {
   const client = await dbPool.connect();
   try {
     await client.query("BEGIN");
+
     await client.query(`DELETE FROM "controller" WHERE id = $1`, [id]);
+
     await client.query("COMMIT");
     return NextResponse.json(
       { message: "Controller deleted successfully" },

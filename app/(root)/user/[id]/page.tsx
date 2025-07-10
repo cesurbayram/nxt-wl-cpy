@@ -8,6 +8,7 @@ import {
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -125,9 +126,10 @@ const Page = ({ params }: { params: { id: string } }) => {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
+                    {params.id !== "0" && <FormLabel>Name</FormLabel>}
                     <FormControl className="relative">
                       <Input
-                        placeholder="Name"
+                        placeholder={params.id === "0" ? "Name" : ""}
                         {...field}
                         className={`${
                           form.formState.errors.name
@@ -145,9 +147,10 @@ const Page = ({ params }: { params: { id: string } }) => {
                 name="lastName"
                 render={({ field }) => (
                   <FormItem>
+                    {params.id !== "0" && <FormLabel>Last Name</FormLabel>}
                     <FormControl>
                       <Input
-                        placeholder="Last Name"
+                        placeholder={params.id === "0" ? "Last Name" : ""}
                         {...field}
                         className={`${
                           form.formState.errors.lastName
@@ -165,9 +168,10 @@ const Page = ({ params }: { params: { id: string } }) => {
                 name="userName"
                 render={({ field }) => (
                   <FormItem>
+                    {params.id !== "0" && <FormLabel>Username</FormLabel>}
                     <FormControl>
                       <Input
-                        placeholder="Username"
+                        placeholder={params.id === "0" ? "Username" : ""}
                         {...field}
                         className={`${
                           form.formState.errors.userName
@@ -185,9 +189,10 @@ const Page = ({ params }: { params: { id: string } }) => {
                 name="role"
                 render={({ field }) => (
                   <FormItem>
+                    {params.id !== "0" && <FormLabel>Role</FormLabel>}
                     <FormControl>
                       <Input
-                        placeholder="Role"
+                        placeholder={params.id === "0" ? "Role" : ""}
                         {...field}
                         className="h-12 rounded-lg"
                       />
@@ -201,9 +206,10 @@ const Page = ({ params }: { params: { id: string } }) => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
+                    {params.id !== "0" && <FormLabel>Email</FormLabel>}
                     <FormControl>
                       <Input
-                        placeholder="Email"
+                        placeholder={params.id === "0" ? "Email" : ""}
                         {...field}
                         className={`${
                           form.formState.errors.email
@@ -230,6 +236,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                               : ""
                           } h-12 rounded-lg`}
                           placeholder="Password"
+                          type="password"
                           {...field}
                         />
                       </FormControl>

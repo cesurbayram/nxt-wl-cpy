@@ -24,6 +24,7 @@ interface MailJob {
   report_format: string;
   status: "scheduled" | "completed" | "failed";
   is_recurring: boolean;
+  recurrence_pattern?: string;
   created_at: string;
 }
 
@@ -35,6 +36,7 @@ interface FormData {
   schedule_date: string;
   schedule_time: string;
   is_recurring: boolean;
+  recurrence_pattern: string;
 }
 
 export default function MailSchedulePage() {
@@ -61,6 +63,7 @@ export default function MailSchedulePage() {
     schedule_date: "",
     schedule_time: "",
     is_recurring: false,
+    recurrence_pattern: "none",
   });
 
   const fetchJobs = async () => {
@@ -117,6 +120,7 @@ export default function MailSchedulePage() {
           schedule_date: "",
           schedule_time: "",
           is_recurring: false,
+          recurrence_pattern: "none",
         });
         fetchJobs();
 
@@ -274,6 +278,8 @@ export default function MailSchedulePage() {
       schedule_date: job.schedule_date,
       schedule_time: job.schedule_time,
       is_recurring: job.is_recurring,
+      recurrence_pattern:
+        job.recurrence_pattern || (job.is_recurring ? "daily" : "none"),
     });
 
     setShowForm(true);
@@ -351,6 +357,7 @@ export default function MailSchedulePage() {
                   schedule_date: "",
                   schedule_time: "",
                   is_recurring: false,
+                  recurrence_pattern: "none",
                 });
               }}
             >
@@ -436,31 +443,16 @@ export default function MailSchedulePage() {
                       <label className="text-sm font-medium text-gray-700">
                         Report Name
                       </label>
-                      <select
-                        onChange={(e) => {
-                          setFormData((prev) => ({
-                            ...prev,
-                            report_name: e.target.value,
-                          }));
-                        }}
+                      <input
+                        type="text"
+                        name="report_name"
                         value={formData.report_name}
+                        onChange={handleInputChange}
+                        placeholder="Enter custom report name"
                         className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:bg-gray-100"
                         disabled={!selectedReportType}
                         required
-                      >
-                        <option value="" disabled hidden>
-                          {selectedReportType
-                            ? reportNames.length > 0
-                              ? "Select Report Name"
-                              : "No reports found for this type"
-                            : "Select Report Type First"}
-                        </option>
-                        {reportNames.map((report, index) => (
-                          <option key={index} value={report.name}>
-                            {report.name}
-                          </option>
-                        ))}
-                      </select>
+                      />
                     </div>
 
                     <div className="space-y-2">
@@ -570,21 +562,34 @@ export default function MailSchedulePage() {
                     </div>
                   </div>
 
-                  <div className="flex items-center space-x-3 p-3 bg-white rounded-lg border border-green-200">
-                    <input
-                      type="checkbox"
-                      id="is_recurring"
-                      name="is_recurring"
-                      checked={formData.is_recurring}
-                      onChange={handleInputChange}
-                      className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
-                    />
-                    <label
-                      htmlFor="is_recurring"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      Recurring Task
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-gray-700">
+                      Recurring Schedule
                     </label>
+                    <select
+                      name="recurrence_pattern"
+                      value={formData.recurrence_pattern}
+                      onChange={(e) => {
+                        const pattern = e.target.value;
+                        setFormData((prev) => ({
+                          ...prev,
+                          recurrence_pattern: pattern,
+                          is_recurring: pattern !== "none",
+                        }));
+                      }}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                    >
+                      <option value="none">One-time only</option>
+                      <option value="daily">
+                        Daily - Every day at same time
+                      </option>
+                      <option value="weekly">
+                        Weekly - Every week at same time
+                      </option>
+                      <option value="monthly">
+                        Monthly - Every month at same time
+                      </option>
+                    </select>
                   </div>
                 </div>
 
@@ -605,6 +610,7 @@ export default function MailSchedulePage() {
                         schedule_date: "",
                         schedule_time: "",
                         is_recurring: false,
+                        recurrence_pattern: "none",
                       });
                     }}
                     disabled={submitting}
@@ -767,7 +773,13 @@ export default function MailSchedulePage() {
                     <div className="flex items-center gap-3">
                       {job.is_recurring && (
                         <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
-                          Recurring
+                          {job.recurrence_pattern === "daily"
+                            ? "Daily"
+                            : job.recurrence_pattern === "weekly"
+                            ? "Weekly"
+                            : job.recurrence_pattern === "monthly"
+                            ? "Monthly"
+                            : "Recurring"}
                         </span>
                       )}
                       <span

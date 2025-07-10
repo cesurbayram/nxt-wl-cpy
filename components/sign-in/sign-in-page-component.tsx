@@ -31,11 +31,16 @@ const SignInPageComponent = () => {
     resolver: zodResolver(LoginValidation),
   });
 
-  const onSubmit = async (values: z.infer<typeof LoginValidation>) => {
+  const onSubmit = async (
+    values: z.infer<typeof LoginValidation>,
+    e?: React.BaseSyntheticEvent
+  ) => {
+    e?.preventDefault();
+
     setIsLoading(true);
     try {
       await userLogin(values);
-      window.location.href = "/";
+      router.push("/");
     } catch (error) {
       console.error("Login failed:", error);
     } finally {
@@ -49,7 +54,13 @@ const SignInPageComponent = () => {
       <div className="mt-8">
         <p className="text-lg font-semibold mb-3">Login with your username!</p>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="mt-4">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="mt-4"
+            method="POST"
+            action=""
+            autoComplete="off"
+          >
             <FormField
               control={form.control}
               name="email"
@@ -64,6 +75,9 @@ const SignInPageComponent = () => {
                           ? "border-red-600 focus:border-red-800"
                           : ""
                       } h-12 rounded-lg`}
+                      type="email"
+                      autoComplete="email"
+                      name="email"
                     />
                   </FormControl>
                   <FormMessage />
@@ -85,6 +99,8 @@ const SignInPageComponent = () => {
                       placeholder="Password"
                       type="password"
                       {...field}
+                      autoComplete="current-password"
+                      name="password"
                     />
                   </FormControl>
                   <FormMessage />
@@ -92,11 +108,12 @@ const SignInPageComponent = () => {
               )}
             />
             <Button
+              type="submit"
               className="mt-6 w-full bg-[#6950e8] hover:bg-[#4e2eeb] transition-all duration-500 text-white hover:text-white"
               variant={"outline"}
               disabled={isLoading}
             >
-              Sign In
+              {isLoading ? "Signing In..." : "Sign In"}
             </Button>
           </form>
         </Form>
