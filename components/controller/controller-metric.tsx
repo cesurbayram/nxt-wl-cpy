@@ -100,12 +100,12 @@ const ControllerMetrics = ({ controllers }: ControllerMetricsProps) => {
         color="default"
       />
 
-      <MetricCard
+      {/* <MetricCard
         title="Connected"
         value={metrics.connected}
         icon={CheckCircle}
         color="success"
-      />
+      /> */}
 
       <MetricCard
         title="Active"

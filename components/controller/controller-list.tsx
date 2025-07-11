@@ -44,13 +44,13 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
       cell: ({ row }) => {
         return (
           <div className="flex gap-1 items-center">
-            <GrConnect
+            {/* <GrConnect
               title="connection"
               color={
                 row.original.controllerStatus?.connection ? "green" : "red"
               }
               size={30}
-            />
+            /> */}
             {row.original.controllerStatus?.teach === "TEACH" && (
               <FaRegHandLizard title="teach" color="green" size={30} />
             )}
