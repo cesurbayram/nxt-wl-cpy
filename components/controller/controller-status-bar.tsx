@@ -55,13 +55,13 @@ const ControllerStatusBar = ({
 
   return (
     <div className="flex gap-6 items-center px-5 -mt-1">
-      <div className="flex flex-col items-center">
+      {/* <div className="flex flex-col items-center">
         <GrConnect
           color={controllerStatus?.connection ? "green" : "red"}
           size={26}
         />
         <p className="text-xs">Connection</p>
-      </div>
+      </div> */}
       {getTeachIcon() && (
         <div className="flex flex-col items-center">
           {getTeachIcon()}

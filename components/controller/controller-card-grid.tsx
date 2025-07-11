@@ -73,12 +73,12 @@ const ControllerCardGrid = ({
 
     return (
       <div className="flex flex-wrap gap-1 mt-3">
-        <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-800">
+        {/* <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-800">
           <GrConnect color={status?.connection ? "green" : "red"} size={16} />
           <span className="text-xs font-medium">
             {status?.connection ? "Connected" : "Disconnected"}
           </span>
-        </div>
+        </div> */}
 
         {status?.teach && (
           <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-green-100 dark:bg-green-900">
