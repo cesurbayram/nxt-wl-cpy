@@ -1,6 +1,20 @@
 import Hero from "@/components/sign-in/hero";
 import { Inter } from "next/font/google";
 import "../globals.css";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "WatchLog - Sign In",
+  description: "Sign in to WatchLog",
+  icons: {
+    icon: [
+      {
+        url: "/icon.svg",
+        type: "image/svg+xml",
+      },
+    ],
+  },
+};
 
 const inter = Inter({ subsets: ["latin"] });
 
