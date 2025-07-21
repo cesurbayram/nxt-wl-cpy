@@ -1,19 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
+import { User } from "@/types/user.types";
 import { dbPool } from "@/utils/dbUtil";
-import { v4 as uuidv4 } from "uuid";
+import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
-
-export interface User {
-  id: string;
-  name: string;
-  lastName: string;
-  userName: string;
-  email: string;
-  role: string;
-  password?: string;
-  createdAt?: string;
-  updatedAt?: string;
-}
+import { v4 as uuidv4 } from "uuid";
 
 const saltRounds = 10;
 
@@ -21,15 +10,58 @@ export async function GET(request: NextRequest) {
   try {
     const userDbResp = await dbPool.query(`
             SELECT 
-            r.id, 
-            r.name, 
-            r.last_name AS "lastName", 
-            r.user_name AS "userName", 
-            r.email, 
-            r.role 
+            u.id, 
+            u.name, 
+            u.last_name AS "lastName", 
+            u.user_name AS "userName", 
+            u.email, 
+            u.role,
+            u.code,
+            u.position,
+            u.location,
+            u.employee_id,
+            e.employee_code,
+            e.name AS employee_name,
+            e.last_name AS employee_last_name,
+            e.department,
+            e.hire_date,
+            e.status AS employee_status
         FROM 
-            "users" r`);
-    const users: User[] = userDbResp.rows;
+            "users" u
+        LEFT JOIN employees e ON u.employee_id = e.id AND e.deleted_at IS NULL
+        ORDER BY u.created_at DESC`);
+
+    const users: User[] = userDbResp.rows.map((row) => ({
+      id: row.id,
+      name: row.name,
+      lastName: row.lastName,
+      userName: row.userName,
+      email: row.email,
+      role: row.role,
+      code: row.code,
+      position: row.position,
+      location: row.location,
+      employee_id: row.employee_id,
+      employee: row.employee_code
+        ? {
+            id: row.employee_id,
+            employee_code: row.employee_code,
+            name: row.employee_name,
+            last_name: row.employee_last_name,
+            department: row.department,
+            hire_date: row.hire_date,
+            status: row.employee_status,
+            email: "",
+            phone: "",
+            position: "",
+            location: "",
+            employee_role_id: "",
+            permissions: [],
+            is_active: true,
+          }
+        : undefined,
+    }));
+
     return NextResponse.json(users, { status: 200 });
   } catch (error: any) {
     console.error("DB ERROR:", error);
@@ -41,8 +73,18 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const { name, lastName, userName, email, role, password }: User =
-    await request.json();
+  const {
+    name,
+    lastName,
+    userName,
+    email,
+    role,
+    password,
+    code,
+    position,
+    location,
+    employee_id,
+  }: User = await request.json();
   const client = await dbPool.connect();
   const newUserId = uuidv4();
   try {
@@ -57,14 +99,44 @@ export async function POST(request: NextRequest) {
         { status: 409 }
       );
     }
+
+    if (employee_id) {
+      const checkEmployeeAssignment = await client.query(
+        `SELECT * FROM users WHERE employee_id = $1`,
+        [employee_id]
+      );
+
+      if (
+        checkEmployeeAssignment.rowCount &&
+        checkEmployeeAssignment.rowCount > 0
+      ) {
+        return NextResponse.json(
+          { message: "This employee is already assigned to another user!" },
+          { status: 409 }
+        );
+      }
+    }
+
     await client.query("BEGIN");
     const bcryptPassword =
       password && (await bcrypt.hash(password, saltRounds));
 
     await client.query(
-      `INSERT INTO "users" (id, name, last_name, user_name, email, role, bcrypt_password) 
-            VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-      [newUserId, name, lastName, userName, email, role, bcryptPassword]
+      `INSERT INTO "users" (id, name, last_name, user_name, email, role, code, position, location, employee_id, bcrypt_password) 
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
+      [
+        newUserId,
+        name,
+        lastName,
+        userName,
+        email,
+        role,
+        code,
+        position,
+        location,
+        employee_id,
+        bcryptPassword,
+      ]
     );
     await client.query("COMMIT");
     return NextResponse.json(
@@ -84,16 +156,54 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
-  const { id, name, lastName, userName, email, role }: User =
-    await request.json();
+  const {
+    id,
+    name,
+    lastName,
+    userName,
+    email,
+    role,
+    code,
+    position,
+    location,
+    employee_id,
+  }: User = await request.json();
   const client = await dbPool.connect();
   try {
+    if (employee_id) {
+      const checkEmployeeAssignment = await client.query(
+        `SELECT * FROM users WHERE employee_id = $1 AND id != $2`,
+        [employee_id, id]
+      );
+
+      if (
+        checkEmployeeAssignment.rowCount &&
+        checkEmployeeAssignment.rowCount > 0
+      ) {
+        return NextResponse.json(
+          { message: "This employee is already assigned to another user!" },
+          { status: 409 }
+        );
+      }
+    }
+
     await client.query("BEGIN");
     await client.query(
       `UPDATE "users" 
-            SET name = $1, last_name = $2, email = $3, role = $4, user_name= $5, updated_at = now() 
-            WHERE id = $6`,
-      [name, lastName, email, role, userName, id]
+            SET name = $1, last_name = $2, email = $3, role = $4, user_name = $5, code = $6, position = $7, location = $8, employee_id = $9, updated_at = now() 
+            WHERE id = $10`,
+      [
+        name,
+        lastName,
+        email,
+        role,
+        userName,
+        code,
+        position,
+        location,
+        employee_id,
+        id,
+      ]
     );
     await client.query("COMMIT");
     return NextResponse.json(

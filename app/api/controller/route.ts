@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { dbPool } from "@/utils/dbUtil";
 import { v4 as uuidv4 } from "uuid";
+import { NotificationService } from "@/utils/service/notification";
 
 export interface Controller {
   id: string;
@@ -298,6 +299,14 @@ export async function POST(request: NextRequest) {
     );
 
     await client.query("COMMIT");
+
+    // Send notification
+    try {
+      await NotificationService.notifyControllerAdded(newRobotId, name);
+    } catch (notificationError) {
+      console.error("Failed to send notification:", notificationError);
+    }
+
     return NextResponse.json(
       { message: "Controller created successfully" },
       { status: 201 }

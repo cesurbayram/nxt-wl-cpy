@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { dbPool } from "@/utils/dbUtil";
+import { NotificationService } from "@/utils/service/notification";
 
 export async function DELETE(
   request: NextRequest,
@@ -68,6 +69,30 @@ export async function PUT(
       )} WHERE id = $${paramIndex}`,
       updateValues
     );
+
+    try {
+      const maintenanceInfo = await dbPool.query(
+        `SELECT mh.maintenance_type, mh.maintenance_date, mh.technician, mh.notes, c.name as controller_name
+         FROM maintenance_history mh
+         JOIN controller c ON mh.controller_id = c.id
+         WHERE mh.id = $1`,
+        [id]
+      );
+
+      if (maintenanceInfo.rows.length > 0) {
+        const info = maintenanceInfo.rows[0];
+        await NotificationService.notifyMaintenanceCompleted(
+          id,
+          info.controller_name,
+          info.maintenance_type,
+          info.technician,
+          info.maintenance_date,
+          info.notes
+        );
+      }
+    } catch (notificationError) {
+      console.error("Failed to send notification:", notificationError);
+    }
 
     return NextResponse.json({
       success: true,

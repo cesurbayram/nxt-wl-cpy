@@ -60,8 +60,12 @@ const UserProfileButton = () => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant={"ghost"} size={"icon"} className="p-2 rounded-full">
-          <CgProfile size={24} />
+        <Button
+          variant={"ghost"}
+          className="flex items-center gap-2 px-3 py-1 hover:bg-accent"
+        >
+          <CgProfile size={20} />
+          <span className="text-sm font-medium">{user?.name || "User"}</span>
         </Button>
       </PopoverTrigger>
 

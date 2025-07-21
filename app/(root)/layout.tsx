@@ -40,11 +40,9 @@ export default function RootLayout({
             </div>
             <div className="flex-1 ml-64">
               <div className="h-screen overflow-y-auto">
-                <div className="px-6 bg-background">
-                  <div className="max-w-7xl w-full mx-auto">
-                    <TopNavbar />
-                    <main className="mt-4 mb-8">{children}</main>
-                  </div>
+                <div className="bg-background">
+                  <TopNavbar />
+                  <main className="p-6">{children}</main>
                 </div>
               </div>
             </div>
