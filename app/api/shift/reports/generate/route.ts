@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { dbPool } from "@/utils/dbUtil";
 import { collectReportData } from "@/utils/service/reports/data-collecter";
 import { generateReportFile } from "@/utils/service/reports/report-genarator";
+import { NotificationService } from "@/utils/service/notification";
 
 export const dynamic = "force-dynamic";
 
@@ -84,6 +85,16 @@ export async function POST(request: NextRequest) {
       description
     );
 
+    try {
+      await NotificationService.notifyReportGenerated(
+        reportId,
+        report_name,
+        normalizedFormat
+      );
+    } catch (notificationError) {
+      console.error("Failed to send notification:", notificationError);
+    }
+
     return NextResponse.json(
       {
         report_id: reportId,
@@ -132,6 +143,18 @@ async function processReportGeneration(
        WHERE id = $2`,
       [filePath, reportId]
     );
+
+    try {
+      const fileName = filePath.split("/").pop() || "report";
+      await NotificationService.notifyReportReady(
+        reportId,
+        reportType.name,
+        format,
+        fileName
+      );
+    } catch (notificationError) {
+      console.error("Failed to send notification:", notificationError);
+    }
   } catch (error: any) {
     console.error("Error in background report generation:", error);
     console.error("Error message:", error.message);
@@ -141,6 +164,16 @@ async function processReportGeneration(
       `UPDATE generated_reports SET status = 'failed' WHERE id = $1`,
       [reportId]
     );
+
+    try {
+      await NotificationService.notifyReportFailed(
+        reportId,
+        reportType.name,
+        error.message
+      );
+    } catch (notificationError) {
+      console.error("Failed to send notification:", notificationError);
+    }
   } finally {
     client.release();
   }

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { dbPool } from "@/utils/dbUtil";
 import { v4 as uuidv4 } from "uuid";
+import { NotificationService } from "@/utils/service/notification";
 
 export async function POST(request: NextRequest) {
   try {
@@ -32,6 +33,26 @@ export async function POST(request: NextRequest) {
         notes,
       ]
     );
+
+    try {
+      const controllerInfo = await dbPool.query(
+        `SELECT name FROM controller WHERE id = $1`,
+        [controller_id]
+      );
+
+      if (controllerInfo.rows.length > 0) {
+        const controller = controllerInfo.rows[0];
+        await NotificationService.notifyMaintenanceScheduled(
+          maintenanceId,
+          controller.name,
+          maintenance_type,
+          technician,
+          maintenance_date
+        );
+      }
+    } catch (notificationError) {
+      console.error("Failed to send notification:", notificationError);
+    }
 
     return NextResponse.json({
       message: "Maintenance recorded successfully",

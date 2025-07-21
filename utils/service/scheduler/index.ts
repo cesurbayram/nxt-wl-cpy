@@ -4,6 +4,7 @@ import { sendReportMail } from "@/utils/service/mail";
 import { dbPool } from "@/utils/dbUtil";
 import { collectReportData } from "@/utils/service/reports/data-collecter";
 import { generateReportFile } from "@/utils/service/reports/report-genarator";
+import { NotificationService } from "@/utils/service/notification";
 import fs from "fs";
 
 const activeCronJobs = new Map<string, cron.ScheduledTask>();
@@ -101,6 +102,16 @@ export const executeMailJob = async (job: ScheduledMailJob): Promise<void> => {
     );
 
     try {
+      await NotificationService.notifyMailSent(
+        job.id,
+        job.report_name,
+        job.email_recipient
+      );
+    } catch (notificationError) {
+      console.error("Failed to send notification:", notificationError);
+    }
+
+    try {
       fs.unlinkSync(filePath);
     } catch (cleanupError) {
       console.warn(`Failed to cleanup file: ${filePath}`, cleanupError);
@@ -117,6 +128,18 @@ export const executeMailJob = async (job: ScheduledMailJob): Promise<void> => {
         "UPDATE scheduled_mail_jobs SET status = $1 WHERE id = $2",
         ["failed", job.id]
       );
+
+      // Send failure notification
+      try {
+        await NotificationService.notifyMailFailed(
+          job.id,
+          job.report_name,
+          job.email_recipient,
+          error instanceof Error ? error.message : String(error)
+        );
+      } catch (notificationError) {
+        console.error("Failed to send notification:", notificationError);
+      }
     } catch (updateError) {
       console.error("Failed to update job status to failed:", updateError);
     }
