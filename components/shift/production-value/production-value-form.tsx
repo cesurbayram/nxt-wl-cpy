@@ -30,7 +30,10 @@ import { ChevronDown } from "lucide-react";
 import { createProductionValue } from "@/utils/service/shift/poduction-value";
 import { getController } from "@/utils/service/controller";
 import { getShifts } from "@/utils/service/shift";
-import { getJobs } from "@/utils/service/job-select";
+import {
+  getJobsByControllerAndShift,
+  sendJobSelectCommand,
+} from "@/utils/service/shift/job-select";
 import { ProductionValue } from "@/types/production-value.types";
 
 const formSchema = z.object({
@@ -63,6 +66,7 @@ export default function ProductionValueForm({
   const [selectedJobs, setSelectedJobs] = useState<JobProductCount[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [jobSelectOpen, setJobSelectOpen] = useState<boolean>(false);
+  const [jobsLoading, setJobsLoading] = useState<boolean>(false);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -115,29 +119,12 @@ export default function ProductionValueForm({
           console.error("Error fetching shifts:", shiftError);
           setShifts([]);
         }
-
-        console.log("Fetching jobs...");
-        let jobsData: Array<{ id: string; name: string }> = [];
-        try {
-          const jobsResponse = await getJobs();
-          console.log("Jobs response:", jobsResponse);
-
-          if (Array.isArray(jobsResponse) && jobsResponse.length > 0) {
-            jobsData = jobsResponse;
-          }
-
-          setJobs(jobsData);
-        } catch (jobError) {
-          console.error("Error fetching jobs:", jobError);
-          setJobs([]);
-        }
       } catch (error) {
         console.error("Error fetching form data:", error);
         toast.error("Failed to load form data");
 
         setControllers([]);
         setShifts([]);
-        setJobs([]);
       }
     };
 
@@ -214,6 +201,70 @@ export default function ProductionValueForm({
     );
   };
 
+  const fetchJobs = async (controllerId: string, shiftId?: string) => {
+    if (!controllerId) {
+      setJobs([]);
+      return;
+    }
+
+    setJobsLoading(true);
+    try {
+      console.log(
+        "Fetching jobs for controller:",
+        controllerId,
+        "shift:",
+        shiftId
+      );
+
+      await sendJobSelectCommand(controllerId);
+
+      const jobsResponse = await getJobsByControllerAndShift({
+        controllerId,
+        shiftId,
+      });
+
+      console.log("Jobs response:", jobsResponse);
+
+      if (Array.isArray(jobsResponse) && jobsResponse.length > 0) {
+        const jobsData = jobsResponse.map((job) => ({
+          id: job.id,
+          name: job.name,
+        }));
+        setJobs(jobsData);
+      } else {
+        setJobs([]);
+      }
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
+      toast.error("Failed to fetch jobs");
+      setJobs([]);
+    } finally {
+      setJobsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const subscription = form.watch((value, { name }) => {
+      if (name === "controllerId" || name === "shiftId") {
+        const controllerId = form.getValues("controllerId");
+        const shiftId = form.getValues("shiftId");
+
+        if (controllerId && shiftId) {
+          setSelectedJobs([]);
+          fetchJobs(controllerId, shiftId);
+        } else if (controllerId) {
+          setSelectedJobs([]);
+          fetchJobs(controllerId);
+        } else {
+          setJobs([]);
+          setSelectedJobs([]);
+        }
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [form]);
+
   return (
     <Card>
       <CardContent className="pt-6">
@@ -286,38 +337,55 @@ export default function ProductionValueForm({
                   <div className="flex flex-col space-y-2">
                     <div
                       className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm cursor-pointer justify-between items-center"
-                      onClick={() => setJobSelectOpen(!jobSelectOpen)}
+                      onClick={() =>
+                        !jobsLoading && setJobSelectOpen(!jobSelectOpen)
+                      }
                     >
                       <span>
-                        {selectedJobs.length === 0
+                        {jobsLoading
+                          ? "Loading jobs..."
+                          : selectedJobs.length === 0
                           ? "Select jobs"
                           : `${selectedJobs.length} jobs selected`}
                       </span>
-                      <ChevronDown className="h-4 w-4 opacity-50" />
+                      <ChevronDown
+                        className={`h-4 w-4 opacity-50 ${
+                          jobsLoading ? "animate-spin" : ""
+                        }`}
+                      />
                     </div>
 
                     {jobSelectOpen && (
                       <div className="border rounded-md p-2 max-h-60 overflow-auto">
-                        {jobs.map((job) => (
-                          <div
-                            key={job.id}
-                            className="flex items-center space-x-2 py-1"
-                          >
-                            <Checkbox
-                              id={`job-${job.id}`}
-                              checked={selectedJobs.some(
-                                (item) => item.jobId === job.id
-                              )}
-                              onCheckedChange={() => handleJobToggle(job.id)}
-                            />
-                            <label
-                              htmlFor={`job-${job.id}`}
-                              className="text-sm cursor-pointer"
-                            >
-                              {job.name}
-                            </label>
+                        {jobs.length === 0 && !jobsLoading ? (
+                          <div className="text-sm text-gray-500 p-2">
+                            {form.getValues("controllerId") &&
+                            form.getValues("shiftId")
+                              ? "No jobs found for selected controller and shift"
+                              : "Please select controller and shift first"}
                           </div>
-                        ))}
+                        ) : (
+                          jobs.map((job) => (
+                            <div
+                              key={job.id}
+                              className="flex items-center space-x-2 py-1"
+                            >
+                              <Checkbox
+                                id={`job-${job.id}`}
+                                checked={selectedJobs.some(
+                                  (item) => item.jobId === job.id
+                                )}
+                                onCheckedChange={() => handleJobToggle(job.id)}
+                              />
+                              <label
+                                htmlFor={`job-${job.id}`}
+                                className="text-sm cursor-pointer"
+                              >
+                                {job.name}
+                              </label>
+                            </div>
+                          ))
+                        )}
                       </div>
                     )}
                   </div>
