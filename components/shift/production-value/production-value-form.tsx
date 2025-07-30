@@ -161,7 +161,7 @@ export default function ProductionValueForm({
         await createProductionValue(productionValue);
       }
 
-      toast.success("Üretim değerleri başarıyla kaydedildi");
+      toast.success("Production values saved successfully");
       form.reset({
         controllerId: "",
         shiftId: "",
@@ -245,14 +245,10 @@ export default function ProductionValueForm({
 
   useEffect(() => {
     const subscription = form.watch((value, { name }) => {
-      if (name === "controllerId" || name === "shiftId") {
+      if (name === "controllerId") {
         const controllerId = form.getValues("controllerId");
-        const shiftId = form.getValues("shiftId");
 
-        if (controllerId && shiftId) {
-          setSelectedJobs([]);
-          fetchJobs(controllerId, shiftId);
-        } else if (controllerId) {
+        if (controllerId) {
           setSelectedJobs([]);
           fetchJobs(controllerId);
         } else {

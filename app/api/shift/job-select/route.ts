@@ -32,11 +32,6 @@ export async function GET(request: NextRequest) {
         LEFT JOIN job_status jst ON js.id = jst.job_id 
           AND jst.controller_id = $1 
           AND jst.shift_id = $2
-        WHERE js.id IN (
-          SELECT DISTINCT job_id FROM shift_job WHERE shift_id = $2
-          UNION
-          SELECT DISTINCT job_id FROM job_status WHERE controller_id = $1 AND shift_id = $2
-        )
         ORDER BY js.name ASC
       `;
       queryParams = [controllerId, shiftId];

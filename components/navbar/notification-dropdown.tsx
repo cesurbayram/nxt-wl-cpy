@@ -22,6 +22,7 @@ import {
 import { NotificationService } from "@/utils/service/notification";
 import { Notification, NotificationResponse } from "@/types/notification.types";
 import { formatDistanceToNow, format } from "date-fns";
+import { getDataFromStorage } from "@/utils/common/storage";
 
 const NotificationDropdown = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -30,16 +31,75 @@ const NotificationDropdown = () => {
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("all");
 
-  const fetchNotifications = async (unreadOnly = false) => {
+  const [lastFetchTime, setLastFetchTime] = useState<number>(0);
+  const [cacheToken, setCacheToken] = useState<string>("");
+  const CACHE_DURATION = 5 * 60 * 1000;
+
+  const isValidToken = () => {
+    try {
+      const userData = getDataFromStorage("user");
+      const token = userData?.token;
+
+      if (!token) {
+        console.log("No auth token found - skipping notifications");
+        return false;
+      }
+
+      try {
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        if (payload.exp && payload.exp * 1000 < Date.now()) {
+          console.log("Auth token expired - skipping notifications");
+          return false;
+        }
+      } catch (e) {}
+
+      return true;
+    } catch (error) {
+      console.log("🔒 Token validation error - skipping notifications");
+      return false;
+    }
+  };
+
+  const fetchNotifications = async (
+    unreadOnly = false,
+    forceRefresh = false
+  ) => {
+    if (!isValidToken()) {
+      setNotifications([]);
+      setUnreadCount(0);
+      return;
+    }
+
+    const now = Date.now();
+    const userData = getDataFromStorage("user");
+    const userToken = userData?.token?.substring(0, 10) || "guest";
+    const currentToken = `${userToken}-${unreadOnly}-${Math.floor(
+      now / CACHE_DURATION
+    )}`;
+
+    if (
+      !forceRefresh &&
+      currentToken === cacheToken &&
+      now - lastFetchTime < CACHE_DURATION
+    ) {
+      console.log("Using cached notifications - No API call needed");
+      return;
+    }
+
     try {
       setLoading(true);
+      console.log("📡 Fetching fresh notifications from API");
+
       const response = await NotificationService.getNotifications(
-        undefined, // Use current user ID
+        undefined,
         unreadOnly,
         50
       );
+
       setNotifications(response.notifications);
       setUnreadCount(response.unread_count);
+      setLastFetchTime(now);
+      setCacheToken(currentToken);
     } catch (error) {
       console.error("Error fetching notifications:", error);
     } finally {
@@ -48,11 +108,11 @@ const NotificationDropdown = () => {
   };
 
   useEffect(() => {
-    fetchNotifications();
+    fetchNotifications(false, true);
 
     const handleVisibilityChange = () => {
       if (!document.hidden) {
-        fetchNotifications();
+        fetchNotifications(false, true);
       }
     };
 
@@ -62,7 +122,7 @@ const NotificationDropdown = () => {
       if (!document.hidden) {
         fetchNotifications();
       }
-    }, 60000);
+    }, 5 * 60 * 1000);
 
     return () => {
       clearInterval(interval);
@@ -72,20 +132,26 @@ const NotificationDropdown = () => {
 
   useEffect(() => {
     if (isOpen) {
-      fetchNotifications(activeTab === "unseen");
-
+      fetchNotifications(activeTab === "unseen", true);
       const openInterval = setInterval(() => {
         fetchNotifications(activeTab === "unseen");
-      }, 15000);
+      }, 60000);
       return () => clearInterval(openInterval);
     }
   }, [isOpen, activeTab]);
 
   const handleMarkAllAsRead = async () => {
+    if (!isValidToken()) {
+      console.log("Cannot mark as read - invalid token");
+      return;
+    }
+
     try {
       await NotificationService.markAsRead();
       setUnreadCount(0);
       setNotifications((prev) => prev.map((n) => ({ ...n, is_read: true })));
+      setCacheToken("");
+      setLastFetchTime(0);
     } catch (error) {
       console.error("Error marking all as read:", error);
     }
@@ -99,6 +165,11 @@ const NotificationDropdown = () => {
     e.stopPropagation();
 
     if (!notification.is_read) {
+      if (!isValidToken()) {
+        console.log("Cannot mark notification as read - invalid token");
+        return;
+      }
+
       try {
         await NotificationService.markAsRead([notification.id]);
         setNotifications((prev) =>
@@ -107,6 +178,9 @@ const NotificationDropdown = () => {
           )
         );
         setUnreadCount((prev) => Math.max(0, prev - 1));
+
+        setCacheToken("");
+        setLastFetchTime(0);
       } catch (error) {
         console.error("Error marking notification as read:", error);
       }
@@ -346,7 +420,6 @@ const NotificationDropdown = () => {
             </ScrollArea>
           </div>
 
-          {/* Footer */}
           <div className="p-4 border-t bg-gray-50">
             <p className="text-xs text-gray-500 text-center">
               That's all your notifications from the last 90 days
