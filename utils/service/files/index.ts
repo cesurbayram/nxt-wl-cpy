@@ -63,4 +63,87 @@ const deleteBackupPlan = async (
   if (!res.ok) throw new Error("Backup plan dont edit");
 };
 
-export { getBackupPlans, createBackupPlan, updateBackupPlan, deleteBackupPlan };
+const manualBackup = async (
+  controllerId: string,
+  fileTypes: string[]
+): Promise<{
+  success: boolean;
+  fileName?: string;
+  fileData?: string;
+  fileCount?: number;
+  error?: string;
+}> => {
+  try {
+    const response = await fetch("http://localhost:8082/api/manual-backup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        controllerId,
+        fileTypes,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to initiate backup");
+    }
+
+    const result = await response.json();
+    const requestId = result.requestId;
+
+    let attempts = 0;
+    const maxAttempts = 60;
+
+    return new Promise((resolve) => {
+      const pollForResult = async () => {
+        try {
+          const resultResponse = await fetch(
+            `https://savola-senddata.fabricademo.com/api/manual-backup-result/${requestId}`
+          );
+
+          if (resultResponse.status === 200) {
+            const backupResult = await resultResponse.json();
+            resolve(backupResult);
+          } else if (resultResponse.status === 202) {
+            attempts++;
+            if (attempts < maxAttempts) {
+              setTimeout(pollForResult, 3000);
+            } else {
+              resolve({
+                success: false,
+                error:
+                  "Backup is taking longer than expected. Please try again.",
+              });
+            }
+          } else {
+            resolve({
+              success: false,
+              error: "Failed to get backup result",
+            });
+          }
+        } catch (error) {
+          resolve({
+            success: false,
+            error: "Error checking backup status. Please try again.",
+          });
+        }
+      };
+
+      setTimeout(pollForResult, 5000);
+    });
+  } catch (error) {
+    return {
+      success: false,
+      error: "Failed to start backup. Please try again.",
+    };
+  }
+};
+
+export {
+  getBackupPlans,
+  createBackupPlan,
+  updateBackupPlan,
+  deleteBackupPlan,
+  manualBackup,
+};
