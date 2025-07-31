@@ -74,16 +74,19 @@ const manualBackup = async (
   error?: string;
 }> => {
   try {
-    const response = await fetch("http://localhost:8082/api/manual-backup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        controllerId,
-        fileTypes,
-      }),
-    });
+    const response = await fetch(
+      "https://savola-senddata.fabricademo.com/api/manual-backup",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          controllerId,
+          fileTypes,
+        }),
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Failed to initiate backup");
