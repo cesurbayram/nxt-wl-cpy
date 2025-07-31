@@ -18,7 +18,7 @@ export default function TimePicker({
     <Input
       type="time"
       value={value}
-      defaultValue={value || defaultValue}
+      defaultValue={defaultValue}
       onChange={(e) => onChange?.(e.target.value)}
       disabled={disabled}
       className="w-32"
