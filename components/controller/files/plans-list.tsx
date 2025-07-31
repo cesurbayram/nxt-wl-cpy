@@ -67,7 +67,10 @@ export default function PlansList({ controllerId }: PlansListProps) {
 
   const startEditing = (plan: BackupPlan) => {
     setEditingPlan(plan.id);
-    setEditForm(plan);
+    setEditForm({
+      ...plan,
+      time: plan.time || "00:00",
+    });
   };
 
   const cancelEditing = () => {
@@ -114,7 +117,7 @@ export default function PlansList({ controllerId }: PlansListProps) {
         const plan = row.original;
         return editingPlan === plan.id ? (
           <TimePicker
-            value={editForm.time || "00:00"}
+            value={editForm.time || plan.time || "00:00"}
             onChange={(time) => setEditForm((prev) => ({ ...prev, time }))}
           />
         ) : (
