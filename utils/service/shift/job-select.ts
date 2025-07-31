@@ -59,7 +59,7 @@ const sendJobSelectCommand = async (
     }
 
     console.log("Sending job-select command:", payload);
-    const apiRes = await fetch("http://localhost:8082/api/job-select-socket", {
+    const apiRes = await fetch("http://savola-senddata/api/job-select-socket", {
       method: "POST",
       body: JSON.stringify(payload),
       headers: {
