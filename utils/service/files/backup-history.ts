@@ -19,7 +19,7 @@ const getBackupHistory = async (
 ): Promise<BackupHistoryResponse> => {
   try {
     const response = await fetch(
-      `WatchLog/utils/service/variable/index.ts/api/backup-history/${controllerId}`,
+      `https://savola-senddata.fabricademo.com/api/backup-history/${controllerId}`,
       {
         method: "GET",
         headers: {
@@ -48,7 +48,7 @@ const downloadBackup = async (
   fileName: string
 ): Promise<void> => {
   try {
-    const downloadUrl = `WatchLog/utils/service/variable/index.ts/api/backup-download/${backupId}`;
+    const downloadUrl = `https://savola-senddata.fabricademo.com/api/backup-download/${backupId}`;
 
     const link = document.createElement("a");
     link.href = downloadUrl;
@@ -68,7 +68,7 @@ const deleteBackup = async (
 ): Promise<{ success: boolean; message?: string; error?: string }> => {
   try {
     const response = await fetch(
-      `WatchLog/utils/service/variable/index.ts/api/backup-history/${backupId}`,
+      `https://savola-senddata.fabricademo.com/api/backup-history/${backupId}`,
       {
         method: "DELETE",
         headers: {
