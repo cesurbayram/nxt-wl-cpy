@@ -101,27 +101,27 @@ const sideMenuItems = [
       },
     ],
   },
-  {
-    title: "Arc Welding",
-    icon: <GiLightningArc size={16} />,
-    link: "#",
-    childPages: [],
-    isDisabled: true,
-  },
-  {
-    title: "Spot Welding",
-    icon: <FaHubspot size={16} />,
-    link: "#",
-    childPages: [],
-    isDisabled: true,
-  },
-  {
-    title: "Automated QSet",
-    icon: <GiAutomaticSas size={16} />,
-    link: "#",
-    childPages: [],
-    isDisabled: true,
-  },
+  // {
+  //   title: "Arc Welding",
+  //   icon: <GiLightningArc size={16} />,
+  //   link: "#",
+  //   childPages: [],
+  //   isDisabled: true,
+  // },
+  // {
+  //   title: "Spot Welding",
+  //   icon: <FaHubspot size={16} />,
+  //   link: "#",
+  //   childPages: [],
+  //   isDisabled: true,
+  // },
+  // {
+  //   title: "Automated QSet",
+  //   icon: <GiAutomaticSas size={16} />,
+  //   link: "#",
+  //   childPages: [],
+  //   isDisabled: true,
+  // },
   {
     title: "Quick Assist",
     icon: <FaQuestionCircle size={16} />,
@@ -170,7 +170,7 @@ const SideNavbarBody = () => {
           );
         } else {
           const active = isActive(item.link);
-          const disabled = item.isDisabled || item.link === "#";
+          const disabled = item.link === "#";
 
           return (
             <div key={item.title} className="relative">
