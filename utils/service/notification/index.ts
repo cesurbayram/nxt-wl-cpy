@@ -35,9 +35,7 @@ export class NotificationService {
     } catch (error) {
       console.error("Error creating notification:", error);
 
-      // Silent fallback - don't break the main flow
       try {
-        // Retry once after 1 second
         await new Promise((resolve) => setTimeout(resolve, 1000));
         const response = await fetch("/api/notifications", {
           method: "POST",
@@ -97,7 +95,6 @@ export class NotificationService {
     });
   }
 
-  // Report Notifications
   static async notifyReportGenerated(
     reportId: string,
     reportName: string,
@@ -230,63 +227,6 @@ export class NotificationService {
     });
   }
 
-  static async notifyEmployeeAdded(
-    employeeId: string,
-    employeeName: string,
-    employeeCode: string,
-    department: string
-  ) {
-    return this.createNotification({
-      type: "employee_added",
-      title: "New Employee Added",
-      message: `Employee "${employeeName}" (${employeeCode}) has been added to ${department}`,
-      data: {
-        employee_id: employeeId,
-        employee_name: employeeName,
-        employee_code: employeeCode,
-        department: department,
-        severity: "info",
-        timestamp: new Date().toISOString(),
-      },
-    });
-  }
-
-  static async notifyEmployeeUpdated(
-    employeeId: string,
-    employeeName: string,
-    employeeCode: string
-  ) {
-    return this.createNotification({
-      type: "employee_updated",
-      title: "Employee Updated",
-      message: `Employee "${employeeName}" (${employeeCode}) information has been updated`,
-      data: {
-        employee_id: employeeId,
-        employee_name: employeeName,
-        employee_code: employeeCode,
-        severity: "info",
-        timestamp: new Date().toISOString(),
-      },
-    });
-  }
-
-  static async notifyEmployeeDeleted(
-    employeeName: string,
-    employeeCode: string
-  ) {
-    return this.createNotification({
-      type: "employee_deleted",
-      title: "Employee Deleted",
-      message: `Employee "${employeeName}" (${employeeCode}) has been deleted`,
-      data: {
-        employee_name: employeeName,
-        employee_code: employeeCode,
-        severity: "warning",
-        timestamp: new Date().toISOString(),
-      },
-    });
-  }
-
   static async notifyControllerAdded(
     controllerId: string,
     controllerName: string
@@ -299,6 +239,25 @@ export class NotificationService {
         controller_id: controllerId,
         controller_name: controllerName,
         severity: "info",
+        timestamp: new Date().toISOString(),
+      },
+    });
+  }
+
+  static async notifyControllerDeleted(
+    controllerId: string,
+    controllerName?: string
+  ) {
+    return this.createNotification({
+      type: "controller_deleted" as NotificationType,
+      title: "Controller Deleted",
+      message: controllerName
+        ? `Controller "${controllerName}" has been deleted from the system`
+        : `Controller has been deleted from the system`,
+      data: {
+        controller_id: controllerId,
+        controller_name: controllerName,
+        severity: "warning",
         timestamp: new Date().toISOString(),
       },
     });
