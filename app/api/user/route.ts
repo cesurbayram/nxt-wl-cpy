@@ -15,10 +15,7 @@ export async function GET(request: NextRequest) {
             u.last_name AS "lastName", 
             u.user_name AS "userName", 
             u.email, 
-            u.role,
-            u.code,
-            u.position,
-            u.location
+            u.role
         FROM 
             "users" u
         ORDER BY u.created_at DESC`);
@@ -30,9 +27,6 @@ export async function GET(request: NextRequest) {
       userName: row.userName,
       email: row.email,
       role: row.role,
-      code: row.code,
-      position: row.position,
-      location: row.location,
     }));
 
     return NextResponse.json(users, { status: 200 });
@@ -46,17 +40,8 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const {
-    name,
-    lastName,
-    userName,
-    email,
-    role,
-    password,
-    code,
-    position,
-    location,
-  }: User = await request.json();
+  const { name, lastName, userName, email, role, password }: User =
+    await request.json();
   const client = await dbPool.connect();
   const newUserId = uuidv4();
   try {
@@ -77,20 +62,9 @@ export async function POST(request: NextRequest) {
       password && (await bcrypt.hash(password, saltRounds));
 
     await client.query(
-      `INSERT INTO "users" (id, name, last_name, user_name, email, role, code, position, location, bcrypt_password) 
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
-      [
-        newUserId,
-        name,
-        lastName,
-        userName,
-        email,
-        role,
-        code,
-        position,
-        location,
-        bcryptPassword,
-      ]
+      `INSERT INTO "users" (id, name, last_name, user_name, email, role, bcrypt_password) 
+            VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+      [newUserId, name, lastName, userName, email, role, bcryptPassword]
     );
     await client.query("COMMIT");
     return NextResponse.json(
@@ -110,25 +84,16 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
-  const {
-    id,
-    name,
-    lastName,
-    userName,
-    email,
-    role,
-    code,
-    position,
-    location,
-  }: User = await request.json();
+  const { id, name, lastName, userName, email, role }: User =
+    await request.json();
   const client = await dbPool.connect();
   try {
     await client.query("BEGIN");
     await client.query(
       `UPDATE "users" 
-            SET name = $1, last_name = $2, email = $3, role = $4, user_name = $5, code = $6, position = $7, location = $8, updated_at = now() 
-            WHERE id = $9`,
-      [name, lastName, email, role, userName, code, position, location, id]
+            SET name = $1, last_name = $2, email = $3, role = $4, user_name = $5, updated_at = now() 
+            WHERE id = $6`,
+      [name, lastName, email, role, userName, id]
     );
     await client.query("COMMIT");
     return NextResponse.json(
