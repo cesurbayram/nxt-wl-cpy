@@ -379,9 +379,50 @@ export async function DELETE(request: NextRequest) {
   try {
     await client.query("BEGIN");
 
+    const controllerInfo = await client.query(
+      `SELECT name FROM controller WHERE id = $1`,
+      [id]
+    );
+    const controllerName = controllerInfo.rows[0]?.name;
+
+    await client.query(
+      `DELETE FROM io_bit WHERE signal_id IN (
+      SELECT ios.id FROM io_signal ios 
+      INNER JOIN io_group iog ON ios.group_id = iog.id 
+      WHERE iog.controller_id = $1
+    )`,
+      [id]
+    );
+
+    await client.query(
+      `DELETE FROM io_signal WHERE group_id IN (
+      SELECT id FROM io_group WHERE controller_id = $1
+    )`,
+      [id]
+    );
+
+    await client.query(`DELETE FROM io_group WHERE controller_id = $1`, [id]);
+
+    const readTables = ["b_read", "d_read", "s_read", "i_read", "r_read"];
+    for (const table of readTables) {
+      await client.query(`DELETE FROM ${table} WHERE controller_id = $1`, [id]);
+    }
+
+    await client.query(
+      `DELETE FROM controller_status WHERE controller_id = $1`,
+      [id]
+    );
+
     await client.query(`DELETE FROM "controller" WHERE id = $1`, [id]);
 
     await client.query("COMMIT");
+
+    try {
+      await NotificationService.notifyControllerDeleted(id, controllerName);
+    } catch (notificationError) {
+      console.error("Failed to send notification:", notificationError);
+    }
+
     return NextResponse.json(
       { message: "Controller deleted successfully" },
       { status: 200 }

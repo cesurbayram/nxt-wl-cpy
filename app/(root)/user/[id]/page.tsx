@@ -22,9 +22,6 @@ import { z } from "zod";
 import PageWrapper from "@/components/shared/page-wrapper";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { LiaUserEditSolid } from "react-icons/lia";
-import { Employee } from "@/types/employee.types";
-import { Badge } from "@/components/ui/badge";
-
 const initialValues = {
   name: "",
   lastName: "",
@@ -32,7 +29,9 @@ const initialValues = {
   email: "",
   password: "",
   role: "",
-  employee_id: "",
+  code: "",
+  position: "",
+  location: "",
 };
 
 const Page = ({ params }: { params: { id: string } }) => {
@@ -40,28 +39,11 @@ const Page = ({ params }: { params: { id: string } }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [isLoadingFetchUser, setIsLoadingFetchUser] = useState(false);
-  const [employees, setEmployees] = useState<Employee[]>([]);
 
   const form = useForm<z.infer<typeof UserEditValidation>>({
     resolver: zodResolver(UserEditValidation),
     defaultValues: initialValues,
   });
-
-  const fetchEmployees = async () => {
-    try {
-      const response = await fetch("/api/employees");
-      if (response.ok) {
-        const data = await response.json();
-        // Filter out employees that already have user accounts (excluding current user)
-        const availableEmployees = data.filter(
-          (emp: Employee) => !emp.user || (user && emp.user.id === user.id)
-        );
-        setEmployees(availableEmployees);
-      }
-    } catch (error) {
-      console.error("Failed to fetch employees:", error);
-    }
-  };
 
   const createMutation = async (values: User) => {
     setIsLoading(true);
@@ -99,33 +81,19 @@ const Page = ({ params }: { params: { id: string } }) => {
           form.setValue("email", data.email as string);
           form.setValue("role", data.role as string);
           form.setValue("userName", data.userName as string);
-          form.setValue("employee_id", data.employee_id || "");
+          form.setValue("code", data.code as string);
+          form.setValue("position", data.position as string);
+          form.setValue("location", data.location as string);
         } catch (error) {
           console.error("Failed to fetch user:", error);
         } finally {
           setIsLoadingFetchUser(false);
         }
-      } else {
-        // Handle URL query parameters for pre-filling form when creating user from employee
-        const urlParams = new URLSearchParams(window.location.search);
-        const employeeId = urlParams.get("employee_id");
-        const name = urlParams.get("name");
-        const lastName = urlParams.get("lastName");
-        const email = urlParams.get("email");
-
-        if (employeeId) form.setValue("employee_id", employeeId);
-        if (name) form.setValue("name", name);
-        if (lastName) form.setValue("lastName", lastName);
-        if (email) form.setValue("email", email);
       }
     };
 
     fetchUser();
   }, [params.id, form]);
-
-  useEffect(() => {
-    fetchEmployees();
-  }, [user]);
 
   const onSubmit = async (values: z.infer<typeof UserEditValidation>) => {
     const newValues: User = {
@@ -139,10 +107,6 @@ const Page = ({ params }: { params: { id: string } }) => {
       await updateMutation(newValues);
     }
   };
-
-  const selectedEmployee = employees.find(
-    (emp) => emp.id === form.watch("employee_id")
-  );
 
   return (
     <>
@@ -269,23 +233,52 @@ const Page = ({ params }: { params: { id: string } }) => {
 
                 <FormField
                   control={form.control}
-                  name="employee_id"
+                  name="code"
                   render={({ field }) => (
                     <FormItem>
-                      {params.id !== "0" && <FormLabel>Employee</FormLabel>}
+                      {params.id !== "0" && <FormLabel>Code</FormLabel>}
                       <FormControl>
-                        <select
+                        <Input
+                          placeholder={params.id === "0" ? "Code" : ""}
                           {...field}
-                          className="h-12 w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        >
-                          <option value="">Select Employee (Optional)</option>
-                          {employees.map((employee) => (
-                            <option key={employee.id} value={employee.id}>
-                              {employee.name} {employee.last_name} - #
-                              {employee.employee_code} ({employee.department})
-                            </option>
-                          ))}
-                        </select>
+                          className="h-12 rounded-lg"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="position"
+                  render={({ field }) => (
+                    <FormItem>
+                      {params.id !== "0" && <FormLabel>Position</FormLabel>}
+                      <FormControl>
+                        <Input
+                          placeholder={params.id === "0" ? "Position" : ""}
+                          {...field}
+                          className="h-12 rounded-lg"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="location"
+                  render={({ field }) => (
+                    <FormItem>
+                      {params.id !== "0" && <FormLabel>Location</FormLabel>}
+                      <FormControl>
+                        <Input
+                          placeholder={params.id === "0" ? "Location" : ""}
+                          {...field}
+                          className="h-12 rounded-lg"
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -316,62 +309,6 @@ const Page = ({ params }: { params: { id: string } }) => {
                   />
                 )}
               </CardContent>
-
-              {selectedEmployee && (
-                <CardContent className="pt-0">
-                  <div className="bg-blue-50 p-4 rounded-lg">
-                    <h4 className="font-medium text-blue-900 mb-2">
-                      Selected Employee Information
-                    </h4>
-                    <div className="grid grid-cols-2 gap-4 text-sm">
-                      <div>
-                        <p className="text-gray-600">Name:</p>
-                        <p className="font-medium">
-                          {selectedEmployee.name} {selectedEmployee.last_name}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-gray-600">Employee Code:</p>
-                        <p className="font-medium">
-                          #{selectedEmployee.employee_code}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-gray-600">Department:</p>
-                        <p className="font-medium">
-                          {selectedEmployee.department}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-gray-600">Position:</p>
-                        <p className="font-medium">
-                          {selectedEmployee.position}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-gray-600">Location:</p>
-                        <p className="font-medium">
-                          {selectedEmployee.location}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-gray-600">Status:</p>
-                        <Badge
-                          className={
-                            selectedEmployee.status === "active"
-                              ? "bg-green-100 text-green-800"
-                              : selectedEmployee.status === "inactive"
-                              ? "bg-yellow-100 text-yellow-800"
-                              : "bg-red-100 text-red-800"
-                          }
-                        >
-                          {selectedEmployee.status}
-                        </Badge>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              )}
 
               <CardFooter className="gap-2">
                 <Button

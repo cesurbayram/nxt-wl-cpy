@@ -7,10 +7,8 @@ export type NotificationType =
   | "maintenance_scheduled"
   | "maintenance_completed"
   | "maintenance_overdue"
-  | "employee_added"
-  | "employee_updated"
-  | "employee_deleted"
   | "controller_added"
+  | "controller_deleted"
   | "alarm_triggered"
   | "shift_changed"
   | "system_backup";
@@ -28,15 +26,18 @@ export interface Notification {
 }
 
 export interface NotificationData {
+  // Mail notifications
   mail_job_id?: string;
   report_name?: string;
   recipient_email?: string;
 
+  // Report notifications
   report_id?: string;
   report_format?: string;
   download_url?: string;
   file_name?: string;
 
+  // Maintenance notifications
   maintenance_id?: string;
   controller_id?: string;
   controller_name?: string;
@@ -47,15 +48,12 @@ export interface NotificationData {
   days_overdue?: number;
   last_maintenance_date?: string;
 
-  employee_id?: string;
-  employee_name?: string;
-  employee_code?: string;
-  department?: string;
-
+  // System notifications
   alarm_type?: string;
   alarm_message?: string;
   shift_name?: string;
 
+  // Common fields
   timestamp?: string;
   severity?: "info" | "warning" | "error" | "success";
 }

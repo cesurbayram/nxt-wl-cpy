@@ -19,7 +19,7 @@ import { MdCalendarViewWeek } from "react-icons/md";
 import { HiDocumentReport } from "react-icons/hi";
 import { MdEmail } from "react-icons/md";
 import { usePathname } from "next/navigation";
-import { FaUsersCog, FaUsers, FaUserTag } from "react-icons/fa";
+import { FaUsersCog } from "react-icons/fa";
 import { FaQuestionCircle } from "react-icons/fa";
 
 const sideMenuItems = [
@@ -34,16 +34,6 @@ const sideMenuItems = [
     icon: <FaUsersCog size={16} />,
     link: "",
     childPages: [
-      {
-        title: "Employees",
-        link: "/employees",
-        icon: <FaUsers size={15} />,
-      },
-      {
-        title: "Employee Roles",
-        link: "/employee-roles",
-        icon: <FaUserTag size={15} />,
-      },
       {
         title: "Users",
         link: "/user",

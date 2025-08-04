@@ -7,5 +7,7 @@ export const UserEditValidation = z.object({
   email: z.string().email({ message: "Valid email is required!" }),
   password: z.string().optional(),
   role: z.string(),
-  employee_id: z.string().optional(),
+  code: z.string().optional(),
+  position: z.string().optional(),
+  location: z.string().optional(),
 });

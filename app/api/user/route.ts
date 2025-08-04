@@ -18,17 +18,9 @@ export async function GET(request: NextRequest) {
             u.role,
             u.code,
             u.position,
-            u.location,
-            u.employee_id,
-            e.employee_code,
-            e.name AS employee_name,
-            e.last_name AS employee_last_name,
-            e.department,
-            e.hire_date,
-            e.status AS employee_status
+            u.location
         FROM 
             "users" u
-        LEFT JOIN employees e ON u.employee_id = e.id AND e.deleted_at IS NULL
         ORDER BY u.created_at DESC`);
 
     const users: User[] = userDbResp.rows.map((row) => ({
@@ -41,25 +33,6 @@ export async function GET(request: NextRequest) {
       code: row.code,
       position: row.position,
       location: row.location,
-      employee_id: row.employee_id,
-      employee: row.employee_code
-        ? {
-            id: row.employee_id,
-            employee_code: row.employee_code,
-            name: row.employee_name,
-            last_name: row.employee_last_name,
-            department: row.department,
-            hire_date: row.hire_date,
-            status: row.employee_status,
-            email: "",
-            phone: "",
-            position: "",
-            location: "",
-            employee_role_id: "",
-            permissions: [],
-            is_active: true,
-          }
-        : undefined,
     }));
 
     return NextResponse.json(users, { status: 200 });
@@ -83,7 +56,6 @@ export async function POST(request: NextRequest) {
     code,
     position,
     location,
-    employee_id,
   }: User = await request.json();
   const client = await dbPool.connect();
   const newUserId = uuidv4();
@@ -100,30 +72,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (employee_id) {
-      const checkEmployeeAssignment = await client.query(
-        `SELECT * FROM users WHERE employee_id = $1`,
-        [employee_id]
-      );
-
-      if (
-        checkEmployeeAssignment.rowCount &&
-        checkEmployeeAssignment.rowCount > 0
-      ) {
-        return NextResponse.json(
-          { message: "This employee is already assigned to another user!" },
-          { status: 409 }
-        );
-      }
-    }
-
     await client.query("BEGIN");
     const bcryptPassword =
       password && (await bcrypt.hash(password, saltRounds));
 
     await client.query(
-      `INSERT INTO "users" (id, name, last_name, user_name, email, role, code, position, location, employee_id, bcrypt_password) 
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
+      `INSERT INTO "users" (id, name, last_name, user_name, email, role, code, position, location, bcrypt_password) 
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
       [
         newUserId,
         name,
@@ -134,7 +89,6 @@ export async function POST(request: NextRequest) {
         code,
         position,
         location,
-        employee_id,
         bcryptPassword,
       ]
     );
@@ -166,44 +120,15 @@ export async function PUT(request: NextRequest) {
     code,
     position,
     location,
-    employee_id,
   }: User = await request.json();
   const client = await dbPool.connect();
   try {
-    if (employee_id) {
-      const checkEmployeeAssignment = await client.query(
-        `SELECT * FROM users WHERE employee_id = $1 AND id != $2`,
-        [employee_id, id]
-      );
-
-      if (
-        checkEmployeeAssignment.rowCount &&
-        checkEmployeeAssignment.rowCount > 0
-      ) {
-        return NextResponse.json(
-          { message: "This employee is already assigned to another user!" },
-          { status: 409 }
-        );
-      }
-    }
-
     await client.query("BEGIN");
     await client.query(
       `UPDATE "users" 
-            SET name = $1, last_name = $2, email = $3, role = $4, user_name = $5, code = $6, position = $7, location = $8, employee_id = $9, updated_at = now() 
-            WHERE id = $10`,
-      [
-        name,
-        lastName,
-        email,
-        role,
-        userName,
-        code,
-        position,
-        location,
-        employee_id,
-        id,
-      ]
+            SET name = $1, last_name = $2, email = $3, role = $4, user_name = $5, code = $6, position = $7, location = $8, updated_at = now() 
+            WHERE id = $9`,
+      [name, lastName, email, role, userName, code, position, location, id]
     );
     await client.query("COMMIT");
     return NextResponse.json(

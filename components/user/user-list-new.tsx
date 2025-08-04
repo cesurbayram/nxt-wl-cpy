@@ -6,7 +6,6 @@ import { MdDelete } from "react-icons/md";
 import { FaArrowRight } from "react-icons/fa6";
 import { DataTable } from "../shared/data-table";
 import { useRouter } from "next/navigation";
-import { Badge } from "../ui/badge";
 
 interface UserListNewProps {
   users: User[];
@@ -49,31 +48,16 @@ const UserListNew = ({ users, deleteClick }: UserListNewProps) => {
       },
     },
     {
-      accessorKey: "employee",
-      header: () => <div className="text-sm font-medium">Employee</div>,
-      cell: ({ row }) => {
-        const employee = row.original.employee;
-        if (employee) {
-          return (
-            <div className="flex flex-col">
-              <span className="font-medium">
-                {employee.name} {employee.last_name}
-              </span>
-              <span className="text-xs text-gray-500">
-                #{employee.employee_code}
-              </span>
-              <span className="text-xs text-gray-500">
-                {employee.department}
-              </span>
-            </div>
-          );
-        }
-        return (
-          <Badge variant="outline" className="text-xs">
-            No Employee
-          </Badge>
-        );
-      },
+      accessorKey: "code",
+      header: () => <div className="text-sm font-medium">Code</div>,
+    },
+    {
+      accessorKey: "position",
+      header: () => <div className="text-sm font-medium">Position</div>,
+    },
+    {
+      accessorKey: "location",
+      header: () => <div className="text-sm font-medium">Location</div>,
     },
     {
       id: "actions",
