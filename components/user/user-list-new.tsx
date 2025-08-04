@@ -48,18 +48,6 @@ const UserListNew = ({ users, deleteClick }: UserListNewProps) => {
       },
     },
     {
-      accessorKey: "code",
-      header: () => <div className="text-sm font-medium">Code</div>,
-    },
-    {
-      accessorKey: "position",
-      header: () => <div className="text-sm font-medium">Position</div>,
-    },
-    {
-      accessorKey: "location",
-      header: () => <div className="text-sm font-medium">Location</div>,
-    },
-    {
       id: "actions",
       header: () => (
         <div className="text-sm font-medium text-center">Actions</div>

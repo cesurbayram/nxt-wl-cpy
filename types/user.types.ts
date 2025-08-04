@@ -7,9 +7,6 @@ export interface User {
   user_name?: string;
   email?: string;
   role?: string;
-  code?: string;
-  position?: string;
-  location?: string;
   password?: string;
   bcryptPassword?: string;
   bcrypt_password?: string;

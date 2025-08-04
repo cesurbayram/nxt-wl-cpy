@@ -29,9 +29,6 @@ const initialValues = {
   email: "",
   password: "",
   role: "",
-  code: "",
-  position: "",
-  location: "",
 };
 
 const Page = ({ params }: { params: { id: string } }) => {
@@ -81,9 +78,6 @@ const Page = ({ params }: { params: { id: string } }) => {
           form.setValue("email", data.email as string);
           form.setValue("role", data.role as string);
           form.setValue("userName", data.userName as string);
-          form.setValue("code", data.code as string);
-          form.setValue("position", data.position as string);
-          form.setValue("location", data.location as string);
         } catch (error) {
           console.error("Failed to fetch user:", error);
         } finally {
@@ -124,7 +118,11 @@ const Page = ({ params }: { params: { id: string } }) => {
         }
       >
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-4"
+            autoComplete="off"
+          >
             <Card>
               <CardContent className="grid grid-cols-2 gap-6 p-6">
                 <FormField
@@ -137,6 +135,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                         <Input
                           placeholder={params.id === "0" ? "Name" : ""}
                           {...field}
+                          autoComplete="off"
                           className={`${
                             form.formState.errors.name
                               ? "border-red-600 focus:border-red-800"
@@ -219,65 +218,12 @@ const Page = ({ params }: { params: { id: string } }) => {
                         <Input
                           placeholder={params.id === "0" ? "Email" : ""}
                           {...field}
+                          autoComplete="off"
                           className={`${
                             form.formState.errors.email
                               ? "border-red-600 focus:border-red-800"
                               : ""
                           } h-12 rounded-lg`}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="code"
-                  render={({ field }) => (
-                    <FormItem>
-                      {params.id !== "0" && <FormLabel>Code</FormLabel>}
-                      <FormControl>
-                        <Input
-                          placeholder={params.id === "0" ? "Code" : ""}
-                          {...field}
-                          className="h-12 rounded-lg"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="position"
-                  render={({ field }) => (
-                    <FormItem>
-                      {params.id !== "0" && <FormLabel>Position</FormLabel>}
-                      <FormControl>
-                        <Input
-                          placeholder={params.id === "0" ? "Position" : ""}
-                          {...field}
-                          className="h-12 rounded-lg"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="location"
-                  render={({ field }) => (
-                    <FormItem>
-                      {params.id !== "0" && <FormLabel>Location</FormLabel>}
-                      <FormControl>
-                        <Input
-                          placeholder={params.id === "0" ? "Location" : ""}
-                          {...field}
-                          className="h-12 rounded-lg"
                         />
                       </FormControl>
                       <FormMessage />
@@ -300,6 +246,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                             } h-12 rounded-lg`}
                             placeholder="Password"
                             type="password"
+                            autoComplete="off"
                             {...field}
                           />
                         </FormControl>
