@@ -31,16 +31,13 @@ const sendVariableCommand = async ({
   activeTab: string;
   controllerId: string;
 }): Promise<boolean> => {
-  const apiRes = await fetch(
-    "https://savola-senddata.fabricademo.com/api/variable-socket",
-    {
-      method: "POST",
-      body: JSON.stringify({ activeVariable: activeTab, controllerId }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  const apiRes = await fetch("http://10.0.110.3:8082/api/variable-socket", {
+    method: "POST",
+    body: JSON.stringify({ activeVariable: activeTab, controllerId }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
   if (!apiRes.ok) {
     const errorData = await apiRes.json();
