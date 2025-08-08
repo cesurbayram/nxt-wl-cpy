@@ -19,7 +19,11 @@ export class NotificationService {
 
   private static async createNotification(request: CreateNotificationRequest) {
     try {
-      const response = await fetch("/api/notifications", {
+      const baseUrl =
+        process.env.NEXT_PUBLIC_APP_URL || "http://10.0.110.3:3000";
+      const url = `${baseUrl}/api/notifications`;
+
+      const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,7 +41,11 @@ export class NotificationService {
 
       try {
         await new Promise((resolve) => setTimeout(resolve, 1000));
-        const response = await fetch("/api/notifications", {
+        const baseUrl =
+          process.env.NEXT_PUBLIC_APP_URL || "http://10.0.110.3:3000";
+        const url = `${baseUrl}/api/notifications`;
+
+        const response = await fetch(url, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -312,7 +320,9 @@ export class NotificationService {
         offset: offset.toString(),
       });
 
-      const response = await fetch(`/api/notifications?${params}`);
+      const baseUrl =
+        process.env.NEXT_PUBLIC_APP_URL || "http://10.0.110.3:3000";
+      const response = await fetch(`${baseUrl}/api/notifications?${params}`);
 
       if (!response.ok) {
         throw new Error("Failed to fetch notifications");
@@ -328,7 +338,9 @@ export class NotificationService {
   static async markAsRead(notificationIds?: string[], userId?: string) {
     try {
       const currentUserId = userId || this.getCurrentUserId();
-      const response = await fetch("/api/notifications", {
+      const baseUrl =
+        process.env.NEXT_PUBLIC_APP_URL || "http://10.0.110.3:3000";
+      const response = await fetch(`${baseUrl}/api/notifications`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

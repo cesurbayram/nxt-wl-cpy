@@ -20,16 +20,13 @@ const getTorkData = async (controllerId: string): Promise<TorkData[]> => {
 };
 
 const sendTorkCommand = async (controllerId: string): Promise<boolean> => {
-  const apiRes = await fetch(
-    "https://savola-senddata.fabricademo.com/api/tork-socket",
-    {
-      method: "POST",
-      body: JSON.stringify({ controllerId }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  const apiRes = await fetch("http://10.0.110.3:8082/api/tork-socket", {
+    method: "POST",
+    body: JSON.stringify({ controllerId }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
   if (!apiRes.ok) {
     const errorData = await apiRes.json();

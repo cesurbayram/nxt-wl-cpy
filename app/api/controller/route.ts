@@ -157,6 +157,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Register tablosu için M000-M999 kayıtlarını oluştur
+    const registerData = [];
+    for (let i = 0; i < 1000; i++) {
+      registerData.push([uuidv4(), newRobotId, i, 0, ipAddress]);
+    }
+    await bulkInsert(
+      client,
+      "register",
+      ["id", "controller_id", "register_no", "register_value", "ip_address"],
+      registerData
+    );
+
     const ioGroups = [
       {
         name: "External Input",
@@ -379,52 +391,34 @@ export async function DELETE(request: NextRequest) {
   try {
     await client.query("BEGIN");
 
-    const controllerInfo = await client.query(
-      `SELECT name FROM controller WHERE id = $1`,
-      [id]
-    );
-    const controllerName = controllerInfo.rows[0]?.name;
+    const tablesQuery = `
+      SELECT table_name 
+      FROM information_schema.columns 
+      WHERE column_name = 'controller_id' 
+      AND table_schema = 'public'
+      AND table_name != 'controller'
+    `;
 
-    await client.query(
-      `DELETE FROM io_bit WHERE signal_id IN (
-      SELECT ios.id FROM io_signal ios 
-      INNER JOIN io_group iog ON ios.group_id = iog.id 
-      WHERE iog.controller_id = $1
-    )`,
-      [id]
-    );
+    const tablesResult = await client.query(tablesQuery);
 
-    await client.query(
-      `DELETE FROM io_signal WHERE group_id IN (
-      SELECT id FROM io_group WHERE controller_id = $1
-    )`,
-      [id]
-    );
-
-    await client.query(`DELETE FROM io_group WHERE controller_id = $1`, [id]);
-
-    const readTables = ["b_read", "d_read", "s_read", "i_read", "r_read"];
-    for (const table of readTables) {
-      await client.query(`DELETE FROM ${table} WHERE controller_id = $1`, [id]);
+    for (const row of tablesResult.rows) {
+      const tableName = row.table_name;
+      try {
+        await client.query(
+          `DELETE FROM "${tableName}" WHERE controller_id = $1`,
+          [id]
+        );
+        console.log(`Deleted records from ${tableName}`);
+      } catch (tableError: any) {
+        console.warn(`Could not delete from ${tableName}:`, tableError.message);
+      }
     }
-
-    await client.query(
-      `DELETE FROM controller_status WHERE controller_id = $1`,
-      [id]
-    );
 
     await client.query(`DELETE FROM "controller" WHERE id = $1`, [id]);
 
     await client.query("COMMIT");
-
-    try {
-      await NotificationService.notifyControllerDeleted(id, controllerName);
-    } catch (notificationError) {
-      console.error("Failed to send notification:", notificationError);
-    }
-
     return NextResponse.json(
-      { message: "Controller deleted successfully" },
+      { message: "Controller and all related data deleted successfully" },
       { status: 200 }
     );
   } catch (error: any) {
