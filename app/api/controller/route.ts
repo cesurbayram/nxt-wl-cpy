@@ -124,204 +124,105 @@ export async function POST(request: NextRequest) {
     );
 
     await client.query(
-      `INSERT INTO controller_status (id, ip_address, controller_id, teach, servo, operating, cycle,  hold, alarm, error, stop, door_opened, c_backup, connection ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)`,
-      [
-        newRobotStatusId,
-        ipAddress,
-        newRobotId,
-        "TEACH",
-        false,
-        false,
-        "CYCLE",
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-      ]
-    );
-
-    const tables = ["b_read", "d_read", "s_read", "i_read", "r_read"];
-    for (const table of tables) {
-      const readData = [];
-      for (let i = 0; i < 100; i++) {
-        readData.push([uuidv4(), ipAddress, i, null, "0", newRobotId]);
-      }
-      await bulkInsert(
-        client,
-        table,
-        ["id", "ip_address", "no", "name", "value", "controller_id"],
-        readData
-      );
-    }
-
-    // Register tablosu için M000-M999 kayıtlarını oluştur
-    const registerData = [];
-    for (let i = 0; i < 1000; i++) {
-      registerData.push([uuidv4(), newRobotId, i, 0, ipAddress]);
-    }
-    await bulkInsert(
-      client,
-      "register",
-      ["id", "controller_id", "register_no", "register_value", "ip_address"],
-      registerData
-    );
-
-    const ioGroups = [
-      {
-        name: "External Input",
-        start_byte: 2001,
-        end_byte: 2512,
-        shortName: "EI",
-        bitType: "I",
-      },
-      {
-        name: "External Output",
-        start_byte: 3001,
-        end_byte: 3512,
-        shortName: "EO",
-        bitType: "O",
-      },
-      {
-        name: "Universal Input",
-        start_byte: 1,
-        end_byte: 512,
-        shortName: "IN",
-        bitType: "#",
-      },
-      {
-        name: "Universal Output",
-        start_byte: 1001,
-        end_byte: 1512,
-        shortName: "OUT",
-        bitType: "#",
-      },
-      {
-        name: "Specific Input",
-        start_byte: 4001,
-        end_byte: 4160,
-        shortName: "SIN",
-        bitType: "#",
-      },
-      {
-        name: "Specific Output",
-        start_byte: 5001,
-        end_byte: 5300,
-        shortName: "SOUT",
-        bitType: "#",
-      },
-      // {
-      //   name: "Interface Panel",
-      //   start_byte: 6001,
-      //   end_byte: 6064,
-      //   shortName: "IP",
-      //   bitType: "P",
-      // },
-      {
-        name: "Auxiliary Relay",
-        start_byte: 7001,
-        end_byte: 7999,
-        shortName: "AR",
-        bitType: "R",
-      },
-      {
-        name: "Control Status",
-        start_byte: 8001,
-        end_byte: 8064,
-        shortName: "CS",
-        bitType: "S",
-      },
-      {
-        name: "Pseudo Input",
-        start_byte: 8201,
-        end_byte: 8220,
-        shortName: "PI",
-        bitType: "I",
-      },
-      {
-        name: "Network Input",
-        start_byte: 2701,
-        end_byte: 2956,
-        shortName: "NI",
-        bitType: "I",
-      },
-      {
-        name: "Network Output",
-        start_byte: 3701,
-        end_byte: 3956,
-        shortName: "NO",
-        bitType: "O",
-      },
-      // {
-      //   name: "Registers",
-      //   start_byte: 100000,
-      //   end_byte: 100559,
-      //   shortName: "R",
-      //   bitType: "R",
-      // },
-    ];
-
-    const groupsData = [];
-    const signalsData = [];
-    const bitsData = [];
-
-    for (const group of ioGroups) {
-      const groupId = uuidv4();
-      groupsData.push([
-        groupId,
-        group.name,
-        group.start_byte,
-        group.end_byte,
-        newRobotId,
-      ]);
-
-      for (let byte = group.start_byte; byte <= group.end_byte; byte++) {
-        const signalId = uuidv4();
-        signalsData.push([signalId, groupId, byte, `${group.name} #${byte}`]);
-
-        for (let bit = 0; bit < 8; bit++) {
-          const formattedBitNumber = `#${byte}${bit} (${group.shortName} ${
-            group.bitType
-          }${bit + 1})`;
-          bitsData.push([uuidv4(), signalId, formattedBitNumber, null, false]);
-        }
-      }
-    }
-
-    await bulkInsert(
-      client,
-      "io_group",
-      ["id", "name", "start_byte", "end_byte", "controller_id"],
-      groupsData
-    );
-    await bulkInsert(
-      client,
-      "io_signal",
-      ["id", "group_id", "byte_number", "description"],
-      signalsData
-    );
-    await bulkInsert(
-      client,
-      "io_bit",
-      ["id", "signal_id", "bit_number", "name", "is_active"],
-      bitsData,
-      2000
+      `INSERT INTO controller_status (id, ip_address, controller_id, teach, servo, operating, cycle,  hold, alarm, error, stop, door_opened, c_backup, connection )
+       VALUES ($1, $2, $3, 'TEACH', false, false, 'CYCLE', false, false, false, false, false, false, false)`,
+      [newRobotStatusId, ipAddress, newRobotId]
     );
 
     await client.query("COMMIT");
 
-    // Send notification
-    try {
-      await NotificationService.notifyControllerAdded(newRobotId, name);
-    } catch (notificationError) {
-      console.error("Failed to send notification:", notificationError);
-    }
+    (async () => {
+      const bgClient = await dbPool.connect();
+      try {
+        await bgClient.query("BEGIN");
+
+        const readTables = [
+          "b_read",
+          "d_read",
+          "s_read",
+          "i_read",
+          "r_read",
+        ] as const;
+        for (const tbl of readTables) {
+          await bgClient.query(
+            `INSERT INTO ${tbl} (id, ip_address, no, name, value, controller_id)
+             SELECT gen_random_uuid()::text, $1, gs::text, NULL, '0', $2
+             FROM generate_series(0, 99) AS gs`,
+            [ipAddress, newRobotId]
+          );
+        }
+
+        await bgClient.query(
+          `INSERT INTO register (id, controller_id, register_no, register_value, ip_address)
+           SELECT gen_random_uuid()::text, $1, gs, 0, $2
+           FROM generate_series(0, 999) AS gs`,
+          [newRobotId, ipAddress]
+        );
+
+        await bgClient.query(
+          `WITH gdef(name, start_byte, end_byte, short_name, bit_type) AS (
+              VALUES
+                ('External Input', 2001, 2512, 'EI', 'I'),
+                ('External Output', 3001, 3512, 'EO', 'O'),
+                ('Universal Input', 1, 512, 'IN', '#'),
+                ('Universal Output', 1001, 1512, 'OUT', '#'),
+                ('Specific Input', 4001, 4160, 'SIN', '#'),
+                ('Specific Output', 5001, 5300, 'SOUT', '#'),
+                ('Auxiliary Relay', 7001, 7999, 'AR', 'R'),
+                ('Control Status', 8001, 8064, 'CS', 'S'),
+                ('Pseudo Input', 8201, 8220, 'PI', 'I'),
+                ('Network Input', 2701, 2956, 'NI', 'I'),
+                ('Network Output', 3701, 3956, 'NO', 'O')
+            ),
+            ins_groups AS (
+              INSERT INTO io_group (id, name, start_byte, end_byte, controller_id)
+              SELECT gen_random_uuid()::text, g.name, g.start_byte, g.end_byte, $1
+              FROM gdef g
+              RETURNING id, name, start_byte, end_byte
+            ),
+            groups_meta AS (
+              SELECT ig.*, g.short_name, g.bit_type
+              FROM ins_groups ig
+              JOIN gdef g USING (name, start_byte, end_byte)
+            ),
+            ins_signals AS (
+              INSERT INTO io_signal (id, group_id, byte_number, description)
+              SELECT gen_random_uuid()::text, gm.id, b, gm.name || ' #' || b
+              FROM groups_meta gm
+              CROSS JOIN LATERAL generate_series(gm.start_byte, gm.end_byte) AS b
+              RETURNING id, group_id, byte_number
+            )
+            INSERT INTO io_bit (id, signal_id, bit_number, name, is_active)
+            SELECT 
+              gen_random_uuid()::text,
+              s.id,
+              '#' || s.byte_number::text || bit_index::text || ' (' || gm.short_name || ' ' || gm.bit_type || (bit_index + 1)::text || ')',
+              NULL,
+              false
+            FROM ins_signals s
+            JOIN groups_meta gm ON gm.id = s.group_id
+            CROSS JOIN generate_series(0, 7) AS bit_index;`,
+          [newRobotId]
+        );
+
+        await bgClient.query("COMMIT");
+
+        try {
+          await NotificationService.notifyControllerAdded(newRobotId, name);
+        } catch (notificationError) {
+          console.error("Failed to send notification:", notificationError);
+        }
+      } catch (bgErr: any) {
+        console.error("BG CREATE ERROR:", bgErr?.message || bgErr);
+        await bgClient.query("ROLLBACK");
+      } finally {
+        bgClient.release();
+      }
+    })();
 
     return NextResponse.json(
-      { message: "Controller created successfully" },
-      { status: 201 }
+      { message: "Controller creation scheduled", controllerId: newRobotId },
+      { status: 202 }
     );
   } catch (error: any) {
     console.error("DB ERROR:", error.message);
@@ -387,48 +288,22 @@ export async function PUT(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   const { id } = await request.json();
-  const client = await dbPool.connect();
-  try {
-    await client.query("BEGIN");
-
-    const tablesQuery = `
-      SELECT table_name 
-      FROM information_schema.columns 
-      WHERE column_name = 'controller_id' 
-      AND table_schema = 'public'
-      AND table_name != 'controller'
-    `;
-
-    const tablesResult = await client.query(tablesQuery);
-
-    for (const row of tablesResult.rows) {
-      const tableName = row.table_name;
-      try {
-        await client.query(
-          `DELETE FROM "${tableName}" WHERE controller_id = $1`,
-          [id]
-        );
-        console.log(`Deleted records from ${tableName}`);
-      } catch (tableError: any) {
-        console.warn(`Could not delete from ${tableName}:`, tableError.message);
-      }
+  (async () => {
+    const client = await dbPool.connect();
+    try {
+      await client.query("BEGIN");
+      await client.query(`DELETE FROM "controller" WHERE id = $1`, [id]);
+      await client.query("COMMIT");
+    } catch (error: any) {
+      console.error("BG DELETE ERROR:", error.message);
+      await client.query("ROLLBACK");
+    } finally {
+      client.release();
     }
+  })();
 
-    await client.query(`DELETE FROM "controller" WHERE id = $1`, [id]);
-
-    await client.query("COMMIT");
-    return NextResponse.json(
-      { message: "Controller and all related data deleted successfully" },
-      { status: 200 }
-    );
-  } catch (error: any) {
-    console.error("DB ERROR:", error.message);
-    await client.query("ROLLBACK");
-    return NextResponse.json(
-      { message: "Internal Server Error" },
-      { status: 500 }
-    );
-  } finally {
-    client.release();
-  }
+  return NextResponse.json(
+    { message: "Controller delete scheduled", id },
+    { status: 202 }
+  );
 }
