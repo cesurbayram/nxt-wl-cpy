@@ -10,7 +10,8 @@ import LoadingUi from "@/components/shared/loading-ui";
 import PageWrapper from "@/components/shared/page-wrapper";
 import { useRouter } from "next/navigation";
 import { GiRobotGrab } from "react-icons/gi";
-import { deleteController, getController } from "@/utils/service/controller";
+import { getController } from "@/utils/service/controller";
+import { useDeleteControllerOptimized } from "@/utils/service/controller";
 import { Controller } from "@/types/controller.types";
 import Timer from "@/components/shared/timer";
 import { Card, CardContent } from "@/components/ui/card";
@@ -109,13 +110,17 @@ const Page = () => {
     });
   }, [controller, filters]);
 
+  const deleteOptimistic = useDeleteControllerOptimized();
   const deleteMutation = async ({ id }: Controller) => {
+    if (isPending) return;
+    if (!id) return;
     setIsPending(true);
     try {
-      await deleteController({ id });
-      await listController();
+      setController((prev) => prev.filter((c) => c.id !== id));
+      await deleteOptimistic.mutateAsync(id as string);
     } catch (error) {
       console.error("Error deleting controller:", error);
+      await listController();
     } finally {
       setIsPending(false);
     }

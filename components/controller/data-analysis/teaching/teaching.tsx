@@ -62,19 +62,62 @@ export const Teaching: React.FC<TeachingProps> = ({ controllerId }) => {
 
   const handleSelectFolder = async (isFirstFolder: boolean) => {
     try {
-      const dirHandle = await window.showDirectoryPicker();
+      const canUseDirectoryPicker =
+        typeof window !== "undefined" &&
+        typeof (window as any).showDirectoryPicker === "function" &&
+        (window as any).isSecureContext;
 
-      if (isFirstFolder) {
-        setFolder1(dirHandle);
-        setFolder1Name(dirHandle.name);
-        await loadFilesFromFolder(dirHandle, true);
-      } else {
-        setFolder2(dirHandle);
-        setFolder2Name(dirHandle.name);
-        await loadFilesFromFolder(dirHandle, false);
+      if (canUseDirectoryPicker) {
+        const dirHandle = await (window as any).showDirectoryPicker();
+
+        if (isFirstFolder) {
+          setFolder1(dirHandle);
+          setFolder1Name(dirHandle.name);
+          await loadFilesFromFolder(dirHandle, true);
+        } else {
+          setFolder2(dirHandle);
+          setFolder2Name(dirHandle.name);
+          await loadFilesFromFolder(dirHandle, false);
+        }
+
+        toast.success(`Folder selected: ${dirHandle.name}`);
+        return;
       }
 
-      toast.success(`Folder selected: ${dirHandle.name}`);
+      const input = document.createElement("input");
+      input.type = "file";
+      (input as any).webkitdirectory = true;
+      input.multiple = true;
+
+      const filesSelected = await new Promise<File[]>((resolve, reject) => {
+        input.onchange = () => {
+          const fileList = input.files ? Array.from(input.files) : [];
+          if (fileList.length === 0) {
+            reject(new Error("No files selected"));
+          } else {
+            resolve(fileList);
+          }
+        };
+        input.click();
+      });
+
+      const first = filesSelected[0] as any;
+      const relativePath: string | undefined = first?.webkitRelativePath;
+      const derivedFolderName = relativePath
+        ? relativePath.split("/")[0]
+        : "Selected Folder";
+
+      if (isFirstFolder) {
+        setFolder1(null);
+        setFolder1Name(derivedFolderName);
+        setFolder1Files(filesSelected);
+      } else {
+        setFolder2(null);
+        setFolder2Name(derivedFolderName);
+        setFolder2Files(filesSelected);
+      }
+
+      toast.success(`Folder selected: ${derivedFolderName}`);
     } catch (error) {
       console.error("Folder selection error:", error);
       toast.error("Folder could not be selected");
