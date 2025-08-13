@@ -190,7 +190,9 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
               size="icon"
               variant="ghost"
               className="p-2"
-              onClick={async () => {
+              onClick={async (e) => {
+                e.preventDefault();
+                e.stopPropagation();
                 await deleteClick({ id: row.original.id });
               }}
             >

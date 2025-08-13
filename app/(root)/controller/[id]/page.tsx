@@ -140,6 +140,10 @@ const Page = ({ params }: { params: { id: string } }) => {
   };
 
   const handleTabChange = async (value: string) => {
+    // İlk önce UI'ı güncelle (anında geçiş)
+    setActiveTab(value);
+
+    // Sonra eski tab için exit command gönder (paralel çalışsın)
     if (
       previousTab.current &&
       ["inputOutput", "variable", "job", "monitoring", "data"].includes(
@@ -156,7 +160,6 @@ const Page = ({ params }: { params: { id: string } }) => {
       }
     }
 
-    setActiveTab(value);
     previousTab.current = value;
   };
 

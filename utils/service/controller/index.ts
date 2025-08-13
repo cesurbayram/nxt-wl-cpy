@@ -148,12 +148,9 @@ export const useDeleteControllerOptimized = () => {
       await queryClient.cancelQueries({ queryKey: ["controllers"] });
 
       const previousControllers = queryClient.getQueryData(["controllers"]);
-      queryClient.setQueryData(["controllers"], (old: any) => {
-        if (!old) return [];
-        return old.filter(
-          (controller: Controller) => controller.id !== deletedId
-        );
-      });
+      queryClient.setQueryData(["controllers"], (old: any) =>
+        old.filter((controller: any) => controller.id !== deletedId)
+      );
 
       toast.success("Controller deletion started...");
 
