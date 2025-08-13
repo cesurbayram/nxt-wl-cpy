@@ -201,7 +201,11 @@ const ControllerCardGrid = ({
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => deleteClick(controller)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    deleteClick(controller);
+                  }}
                   className="hover:bg-red-500 hover:text-white text-red-600"
                 >
                   <Trash2 className="h-4 w-4" />

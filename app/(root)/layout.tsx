@@ -4,7 +4,6 @@ import "../globals.css";
 import SideNavbar from "@/components/navbar/side-navbar";
 import TopNavbar from "@/components/navbar/top-navbar";
 import { ThemeProvider } from "next-themes";
-import ReactQueryProvider from "@/utils/providers/react-query-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -35,21 +34,19 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ReactQueryProvider>
-            <div className="flex h-screen overflow-hidden">
-              <div className="w-64 pr-4 pl-7 border-r-2 overflow-y-auto fixed h-full">
-                <SideNavbar />
-              </div>
-              <div className="flex-1 ml-64">
-                <div className="h-screen overflow-y-auto">
-                  <div className="bg-background">
-                    <TopNavbar />
-                    <main className="p-6">{children}</main>
-                  </div>
+          <div className="flex h-screen overflow-hidden">
+            <div className="w-64 pr-4 pl-7 border-r-2 overflow-y-auto fixed h-full">
+              <SideNavbar />
+            </div>
+            <div className="flex-1 ml-64">
+              <div className="h-screen overflow-y-auto">
+                <div className="bg-background">
+                  <TopNavbar />
+                  <main className="p-6">{children}</main>
                 </div>
               </div>
             </div>
-          </ReactQueryProvider>
+          </div>
         </ThemeProvider>
       </body>
     </html>

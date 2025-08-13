@@ -288,22 +288,35 @@ export async function PUT(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   const { id } = await request.json();
-  (async () => {
-    const client = await dbPool.connect();
-    try {
-      await client.query("BEGIN");
-      await client.query(`DELETE FROM "controller" WHERE id = $1`, [id]);
-      await client.query("COMMIT");
-    } catch (error: any) {
-      console.error("BG DELETE ERROR:", error.message);
-      await client.query("ROLLBACK");
-    } finally {
-      client.release();
-    }
-  })();
 
-  return NextResponse.json(
-    { message: "Controller delete scheduled", id },
-    { status: 202 }
-  );
+  const client = await dbPool.connect();
+  try {
+    await client.query("BEGIN");
+    const result = await client.query(
+      `DELETE FROM "controller" WHERE id = $1`,
+      [id]
+    );
+    await client.query("COMMIT");
+
+    if (result.rowCount === 0) {
+      return NextResponse.json(
+        { message: "Controller not found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      { message: "Controller deleted successfully", id },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    console.error("DELETE ERROR:", error.message);
+    await client.query("ROLLBACK");
+    return NextResponse.json(
+      { message: "Failed to delete controller" },
+      { status: 500 }
+    );
+  } finally {
+    client.release();
+  }
 }
