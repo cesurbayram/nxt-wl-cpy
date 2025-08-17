@@ -20,7 +20,7 @@ export class NotificationService {
   private static async createNotification(request: CreateNotificationRequest) {
     try {
       const baseUrl =
-        process.env.NEXT_PUBLIC_APP_URL || "http://10.0.110.3:3000";
+        process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
       const url = `${baseUrl}/api/notifications`;
 
       const response = await fetch(url, {
@@ -42,7 +42,7 @@ export class NotificationService {
       try {
         await new Promise((resolve) => setTimeout(resolve, 1000));
         const baseUrl =
-          process.env.NEXT_PUBLIC_APP_URL || "http://10.0.110.3:3000";
+          process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
         const url = `${baseUrl}/api/notifications`;
 
         const response = await fetch(url, {
@@ -321,7 +321,7 @@ export class NotificationService {
       });
 
       const baseUrl =
-        process.env.NEXT_PUBLIC_APP_URL || "http://10.0.110.3:3000";
+        process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
       const response = await fetch(`${baseUrl}/api/notifications?${params}`);
 
       if (!response.ok) {
@@ -339,7 +339,7 @@ export class NotificationService {
     try {
       const currentUserId = userId || this.getCurrentUserId();
       const baseUrl =
-        process.env.NEXT_PUBLIC_APP_URL || "http://10.0.110.3:3000";
+        process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
       const response = await fetch(`${baseUrl}/api/notifications`, {
         method: "PUT",
         headers: {

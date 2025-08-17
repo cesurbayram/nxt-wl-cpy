@@ -20,7 +20,7 @@ const getTorkData = async (controllerId: string): Promise<TorkData[]> => {
 };
 
 const sendTorkCommand = async (controllerId: string): Promise<boolean> => {
-  const apiRes = await fetch("http://10.0.110.3:8082/api/tork-socket", {
+  const apiRes = await fetch("http://localhost:8082/api/tork-socket", {
     method: "POST",
     body: JSON.stringify({ controllerId }),
     headers: {

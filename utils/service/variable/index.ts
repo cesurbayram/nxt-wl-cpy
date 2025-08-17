@@ -31,7 +31,7 @@ const sendVariableCommand = async ({
   activeTab: string;
   controllerId: string;
 }): Promise<boolean> => {
-  const apiRes = await fetch("http://10.0.110.3:8082/api/variable-socket", {
+  const apiRes = await fetch("http://localhost:8082/api/variable-socket", {
     method: "POST",
     body: JSON.stringify({ activeVariable: activeTab, controllerId }),
     headers: {

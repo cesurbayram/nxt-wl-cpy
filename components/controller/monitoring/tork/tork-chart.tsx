@@ -1160,11 +1160,7 @@ const TorkChart = ({
     <Card className="p-4 overflow-hidden">
       <CardHeader className="pb-2">
         <div className="flex justify-between items-center">
-          <CardTitle>
-            <h2 className="text-xl font-medium">
-              Torque Sensor Status Monitor
-            </h2>
-          </CardTitle>
+          <CardTitle>Torque Sensor Status Monitor</CardTitle>
           <div className="flex items-center gap-2">
             <Button
               variant="outline"

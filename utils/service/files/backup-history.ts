@@ -19,7 +19,7 @@ const getBackupHistory = async (
 ): Promise<BackupHistoryResponse> => {
   try {
     const response = await fetch(
-      `http://10.0.110.3:8082/api/backup-history/${controllerId}`,
+      `http://localhost:8082/api/backup-history/${controllerId}`,
       {
         method: "GET",
         headers: {
@@ -48,7 +48,7 @@ const downloadBackup = async (
   fileName: string
 ): Promise<void> => {
   try {
-    const downloadUrl = `http://10.0.110.3:8082/api/backup-download/${backupId}`;
+    const downloadUrl = `http://localhost:8082/api/backup-download/${backupId}`;
 
     const link = document.createElement("a");
     link.href = downloadUrl;
@@ -68,7 +68,7 @@ const deleteBackup = async (
 ): Promise<{ success: boolean; message?: string; error?: string }> => {
   try {
     const response = await fetch(
-      `http://10.0.110.3:8082/api/backup-history/${backupId}`,
+      `http://localhost:8082/api/backup-history/${backupId}`,
       {
         method: "DELETE",
         headers: {

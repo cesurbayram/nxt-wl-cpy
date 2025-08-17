@@ -30,7 +30,7 @@ const sendInputOutputCommand = async ({
   activeTab: string;
   controllerId: string;
 }): Promise<boolean> => {
-  const apiRes = await fetch("http://10.0.110.3:8082/api/input-output-socket", {
+  const apiRes = await fetch("http://localhost:8082/api/input-output-socket", {
     method: "POST",
     body: JSON.stringify({ activeInputOutput: activeTab, controllerId }),
     headers: {

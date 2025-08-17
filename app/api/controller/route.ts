@@ -124,9 +124,9 @@ export async function POST(request: NextRequest) {
     );
 
     await client.query(
-      `INSERT INTO controller_status (id, controller_id, teach, servo, operating, cycle,  hold, alarm, error, stop, door_opened, c_backup, connection )
-       VALUES ($1, $2, 'TEACH', false, false, 'CYCLE', false, false, false, false, false, false, false)`,
-      [newRobotStatusId, newRobotId]
+      `INSERT INTO controller_status (id, ip_address, controller_id, teach, servo, operating, cycle,  hold, alarm, error, stop, door_opened, c_backup, connection )
+       VALUES ($1, $2, $3, 'TEACH', false, false, 'CYCLE', false, false, false, false, false, false, false)`,
+      [newRobotStatusId, ipAddress, newRobotId]
     );
 
     await client.query("COMMIT");
@@ -145,18 +145,18 @@ export async function POST(request: NextRequest) {
         ] as const;
         for (const tbl of readTables) {
           await bgClient.query(
-            `INSERT INTO ${tbl} (id, no, name, value, controller_id)
-             SELECT gen_random_uuid()::text, gs::text, NULL, '0', $1
+            `INSERT INTO ${tbl} (id, ip_address, no, name, value, controller_id)
+             SELECT gen_random_uuid()::text, $1, gs::text, NULL, '0', $2
              FROM generate_series(0, 99) AS gs`,
-            [newRobotId]
+            [ipAddress, newRobotId]
           );
         }
 
         await bgClient.query(
-          `INSERT INTO register (id, controller_id, register_no, register_value)
-           SELECT gen_random_uuid()::text, $1, gs, 0
+          `INSERT INTO register (id, controller_id, register_no, register_value, ip_address)
+           SELECT gen_random_uuid()::text, $1, gs, 0, $2
            FROM generate_series(0, 999) AS gs`,
-          [newRobotId]
+          [newRobotId, ipAddress]
         );
 
         await bgClient.query(
@@ -214,6 +214,7 @@ export async function POST(request: NextRequest) {
         }
       } catch (bgErr: any) {
         console.error("BG CREATE ERROR:", bgErr?.message || bgErr);
+        console.error("BG ERROR DETAILS:", bgErr);
         await bgClient.query("ROLLBACK");
       } finally {
         bgClient.release();

@@ -5,7 +5,7 @@ const sendTabExitCommand = async ({
   exitedTab: string;
   controllerId: string;
 }): Promise<boolean> => {
-  const apiRes = await fetch("http://10.0.110.3:8082/api/tab-exit", {
+  const apiRes = await fetch("http://localhost:8082/api/tab-exit", {
     method: "POST",
     body: JSON.stringify({ exitedTab, controllerId }),
     headers: {

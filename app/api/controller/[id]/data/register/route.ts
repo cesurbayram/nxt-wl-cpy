@@ -20,7 +20,8 @@ export async function GET(
         id,
         controller_id,
         register_no,
-        register_value
+        register_value,
+        ip_address
       FROM register
       WHERE controller_id = $1 
       ORDER BY register_no ASC`,

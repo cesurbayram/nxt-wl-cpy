@@ -74,7 +74,7 @@ const manualBackup = async (
   error?: string;
 }> => {
   try {
-    const response = await fetch("http://10.0.110.3:8082/api/manual-backup", {
+    const response = await fetch("http://localhost:8082/api/manual-backup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -99,7 +99,7 @@ const manualBackup = async (
       const pollForResult = async () => {
         try {
           const resultResponse = await fetch(
-            `http://10.0.110.3:8082/api/manual-backup-result/${requestId}`
+            `http://localhost:8082/api/manual-backup-result/${requestId}`
           );
 
           if (resultResponse.status === 200) {
