@@ -1,0 +1,1139 @@
+YRC1000,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+Alarm Number,Alarm Name/Message,Contents,Sub Code,Meaning,Cause,Remedy,図表1,図表2,詳細説明(技術者用),Notes
+5010,ANALOG INPUT ERROR(ACP02),Analog input error is occured on the ACP02 board.,,Sub Code shows the input error channel.,Analog input error,"(1)Check the cable connection.
+(2)Replace the ACP02 board.",,,,COMARC
+,,,,,,,,,,COMARC
+,,,,,,,,,,COMARC
+5011,TRANSMISSION ERROR((ACP02),"COMARC:Serial transmission error is  occurred on JANCD-ACP02 board
+Laser tracking:Transmission error is  occurred between YRC1000 and laser sensor unit.",0000_0001,Transmission error,Transmission error is  occurred between YRC1000 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of YRC1000 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-ACP01 CN105 or CN106 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP21 board and the cable.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,0000_0010,Transmission error,Transmission error is  occurred between YRC1000 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of YRC1000 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-ACP01 CN105 or CN106 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP21 board and the cable.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,0000_0011,Transmission error,Transmission error is  occurred between YRC1000 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of YRC1000 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-ACP01 CN105 or CN106 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP21 board and the cable.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,0000_0100,Transmission error,Transmission error is  occurred between YRC1000 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of YRC1000 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-ACP01 CN105 or CN106 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP21 board and the cable.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,0000_0101,Transmission error,Transmission error is  occurred between YRC1000 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of YRC1000 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-ACP01 CN105 or CN106 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP21 board and the cable.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,0000_0110,Transmission error,Transmission error is  occurred between YRC1000 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of YRC1000 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-ACP01 CN105 or CN106 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP21 board and the cable.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,0000_0111,Transmission error,Transmission error is  occurred between YRC1000 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of YRC1000 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-ACP01 CN105 or CN106 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP21 board and the cable.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,0000_1000,Transmission error,Transmission error is  occurred between YRC1000 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of YRC1000 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-ACP01 CN105 or CN106 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP21 board and the cable.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,0000_1001,Transmission error,Transmission error is  occurred between YRC1000 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of YRC1000 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-ACP01 CN105 or CN106 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP21 board and the cable.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,0000_1010,Transmission error,Transmission error is  occurred between YRC1000 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of YRC1000 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-ACP01 CN105 or CN106 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP21 board and the cable.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,0000_1011,Transmission error,Transmission error is  occurred between YRC1000 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of YRC1000 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-ACP01 CN105 or CN106 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP21 board and the cable.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,0000_1100,Transmission error,Transmission error is  occurred between YRC1000 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of YRC1000 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-ACP01 CN105 or CN106 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP21 board and the cable.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,0000_1101,Transmission error,Transmission error is  occurred between YRC1000 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of YRC1000 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-ACP01 CN105 or CN106 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP21 board and the cable.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,0000_1110,Transmission error,Transmission error is  occurred between YRC1000 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of YRC1000 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-ACP01 CN105 or CN106 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP21 board and the cable.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,0000_1111,Transmission error,Transmission error is  occurred between YRC1000 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of YRC1000 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-ACP01 CN105 or CN106 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP21 board and the cable.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,0001_0000,"COMARC:Checksum error
+Laser tracking:Transmission error","COMARC:Serial transmission error
+Laser tracking:Transmission error is  occurred between YRC1000 and laser sensor unit.","[COMARC]
+(1)Replace the transmission cable.
+(2)Replace JANCD-YCP02.
+[Laser tracking]
+(1)Reset the alarm, and then try again.
+(2)Turn off the power of YRC1000 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-ACP01 CN105 or CN106 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP21 board and the cable.",,,,"COMARC
+Laser tracking"
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,"COMARC
+Laser tracking"
+,,,0001_0001,Transmission error,Transmission error is  occurred between YRC1000 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of YRC1000 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-ACP01 CN105 or CN106 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP21 board and the cable.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,0001_0010,Transmission error,Transmission error is  occurred between YRC1000 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of YRC1000 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-ACP01 CN105 or CN106 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP21 board and the cable.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,0001_0011,Transmission error,Transmission error is  occurred between YRC1000 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of YRC1000 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-ACP01 CN105 or CN106 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP21 board and the cable.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,0001_0100,Transmission error,Transmission error is  occurred between YRC1000 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of YRC1000 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-ACP01 CN105 or CN106 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP21 board and the cable.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,0001_0101,Transmission error,Transmission error is  occurred between YRC1000 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of YRC1000 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-ACP01 CN105 or CN106 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP21 board and the cable.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,0001_0110,Transmission error,Transmission error is  occurred between YRC1000 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of YRC1000 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-ACP01 CN105 or CN106 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP21 board and the cable.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,0001_0111,Transmission error,Transmission error is  occurred between YRC1000 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of YRC1000 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-ACP01 CN105 or CN106 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP21 board and the cable.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,0001_1000,Transmission error,Transmission error is  occurred between YRC1000 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of YRC1000 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-ACP01 CN105 or CN106 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP21 board and the cable.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,0001_1001,Transmission error,Transmission error is  occurred between YRC1000 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of YRC1000 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-ACP01 CN105 or CN106 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP21 board and the cable.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,0001_1010,Transmission error,Transmission error is  occurred between YRC1000 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of YRC1000 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-ACP01 CN105 or CN106 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP21 board and the cable.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,0001_1011,Transmission error,Transmission error is  occurred between YRC1000 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of YRC1000 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-ACP01 CN105 or CN106 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP21 board and the cable.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,0001_1100,Transmission error,Transmission error is  occurred between YRC1000 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of YRC1000 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-ACP01 CN105 or CN106 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP21 board and the cable.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,0010_0000,NAK command receive error,Serial transmission error,"(1)Replace the transmission cable.
+(2)Replace JANCD-YCP02.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,0011_0000,Transmission process time over,Serial transmission error,"(1)Replace the transmission cable.
+(2)Replace JANCD-YCP02.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,0100_0000,Reception process time over,Serial transmission error,"(1)Replace the transmission cable.
+(2)Replace JANCD-YCP02.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+,,,,,,,,,,Laser tracking
+5012,SYSTEM ERROR(COMARC),System error occurred in the sensor process of COMARC Function.,0,System task mail send error,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,COMARC
+,,,1,System task mail receive error,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,COMARC
+,,,2,Sensing task mail send error,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,COMARC
+,,,3,Sensing task mail receive error,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,COMARC
+,,,4,Transmission task mail send error,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,COMARC
+,,,5,Transmission task mail receive error,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,COMARC
+,,,6,Transmission task create error,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,COMARC
+,,,7,Sensing task mail token get error,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,COMARC
+5013,SYSTEM ERROR(COMARC),Data error occurred in the sensor process of COMARC Function.,0,Main command processing error,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,COMARC
+,,,1,Main command data error,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,COMARC
+,,,2,Sub command data error,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,COMARC
+,,,3,Sensor bank get error,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,COMARC
+,,,4,Measured welding current error,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,COMARC
+,,,5,Input parameter error,Setting error,"(1) SxE202 needs to be set only when the scale conversion of the measured value used by the digital COMARC function for sensing is required. Enter 0 for SxE202 if you do not need to scale the measurements. If scale conversion of the measured value is required, enter the M register number in SxE202 that stores the measurements used by the digital COMARC function for sensing.
+(2) When the set value of SxE202 is other than 0, the set value of SxE200 and SxE201 is used to perform scale conversion of the measured value used by the digital COMARC function for sensing. Enter the minimum measured value in SxE200 and the maximum measured value in SxE201.
+(3)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,COMARC
+5019,ARITHMETIC ERROR(SENSOR),An error occurred in the arithmetic process for coordinates in gauging motion.,,It is the kind of error of arithmetic process for coordinates.,Software operation error occurred,"(1)When another alarm has occurred at the same time, Take the measures of it, 
+(2)When another alarm has not occurred at the same time, Reset the alarm, and then try again.
+(3)If the alarm occurs again, save the CMOS.BIN , and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Bendling
+5020,VERIFY ERROR (SENSOR PARAMETER),Calc err is occurred when calc parameter at conveyor condition file.,0,USED STATUS is err at condition file1.,Setting error,Check USED STATUS at condition file1.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,1,PORT NO. is err at condition file1.,Setting error,Check PORT NO. at condition file1.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,2,BROKEN LINE DETECT is err at condition file1.,Setting error,Check BROKEN LINE DETECT at condition file1.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,3,ENCODER INPUT is err at condition file1.,Setting error,Check ENCODER INPUT at condition file1.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,4,ENCODER SIGN is err at condition file1.,Setting error,Check ENCODER SIGN at condition file1.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,5,CORRECTION is err at condition file1.,Setting error,Check CORRECTION at condition file1.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,6,VIRTUAL CV SPEED is err at condition file1.,Setting error,Check VIRTUAL CV SPEED at condition file1.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,7,AVERAGE TRAVEL TIME is err at condition file1.,Setting error,Check AVERAGE TRAVEL TIME at condition file1.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,8,POS RESOLUTION is err at condition file1.,Setting error,Check POS RESOLUTION at condition file1.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,9,PERMIT CV QUE is err at condition file1.,Setting error,Check PERMIT CV QUE at condition file1.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,40,"Wrong value is set to Sensor parameter, SxE040.
+Laser tracking: Analog output signal number for Gap ratio condition control is wrong. ","Wrong value is set to Sensor parameter, SxE***.","[Laser tracking]
+Set correct value,1-12, to Analog output signal number for Gap ratio condition control parameter, SxE040. And check not to set same value to the other, SxE040-043. (To be developed in the future)",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,41,"Wrong value is set to Sensor parameter, SxE041.
+Laser tracking:Analog output signal number for Gap ratio condition control is wrong. ","Wrong value is set to Sensor parameter, SxE***.","[Laser tracking]
+Set correct value,1-12, to Analog output signal number for Gap ratio condition control parameter, SxE041. And check not to set same value to the other, SxE040-043. (To be developed in the future)",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,42,"Wrong value is set to Sensor parameter, SxE042.
+Laser tracking:Analog output signal number for Gap ratio condition control is wrong. ","Wrong value is set to Sensor parameter, SxE***.","[Laser tracking]
+Set correct value,1-12, to Analog output signal number for Gap ratio condition control parameter, SxE042. And check not to set same value to the other, SxE040-043. (To be developed in the future)",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,43,"Wrong value is set to Sensor parameter, SxE043.
+Laser tracking:Analog output signal number for Gap ratio condition control is wrong. ","Wrong value is set to Sensor parameter, SxE***.","[Laser tracking]
+Set correct value,1-12, to Analog output signal number for Gap ratio condition control parameter, SxE043. And check not to set same value to the other, SxE040-043. (To be developed in the future)",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,100,USED STATUS is err at condition file2.,Setting error,Check PORT NO. at condition file2.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,101,PORT NO. is err at condition file2.,Setting error,Check PORT NO. at condition file2.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,102,BROKEN LINE DETECT is err at condition file2.,Setting error,Check BROKEN LINE DETECT at condition file2.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,103,ENCODER INPUT is err at condition file2.,Setting error,Check ENCODER INPUT at condition file2.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,104,ENCODER SIGN is err at condition file2.,Setting error,Check ENCODER SIGN at condition file2.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,105,CORRECTION is err at condition file2.,Setting error,Check CORRECTION at condition file2.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,106,VIRTUAL CV SPEED is err at condition file2.,Setting error,Check VIRTUAL CV SPEED at condition file2.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,107,AVERAGE TRAVEL TIME is err at condition file2.,Setting error,Check AVERAGE TRAVEL TIME at condition file2.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,108,POS RESOLUTION is err at condition file2.,Setting error,Check POS RESOLUTION at condition file2.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,109,PERMIT CV QUE is err at condition file2.,Setting error,Check PERMIT CV QUE at condition file2.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,200,USED STATUS is err at condition file3.,Setting error,Check USED STATUS at condition file3.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,201,PORT NO. is err at condition file3.,Setting error,Check PORT NO. at condition file3.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,202,BROKEN LINE DETECT is err at condition file3.,Setting error,Check BROKEN LINE DETECT at condition file3.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,203,ENCODER INPUT is err at condition file3.,Setting error,Check ENCODER INPUT at condition file3.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,204,ENCODER SIGN is err at condition file3.,Setting error,Check ENCODER SIGN at condition file3.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,205,CORRECTION is err at condition file3.,Setting error,Check CORRECTION at condition file3.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,206,VIRTUAL CV SPEED is err at condition file3.,Setting error,Check VIRTUAL CV SPEED at condition file3.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,207,AVERAGE TRAVEL TIME is err at condition file3.,Setting error,Check AVERAGE TRAVEL TIME at condition file3.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,208,POS RESOLUTION is err at condition file3.,Setting error,Check POS RESOLUTION at condition file3.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,209,PERMIT CV QUE is err at condition file3.,Setting error,Check PERMIT CV QUE at condition file3.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,300,USED STATUS is err at condition file4.,Setting error,Check USED STATUS at condition file4.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,301,PORT NO. is err at condition file4.,Setting error,Check PORT NO. at condition file4.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,302,BROKEN LINE DETECT is err at condition file4.,Setting error,Check BROKEN LINE DETECT at condition file4.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,303,ENCODER INPUT is err at condition file4.,Setting error,Check ENCODER INPUT at condition file4.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,304,ENCODER SIGN is err at condition file4.,Setting error,Check ENCODER SIGN at condition file4.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,305,CORRECTION is err at condition file4.,Setting error,Check CORRECTION at condition file4.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,306,VIRTUAL CV SPEED is err at condition file4.,Setting error,Check VIRTUAL CV SPEED at condition file4.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,307,AVERAGE TRAVEL TIME is err at condition file4.,Setting error,Check AVERAGE TRAVEL TIME at condition file4.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,308,POS RESOLUTION is err at condition file4.,Setting error,Check POS RESOLUTION at condition file4.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,309,PERMIT CV QUE is err at condition file4.,Setting error,Check PERMIT CV QUE at condition file4.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,400,USED STATUS is err at condition file5.,Setting error,Check USED STATUS at condition file5.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,401,PORT NO. is err at condition file5.,Setting error,Check PORT NO. at condition file5.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,402,BROKEN LINE DETECT is err at condition file5.,Setting error,Check BROKEN LINE DETECT at condition file5.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,403,ENCODER INPUT is err at condition file5.,Setting error,Check ENCODER INPUT at condition file5.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,404,ENCODER SIGN is err at condition file5.,Setting error,Check ENCODER SIGN at condition file5.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,405,CORRECTION is err at condition file5.,Setting error,Check CORRECTION at condition file5.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,406,VIRTUAL CV SPEED is err at condition file5.,Setting error,Check VIRTUAL CV SPEED at condition file5.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,407,AVERAGE TRAVEL TIME is err at condition file5.,Setting error,Check AVERAGE TRAVEL TIME at condition file5.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,408,POS RESOLUTION is err at condition file5.,Setting error,Check POS RESOLUTION at condition file5.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,409,PERMIT CV QUE is err at condition file5.,Setting error,Check PERMIT CV QUE at condition file5.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,500,USED STATUS is err at condition file6.,Setting error,Check USED STATUS at condition file6.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,501,PORT NO. is err at condition file6.,Setting error,Check PORT NO. at condition file6.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,502,BROKEN LINE DETECT is err at condition file6.,Setting error,Check BROKEN LINE DETECT at condition file6.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,503,ENCODER INPUT is err at condition file6.,Setting error,Check ENCODER INPUT at condition file6.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,504,ENCODER SIGN is err at condition file6.,Setting error,Check ENCODER SIGN at condition file6.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,505,CORRECTION is err at condition file6.,Setting error,Check CORRECTION at condition file6.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,506,VIRTUAL CV SPEED is err at condition file6.,Setting error,Check VIRTUAL CV SPEED at condition file6.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,507,AVERAGE TRAVEL TIME is err at condition file6.,Setting error,Check AVERAGE TRAVEL TIME at condition file6.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,508,POS RESOLUTION is err at condition file6.,Setting error,Check POS RESOLUTION at condition file6.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,509,PERMIT CV QUE is err at condition file6.,Setting error,Check PERMIT CV QUE at condition file6.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+5021,VERIFY ERROR(CONVEYOR COND FILE),,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+5022,CONVEYOR POSITION LIMIT,Correct pos is limit over (21M).,,"Correct pos is limit over (21M) at condition file.
+Sub Code : Alarm occurred conveyor condition file No",Synchronization section error,"Check the synchronized move at condition file, or check parameter auto cvque dis (SxE40). Correct pos is not updated after alarm is occurred, so Synchronized move is not done, and move at correct pos at alarm is occurred. ",,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+5023,CONVEYOR COUNTER LIMIT,"The conveyor position counter pulse
+overflow",,"Curr pos is over at condition file.
+Sub Code : Alarm occurred conveyor condition file No",Setting error,"Check the POS RESOLUTION or synchronized move at condition file. Correct pos is not updated after alarm is occurred, so Synchronized move is not done, and move at correct pos at alarm is occurred. 
+",,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+5024,SETUP ERROR(CV COND SUPP. FILE),The setting of CONVEYOR CONDITION SUPPORT FILE is not correct.  ,,,Setting error,"Check the settings for LS and shift distance in the conveyor condition support file. If the same LS is used, set the same shift disance in each condition file.  
+
+",,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+5050,MEI ERROR,The error about Motion Extension API is occurred in sensor process.,,"Sub Code: 100-250
+It is the kind of error of Motion extension API in sensor process of laser tracking function.",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+5051,SKILL COMMAND ERROR,The error about Skill command is occurred in sensor process.,,"Sub Code: 100-250
+It is the kind of error of Skill command in sensor process of laser tracking function.",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+5052,SYSTEM ERROR (LASER TRACKING),The system error is occurred in sensor process.,,"Sub Code: 0-22
+It is the kind of error of internal sensor process of laser tracking function.
+6:The transmission error is occurred  between YRC1000 and Laser sensor unit. ",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+5053,LASER TRACKING PROCESS ERROR,The data error is occurred in sensor process.,10,Mode error.,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,11,Correction coordinate error.,Setting error,"(1)Make common coordinate motion in the sensing path, if normal motion and synchronous motion are set in the JOB.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,12,Tool number error.,Setting error,"(1)Make common tool number in the sensing path, if several tool number are set in the JOB.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,13,Control group error.,Setting error,"(1)Make common control group in the sensing path, if several JOB that the control group is different are executed in the sensing path.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,14,User coordinate number error.,Setting error,"(1)Make common user coordinate of External reference point control in the sensing path, if several kind of user coordinate are set in the JOB. (To be developed in the future)
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,15,Same gap mount is set.,Setting error,"(1)Delete one gap mount data in Gap condition file. Because same data is set.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,16,Same gap mount is set.,Setting error,"(1)Delete one gap mount data in Gap condition file. Because same data is set.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,17,Non detection error.,Setting error,"(1)Remove the dirt and the dust from the sensing point.
+(2)Check that the sensing point is inside of sensor range.
+(3)Check the sensing condition of laser sensor unit.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,18,Detection error.,Setting error,"(1)Remove the dirt and the dust from the sensing point.
+(2)Check that the sensing point is inside of sensor range.
+(3)Check the sensing condition of laser sensor unit.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,19,Laser sensor calibration error.,Setting error,"(1)Check that the sensing point is inside of sensor range.
+(2)Turn on the laser beam. Move the manipulator to the teaching point. And check that the laser beam point the teaching position.
+(3)Check the sensing condition of laser sensor unit.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,20,Laser sensor calibration error.,Setting error,"(1)Check that the sensing point is inside of sensor range.
+(2)Turn on the laser beam. Move the manipulator to the teaching point. And check that the laser beam point the teaching position.
+(3)Check the sensing condition of laser sensor unit.",,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,21,Correction mount error.,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,28,Task error.,Setting error,"(1)Check that the JOB isn't switched to the other task during tracking.
+(2)Turn on the laser beam. Move the manipulator to the teaching point. And check that the laser beam point the teaching position.
+(3)Check the sensing condition of laser sensor unit.
+(4)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,29,Application error.,Setting error,"(1)Check that the JOB isn't switched to the other task between tracking.
+(2)Turn on the laser beam. Move the manipulator to the teaching point. And check that the laser beam point the teaching position.
+(3)Check the sensing condition of laser sensor unit.
+(4)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,40,Wrong laser tracking file no.,Setting error,"(1)Wrong laser tracking file no. is set to command of laser tracking function. Change it to correct no,( 1-40)
+(2)Turn on the laser beam. Move the manipulator to the teaching point. And check that the laser beam point the teaching position.
+(3)Check the sensing condition of laser sensor unit.
+(4)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,41,Wrong laser sensor calibration file no.,Setting error,"(1)Wrong laser sensor calibration file no. is set to command of laser tracking function. Change it to correct no,( 1-64)
+(2)Turn on the laser beam. Move the manipulator to the teaching point. And check that the laser beam point the teaching position.
+(3)Check the sensing condition of laser sensor unit.
+(4)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,50,End point search motion error.,Setting error,"(1)Check that the tracking distance is enough long to start end point search.
+(2)Turn on the laser beam. Move the manipulator to the teaching point. And check that the laser beam point the teaching position.
+(3)Check the sensing condition of laser sensor unit.
+(4)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,51,End point search motion error.,Setting error,"(1)Check that the tracking distance is enough long to start end point search.
+(2)Turn on the laser beam. Move the manipulator to the teaching point. And check that the laser beam point the teaching position.
+(3)Check the sensing condition of laser sensor unit.
+(4)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,52,End point search motion error.,Setting error,"(1)Check that the tracking distance is enough long to start end point search.
+(2)Turn on the laser beam. Move the manipulator to the teaching point. And check that the laser beam point the teaching position.
+(3)Check the sensing condition of laser sensor unit.
+(4)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,53,End point search motion error.,Setting error,"(1)Check that the tracking distance is enough long to start end point search.
+(2)Turn on the laser beam. Move the manipulator to the teaching point. And check that the laser beam point the teaching position.
+(3)Check the sensing condition of laser sensor unit.
+(4)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,54,End point search motion error.,Setting error,"(1)Check that the tracking distance is enough long to start end point search.
+(2)Turn on the laser beam. Move the manipulator to the teaching point. And check that the laser beam point the teaching position.
+(3)Check the sensing condition of laser sensor unit.
+(4)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,55,End point search motion error.,Setting error,"(1)Check that the tracking distance is enough long to start end point search.
+(2)Turn on the laser beam. Move the manipulator to the teaching point. And check that the laser beam point the teaching position.
+(3)Check the sensing condition of laser sensor unit.
+(4)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,56,End point search motion error.,Setting error,"(1)Check that the tracking distance is enough long to start end point search.
+(2)Turn on the laser beam. Move the manipulator to the teaching point. And check that the laser beam point the teaching position.
+(3)Check the sensing condition of laser sensor unit.
+(4)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,60,Gap adaptation control error.,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,70,Laser sensor calibration error.,Setting error,Check that there are enough long length between the sensing points 1-4.,,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,71,Laser sensor calibration error.,Setting error,Check that there are enough long length between the sensing points 1-4.,,,,Laser tracking
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,80,Synchronized timer error between YRC1000 and laser sensor unit.,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,90,Memoplay control error.,Setting error,"(1)Check the memoplay file number set to instruction.(1-200)
+(2)Delete some unnecessary memoplay file. The record capacity of sampling data is over.
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,91,Memoplay control error.,Setting error,"(1)Check the memoplay file number set to instruction.(1-200)
+(2)Delete some unnecessary memoplay file. The record capacity of sampling data is over.
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,92,Memoplay control error.,Setting error,"(1)Check the memoplay file number set to instruction.(1-200)
+(2)Delete some unnecessary memoplay file. The record capacity of sampling data is over.
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,93,Memoplay control error.,Setting error,"(1)Check the memoplay file number set to instruction.(1-200)
+(2)Delete some unnecessary memoplay file. The record capacity of sampling data is over.
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,94,Memoplay control error.,Setting error,"(1)Check the memoplay file number set to instruction.(1-200)
+(2)Delete some unnecessary memoplay file. The record capacity of sampling data is over.
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,95,Memoplay control error.,Setting error,"(1)Check the memoplay file number set to instruction.(1-200)
+(2)Delete some unnecessary memoplay file. The record capacity of sampling data is over.
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,96,Memoplay control error.,Setting error,"(1)Check the memoplay file number set to instruction.(1-200)
+(2)Delete some unnecessary memoplay file. The record capacity of sampling data is over.
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,97,Memoplay control error.,Setting error,"(1)Check the memoplay file number set to instruction.(1-200)
+(2)Delete some unnecessary memoplay file. The record capacity of sampling data is over.
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,98,Memoplay control error.,Setting error,"(1)Check the memoplay file number set to instruction.(1-200)
+(2)Delete some unnecessary memoplay file. The record capacity of sampling data is over.
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,99,Memoplay control error.,Setting error,"(1)Check the memoplay file number set to instruction.(1-200)
+(2)Delete some unnecessary memoplay file. The record capacity of sampling data is over.
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,100,Memoplay control error.,Setting error,"(1)Check the memoplay file number set to instruction.(1-200)
+(2)Delete some unnecessary memoplay file. The record capacity of sampling data is over.
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,120,Path Over error.,Setting error,"(1)Check the difference of work position between teaching and the time when the alarm is occurred.
+(2)Check the PATHOVER condition in LASER TRACKING FILE set to command of Laser tracking function, LTRACKON and LTRACKSET.
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,121,Stop motion error at fail sens.,Setting error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,122,Stop motion error at fail sens.,Setting error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,123,Stop motion error at fail sens.,Setting error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,124,Stop motion error at fail sens.,Setting error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,125,Stop motion error at fail sens.,Setting error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,126,Stop motion error at fail sens.,Setting error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,130,Get feedback position error.,Setting error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,131,Convert rectangle position error.,Setting error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,132,Get rectangle feedback position error.,Setting error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+5054,LASER SENSOR ERROR,,,"Sub Code: 1-14
+It is the kind of transmission error between YRC1000 and laser sensor unit.",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Laser tracking
+5060,GAUGING PROCESS ERROR,The error is occurred in sensor process.,4,"The left gauge sensor port number is wrong in GAUGEON command. It is set the parameter, SxE020-026.",Setting error,"(1)Set good value to the parameter of Left gauge sensor port number,SxE020-026.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Bendling
+,,,5,"The right gauge sensor port number is wrong in GAUGEON command. It is set the parameter, SxE020-026.",Setting error,"(1)Set good value to the parameter of Right gauge sensor port number,SxE020-026.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Bendling
+,,,6,The gain of left gauge sensor is not set in GAUGEON command. It is  set in Gauge specification file.,Setting error,"(1)Execute left gauge sensor calibration.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Bendling
+,,,7,The gain of right gauge sensor is not set in GAUGEON command. It is  set in Gauge specification file.,Setting error,"(1)Execute right gauge sensor calibration.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Bendling
+,,,8,The offset of left gauge sensor is not set in GAUGEON command. It is  set in Gauge specification file.,Setting error,"(1)Execute left gauge sensor calibration.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Bendling
+,,,9,The offset of right gauge sensor is not set in GAUGEON command. It is  set in Gauge specification file.,Setting error,"(1)Execute right gauge sensor calibration.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Bendling
+,,,10,"The left side gauge sensor port number is wrong in GAUGEON command. It is set the parameter, SxE020-026.",Setting error,"(1)Set good value to the parameter of left side gauge sensor port number,SxE020-026.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Bendling
+,,,11,"The right side gauge sensor port number is wrong in GAUGEON command. It is set the parameter, SxE020-026.",Setting error,"(1)Set good value to the parameter of right side gauge sensor port number,SxE020-026.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Bendling
+,,,12,The gain of left side gauge sensor is not set in GAUGEON command. It is  set in Gauge specification file.,Setting error,"(1)Execute left side gauge sensor calibration.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Bendling
+,,,13,The gain of right side gauge sensor is not set in GAUGEON command. It is  set in Gauge specification file.,Setting error,"(1)Execute right side gauge sensor calibration.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Bendling
+,,,14,The offset of left side gauge sensor is not set in GAUGEON command. It is  set in Gauge specification file.,Setting error,"(1)Execute left side gauge sensor calibration.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Bendling
+,,,15,The offset of right side gauge sensor is not set in GAUGEON command. It is  set in Gauge specification file.,Setting error,"(1)Execute right side gauge sensor calibration.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Bendling
+5061,SENSOR NO. SETTING ERROR,Same Sensor number is set in GAUGEON command.,0,Left and right gauge sensor number are same.,Setting error,"(1)Set different sensor number between left and right.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Bendling
+,,,1,Left and left side gauge sensor number are same.,Setting error,"(1)Set different sensor number between left and left side.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Bendling
+,,,2,Left and right side gauge sensor number are same.,Setting error,"(1)Set different sensor number between left and right side.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Bendling
+,,,3,Right and Left side gauge sensor number are same.,Setting error,"(1)Set different sensor number between right and left side.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Bendling
+,,,4,Right and Right side gauge sensor number are same.,Setting error,"(1)Set different sensor number between right and right side.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Bendling
+,,,5,Left side and right side gauge sensor number are same.,Setting error,"(1)Set different sensor number between left side and right side.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Bendling
+5062,GAUGING CORRECTION OVER,The mount of gauging correction exceed maximum correction during gauging.,,"Sub code : correction type
+0000_0001 :Position correction(Y direction) exceed the maximum corection,SxE054.
+0000_0010 :Posture correction exceed the maximum corection,SxE055.
+0000_0100 :Position correction(X direction) exceed the maximum corection,SxE075.",Setting error,"(1)Check the contact state between the gauge sensor and the steel plate.
+(2)Check the  gauge sensor value and the connection.
+(3)Check the parameters, maximum position correction(Y direction)(SxE054), maximum posture correction(SxE055) and maximum position correction(X direction)(SxE075).
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Bendling
+5063,LEFT SENSOR VALUE NOT CHANGED,Left gauge sensor value does not change amount(SxE038) in the checking time(SxE031).,,,Setting error,"(1)Check the contact state between the gauge sensor and the steel plate.
+(2)Check the  gauge sensor value and the connection.
+(3)Check the parameters, unchanged amount of sensor value(SxE038) and sensor value unchanged time(SxE031).
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Bendling
+5064,RIGHT SENSOR VALUE NOT CHANGED,Right gauge sensor value does not change amount(SxE038) during checking time(SxE031).,,,Setting error,"(1)Check the contact state between the gauge sensor and the steel plate.
+(2)Check the  gauge sensor value and the connection.
+(3)Check the parameters, unchanged amount of sensor value(SxE038) and sensor value unchanged time(SxE031).
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Bendling
+5065,ILLEGAL SENSOR VALUE,"Gauge sensor value is smaller than minimum sensor value(SxE035), or greater than maximum sensor value(SxE036) during gauging.",,"Sub code : Gauge sensor type
+0000_0001 :Left gauge sensor.
+0000_0010 :Right gauge sensor.
+0000_0100 :Side gauge sensor.",Setting error,"(1)Check the contact state between the gauge sensor and the steel plate.
+(2)Check the  gauge sensor value and the connection.
+(3)Check the parameters, minimum sensor value(SxE035) and maximum sensor value(SxE036) 
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Bendling
+5067,LNR SCALE POSITION LIMIT,The linear scale value exceeds plus or minus21 m.,,,Linear scale or the connection failure,"(1)Check the  linear scale value and the connection.
+(2)Check the position resolution in Linear scale specification file.",,,,Bendling
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Bendling
+5068,LNR SCALE COUNTER LIMIT,The linear scale position counter pulse is overflowed.,,,Linear scale or the connection failure,Check the  linear scale value and the connection.,,,,Bendling
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Bendling
+5069,SIDE SENSOR VALUE NOT CHANGED,Side gauge sensor value does not change amount(SxE038) in the checking time(SxE031).,,,Setting error,"(1)Check the contact state between the gauge sensor and the steel plate.
+(2)Check the  gauge sensor value and the connection.
+(3)Check the parameters, unchanged amount of sensor value(SxE038) and sensor value unchanged time(SxE031).
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Bendling
+5070,WORK IN/NOT DATA OVER FLOW,The WORK IN/NOT shift data overflow.,,,Data error,"Check the shift data and the actual workpiece status.
+If any inconsistency is found, delete the shift data and prepare newly the shift data.",,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+5071,WORK ID. DATA OVER FLOW,WORK ID shift data overflow.,,,Data error,"Check the shift data and the actual workpiece status.
+If any inconsistency is found, delete the shift data and prepare newly the shift data.",,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+5072,START SHIFT DATA OVER FLOW,Start shift data overflow.,,,Data error,"Check the shift data and the actual workpiece status.
+If any inconsistency is found, delete the shift data and prepare newly the shift data.",,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+5073,TRACKING AREA DATA OVER FLOW,Shift section data overflow.,,,Data error,"Check the tracking area data in the synchronized section and the actual workpiece status.
+If any inconsistency is found, delete the shift data in the synchronized section and prepare newly the shift data.",,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+5074,TRACKING AREA DATA NOT FOUND,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+5075,ENCODER STOP ERROR(CONVEYOR),"The encoder was not in suspend status
+when the control power supply was
+turned ON.",,,Data error,"Check the shift data and the actual workpiece status.
+If any inconsistency is found, delete the shift data and prepare newly the shift data.",,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+5076,TRACK AREA IN/NOT DATA POS LMT,"The WORK IN/NOT data of the first
+workpiece in the synchronized section
+exceeds the preset value.",,,Data error,Delete the WORK IN/NOT data in the synchronized section.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+5077,TRACKING AREA ID DATA POS LMT,"The WORK ID data of the first workpiece in the synchronized section
+exceeds the preset value.",,,Data error,Delete the WORK ID data in the synchronized section.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+5078,CVQUE can't exec. under tracking,CVQUE exec under tracking. ,,,Setting error,Check the JOB.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+5080,SYSTEM ERROR(WEAV.SYNC.),,,,,,,,,ｳｨｰﾋﾞﾝｸﾞ同期
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,ｳｨｰﾋﾞﾝｸﾞ同期
+5081,WEAV.SYNC. PROCESS ERROR,,,,,,,,,ｳｨｰﾋﾞﾝｸﾞ同期
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,ｳｨｰﾋﾞﾝｸﾞ同期
+5090,SYSTEM ERROR (REMOTE LASER),Galvano BOX version acquisition failed,60,CAN transmission error when requesting version acquisition,Galvano BOX（equipment failed),Turn the power OFF then back ON.,,,,REMOTE LASER
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,REMOTE LASER
+,,,61,CAN reception error when requesting version acquisition,Galvano BOX（equipment failed),Turn the power OFF then back ON.,,,,REMOTE LASER
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,REMOTE LASER
+,,,62,"When requesting to acquire version information, the waiting time for receiving CAN communication has timed up.",Galvano BOX（equipment failed),Turn the power OFF then back ON.,,,,REMOTE LASER
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,REMOTE LASER
+,,,63,The firmware version number of the SMB board is incorrect.,The firmware version information of the SMB board in the Galvano BOX acquired by CAN communication is abnormal.,Turn the power OFF then back ON.,,,,REMOTE LASER
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,REMOTE LASER
+,,,64,The firmware version number of the CAN-LVDS board is incorrect.,The firmware version information of the CAN-LVDS board in the Galvano BOX acquired by CAN communication is abnormal.,Turn the power OFF then back ON.,,,,REMOTE LASER
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,REMOTE LASER
+,,SMB board's CPUs in Galvano BOX detects abnormality.,250,"The meaning when the numerical value of the subcode is large is as follows.
+[AAAABBBB]
+AAAA:CPU-A's error code, BBBB:CPU-B's error code","For details on the error code, refer to ""Remote Laser Function Manual for Small Galvano Scanner Head"".",Turn the power OFF then back ON.,,,,REMOTE LASER
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,REMOTE LASER
+5091,REMOTE LASER PROCESSING ERROR,Detected situation that Galvano BOX version not acquired,271,Laser welding was executed without the Galvano BOX version information.,It remains in the state where the acquisition of the version information of the firmware in the Galvano BOX has failed.,Turn the power OFF then back ON.,,,,REMOTE LASER
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,REMOTE LASER
+5100,VERIFY ERROR(PRESS COND FILE),Incorrect setting of the press condition file.,,,Setting error,Check if the press condition file is correctly set. ,,,,PRESS
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,PRESS
+5101,PRESS COUNTER LIMIT,Press position counter pulse overflow.,,,Setting error,Check that correct press position pulse is sent to MP2110.,,,,PRESS
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,PRESS
+5102,PRESS POSITION LIMIT,Press position error was detected.,,,Setting error,"(1)Review the resolution value in the Press condition file. 
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,PRESS
+5104,PRESS ENCODER DATA ERROR,Press encoder data wasn't acquired correctly. ,,,Encoder(Equipment abnormality),"Check if the press encoder is connected correctly. If the alarm occurs again, cycle the power of the controller or press-encoder power.  ",,,,PRESS
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,PRESS
+5120,VERIFY ERROR(SENSOR PARAMETER),An operation error occurred when parameter calculation was performed from the data of the press condition data file on the ACP 02 board.,0,Parameter error in USE setting (Press Condition Data file 1),Setting error,Check the USE setting (Press Condition Data file 1),,,,PRESS
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,PRESS
+,,,1,Parameter error in PORT NO. setting (Press Condition Data file 1),Setting error,Check the PORT NO. setting. (Press Condition Data file 1),,,,PRESS
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,PRESS
+,,,2,Parameter error in BROKEN LINE DETECT setting (Press Condition Data file 1),Setting error,Check the BROKEN LINE DETECT setting. (Press Condition Data file 1),,,,PRESS
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,PRESS
+,,,3,Parameter error in ENCODER INPUT setting (Press Condition Data file 1),Setting error,Check the ENCODER INPUT setting. (Press Condition Data file 1),,,,PRESS
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,PRESS
+,,,4,Parameter error in ENCODER SIGN setting (Press Condition Data file 1),Setting error,Check the ENCODER SIGN setting. (Press Condition Data file 1),,,,PRESS
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,PRESS
+,,,5,Parameter error in CORRECTION setting (Press Condition Data file 1),Setting error,Check the CORRECTION setting. (Press Condition Data file 1),,,,PRESS
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,PRESS
+,,,6,Parameter error in AVERAGED TRAVEL TIME setting (Press Condition Data file 1),Setting error,Check the AVERAGED TRAVEL TIME setting. (Press Condition Data file 1),,,,PRESS
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,PRESS
+,,,7,Parameter error in RESOLUTION setting (Press Condition Data file 1),Setting error,Check the RESOLUTION setting. (Press Condition Data file 1),,,,PRESS
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,PRESS
+,,,100,Parameter error in USE setting (Press Condition Data file 2),Setting error,Check the USE setting (Press Condition Data file 2),,,,PRESS
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,PRESS
+,,,101,Parameter error in PORT NO. setting (Press Condition Data file 2),Setting error,Check the PORT NO. setting. (Press Condition Data file 2),,,,PRESS
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,PRESS
+,,,102,Parameter error in BROKEN LINE DETECT setting (Press Condition Data file 2),Setting error,Check the BROKEN LINE DETECT setting. (Press Condition Data file 2),,,,PRESS
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,PRESS
+,,,103,Parameter error in ENCODER INPUT setting (Press Condition Data file 2),Setting error,Check the ENCODER INPUT setting. (Press Condition Data file 2),,,,PRESS
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,PRESS
+,,,104,Parameter error in ENCODER SIGN setting (Press Condition Data file 2),Setting error,Check the ENCODER SIGN setting. (Press Condition Data file 2),,,,PRESS
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,PRESS
+,,,105,Parameter error in CORRECTION setting (Press Condition Data file 2),Setting error,Check the CORRECTION setting. (Press Condition Data file 2),,,,PRESS
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,PRESS
+,,,106,Parameter error in AVERAGED TRAVEL TIME setting (Press Condition Data file 2),Setting error,Check the AVERAGED TRAVEL TIME setting. (Press Condition Data file 2),,,,PRESS
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,PRESS
+,,,107,Parameter error in RESOLUTION setting (Press Condition Data file 2),Setting error,Check the RESOLUTION setting. (Press Condition Data file 2),,,,PRESS
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,PRESS
+,,,200,Parameter error in USE setting (Press Condition Data file 3),Setting error,Check the USE setting (Press Condition Data file 3),,,,PRESS
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,PRESS
+,,,201,Parameter error in PORT NO. setting (Press Condition Data file 3),Setting error,Check the PORT NO. setting. (Press Condition Data file 3),,,,PRESS
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,PRESS
+,,,202,Parameter error in BROKEN LINE DETECT setting (Press Condition Data file 3),Setting error,Check the BROKEN LINE DETECT setting. (Press Condition Data file 3),,,,PRESS
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,PRESS
+,,,203,Parameter error in ENCODER INPUT setting (Press Condition Data file 3),Setting error,Check the ENCODER INPUT setting. (Press Condition Data file 3),,,,PRESS
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,PRESS
+,,,204,Parameter error in ENCODER SIGN setting (Press Condition Data file 3),Setting error,Check the ENCODER SIGN setting. (Press Condition Data file 3),,,,PRESS
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,PRESS
+,,,205,Parameter error in CORRECTION setting (Press Condition Data file 3),Setting error,Check the CORRECTION setting. (Press Condition Data file 3),,,,PRESS
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,PRESS
+,,,206,Parameter error in AVERAGED TRAVEL TIME setting (Press Condition Data file 3),Setting error,Check the AVERAGED TRAVEL TIME setting. (Press Condition Data file 3),,,,PRESS
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,PRESS
+,,,207,Parameter error in RESOLUTION setting (Press Condition Data file 3),Setting error,Check the RESOLUTION setting. (Press Condition Data file 3),,,,PRESS
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,PRESS
+,,,,,,,,,,PRESS
+,,,,,,,,,,PRESS
+5131,ADAPTIVE CONTROL FUNCTION SYSTEM ERROR,An error occurred in the adaptive control function system settings.,10,The analog input setting is not the voltage setting.,System error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,11,Log data output error,System error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,20,The adaptive control configuration file does not exist.,System error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,21,Adaptive control configuration file acquisition timeout,System error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,22,Adaptive control configuration file error,System error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,23,The adaptive control filter file does not exist.,System error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,24,Adaptive control filter file acquisition timeout,System error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,25,Adaptive control filter file error,System error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,26,The adaptive control welding condition file does not exist.,System error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,27,Adaptive control welding condition file acquisition timeout,System error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,28,Adaptive control welding condition file error,System error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,29,Offline command execution error,System error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,50,Parameter error when executing skill command,System error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,60,Request error when requesting real-time processing,System error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,80,Error during analog output,System error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,81,Error during analog input,System error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,82,Constant current control execution error,System error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,5000,PARAMETER ERROR:SE000,PARAMETER ERROR,Make sure value 112 is set.,,,,Adaptive control
+,,,5001,PARAMETER ERROR:SE001,PARAMETER ERROR,Make sure value 2 is set.,,,,Adaptive control
+,,,5002,PARAMETER ERROR:SE002,PARAMETER ERROR,Make sure value 2000 is set.,,,,Adaptive control
+,,,5011,PARAMETER ERROR:SE011,PARAMETER ERROR,Make sure value 999 is set.,,,,Adaptive control
+,,,5012,PARAMETER ERROR:SE012,PARAMETER ERROR,Make sure value 1202 is set.,,,,Adaptive control
+,,,5013,PARAMETER ERROR:SE013,PARAMETER ERROR,Make sure value 1203 is set.,,,,Adaptive control
+,,,5014,PARAMETER ERROR:SE014,PARAMETER ERROR,Make sure value 1204 is set.,,,,Adaptive control
+,,,5015,PARAMETER ERROR:SE015,PARAMETER ERROR,"Make sure value 1-4 is set.
+Also, Make sure value that the settings are not the same as SE017.",,,,Adaptive control
+,,,5016,PARAMETER ERROR:SE016,PARAMETER ERROR,Make sure value 1205 is set.,,,,Adaptive control
+,,,5017,PARAMETER ERROR:SE017,PARAMETER ERROR,"Make sure value 1-4 is set.
+Also, Make sure value that the settings are not the same as SE015.",,,,Adaptive control
+,,,5018,PARAMETER ERROR:SE018,PARAMETER ERROR,Make sure value 1009 is set.,,,,Adaptive control
+,,,5019,PARAMETER ERROR:SE019,PARAMETER ERROR,Make sure value 5 is set.,,,,Adaptive control
+,,,5020,PARAMETER ERROR:SE020,PARAMETER ERROR,Make sure value 1206 is set.,,,,Adaptive control
+,,,5021,PARAMETER ERROR:SE021,PARAMETER ERROR,Make sure value 1-1500 is set.,,,,Adaptive control
+,,,5023,PARAMETER ERROR:SE023,PARAMETER ERROR,Make sure value 1223 is set.,,,,Adaptive control
+,,,5024,PARAMETER ERROR:SE024,PARAMETER ERROR,Make sure value 100 is set.,,,,Adaptive control
+,,,5025,PARAMETER ERROR:SE025,PARAMETER ERROR,Make sure value 49 is set.,,,,Adaptive control
+,,,5026,PARAMETER ERROR:SE026,PARAMETER ERROR,Make sure value 210 is set.,,,,Adaptive control
+,,,5027,PARAMETER ERROR:SE027,PARAMETER ERROR,Make sure value 52 is set.,,,,Adaptive control
+,,,5028,PARAMETER ERROR:SE028,PARAMETER ERROR,Make sure value 1217 is set.,,,,Adaptive control
+,,,5029,PARAMETER ERROR:SE029,PARAMETER ERROR,Make sure value 1218 is set.,,,,Adaptive control
+,,,5030,PARAMETER ERROR:SE030,PARAMETER ERROR,Make sure value 1219 is set.,,,,Adaptive control
+,,,5031,PARAMETER ERROR:SE031,PARAMETER ERROR,Make sure value 1220 is set.,,,,Adaptive control
+,,,5032,PARAMETER ERROR:SE032,PARAMETER ERROR,Make sure value 691 is set.,,,,Adaptive control
+,,,5033,PARAMETER ERROR:SE033,PARAMETER ERROR,Make sure value 711 is set.,,,,Adaptive control
+,,,6000,PARAMETER ERROR:S4C1500,PARAMETER ERROR,Make sure value 200 is set.,,,,Adaptive control
+,,,6008,PARAMETER ERROR:S4C1508,PARAMETER ERROR,Make sure value 204 is set.,,,,Adaptive control
+,,,6042,PARAMETER ERROR:S4C1542,PARAMETER ERROR,Make sure value 250 is set.,,,,Adaptive control
+,,,6043,PARAMETER ERROR:S4C1543,PARAMETER ERROR,Make sure value 251 is set.,,,,Adaptive control
+,,,6044,PARAMETER ERROR:S4C1544,PARAMETER ERROR,Make sure value 252 is set.,,,,Adaptive control
+5132,ADAPTIVE CONTROL FUNCTION PROCESS ERROR,An error occurred in the adaptive control function processing.,11,Analog input setting:The primary current maximum voltage setting value is out of the input range.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,12,Analog input setting:The primary current minimum voltage setting value is out of the input range.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,13,Analog input setting:The setting value of the primary current slope is out of the input range.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,14,Analog input setting:The setting value of the primary current offset is out of the input range.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,15,Analog input setting:The set value of the number of primary current samples is out of the input range.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,21,Analog input setting:The secondary current maximum voltage setting value is out of the input range.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,22,Analog input setting:The secondary current minimum voltage setting value is out of the input range.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,23,Analog input setting:The setting value of the secondary current slope is out of the input range.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,24,Analog input setting:The setting value of the secondary current offset is out of the input range.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,25,Analog input setting:The set value of the number of secondary current samples is out of the input range.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,31,Analog input setting:The maximum voltage setting chip voltage is out of the input range.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,32,Analog input setting:The minimum voltage setting  chip voltage is out of the input range.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,33,Analog input setting:The setting value of the voltage slope  chip voltage is out of the input range.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,34,Analog input setting:The setting value of the voltage offset  chip voltage is out of the input range.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,35,Analog input setting:The setting value of the number of voltage samples  chip voltage is out of the input range.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,41,Analog input setting:Pressure (gun distort) maximum voltage setting value is out of the input range.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,42,Analog input setting:Pressure (gun distort) minimum voltage setting value is out of the input range.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,43,Analog input setting:Pressure (gun distort) slope setting value is out of the input range.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,44,Analog input setting:Pressure (gun distort) offset setting value is out of the input range.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,501,Analog output:The maximum voltage setting value is out of the input range.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,502,Analog output:The minimum voltage setting is out of the input range.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,503,Analog output:The slope setting value is out of the input range.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,504,Analog output:The offset setting value is out of the input range.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,570,Analog input:The calculation result of the primary current offset is out of range.,Calculation error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,571,Analog input:Offset adjustment was performed while the servo was on.,Execution error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,600,Circuit resistance base:The Circuit resistance base reference measurement time is out of the input range.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,601,Circuit resistance base:The current value of the Circuit resistance base reference measurement is out of the input range.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,604,Circuit resistance base:The measurement section START of the Circuit resistance base reference measurement is out of the input range.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,605,Circuit resistance base:The measurement section END of the Circuit resistance base reference measurement is out of the input range.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,606,Circuit resistance base:The magnitude relationship between the measurement section START and END of the Circuit resistance base reference measurement is abnormal.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,607,Circuit resistance base:The Circuit resistance base reference value calculation result of the Circuit resistance base reference measurement is abnormal.,Calculation error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,608,Circuit resistance base:Circuit resistance base reference measurement was performed by manual welding.,Execution error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,650,Rewelding judgment:The rewelding threshold (lower limit) is out of range.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,651,Rewelding judgment:The rewelding threshold (upper limit) is out of range.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,652,Rewelding judgment:The magnitude relationship between the upper and lower limits of the rewelding threshold is abnormal.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,653,Rewelding judgment:Rewelding judgment was made by Circuit resistance base standard measurement.,WELD ERROR,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,654,Rewelding judgment:Rewelding judgment was made by manual welding.,WELD ERROR,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,655,Rewelding judgment:Timer error 60-69 occurred during manual welding.,WELD ERROR,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,661,Disconnect check:A disconnection check error was detected in the primary current.,Execution error,"(1)Reset alarm and check for broken cables and make appropriate settings.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,662,Disconnect check:A disconnection check error was detected in the secondary current.,Execution error,"(1)Reset alarm and check for broken cables and make appropriate settings.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,663,Disconnect check:A disconnection check error was detected in the chip voltage.,Execution error,"(1)Reset alarm and check for broken cables and make appropriate settings.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,664,Disconnect check:A disconnection check error was detected in the pressure (gun distort).,Execution error,"(1)Reset alarm and check for broken cables and make appropriate settings.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,665,Disconnect check:The disconnect check threshold (lower limit) is out of range.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,666,Disconnect check:The disconnect check (upper limit) is out of range.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,667,Disconnect check:The magnitude relationship between the upper and lower limits of the disconnect check is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,697,WELD MODE ERROR,WELD ERROR,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,698,Circuit resistance base:There was no sampling.,WELD ERROR,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,700,Welding condition:Welding condition kind setting is out of range.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,701,Welding condition:Welding condition No. setting is out of range.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,703,Welding condition:The analog output command value is out of the output range. (Lower limit),Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,704,Welding condition:The analog output command value is out of the output range. (Upper limit),Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,705,Welding conditions:The total welding time is 0.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,706,Welding conditions:The total welding time is 1.5s or more.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,707,Welding conditions:The difference between the delay time and the retention time is too short.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,708,Welding conditions:The retention time is 0.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,709,Welding conditions:The current value (I1) setting is out of the range of 2000 to 55000A.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,710,Welding conditions:One of the current value (I2 to I16) settings is a setting value other than 0 or 2000 to 55000A.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,711,Welding conditions:The 1st press time is 0.,Configuration file error,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,712,Welding conditions:The setting of the 1st press is 0.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,713,Welding conditions:The setting of the 2nd press is 0.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1000,Adaptive coefficient:EXC6 is 0 or less.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1001,Adaptive coefficient:The magnitude relationship between EXIS and EXIE is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1002,Adaptive coefficient:The magnitude relationship between SQSS and SQSE is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1003,Adaptive coefficient:The magnitude relationship between PESS and PESE is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1004,"Adaptive coefficient:The setting of TSRkB1 (k = 1,2) is abnormal.",Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1005,"Adaptive coefficient:The setting of TSFkBi (k = 1,2) is abnormal.",Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1006,"Adaptive coefficient:The setting of TSSkBi (k = 1,2) is abnormal.",Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1007,"Adaptive coefficient:The magnitude relationship between TSFC5 and TSFkB7 (k = 1,2) is abnormal.",Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1008,"Adaptive coefficient:The magnitude relationship between TSFC7 and TSFkB9 (k = 1,2) is abnormal.",Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1009,"Adaptive coefficient:The magnitude relationship between TSSC5 and TSSkB7 (k = 1,2) is abnormal.",Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1010,"Adaptive coefficient:The magnitude relationship between TSSC7 and TSSkB9 (k = 1,2) is abnormal.",Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1011,Adaptive coefficient:The settings of TSROS and TSROE are abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1012,Adaptive coefficient:The magnitude relationship between LL and UL is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1013,Adaptive coefficient:The FBRT setting is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1014,"Adaptive coefficient:The settings of CROS, CROE, and CROA are abnormal.",Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1015,Adaptive coefficient:The LAG setting is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1101,Adaptive coefficient:The magnitude relationship between VULS and VLLS on the 1st energizing slope is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1102,Adaptive coefficient:The magnitude relationship between VULS and VLLS on the 2nd energizing slope is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1103,Adaptive coefficient:The magnitude relationship between VULS and VLLS on the 3rd energizing slope is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1104,Adaptive coefficient:The magnitude relationship between VULS and VLLS on the 4th energizing slope is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1105,Adaptive coefficient:The magnitude relationship between VULS and VLLS on the 5th energizing slope is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1106,Adaptive coefficient:The magnitude relationship between VULS and VLLS on the 6th energizing slope is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1107,Adaptive coefficient:The magnitude relationship between VULS and VLLS on the 7th energizing slope is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1108,Adaptive coefficient:The magnitude relationship between VULS and VLLS on the 8th energizing slope is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1109,Adaptive coefficient:The magnitude relationship between VULS and VLLS on the 9th energizing slope is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1110,Adaptive coefficient:The magnitude relationship between VULS and VLLS on the 10th energizing slope is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1111,Adaptive coefficient:The magnitude relationship between VULS and VLLS on the 11th energizing slope is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1112,Adaptive coefficient:The magnitude relationship between VULS and VLLS on the 12th energizing slope is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1113,Adaptive coefficient:The magnitude relationship between VULS and VLLS on the 13th energizing slope is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1114,Adaptive coefficient:The magnitude relationship between VULS and VLLS on the 14th energizing slope is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1115,Adaptive coefficient:The magnitude relationship between VULS and VLLS on the 15th energizing slope is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1201,Adaptive coefficient:The magnitude relationship between VULS and VLLS of the 1st energizing part is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1202,Adaptive coefficient:The magnitude relationship between VULS and VLLS of the 2nd energizing part is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1203,Adaptive coefficient:The magnitude relationship between VULS and VLLS of the 3rd energizing part is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1204,Adaptive coefficient:The magnitude relationship between VULS and VLLS of the 4th energizing part is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1205,Adaptive coefficient:The magnitude relationship between VULS and VLLS of the 5th energizing part is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1206,Adaptive coefficient:The magnitude relationship between VULS and VLLS of the 6th energizing part is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1207,Adaptive coefficient:The magnitude relationship between VULS and VLLS of the 7th energizing part is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1208,Adaptive coefficient:The magnitude relationship between VULS and VLLS of the 8th energizing part is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1209,Adaptive coefficient:The magnitude relationship between VULS and VLLS of the 9th energizing part is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1210,Adaptive coefficient:The magnitude relationship between VULS and VLLS of the 10th energizing part is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1211,Adaptive coefficient:The magnitude relationship between VULS and VLLS of the 11th energizing part is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1212,Adaptive coefficient:The magnitude relationship between VULS and VLLS of the 12th energizing part is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1213,Adaptive coefficient:The magnitude relationship between VULS and VLLS of the 13th energizing part is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1214,Adaptive coefficient:The magnitude relationship between VULS and VLLS of the 14th energizing part is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1215,Adaptive coefficient:The magnitude relationship between VULS and VLLS of the 15th energizing part is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1301,Adaptive coefficient:The magnitude relationship between RULS and RLLS in the 1st energizing slope is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1302,Adaptive coefficient:The magnitude relationship between RULS and RLLS in the 2nd energizing slope is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1303,Adaptive coefficient:The magnitude relationship between RULS and RLLS in the 3rd energizing slope is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1304,Adaptive coefficient:The magnitude relationship between RULS and RLLS in the 4th energizing slope is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1305,Adaptive coefficient:The magnitude relationship between RULS and RLLS in the 5th energizing slope is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1306,Adaptive coefficient:The magnitude relationship between RULS and RLLS in the 6th energizing slope is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1307,Adaptive coefficient:The magnitude relationship between RULS and RLLS in the 7th energizing slope is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1308,Adaptive coefficient:The magnitude relationship between RULS and RLLS in the 8th energizing slope is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1309,Adaptive coefficient:The magnitude relationship between RULS and RLLS in the 9th energizing slope is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1310,Adaptive coefficient:The magnitude relationship between RULS and RLLS in the 10th energizing slope is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1311,Adaptive coefficient:The magnitude relationship between RULS and RLLS in the 11th energizing slope is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1312,Adaptive coefficient:The magnitude relationship between RULS and RLLS in the 12th energizing slope is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1313,Adaptive coefficient:The magnitude relationship between RULS and RLLS in the 13th energizing slope is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1314,Adaptive coefficient:The magnitude relationship between RULS and RLLS in the 14th energizing slope is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1315,Adaptive coefficient:The magnitude relationship between RULS and RLLS in the 15th energizing slope is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1401,Adaptive coefficient:The magnitude relationship between RULE and RLLE of the 1st energizing part is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1402,Adaptive coefficient:The magnitude relationship between RULE and RLLE of the 2nd energizing part is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1403,Adaptive coefficient:The magnitude relationship between RULE and RLLE of the 3rd energizing part is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1404,Adaptive coefficient:The magnitude relationship between RULE and RLLE of the 4th energizing part is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1405,Adaptive coefficient:The magnitude relationship between RULE and RLLE of the 5th energizing part is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1406,Adaptive coefficient:The magnitude relationship between RULE and RLLE of the 6th energizing part is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1407,Adaptive coefficient:The magnitude relationship between RULE and RLLE of the 7th energizing part is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1408,Adaptive coefficient:The magnitude relationship between RULE and RLLE of the 8th energizing part is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1409,Adaptive coefficient:The magnitude relationship between RULE and RLLE of the 9th energizing part is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1410,Adaptive coefficient:The magnitude relationship between RULE and RLLE of the 10th energizing part is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1411,Adaptive coefficient:The magnitude relationship between RULE and RLLE of the 11th energizing part is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1412,Adaptive coefficient:The magnitude relationship between RULE and RLLE of the 12th energizing part is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1413,Adaptive coefficient:The magnitude relationship between RULE and RLLE of the 13th energizing part is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1414,Adaptive coefficient:The magnitude relationship between RULE and RLLE of the 14th energizing part is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+,,,1415,Adaptive coefficient:The magnitude relationship between RULE and RLLE of the 15th energizing part is abnormal.,Configuration file error,"(1)Reset alarm and check setting.
+(2)If the alarm occurs again, save the CMOS.BIN and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Adaptive control
+5140,OUTSIDE OF SENSOR VALUE,The sensor is far from the target position.,,"Sub code : Gauge sensor type
+0000_0001 :Left gauge sensor
+0000_0010 :Right gauge sensor
+0000_0100 :Side gauge sensor",Setting error,Check if the detection time and detection range are set correctly.,,,,Bendling
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Bendling

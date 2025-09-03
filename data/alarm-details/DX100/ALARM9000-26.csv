@@ -1,0 +1,164 @@
+DX100,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+Alarm Number,Alarm Name/Message,Contents,Sub Code,Meaning,Cause,Remedy,Chart1,Chart2,Detail,Notes
+9001,MISSING ARC START CONFIRM:1,Arc generation confirmation signal is not inputted within the time at the arc atarting.,,,Fail in arc generation,Remove the slag and check the wire feeding so that the power flow can be applied to the wire tip. ,,,,
+,,,,,Unstable wire supply,"Check the devicies for the wire feed, motor,  clamp, conduit cable, torch and feed state of a wire.",,,,
+,,,,,The main power supply of the welding machine is not on. ,Turn on the welding machine.,,,,
+,,,,,The power cable of the welding machine is not connected to the torch or the base metal. ,Check the polarity and the connection of the power cable of the welding machine. ,,,,
+,,,,,Welding instruction cable including arc generation confirmation signal is disconnected.,Check if there is any breaking wire at the welding instruction cable. ,,,,
+9002,ARC FAILURE:1,"Arc shortage occurred during arc welding.
+Arc shortage signal was turned ON during arc welding.
+Or Arc generation confirmation signal was truned OFF during arc welding.
+",,,Wrong welding condition ,Adjust welding condition.,,,,
+,,,,,The error occurred in the welding machine. ,"(1)Wait until the error at the welding machine is released. 
+(2)Cycle the power of the welding machine.",,,,
+,,,,,Unstable wire supply ,"Check the devicies for the wire feed, motor,  clamp, conduit cable, torch and feed state of a wire.",,,,
+,,,,,The power cable of the welding machine is not connected to the torch or the base metal. ,Check the polarity and the connection of the power cable of the welding machine. ,,,,
+,,,,,Welding instruction cable including arc generation confirmation signal is cut.,Check if there is any breaking wire at the welding instruction cable. ,,,,
+9004,GAS FAILURE (RESTART):1,"Gas shortage occurred during arc welding.
+Gas shortage signal was turned on in arc welding.",,,A gas flow amount sensor detects the reduction of a gas flow amount.,Check the devices for gas supply; gas tap and gas hose.,,,,
+,,,,,Wrong detection of a gas flow amount sensor.,"Check the setting for gas flow amount sensor, or sensor power source ON. ",,,,
+9005,WIRE FAILURE (RESTART):1,"Wire shortage occurred during arc welding.
+Wire shortage signal was turned ON during  arc welding.",,,The wire sensor detected the shortage.,Check charge of the wire. ,,,,
+,,,,,Wrong detection of A wire sensor.,"Check the setting for wire detection sensor, or sensor power source ON. ",,,,
+9009,MISSING ARC START CONFIRM:2,Arc generation confirmation signal is not inputted within the time at the arc atarting.,,,Fail in arc generation,Remove the slag and check the wire feeding so that the power flow can be applied to the wire tip. ,,,,
+,,,,,Unstable wire supply,"Check the devicies for the wire feed, motor,  clamp, conduit cable, torch and feed state of a wire.",,,,
+,,,,,The main power supply of the welding machine is not on. ,Turn on the welding machine.,,,,
+,,,,,The power cable of the welding machine is not connected to the torch or the base metal. ,Check the polarity and the connection of the power cable of the welding machine. ,,,,
+,,,,,Welding instruction cable including arc generation confirmation signal is disconnected.,Check if there is any breaking wire at the welding instruction cable. ,,,,
+9010,ARC FAILURE:2,"Arc shortage occurred during arc welding.
+Arc shortage signal was turned ON during arc welding.
+Or Arc generation confirmation signal was truned OFF during arc welding.
+",,,Wrong welding condition ,Adjust welding condition.,,,,
+,,,,,The error occurred in the welding machine. ,"(1)Wait until the error at the welding machine is released. 
+(2)Cycle the power of the welding machine.",,,,
+,,,,,Unstable wire supply ,"Check the devicies for the wire feed, motor,  clamp, conduit cable, torch and feed state of a wire.",,,,
+,,,,,The power cable of the welding machine is not connected to the torch or the base metal. ,Check the polarity and the connection of the power cable of the welding machine. ,,,,
+,,,,,Welding instruction cable including arc generation confirmation signal is cut.,Check if there is any breaking wire at the welding instruction cable. ,,,,
+9012,GAS FAILURE (RESTART):2,"Gas shortage occurred during arc welding.
+Gas shortage signal was turned on in arc welding.",,,A gas flow amount sensor detects the reduction of a gas flow amount.,Check the devices for gas supply; gas tap and gas hose.,,,,
+,,,,,Wrong detection of a gas flow amount sensor.,"Check the setting for gas flow amount sensor, or sensor power source ON. ",,,,
+9013,WIRE FAILURE (RESTART):2,"Wire shortage occurred during arc welding.
+Wire shortage signal was turned ON during  arc welding.",,,The wire sensor detected the shortage.,Check charge of the wire. ,,,,
+,,,,,Wrong detection of A wire sensor.,"Check the setting for wire detection sensor, or sensor power source ON. ",,,,
+9017,MISSING ARC START CONFIRM:3,Arc generation confirmation signal is not inputted within the time at the arc atarting.,,,Fail in arc generation,Remove the slag and check the wire feeding so that the power flow can be applied to the wire tip. ,,,,
+,,,,,Unstable wire supply,"Check the devicies for the wire feed, motor,  clamp, conduit cable, torch and feed state of a wire.",,,,
+,,,,,The main power supply of the welding machine is not on. ,Turn on the welding machine.,,,,
+,,,,,The power cable of the welding machine is not connected to the torch or the base metal. ,Check the polarity and the connection of the power cable of the welding machine. ,,,,
+,,,,,Welding instruction cable including arc generation confirmation signal is disconnected.,Check if there is any breaking wire at the welding instruction cable. ,,,,
+9018,ARC FAILURE:3,"Arc shortage occurred during arc welding.
+Arc shortage signal was turned ON during arc welding.
+Or Arc generation confirmation signal was truned OFF during arc welding.
+",,,Wrong welding condition ,Adjust welding condition.,,,,
+,,,,,The error occurred in the welding machine. ,"(1)Wait until the error at the welding machine is released. 
+(2)Cycle the power of the welding machine.",,,,
+,,,,,Unstable wire supply ,"Check the devicies for the wire feed, motor,  clamp, conduit cable, torch and feed state of a wire.",,,,
+,,,,,The power cable of the welding machine is not connected to the torch or the base metal. ,Check the polarity and the connection of the power cable of the welding machine. ,,,,
+,,,,,Welding instruction cable including arc generation confirmation signal is cut.,Check if there is any breaking wire at the welding instruction cable. ,,,,
+9020,GAS FAILURE (RESTART):3,"Gas shortage occurred during arc welding.
+Gas shortage signal was turned on in arc welding.",,,A gas flow amount sensor detects the reduction of a gas flow amount.,Check the devices for gas supply; gas tap and gas hose.,,,,
+,,,,,Wrong detection of a gas flow amount sensor.,"Check the setting for gas flow amount sensor, or sensor power source ON. ",,,,
+9021,WIRE FAILURE (RESTART):3,"Wire shortage occurred during arc welding.
+Wire shortage signal was turned ON during  arc welding.",,,The wire sensor detected the shortage.,Check charge of the wire. ,,,,
+,,,,,Wrong detection of A wire sensor.,"Check the setting for wire detection sensor, or sensor power source ON. ",,,,
+9025,MISSING ARC START CONFIRM:4,Arc generation confirmation signal is not inputted within the time at the arc atarting.,,,Fail in arc generation,Remove the slag and check the wire feeding so that the power flow can be applied to the wire tip. ,,,,
+,,,,,Unstable wire supply,"Check the devicies for the wire feed, motor,  clamp, conduit cable, torch and feed state of a wire.",,,,
+,,,,,The main power supply of the welding machine is not on. ,Turn on the welding machine.,,,,
+,,,,,The power cable of the welding machine is not connected to the torch or the base metal. ,Check the polarity and the connection of the power cable of the welding machine. ,,,,
+,,,,,Welding instruction cable including arc generation confirmation signal is disconnected.,Check if there is any breaking wire at the welding instruction cable. ,,,,
+9026,ARC FAILURE:4,"Arc shortage occurred during arc welding.
+Arc shortage signal was turned ON during arc welding.
+Or Arc generation confirmation signal was truned OFF during arc welding.
+",,,Wrong welding condition ,Adjust welding condition.,,,,
+,,,,,The error occurred in the welding machine. ,"(1)Wait until the error at the welding machine is released. 
+(2)Cycle the power of the welding machine.",,,,
+,,,,,Unstable wire supply ,"Check the devicies for the wire feed, motor,  clamp, conduit cable, torch and feed state of a wire.",,,,
+,,,,,The power cable of the welding machine is not connected to the torch or the base metal. ,Check the polarity and the connection of the power cable of the welding machine. ,,,,
+,,,,,Welding instruction cable including arc generation confirmation signal is cut.,Check if there is any breaking wire at the welding instruction cable. ,,,,
+9028,GAS FAILURE (RESTART):4,"Gas shortage occurred during arc welding.
+Gas shortage signal was turned on in arc welding.",,,A gas flow amount sensor detects the reduction of a gas flow amount.,Check the devices for gas supply; gas tap and gas hose.,,,,
+,,,,,Wrong detection of a gas flow amount sensor.,"Check the setting for gas flow amount sensor, or sensor power source ON. ",,,,
+9029,WIRE FAILURE (RESTART):4,"Wire shortage occurred during arc welding.
+Wire shortage signal was turned ON during  arc welding.",,,The wire sensor detected the shortage.,Check charge of the wire. ,,,,
+,,,,,Wrong detection of A wire sensor.,"Check the setting for wire detection sensor, or sensor power source ON. ",,,,
+9033,MISSING ARC START CONFIRM:5,Arc generation confirmation signal is not inputted within the time at the arc atarting.,,,Fail in arc generation,Remove the slag and check the wire feeding so that the power flow can be applied to the wire tip. ,,,,
+,,,,,Unstable wire supply,"Check the devicies for the wire feed, motor,  clamp, conduit cable, torch and feed state of a wire.",,,,
+,,,,,The main power supply of the welding machine is not on. ,Turn on the welding machine.,,,,
+,,,,,The power cable of the welding machine is not connected to the torch or the base metal. ,Check the polarity and the connection of the power cable of the welding machine. ,,,,
+,,,,,Welding instruction cable including arc generation confirmation signal is disconnected.,Check if there is any breaking wire at the welding instruction cable. ,,,,
+9034,ARC FAILURE:5,"Arc shortage occurred during arc welding.
+Arc shortage signal was turned ON during arc welding.
+Or Arc generation confirmation signal was truned OFF during arc welding.
+",,,Wrong welding condition ,Adjust welding condition.,,,,
+,,,,,The error occurred in the welding machine. ,"(1)Wait until the error at the welding machine is released. 
+(2)Cycle the power of the welding machine.",,,,
+,,,,,Unstable wire supply ,"Check the devicies for the wire feed, motor,  clamp, conduit cable, torch and feed state of a wire.",,,,
+,,,,,The power cable of the welding machine is not connected to the torch or the base metal. ,Check the polarity and the connection of the power cable of the welding machine. ,,,,
+,,,,,Welding instruction cable including arc generation confirmation signal is cut.,Check if there is any breaking wire at the welding instruction cable. ,,,,
+9036,GAS FAILURE (RESTART):5,"Gas shortage occurred during arc welding.
+Gas shortage signal was turned on in arc welding.",,,A gas flow amount sensor detects the reduction of a gas flow amount.,Check the devices for gas supply; gas tap and gas hose.,,,,
+,,,,,Wrong detection of a gas flow amount sensor.,"Check the setting for gas flow amount sensor, or sensor power source ON. ",,,,
+9037,WIRE FAILURE (RESTART):5,"Wire shortage occurred during arc welding.
+Wire shortage signal was turned ON during  arc welding.",,,The wire sensor detected the shortage.,Check charge of the wire. ,,,,
+,,,,,Wrong detection of A wire sensor.,"Check the setting for wire detection sensor, or sensor power source ON. ",,,,
+9041,MISSING ARC START CONFIRM:6,Arc generation confirmation signal is not inputted within the time at the arc atarting.,,,Fail in arc generation,Remove the slag and check the wire feeding so that the power flow can be applied to the wire tip. ,,,,
+,,,,,Unstable wire supply,"Check the devicies for the wire feed, motor,  clamp, conduit cable, torch and feed state of a wire.",,,,
+,,,,,The main power supply of the welding machine is not on. ,Turn on the welding machine.,,,,
+,,,,,The power cable of the welding machine is not connected to the torch or the base metal. ,Check the polarity and the connection of the power cable of the welding machine. ,,,,
+,,,,,Welding instruction cable including arc generation confirmation signal is disconnected.,Check if there is any breaking wire at the welding instruction cable. ,,,,
+9042,ARC FAILURE:6,"Arc shortage occurred during arc welding.
+Arc shortage signal was turned ON during arc welding.
+Or Arc generation confirmation signal was truned OFF during arc welding.
+",,,Wrong welding condition ,Adjust welding condition.,,,,
+,,,,,The error occurred in the welding machine. ,"(1)Wait until the error at the welding machine is released. 
+(2)Cycle the power of the welding machine.",,,,
+,,,,,Unstable wire supply ,"Check the devicies for the wire feed, motor,  clamp, conduit cable, torch and feed state of a wire.",,,,
+,,,,,The power cable of the welding machine is not connected to the torch or the base metal. ,Check the polarity and the connection of the power cable of the welding machine. ,,,,
+,,,,,Welding instruction cable including arc generation confirmation signal is cut.,Check if there is any breaking wire at the welding instruction cable. ,,,,
+9044,GAS FAILURE (RESTART):6,"Gas shortage occurred during arc welding.
+Gas shortage signal was turned on in arc welding.",,,A gas flow amount sensor detects the reduction of a gas flow amount.,Check the devices for gas supply; gas tap and gas hose.,,,,
+,,,,,Wrong detection of a gas flow amount sensor.,"Check the setting for gas flow amount sensor, or sensor power source ON. ",,,,
+9045,WIRE FAILURE (RESTART):6,"Wire shortage occurred during arc welding.
+Wire shortage signal was turned ON during  arc welding.",,,The wire sensor detected the shortage.,Check charge of the wire. ,,,,
+,,,,,Wrong detection of A wire sensor.,"Check the setting for wire detection sensor, or sensor power source ON. ",,,,
+9049,MISSING ARC START CONFIRM:7,Arc generation confirmation signal is not inputted within the time at the arc atarting.,,,Fail in arc generation,Remove the slag and check the wire feeding so that the power flow can be applied to the wire tip. ,,,,
+,,,,,Unstable wire supply,"Check the devicies for the wire feed, motor,  clamp, conduit cable, torch and feed state of a wire.",,,,
+,,,,,The main power supply of the welding machine is not on. ,Turn on the welding machine.,,,,
+,,,,,The power cable of the welding machine is not connected to the torch or the base metal. ,Check the polarity and the connection of the power cable of the welding machine. ,,,,
+,,,,,Welding instruction cable including arc generation confirmation signal is disconnected.,Check if there is any breaking wire at the welding instruction cable. ,,,,
+9050,ARC FAILURE:7,"Arc shortage occurred during arc welding.
+Arc shortage signal was turned ON during arc welding.
+Or Arc generation confirmation signal was truned OFF during arc welding.
+",,,Wrong welding condition ,Adjust welding condition.,,,,
+,,,,,The error occurred in the welding machine. ,"(1)Wait until the error at the welding machine is released. 
+(2)Cycle the power of the welding machine.",,,,
+,,,,,Unstable wire supply ,"Check the devicies for the wire feed, motor,  clamp, conduit cable, torch and feed state of a wire.",,,,
+,,,,,The power cable of the welding machine is not connected to the torch or the base metal. ,Check the polarity and the connection of the power cable of the welding machine. ,,,,
+,,,,,Welding instruction cable including arc generation confirmation signal is cut.,Check if there is any breaking wire at the welding instruction cable. ,,,,
+9052,GAS FAILURE (RESTART):7,"Gas shortage occurred during arc welding.
+Gas shortage signal was turned on in arc welding.",,,A gas flow amount sensor detects the reduction of a gas flow amount.,Check the devices for gas supply; gas tap and gas hose.,,,,
+,,,,,Wrong detection of a gas flow amount sensor.,"Check the setting for gas flow amount sensor, or sensor power source ON. ",,,,
+9053,WIRE FAILURE (RESTART):7,"Wire shortage occurred during arc welding.
+Wire shortage signal was turned ON during  arc welding.",,,The wire sensor detected the shortage.,Check charge of the wire. ,,,,
+,,,,,Wrong detection of A wire sensor.,"Check the setting for wire detection sensor, or sensor power source ON. ",,,,
+9057,MISSING ARC START CONFIRM:8,Arc generation confirmation signal is not inputted within the time at the arc atarting.,,,Fail in arc generation,Remove the slag and check the wire feeding so that the power flow can be applied to the wire tip. ,,,,
+,,,,,Unstable wire supply,"Check the devicies for the wire feed, motor,  clamp, conduit cable, torch and feed state of a wire.",,,,
+,,,,,The main power supply of the welding machine is not on. ,Turn on the welding machine.,,,,
+,,,,,The power cable of the welding machine is not connected to the torch or the base metal. ,Check the polarity and the connection of the power cable of the welding machine. ,,,,
+,,,,,Welding instruction cable including arc generation confirmation signal is disconnected.,Check if there is any breaking wire at the welding instruction cable. ,,,,
+9058,ARC FAILURE:8,"Arc shortage occurred during arc welding.
+Arc shortage signal was turned ON during arc welding.
+Or Arc generation confirmation signal was truned OFF during arc welding.
+",,,Wrong welding condition ,Adjust welding condition.,,,,
+,,,,,The error occurred in the welding machine. ,"(1)Wait until the error at the welding machine is released. 
+(2)Cycle the power of the welding machine.",,,,
+,,,,,Unstable wire supply ,"Check the devicies for the wire feed, motor,  clamp, conduit cable, torch and feed state of a wire.",,,,
+,,,,,The power cable of the welding machine is not connected to the torch or the base metal. ,Check the polarity and the connection of the power cable of the welding machine. ,,,,
+,,,,,Welding instruction cable including arc generation confirmation signal is cut.,Check if there is any breaking wire at the welding instruction cable. ,,,,
+9060,GAS FAILURE (RESTART):8,"Gas shortage occurred during arc welding.
+Gas shortage signal was turned on in arc welding.",,,A gas flow amount sensor detects the reduction of a gas flow amount.,Check the devices for gas supply; gas tap and gas hose.,,,,
+,,,,,Wrong detection of a gas flow amount sensor.,"Check the setting for gas flow amount sensor, or sensor power source ON. ",,,,
+9061,WIRE FAILURE (RESTART):8,"Wire shortage occurred during arc welding.
+Wire shortage signal was turned ON during  arc welding.",,,The wire sensor detected the shortage.,Check charge of the wire. ,,,,
+,,,,,Wrong detection of A wire sensor.,"Check the setting for wire detection sensor, or sensor power source ON. ",,,,

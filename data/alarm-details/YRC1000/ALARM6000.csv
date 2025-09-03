@@ -1,0 +1,885 @@
+YRC1000,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+Alarm Number,Alarm Name/Message,Contents,Sub Code,Meaning,Cause,Remedy,}•\1,}•\2,ŹÚŤ×ŕ–ľ(‹ZŹpŽŇ—p),Notes
+6000,SYSTEM ERROR2(PFL),Process is not performed properly on the ASF04 board.,70,Invalid of Axis Speed Monitor Condition File ,Setting error,"(1)Turn the power OFF then back ON.
+(2)Confirm the Axis Speed Monitor Condition File No. 32 is valid.
+(3)If the alarm occurs again, replace the ASF04 board. Save the CMOS.BIN before replacement to be safe.",,,,PFL
+,,,,,Other,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+6001,MUTING ERROR(PFL),PFL Speed limitation is invalid during PFL muting operation.,,,Operation mistake,"(1)Reset alarm.
+(2)Confirm the robot is crashed.
+(3)If PFL function is muted, confirm the safety and resume the robot.",,,,PFL
+6002,NEAR SINGULARITY(PFL),"On the singularity, 2 or more axes movement is restricted. If 2 or more axes movement is detected on the singularity, this alarm is occurred.",,,Operation mistake,"(1)Reset alarm.
+(2)If the alarm occurs again, confirm if 2 or more axes are moved near singularity in collaborative operation.
+(3)Confirm the robot is crashed.
+(4)Confirm the safety and resume the robot.",,,,PFL
+6003,UNDEFINED SPEED LIMIT(PFL),"Speed limitation is required for collaborative operation. If speed limitation is not set, this alarm is occurred.",,,Setting error,"(1)Confirm the setting of speed limit condition file no.31 and 32 in accordance with the manual.
+(2)Reset alarm.
+(3)Confirm if collision occurs.
+(4)Confirm the safety and resume the robot.",,,,PFL
+6004,ESCAPE FROM CLAMPING ERROR(PFL),"When clamping is happened, robot moves the any direction which direction decrease the power automatically.
+If power is increased greatly during escaping, this alarm is occurred.",,,Operation mistake,"(1)Reset alarm.
+(2)If collision occurred, confirm the safety and escape from collision.
+(3)Confirm if setting of Tool files is correct.
+(4)Confirm if torque sensor home position is deviated. If it is deviated, set home position again following Collaborative Operation Instructions. 
+(5)If the alarm occurs again, Turn the power OFF then back ON.
+(6)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+,,,,,Near Singularity,"If the robot's posture when the alarm occurred is near singularity, take the following measures.
+(1)Reset alarm.
+(2)Confirm if external force of TCP exceeds external force limits in posture when the alarm occurred. If it exceeds, it may be improved by changing to a movement that does not pass the posture.
+(3)Confirm if external force of TCP exceeds external force limits during operation.
+(4)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+6005,EXTERNAL FORCE ERROR(PFL),Large external force is detected continuously.,,"Sub Code:alarm occurred axis or direction
+1-8: Axis number
+9-12: TCP(Resultant,X,Y,Z)",Setting error,"(1)Reset alarm.
+(2)If collision occurred, confirm the safety and escape from crash.
+(3)Confirm if setting of Tool files is correct.
+(4)Confirm the torque sensor home position. And, if home position is diverged, set correct position again following Collaborative Operation Instructions.
+(5)After home position setting, confirm the movement before operation start.",,,,PFL
+,,,,,Other,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+6007,DEFECTIVE TIP DRESS CONDITION FILE,An error occurred in the tip dress condition file.,,Sub Code: Tip dress condition file number,Setting error,Set a positive value for the dress length of the tip dress condition file.,,,,MOTION
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,MOTION
+6008,TRQ SENSOR OVERLOAD,"This alarm occurs if a torque that is higher than the rated torque is applied to the torque sensor due to a collision of the manipulator or in other situations, or the failure is detected in the torque sensor.",,Sub Code: Indicates the axis in which the alarm occurred.,Torque sensor failure,"(1)If an external force is applied to the manipulator due to a collision with the surroundings or other causes, move the manipulator according to the manual.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,PFL
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+6010,CONTROLLER SYNCHRONIZATION ERROR,An error occurred in inter-controller synchronization execution.,1,Master group designation error,Setting error,"(1)Reset the alarm.
+(2)Confirm that the specified control group is master group.",,,,MOTION
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,MOTION
+6011,AVOIDANCE FUNC. PARAMETER ERROR,Parameter for avoidance function is wrong.,,"Subcode: Signifies the error type and the targeted D variable.
+last 3 digit: D variable's number
+first digit: erroer types
+Meaning of error type is as follows.
+None:Parameter range error
+1:Setting of two D variables is wrong.
+When setting of two D variable is wrong, the younger one is signified as the targeted D variable.",Software operation error occurred,"(1)Reset the alarm after turn off Servo Power.
+(2)Check the and correct the D variable settings.",,,,SYSCON
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,SYSCON
+6012,HAND GUIDING PARAMETER ERROR,Parameter for hand guiding is wrong,,"Subcode: Signifies the error type and the targeted D variable.
+last 3 digit: D variable's number
+first digit: errer types
+Meaning of error type is as follows.
+None:Parameter range error
+1:Setting of two D variables is wrong.
+When setting of two D variable is wrong, the younger one is signified as the targeted D variable.",Software operation error occurred,"(1)Reset the alarm.
+(2)Check the and correct the D variable settings.",,,,SYSCON
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,SYSCON
+6013,CANNOT START HAND GUIDING(JOINT),External force is exceeding the allowable value when starting hand guiding.,,"subcode:The axis that exceeds the allowable value is indicated by a bit.
+D01:S
+D02:L
+D03:U
+D04:R
+D05:B
+D06:T",Operation mistake,"(1)Reset the alarm.
+(2)Reduce the force for the hand guiding when starting.",,,,SYSCON
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,SYSCON
+6014,CANNOT START HAND GUIDING(XYZ-T),External force is exceeding the allowable value when starting hand guiding.,,"subcode:The direction or the axis that exceeds the allowable value is indicated by a bit.
+D01:X
+D02:Y
+D03:Z
+D04:T",Operation mistake,"(1)Reset the alarm.
+(2)Reduce the force for the hand guiding when starting.",,,,SYSCON
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,SYSCON
+6015,CANNOT START HAND GUIDING(RBT),External force is exceeding the allowable value when starting hand guiding.,,"subcode:The axis that exceeds the allowable value is indicated by a bit.
+D01:S
+D02:L
+D03:U
+D04:R
+D05:B
+D06:T",Operation mistake,"(1)Reset the alarm.
+(2)Reduce the force for the hand guiding when starting.",,,,SYSCON
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,SYSCON
+6016,AVOIDANCE FUNC.RECOVER ERR(IMOV),Avoidance function has executed during IMOV.,,,Operation mistake,"(1)Reset the alarm.
+(2)Do not execute avoidance function during IMOV.",,,,SYSCON
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,SYSCON
+6017,HAND GUIDING SUSPEND,Hand guiding function has force-quit.,16,Servo power has been turn OFF during hand guiding.,Operation mistake,Reset the alarm.,,,,SYSCON
+,,,17,Hold has requested during hand guiding.,Operation mistake,Reset the alarm.,,,,SYSCON
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,SYSCON
+6018,ESCAPE FROM CLAMPING SUSPEND,Escape from clamping function has force-quit.,16,Servo power has been turn OFF during escape from clamping.,Operation mistake,Reset the alarm.,,,,SYSCON
+,,,17,Hold has requested during escape from clamping.,Operation mistake,Reset the alarm.,,,,SYSCON
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,SYSCON
+6019,DIRECT TEACHING FAILED,Cannot edit the JOB.,16,Cannot edit the prohibited JOB.,Operation mistake,Reset the alarm.,,,,SYSCON
+,,,64,Cannot edit JOB because edit screen is not active.,Operation mistake,Reset the alarm.,,,,SYSCON
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,SYSCON
+6021,WORK CALIBRATION DATA ERROR,An error occurred in work calibration.,1,Incorrect number of teaching points for work calibration,Setting error,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure, ladder editor line index).",,,,MOTION
+,,,2,Incorrect designation of the occupation control group for PC program work calibration data,Setting error,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure, ladder editor line index).",,,,MOTION
+,,,3,Incorrect designation of the enabling control group for PC program work calibration data,Setting error,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure, ladder editor line index).",,,,MOTION
+,,,4,Incorrect designation of the control group for PC program work calibration data,Setting error,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure, ladder editor line index).",,,,MOTION
+,,,5,Incorrect designation of the occupation control group for controller program calibration data,Setting error,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure, ladder editor line index).",,,,MOTION
+,,,6,Incorrect designation of the enabling control group for controller program calibration data,Setting error,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure, ladder editor line index).",,,,MOTION
+,,,7,Incorrect designation of the control group for controller program calibration data,Setting error,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure, ladder editor line index).",,,,MOTION
+,,,8,"Among taught points in the PC work calibration program, two or three points are on the same point.",Setting error,Teach the data for work calibration so that each point is different.,,,,MOTION
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,MOTION
+,,,9,"Among taught points in the controller work calibration program, two or three points are on the same point.",Setting error,Teach the data for work calibration so that each point is different.,,,,MOTION
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,MOTION
+,,,10,The number of robots in the PC work calibration program is two or more.,Setting error,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure, ladder editor line index).",,,,MOTION
+,,,11,The number of robots in the controller work calibration program is two or more.,Setting error,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure, ladder editor line index).",,,,MOTION
+6022,EXTERNAL FORCE ESTIMATION ERROR,External force is exceeding the allowable value when starting controller.,,"subcode:The axis that exceeds the allowable value is indicated by a bit.
+D01:S
+D02:L
+D03:U
+D04:R
+D05:B
+D06:T",Sensor error,"(1)Check if any external force has been applied to the manipulator, such as colliding with the surroundings.
+(2)Reset the alarm, and confirm the tool file settings(Weight, Unit of centroid position, +-).
+(3)Confirm the torque sensor home position. And, if home position is diverged, set correct position.",,,,SYSCON
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,SYSCON
+6023,AVOIDANCE FUNC. ERR(CONV. SYNC),Avoidance function has used during conveyor synchronized operation.,,,Operation mistake,"(1)Reset the alarm.
+(2)Do not use the avoidance function during conveyor synchronized operation.",,,,SYSCON
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,SYSCON
+6024,PENDANT COMMUNICATION ERROR,A communication error occurred between the controller and the programming pendant.,,,-,"For the cause and remedy, refer to chapter 13 ""Trouble Shooting When Alarm Is Not Displayed"" of the YRC1000 MAINTENANCE MANUAL.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+6025,SYNC TARGET CONTROLLER ERR,An error has occurred on the synchronization target controller.,,,Software operation error occurred,Resolve the error of the  synchronization target controller.,,,,MOTION
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,MOTION
+6029,DUPLICATED SEALING GUN NUMBER,The gun numbers duplicated.,,Sub Code: The duplicated gun number,Setting error,Check the settings for gun numbers.,,,,MOTION
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,MOTION
+6030,OUT OF SEALING INPUT RANGE,Sealing condition setting value out of range was specified.,,,Setting error,Please specify a value within the range.,,,,MOTION
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,MOTION
+6031,HIGH SPEED ROBOT DATA COMM ERROR,Communication processing error with Trumpf  laser welding machine ,0,IP address for Trumpf i-PFO is not set correctly. ,Setting error,Check the setting of the IP address for Trumpf i-PFO.,,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,1,Port number for Trumpf i-PFO is not set correctly. ,Setting error,Check the setting of the Port number for Trumpf i-PFO.,,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,2,SENTYPE for Trumpf i-PFO is not set correctly. ,Setting error,Check the setting of the SENTYPE for Trumpf i-PFO.,,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,3,Communication direction for Trumpf i-PFO is not set correctly. ,Setting error,Check the setting of the Communication direction for Trumpf i-PFO.,,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,4,Error counter output M register for Trumpf i-PFO is not set correctly. ,Setting error,Check the setting of the Error counter output M register for Trumpf i-PFO.,,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,5,Communication error threshold for Trumpf i-PFO is not set correctly. ,Setting error,Check the setting of the Communication error threshold for Trumpf i-PFO.,,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,6,Continuous writing check for Trumpf i-PFO is not set correctly. ,Setting error,Check the setting of the Continuous writing check for Trumpf i-PFO.,,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,7,No transmission request counter output M register for Trumpf i-PFO is not set correctly. ,Setting error,Check the setting of the No transmission request counter output M register for Trumpf i-PFO.,,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,100,LAN Interface Setting is not set correctly. ,Setting error,Check the setting of the LAN interface.,,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,2000,Trumpf  i-PFO communication error over the  threshold has detected. ,Setting error,"Check the communication settings for Trumpf i-PFO is correct.
+Check the MotoPlus application for Trumpf i-PFO is correct. ",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+6036,ROBOT I/F CONNECTION ERROR,An error of communication with the host device using the YERCProfile has occurred.,,,Setting error,"(1)Check the settings of Ethernet for the robot controller.
+(2)Check whether the host device's power is ON.
+(3)Check the settings of IP address for the host device.",,,,SYSCON
+,,,,,Connection failure,"(1)Reset the alarm.
+(2)After above operation implementation, If the alarm occurs again, check the connection and inserting state of between the host device and the ACP01-LAN connector.",,,,SYSCON
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,SYSCON
+6037,MANUAL OPERATION FAILED,An error occurred in manual operation.,3,Do not tried to manually operate multiple robots in a coordinated control job.,Operation mistake,"(1)Reset the alarm.
+(2)Set R1 and R2 to jobs in different control groups.",,,,PFL
+,,,,,Other,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+,,,,System error,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+6038,EXTERNAL FORCE CONTROL FAILED,An error occurred in external force control operation.,1,Failed to read the command of SKILLSND.,Setting error,"(1)Confirm and fix the command of SKILLSND.
+(2)Confirm and fix the delimiter character between command name and argument.",,,,PFL
+,,,,,Other,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+,,,2,Failed to read the argument of SKILL command.,Setting error,"(1)This command requires the argument. Set the argument into SKILL command.
+(2)Confirm and fix the command name of SKILLSND.
+(3)Confirm and fix the delimiter character between command name and argument.",,,,PFL
+,,,,,Other,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+,,,3,Too many arguments of SKILL command.,Setting error,Decrease the number of arguments of SKILL command.,,,,PFL
+,,,,,Other,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+,,,4,Out of range of argument value.,Setting error,Confirm and fix the value of arguments of SKILL command.,,,,PFL
+,,,,,Other,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+,,,5,Wrong combination about arguments.,Setting error,Confirm and fix the pair of arguments of SKILL command.,,,,PFL
+,,,,,Other,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+,,,,System error,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+6039,GAS PRESS CHECK SETTING ERROR,An error occurred when registering criteria of gas pressure check.,,,Setting error,"Do not execute any job when registering criteria of gas pressure check.
+",,,,SYSCON
+,,,,,Software operation error occurred,"Reset the alarm, and then try again.",,,,SYSCON
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,SYSCON
+6040,DEFECTIVE GUN SPRT PRESS FILE,An error occurred in the gun support axis pressure file.,,Sub Code: Gun support axis pressure file number,Setting error,"Match the number of ""END WAIT"" in the gun support axis pressure file, and the number of ""Welding Conditions(WTM)"" in the instruction.",,,,MOTION
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,MOTION
+6041,WEAR DETECTION ERROR,An error occurred in wear detection.,1,The gun is designated as wear detection prohibited.,Setting error,Verify that the specified gun and wear detection action is a wear detectable combination.,,,,MOTION
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,MOTION
+6042,"PRESSURE EROOR (AMP) 
+ 
+ 
+ 
+ 
+ 
+ 
+",A pressure error was detected at the amplifier current detector.,,Sub Code: Gun number,Connection failure,"(1)Reset the alarm.
+(2)If the alarm occurs again, check the connection and inserting state of the following cables and connectors.
+- SDCA01-CN501, CN531, CN532, CN533
+- CPS01-CN157
+- Inverter board-CN571, CN573-579, 
+- SDB(External axis SERVO PACK)-CN591,594
+- Motor power line
+
+",,,,MOTION
+,,,,,Connection failure,"(1)Reset the alarm.
+(2)If the alarm occurs again, check the following cables.
+- External axis cables
+- Supply cables
+
+",,,,MOTION
+,,,,,Module failure(Regenerative resistor),Module failure(Regenerative resistor) Check if there is no ground fault in the regeneration resistors.,,,,MOTION
+,,,,,GND wiring failure,"(1)Reset the alarm.
+(2) If the alarm repeats, check the voltage of the primary power and GND. If the voltage amount on each RST varies more than 100V, review the GND setting.
+",,,,MOTION
+,,,,," Module failure (amplifier)
+","(1)Reset the alarm.
+(2)If the alarm occurs again, replace the amplifier.
+",,,,MOTION
+,,,,,Module failure(motor),"(1)Reset the alarm.
+(2)If the alarm occurs again, replace the motor.
+",,,,MOTION
+,,,,,SDCA01 board failure,"(1)Reset the alarm.
+(2)If the alarm occurs again, replace the SDCA01 board. Save the CMOS.BIN before replacing the board to be safe.
+",,,,MOTION
+,,,,,Setting error,Check the parameter setting value.,,,,MOTION
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,MOTION
+6044,"1-STEP BACK EXECUTION ERROR
+ 
+ 
+ 
+",Cannot execute BWD operation from the current position.,,Sub Code: System number,Operation mistake,"Cannot execute BWD operation from the current position.
+Reset the alarm, and then move the manipulator to safety place in teach mode. ",,,,MOTION
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,MOTION
+6045,"CONTROLLER SYNC INTERFERENCE
+ 
+ 
+",The distance between the interference monitoring axes has exceeded the threshold value.,,Sub Code; Group and file number,Setting error,"Check the following settings.
+- Change the step position at which the alarm occurs so that it does not exceed the threshold value.
+- Modify the csync interference setting.",,,,MOTION
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,MOTION
+6046,PROFINET DISCONNECT FUNC ERROR,There is a wrong setting for the PROFINET disconnect function.,,"Sub code: Indicates a communication target station that has been improperly configured in 6-digit decimal [XX Y ZZZ] format.
+  XX : IO module number
+  Y : Channel number
+    0: 1 channel
+    1: 2 channels (SST-DN4-PCU only)
+  ZZZ: Communication station number (station number)
+",Setting error,Check that the PROFINET disconnection function settings are correct for the communication target station indicated by the subcode.,,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+6047,FIELDBUS COMMUNICATION ERROR,A communication error was detected by the PROFINET disconnect function.,,"Sub code: Indicates a communication target station that has detected a communication error in 6-digit decimal [XX Y ZZZ] format.
+ XX : IO module number
+ Y : Channel number
+  0: 1 channel
+  1: 2 channels (SST-DN4-PCU only)
+ ZZZ: Communication station number (station number)
+",Communication target error,Check the communication target station indicated by the subcode is working normally.,,,,HWC
+,,,,,Connection failure,Check that the cable and the communication device such as HUB between CP1616 and the other station indicated by the subcode are properly connected and working normally.,,,,HWC
+,,,,,Setting error,"Check followings.
+(1) Check that the PROFINET disconnection function settings are correct for the communication target station indicated by the subcode.
+(2) Check that the PROFINET communication function settings (both YRC1000 and CP1616 board) are correctly configured.",,,,HWC
+,,,,,PROFINET CP1616 board error,Check the CP1616 board is working normally.,,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+6048,BACKWARD EXECUTION ERROR,Failed to execute the BWD operetion.,1,Backward operation is not possible for the current job.,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure, ladder editor line index).",,,,MOTION
+,,,2,Could not find information about the job called by the instruction.,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure, ladder editor line index).",,,,MOTION
+,,,3,The information of the job called by the instruction was abnormal.,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure, ladder editor line index).",,,,MOTION
+6049,AXIS INTERFERENCE,The manipulator has entered the axis interference area that was specified.,,"Sub Code: Group, interference area number and set number",Setting error,"Check the following settings.
+- Change the step position where the alarm occurred to the area outside the interference area.
+- Modify the interference area setting.",,,,MOTION
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,MOTION
+6050,CUBE INTERFERENCE(TCP),The TCP of the manipulator has entered the cube interference area that was specified.,,"Sub Code: Group, interference area number and set number",Setting error,"Check the following settings.
+- Change the step position where the alarm occurred to the area outside the interference area.
+- Modify the interference area setting.",,,,MOTION
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,MOTION
+6051,CUBE INTERFERENCE(ENTIRE),A part of the manipulator has entered the cube interference area that was specified.,,"Sub Code: Group, axis, interference area number and set number",Setting error,"Check the following settings.
+- Change the step position where the alarm occurred to the area outside the interference area.
+- Modify the interference area setting.",,,,MOTION
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,MOTION
+6052,MOTOWELD: ERROR,Detected an error in the MOTOWELD welding power source .,1780,Error 780 : OUTSIDE OF VOLTAGE SETTING (High) occurred in the welder1.,Arc welding power source error,"The weld voltage command value and the weld voltage output value are different. Please check the following.
+(1) Check if the weld voltage command is not too low or too high.
+(2) Check if the selection of motor is correct, or confirm the settings of C parameter C09.
+(3) Check if the wire, shield gas, weld type, grounding are correctly set.
+(4) Check if the welding wire does not slip, or the wire is fed as instructed by the feeding command.
+(5) Check if the wire stick out is not excessively short or long.
+(6) Check if the range set in C parameter C72(Average calculation time used for OUTSIDE OF VOLTAGE SETTING(Unit:0.1s)) of the MOTOWELD is not too narrow.
+(7) When D-3-12 parameter of the MOTOWELD is set to ""OFF"", Check if the range set in C parameter C73(Judgment range for OUTSIDE OF VOLTAGE SETTING(Unit:0.1V)) of the MOTOWELD is not too narrow.
+(8) When D-3-12 parameter of the MOTOWELD is set to ""ON"", Check if the range set in A parameter A6(Judgment range for OUTSIDE OF VOLTAGE SETTING(Unit:0.1V)) of the MOTOWELD is not too narrow.",,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,2780,Error 780 : OUTSIDE OF VOLTAGE SETTING (High) occurred in the welder2.,Arc welding power source error,"The weld voltage command value and the weld voltage output value are different. Please check the following.
+(1) Check if the weld voltage command is not too low or too high.
+(2) Check if the selection of motor is correct, or confirm the settings of C parameter C09.
+(3) Check if the wire, shield gas, weld type, grounding are correctly set.
+(4) Check if the welding wire does not slip, or the wire is fed as instructed by the feeding command.
+(5) Check if the wire stick out is not excessively short or long.
+(6) Check if the range set in C parameter C72(Average calculation time used for OUTSIDE OF VOLTAGE SETTING(Unit:0.1s)) of the MOTOWELD is not too narrow.
+(7) When D-3-12 parameter of the MOTOWELD is set to ""OFF"", Check if the range set in C parameter C73(Judgment range for OUTSIDE OF VOLTAGE SETTING(Unit:0.1V)) of the MOTOWELD is not too narrow.
+(8) When D-3-12 parameter of the MOTOWELD is set to ""ON"", Check if the range set in A parameter A6(Judgment range for OUTSIDE OF VOLTAGE SETTING(Unit:0.1V)) of the MOTOWELD is not too narrow.",,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,3780,Error 780 : OUTSIDE OF VOLTAGE SETTING (High) occurred in the welder3.,Arc welding power source error,"The weld voltage command value and the weld voltage output value are different. Please check the following.
+(1) Check if the weld voltage command is not too low or too high.
+(2) Check if the selection of motor is correct, or confirm the settings of C parameter C09.
+(3) Check if the wire, shield gas, weld type, grounding are correctly set.
+(4) Check if the welding wire does not slip, or the wire is fed as instructed by the feeding command.
+(5) Check if the wire stick out is not excessively short or long.
+(6) Check if the range set in C parameter C72(Average calculation time used for OUTSIDE OF VOLTAGE SETTING(Unit:0.1s)) of the MOTOWELD is not too narrow.
+(7) When D-3-12 parameter of the MOTOWELD is set to ""OFF"", Check if the range set in C parameter C73(Judgment range for OUTSIDE OF VOLTAGE SETTING(Unit:0.1V)) of the MOTOWELD is not too narrow.
+(8) When D-3-12 parameter of the MOTOWELD is set to ""ON"", Check if the range set in A parameter A6(Judgment range for OUTSIDE OF VOLTAGE SETTING(Unit:0.1V)) of the MOTOWELD is not too narrow.",,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,4780,Error 780 : OUTSIDE OF VOLTAGE SETTING (High) occurred in the welder4.,Arc welding power source error,"The weld voltage command value and the weld voltage output value are different. Please check the following.
+(1) Check if the weld voltage command is not too low or too high.
+(2) Check if the selection of motor is correct, or confirm the settings of C parameter C09.
+(3) Check if the wire, shield gas, weld type, grounding are correctly set.
+(4) Check if the welding wire does not slip, or the wire is fed as instructed by the feeding command.
+(5) Check if the wire stick out is not excessively short or long.
+(6) Check if the range set in C parameter C72(Average calculation time used for OUTSIDE OF VOLTAGE SETTING(Unit:0.1s)) of the MOTOWELD is not too narrow.
+(7) When D-3-12 parameter of the MOTOWELD is set to ""OFF"", Check if the range set in C parameter C73(Judgment range for OUTSIDE OF VOLTAGE SETTING(Unit:0.1V)) of the MOTOWELD is not too narrow.
+(8) When D-3-12 parameter of the MOTOWELD is set to ""ON"", Check if the range set in A parameter A6(Judgment range for OUTSIDE OF VOLTAGE SETTING(Unit:0.1V)) of the MOTOWELD is not too narrow.",,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,5780,Error 780 : OUTSIDE OF VOLTAGE SETTING (High) occurred in the welder5.,Arc welding power source error,"The weld voltage command value and the weld voltage output value are different. Please check the following.
+(1) Check if the weld voltage command is not too low or too high.
+(2) Check if the selection of motor is correct, or confirm the settings of C parameter C09.
+(3) Check if the wire, shield gas, weld type, grounding are correctly set.
+(4) Check if the welding wire does not slip, or the wire is fed as instructed by the feeding command.
+(5) Check if the wire stick out is not excessively short or long.
+(6) Check if the range set in C parameter C72(Average calculation time used for OUTSIDE OF VOLTAGE SETTING(Unit:0.1s)) of the MOTOWELD is not too narrow.
+(7) When D-3-12 parameter of the MOTOWELD is set to ""OFF"", Check if the range set in C parameter C73(Judgment range for OUTSIDE OF VOLTAGE SETTING(Unit:0.1V)) of the MOTOWELD is not too narrow.
+(8) When D-3-12 parameter of the MOTOWELD is set to ""ON"", Check if the range set in A parameter A6(Judgment range for OUTSIDE OF VOLTAGE SETTING(Unit:0.1V)) of the MOTOWELD is not too narrow.",,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,6780,Error 780 : OUTSIDE OF VOLTAGE SETTING (High) occurred in the welder6.,Arc welding power source error,"The weld voltage command value and the weld voltage output value are different. Please check the following.
+(1) Check if the weld voltage command is not too low or too high.
+(2) Check if the selection of motor is correct, or confirm the settings of C parameter C09.
+(3) Check if the wire, shield gas, weld type, grounding are correctly set.
+(4) Check if the welding wire does not slip, or the wire is fed as instructed by the feeding command.
+(5) Check if the wire stick out is not excessively short or long.
+(6) Check if the range set in C parameter C72(Average calculation time used for OUTSIDE OF VOLTAGE SETTING(Unit:0.1s)) of the MOTOWELD is not too narrow.
+(7) When D-3-12 parameter of the MOTOWELD is set to ""OFF"", Check if the range set in C parameter C73(Judgment range for OUTSIDE OF VOLTAGE SETTING(Unit:0.1V)) of the MOTOWELD is not too narrow.
+(8) When D-3-12 parameter of the MOTOWELD is set to ""ON"", Check if the range set in A parameter A6(Judgment range for OUTSIDE OF VOLTAGE SETTING(Unit:0.1V)) of the MOTOWELD is not too narrow.",,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,7780,Error 780 : OUTSIDE OF VOLTAGE SETTING (High) occurred in the welder7.,Arc welding power source error,"The weld voltage command value and the weld voltage output value are different. Please check the following.
+(1) Check if the weld voltage command is not too low or too high.
+(2) Check if the selection of motor is correct, or confirm the settings of C parameter C09.
+(3) Check if the wire, shield gas, weld type, grounding are correctly set.
+(4) Check if the welding wire does not slip, or the wire is fed as instructed by the feeding command.
+(5) Check if the wire stick out is not excessively short or long.
+(6) Check if the range set in C parameter C72(Average calculation time used for OUTSIDE OF VOLTAGE SETTING(Unit:0.1s)) of the MOTOWELD is not too narrow.
+(7) When D-3-12 parameter of the MOTOWELD is set to ""OFF"", Check if the range set in C parameter C73(Judgment range for OUTSIDE OF VOLTAGE SETTING(Unit:0.1V)) of the MOTOWELD is not too narrow.
+(8) When D-3-12 parameter of the MOTOWELD is set to ""ON"", Check if the range set in A parameter A6(Judgment range for OUTSIDE OF VOLTAGE SETTING(Unit:0.1V)) of the MOTOWELD is not too narrow.",,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,8780,Error 780 : OUTSIDE OF VOLTAGE SETTING (High) occurred in the welder8.,Arc welding power source error,"The weld voltage command value and the weld voltage output value are different. Please check the following.
+(1) Check if the weld voltage command is not too low or too high.
+(2) Check if the selection of motor is correct, or confirm the settings of C parameter C09.
+(3) Check if the wire, shield gas, weld type, grounding are correctly set.
+(4) Check if the welding wire does not slip, or the wire is fed as instructed by the feeding command.
+(5) Check if the wire stick out is not excessively short or long.
+(6) Check if the range set in C parameter C72(Average calculation time used for OUTSIDE OF VOLTAGE SETTING(Unit:0.1s)) of the MOTOWELD is not too narrow.
+(7) When D-3-12 parameter of the MOTOWELD is set to ""OFF"", Check if the range set in C parameter C73(Judgment range for OUTSIDE OF VOLTAGE SETTING(Unit:0.1V)) of the MOTOWELD is not too narrow.
+(8) When D-3-12 parameter of the MOTOWELD is set to ""ON"", Check if the range set in A parameter A6(Judgment range for OUTSIDE OF VOLTAGE SETTING(Unit:0.1V)) of the MOTOWELD is not too narrow.",,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,1781,Error 781 : OUTSIDE OF VOLTAGE SETTING (Low) occurred in the welder1.,Arc welding power source error,"The weld voltage command value and the weld voltage output value are different. Please check the following.
+(1) Check if the weld voltage command is not too low or too high.
+(2) Check if the selection of motor is correct, or confirm the settings of C parameter C09.
+(3) Check if the wire, shield gas, weld type, grounding are correctly set.
+(4) Check if the welding wire does not slip, or the wire is fed as instructed by the feeding command.
+(5) Check if the wire stick out is not excessively short or long.
+(6) Check if the range set in C parameter C72(Average calculation time used for OUTSIDE OF VOLTAGE SETTING(Unit:0.1s)) of the MOTOWELD is not too narrow.
+(7) When D-3-12 parameter of the MOTOWELD is set to ""OFF"", Check if the range set in C parameter C73(Judgment range for OUTSIDE OF VOLTAGE SETTING(Unit:0.1V)) of the MOTOWELD is not too narrow.
+(8) When D-3-12 parameter of the MOTOWELD is set to ""ON"", Check if the range set in A parameter A6(Judgment range for OUTSIDE OF VOLTAGE SETTING(Unit:0.1V)) of the MOTOWELD is not too narrow.",,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,2781,Error 781 : OUTSIDE OF VOLTAGE SETTING (Low) occurred in the welder2.,Arc welding power source error,"The weld voltage command value and the weld voltage output value are different. Please check the following.
+(1) Check if the weld voltage command is not too low or too high.
+(2) Check if the selection of motor is correct, or confirm the settings of C parameter C09.
+(3) Check if the wire, shield gas, weld type, grounding are correctly set.
+(4) Check if the welding wire does not slip, or the wire is fed as instructed by the feeding command.
+(5) Check if the wire stick out is not excessively short or long.
+(6) Check if the range set in C parameter C72(Average calculation time used for OUTSIDE OF VOLTAGE SETTING(Unit:0.1s)) of the MOTOWELD is not too narrow.
+(7) When D-3-12 parameter of the MOTOWELD is set to ""OFF"", Check if the range set in C parameter C73(Judgment range for OUTSIDE OF VOLTAGE SETTING(Unit:0.1V)) of the MOTOWELD is not too narrow.
+(8) When D-3-12 parameter of the MOTOWELD is set to ""ON"", Check if the range set in A parameter A6(Judgment range for OUTSIDE OF VOLTAGE SETTING(Unit:0.1V)) of the MOTOWELD is not too narrow.",,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,3781,Error 781 : OUTSIDE OF VOLTAGE SETTING (Low) occurred in the welder3.,Arc welding power source error,"The weld voltage command value and the weld voltage output value are different. Please check the following.
+(1) Check if the weld voltage command is not too low or too high.
+(2) Check if the selection of motor is correct, or confirm the settings of C parameter C09.
+(3) Check if the wire, shield gas, weld type, grounding are correctly set.
+(4) Check if the welding wire does not slip, or the wire is fed as instructed by the feeding command.
+(5) Check if the wire stick out is not excessively short or long.
+(6) Check if the range set in C parameter C72(Average calculation time used for OUTSIDE OF VOLTAGE SETTING(Unit:0.1s)) of the MOTOWELD is not too narrow.
+(7) When D-3-12 parameter of the MOTOWELD is set to ""OFF"", Check if the range set in C parameter C73(Judgment range for OUTSIDE OF VOLTAGE SETTING(Unit:0.1V)) of the MOTOWELD is not too narrow.
+(8) When D-3-12 parameter of the MOTOWELD is set to ""ON"", Check if the range set in A parameter A6(Judgment range for OUTSIDE OF VOLTAGE SETTING(Unit:0.1V)) of the MOTOWELD is not too narrow.",,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,4781,Error 781 : OUTSIDE OF VOLTAGE SETTING (Low) occurred in the welder4.,Arc welding power source error,"The weld voltage command value and the weld voltage output value are different. Please check the following.
+(1) Check if the weld voltage command is not too low or too high.
+(2) Check if the selection of motor is correct, or confirm the settings of C parameter C09.
+(3) Check if the wire, shield gas, weld type, grounding are correctly set.
+(4) Check if the welding wire does not slip, or the wire is fed as instructed by the feeding command.
+(5) Check if the wire stick out is not excessively short or long.
+(6) Check if the range set in C parameter C72(Average calculation time used for OUTSIDE OF VOLTAGE SETTING(Unit:0.1s)) of the MOTOWELD is not too narrow.
+(7) When D-3-12 parameter of the MOTOWELD is set to ""OFF"", Check if the range set in C parameter C73(Judgment range for OUTSIDE OF VOLTAGE SETTING(Unit:0.1V)) of the MOTOWELD is not too narrow.
+(8) When D-3-12 parameter of the MOTOWELD is set to ""ON"", Check if the range set in A parameter A6(Judgment range for OUTSIDE OF VOLTAGE SETTING(Unit:0.1V)) of the MOTOWELD is not too narrow.",,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,5781,Error 781 : OUTSIDE OF VOLTAGE SETTING (Low) occurred in the welder5.,Arc welding power source error,"The weld voltage command value and the weld voltage output value are different. Please check the following.
+(1) Check if the weld voltage command is not too low or too high.
+(2) Check if the selection of motor is correct, or confirm the settings of C parameter C09.
+(3) Check if the wire, shield gas, weld type, grounding are correctly set.
+(4) Check if the welding wire does not slip, or the wire is fed as instructed by the feeding command.
+(5) Check if the wire stick out is not excessively short or long.
+(6) Check if the range set in C parameter C72(Average calculation time used for OUTSIDE OF VOLTAGE SETTING(Unit:0.1s)) of the MOTOWELD is not too narrow.
+(7) When D-3-12 parameter of the MOTOWELD is set to ""OFF"", Check if the range set in C parameter C73(Judgment range for OUTSIDE OF VOLTAGE SETTING(Unit:0.1V)) of the MOTOWELD is not too narrow.
+(8) When D-3-12 parameter of the MOTOWELD is set to ""ON"", Check if the range set in A parameter A6(Judgment range for OUTSIDE OF VOLTAGE SETTING(Unit:0.1V)) of the MOTOWELD is not too narrow.",,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,6781,Error 781 : OUTSIDE OF VOLTAGE SETTING (Low) occurred in the welder6.,Arc welding power source error,"The weld voltage command value and the weld voltage output value are different. Please check the following.
+(1) Check if the weld voltage command is not too low or too high.
+(2) Check if the selection of motor is correct, or confirm the settings of C parameter C09.
+(3) Check if the wire, shield gas, weld type, grounding are correctly set.
+(4) Check if the welding wire does not slip, or the wire is fed as instructed by the feeding command.
+(5) Check if the wire stick out is not excessively short or long.
+(6) Check if the range set in C parameter C72(Average calculation time used for OUTSIDE OF VOLTAGE SETTING(Unit:0.1s)) of the MOTOWELD is not too narrow.
+(7) When D-3-12 parameter of the MOTOWELD is set to ""OFF"", Check if the range set in C parameter C73(Judgment range for OUTSIDE OF VOLTAGE SETTING(Unit:0.1V)) of the MOTOWELD is not too narrow.
+(8) When D-3-12 parameter of the MOTOWELD is set to ""ON"", Check if the range set in A parameter A6(Judgment range for OUTSIDE OF VOLTAGE SETTING(Unit:0.1V)) of the MOTOWELD is not too narrow.",,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,7781,Error 781 : OUTSIDE OF VOLTAGE SETTING (Low) occurred in the welder7.,Arc welding power source error,"The weld voltage command value and the weld voltage output value are different. Please check the following.
+(1) Check if the weld voltage command is not too low or too high.
+(2) Check if the selection of motor is correct, or confirm the settings of C parameter C09.
+(3) Check if the wire, shield gas, weld type, grounding are correctly set.
+(4) Check if the welding wire does not slip, or the wire is fed as instructed by the feeding command.
+(5) Check if the wire stick out is not excessively short or long.
+(6) Check if the range set in C parameter C72(Average calculation time used for OUTSIDE OF VOLTAGE SETTING(Unit:0.1s)) of the MOTOWELD is not too narrow.
+(7) When D-3-12 parameter of the MOTOWELD is set to ""OFF"", Check if the range set in C parameter C73(Judgment range for OUTSIDE OF VOLTAGE SETTING(Unit:0.1V)) of the MOTOWELD is not too narrow.
+(8) When D-3-12 parameter of the MOTOWELD is set to ""ON"", Check if the range set in A parameter A6(Judgment range for OUTSIDE OF VOLTAGE SETTING(Unit:0.1V)) of the MOTOWELD is not too narrow.",,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,8781,Error 781 : OUTSIDE OF VOLTAGE SETTING (Low) occurred in the welder8.,Arc welding power source error,"The weld voltage command value and the weld voltage output value are different. Please check the following.
+(1) Check if the weld voltage command is not too low or too high.
+(2) Check if the selection of motor is correct, or confirm the settings of C parameter C09.
+(3) Check if the wire, shield gas, weld type, grounding are correctly set.
+(4) Check if the welding wire does not slip, or the wire is fed as instructed by the feeding command.
+(5) Check if the wire stick out is not excessively short or long.
+(6) Check if the range set in C parameter C72(Average calculation time used for OUTSIDE OF VOLTAGE SETTING(Unit:0.1s)) of the MOTOWELD is not too narrow.
+(7) When D-3-12 parameter of the MOTOWELD is set to ""OFF"", Check if the range set in C parameter C73(Judgment range for OUTSIDE OF VOLTAGE SETTING(Unit:0.1V)) of the MOTOWELD is not too narrow.
+(8) When D-3-12 parameter of the MOTOWELD is set to ""ON"", Check if the range set in A parameter A6(Judgment range for OUTSIDE OF VOLTAGE SETTING(Unit:0.1V)) of the MOTOWELD is not too narrow.",,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,1782,Error 782 : OUTSIDE OF VOLTAGE SETTING FORCED STOP (High) occurred in the welder1.,Arc welding power source error,"The weld voltage command value and the weld voltage output value are different. Please check the following.
+(1) Check if the weld voltage command is not too low or too high.
+(2) Check if the selection of motor is correct, or confirm the settings of C parameter C09.
+(3) Check if the wire, shield gas, weld type, grounding are correctly set.
+(4) Check if the welding wire does not slip, or the wire is fed as instructed by the feeding command.
+(5) Check if the wire stick out is not excessively short or long.
+(6) Check if the range set in C parameter C72(Average calculation time used for OUTSIDE OF VOLTAGE.SETTING FORCED STOP(Unit:0.1s)) of the MOTOWELD is not too narrow.
+(7) Check if the range set in C parameter C75(Judgment range for OUTSIDE OF VOLTAGE.SETTING FORCED STOP(Uint:0.1V)) of the MOTOWELD is not too narrow.",,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,2782,Error 782 : OUTSIDE OF VOLTAGE SETTING FORCED STOP (High) occurred in the welder2.,Arc welding power source error,"The weld voltage command value and the weld voltage output value are different. Please check the following.
+(1) Check if the weld voltage command is not too low or too high.
+(2) Check if the selection of motor is correct, or confirm the settings of C parameter C09.
+(3) Check if the wire, shield gas, weld type, grounding are correctly set.
+(4) Check if the welding wire does not slip, or the wire is fed as instructed by the feeding command.
+(5) Check if the wire stick out is not excessively short or long.
+(6) Check if the range set in C parameter C72(Average calculation time used for OUTSIDE OF VOLTAGE.SETTING FORCED STOP(Unit:0.1s)) of the MOTOWELD is not too narrow.
+(7) Check if the range set in C parameter C75(Judgment range for OUTSIDE OF VOLTAGE.SETTING FORCED STOP(Uint:0.1V)) of the MOTOWELD is not too narrow.",,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,3782,Error 782 : OUTSIDE OF VOLTAGE SETTING FORCED STOP (High) occurred in the welder3.,Arc welding power source error,"The weld voltage command value and the weld voltage output value are different. Please check the following.
+(1) Check if the weld voltage command is not too low or too high.
+(2) Check if the selection of motor is correct, or confirm the settings of C parameter C09.
+(3) Check if the wire, shield gas, weld type, grounding are correctly set.
+(4) Check if the welding wire does not slip, or the wire is fed as instructed by the feeding command.
+(5) Check if the wire stick out is not excessively short or long.
+(6) Check if the range set in C parameter C72(Average calculation time used for OUTSIDE OF VOLTAGE.SETTING FORCED STOP(Unit:0.1s)) of the MOTOWELD is not too narrow.
+(7) Check if the range set in C parameter C75(Judgment range for OUTSIDE OF VOLTAGE.SETTING FORCED STOP(Uint:0.1V)) of the MOTOWELD is not too narrow.",,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,4782,Error 782 : OUTSIDE OF VOLTAGE SETTING FORCED STOP (High) occurred in the welder4.,Arc welding power source error,"The weld voltage command value and the weld voltage output value are different. Please check the following.
+(1) Check if the weld voltage command is not too low or too high.
+(2) Check if the selection of motor is correct, or confirm the settings of C parameter C09.
+(3) Check if the wire, shield gas, weld type, grounding are correctly set.
+(4) Check if the welding wire does not slip, or the wire is fed as instructed by the feeding command.
+(5) Check if the wire stick out is not excessively short or long.
+(6) Check if the range set in C parameter C72(Average calculation time used for OUTSIDE OF VOLTAGE.SETTING FORCED STOP(Unit:0.1s)) of the MOTOWELD is not too narrow.
+(7) Check if the range set in C parameter C75(Judgment range for OUTSIDE OF VOLTAGE.SETTING FORCED STOP(Uint:0.1V)) of the MOTOWELD is not too narrow.",,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,5782,Error 782 : OUTSIDE OF VOLTAGE SETTING FORCED STOP (High) occurred in the welder5.,Arc welding power source error,"The weld voltage command value and the weld voltage output value are different. Please check the following.
+(1) Check if the weld voltage command is not too low or too high.
+(2) Check if the selection of motor is correct, or confirm the settings of C parameter C09.
+(3) Check if the wire, shield gas, weld type, grounding are correctly set.
+(4) Check if the welding wire does not slip, or the wire is fed as instructed by the feeding command.
+(5) Check if the wire stick out is not excessively short or long.
+(6) Check if the range set in C parameter C72(Average calculation time used for OUTSIDE OF VOLTAGE.SETTING FORCED STOP(Unit:0.1s)) of the MOTOWELD is not too narrow.
+(7) Check if the range set in C parameter C75(Judgment range for OUTSIDE OF VOLTAGE.SETTING FORCED STOP(Uint:0.1V)) of the MOTOWELD is not too narrow.",,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,6782,Error 782 : OUTSIDE OF VOLTAGE SETTING FORCED STOP (High) occurred in the welder6.,Arc welding power source error,"The weld voltage command value and the weld voltage output value are different. Please check the following.
+(1) Check if the weld voltage command is not too low or too high.
+(2) Check if the selection of motor is correct, or confirm the settings of C parameter C09.
+(3) Check if the wire, shield gas, weld type, grounding are correctly set.
+(4) Check if the welding wire does not slip, or the wire is fed as instructed by the feeding command.
+(5) Check if the wire stick out is not excessively short or long.
+(6) Check if the range set in C parameter C72(Average calculation time used for OUTSIDE OF VOLTAGE.SETTING FORCED STOP(Unit:0.1s)) of the MOTOWELD is not too narrow.
+(7) Check if the range set in C parameter C75(Judgment range for OUTSIDE OF VOLTAGE.SETTING FORCED STOP(Uint:0.1V)) of the MOTOWELD is not too narrow.",,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,7782,Error 782 : OUTSIDE OF VOLTAGE SETTING FORCED STOP (High) occurred in the welder7.,Arc welding power source error,"The weld voltage command value and the weld voltage output value are different. Please check the following.
+(1) Check if the weld voltage command is not too low or too high.
+(2) Check if the selection of motor is correct, or confirm the settings of C parameter C09.
+(3) Check if the wire, shield gas, weld type, grounding are correctly set.
+(4) Check if the welding wire does not slip, or the wire is fed as instructed by the feeding command.
+(5) Check if the wire stick out is not excessively short or long.
+(6) Check if the range set in C parameter C72(Average calculation time used for OUTSIDE OF VOLTAGE.SETTING FORCED STOP(Unit:0.1s)) of the MOTOWELD is not too narrow.
+(7) Check if the range set in C parameter C75(Judgment range for OUTSIDE OF VOLTAGE.SETTING FORCED STOP(Uint:0.1V)) of the MOTOWELD is not too narrow.",,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,8782,Error 782 : OUTSIDE OF VOLTAGE SETTING FORCED STOP (High) occurred in the welder8.,Arc welding power source error,"The weld voltage command value and the weld voltage output value are different. Please check the following.
+(1) Check if the weld voltage command is not too low or too high.
+(2) Check if the selection of motor is correct, or confirm the settings of C parameter C09.
+(3) Check if the wire, shield gas, weld type, grounding are correctly set.
+(4) Check if the welding wire does not slip, or the wire is fed as instructed by the feeding command.
+(5) Check if the wire stick out is not excessively short or long.
+(6) Check if the range set in C parameter C72(Average calculation time used for OUTSIDE OF VOLTAGE.SETTING FORCED STOP(Unit:0.1s)) of the MOTOWELD is not too narrow.
+(7) Check if the range set in C parameter C75(Judgment range for OUTSIDE OF VOLTAGE.SETTING FORCED STOP(Uint:0.1V)) of the MOTOWELD is not too narrow.",,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,1783,Error 783 : OUTSIDE OF VOLTAGE SETTING FORCED STOP (Low) occurred in the welder1.,Arc welding power source error,"The weld voltage command value and the weld voltage output value are different. Please check the following.
+(1) Check if the weld voltage command is not too low or too high.
+(2) Check if the selection of motor is correct, or confirm the settings of C parameter C09.
+(3) Check if the wire, shield gas, weld type, grounding are correctly set.
+(4) Check if the welding wire does not slip, or the wire is fed as instructed by the feeding command.
+(5) Check if the wire stick out is not excessively short or long.
+(6) Check if the range set in C parameter C72(Average calculation time used for OUTSIDE OF VOLTAGE.SETTING FORCED STOP(Unit:0.1s)) of the MOTOWELD is not too narrow.
+(7) Check if the range set in C parameter C75(Judgment range for OUTSIDE OF VOLTAGE.SETTING FORCED STOP(Uint:0.1V)) of the MOTOWELD is not too narrow.",,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,2783,Error 783 : OUTSIDE OF VOLTAGE SETTING FORCED STOP (Low) occurred in the welder2.,Arc welding power source error,"The weld voltage command value and the weld voltage output value are different. Please check the following.
+(1) Check if the weld voltage command is not too low or too high.
+(2) Check if the selection of motor is correct, or confirm the settings of C parameter C09.
+(3) Check if the wire, shield gas, weld type, grounding are correctly set.
+(4) Check if the welding wire does not slip, or the wire is fed as instructed by the feeding command.
+(5) Check if the wire stick out is not excessively short or long.
+(6) Check if the range set in C parameter C72(Average calculation time used for OUTSIDE OF VOLTAGE.SETTING FORCED STOP(Unit:0.1s)) of the MOTOWELD is not too narrow.
+(7) Check if the range set in C parameter C75(Judgment range for OUTSIDE OF VOLTAGE.SETTING FORCED STOP(Uint:0.1V)) of the MOTOWELD is not too narrow.",,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,3783,Error 783 : OUTSIDE OF VOLTAGE SETTING FORCED STOP (Low) occurred in the welder3.,Arc welding power source error,"The weld voltage command value and the weld voltage output value are different. Please check the following.
+(1) Check if the weld voltage command is not too low or too high.
+(2) Check if the selection of motor is correct, or confirm the settings of C parameter C09.
+(3) Check if the wire, shield gas, weld type, grounding are correctly set.
+(4) Check if the welding wire does not slip, or the wire is fed as instructed by the feeding command.
+(5) Check if the wire stick out is not excessively short or long.
+(6) Check if the range set in C parameter C72(Average calculation time used for OUTSIDE OF VOLTAGE.SETTING FORCED STOP(Unit:0.1s)) of the MOTOWELD is not too narrow.
+(7) Check if the range set in C parameter C75(Judgment range for OUTSIDE OF VOLTAGE.SETTING FORCED STOP(Uint:0.1V)) of the MOTOWELD is not too narrow.",,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,4783,Error 783 : OUTSIDE OF VOLTAGE SETTING FORCED STOP (Low) occurred in the welder4.,Arc welding power source error,"The weld voltage command value and the weld voltage output value are different. Please check the following.
+(1) Check if the weld voltage command is not too low or too high.
+(2) Check if the selection of motor is correct, or confirm the settings of C parameter C09.
+(3) Check if the wire, shield gas, weld type, grounding are correctly set.
+(4) Check if the welding wire does not slip, or the wire is fed as instructed by the feeding command.
+(5) Check if the wire stick out is not excessively short or long.
+(6) Check if the range set in C parameter C72(Average calculation time used for OUTSIDE OF VOLTAGE.SETTING FORCED STOP(Unit:0.1s)) of the MOTOWELD is not too narrow.
+(7) Check if the range set in C parameter C75(Judgment range for OUTSIDE OF VOLTAGE.SETTING FORCED STOP(Uint:0.1V)) of the MOTOWELD is not too narrow.",,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,5783,Error 783 : OUTSIDE OF VOLTAGE SETTING FORCED STOP (Low) occurred in the welder5.,Arc welding power source error,"The weld voltage command value and the weld voltage output value are different. Please check the following.
+(1) Check if the weld voltage command is not too low or too high.
+(2) Check if the selection of motor is correct, or confirm the settings of C parameter C09.
+(3) Check if the wire, shield gas, weld type, grounding are correctly set.
+(4) Check if the welding wire does not slip, or the wire is fed as instructed by the feeding command.
+(5) Check if the wire stick out is not excessively short or long.
+(6) Check if the range set in C parameter C72(Average calculation time used for OUTSIDE OF VOLTAGE.SETTING FORCED STOP(Unit:0.1s)) of the MOTOWELD is not too narrow.
+(7) Check if the range set in C parameter C75(Judgment range for OUTSIDE OF VOLTAGE.SETTING FORCED STOP(Uint:0.1V)) of the MOTOWELD is not too narrow.",,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,6783,Error 783 : OUTSIDE OF VOLTAGE SETTING FORCED STOP (Low) occurred in the welder6.,Arc welding power source error,"The weld voltage command value and the weld voltage output value are different. Please check the following.
+(1) Check if the weld voltage command is not too low or too high.
+(2) Check if the selection of motor is correct, or confirm the settings of C parameter C09.
+(3) Check if the wire, shield gas, weld type, grounding are correctly set.
+(4) Check if the welding wire does not slip, or the wire is fed as instructed by the feeding command.
+(5) Check if the wire stick out is not excessively short or long.
+(6) Check if the range set in C parameter C72(Average calculation time used for OUTSIDE OF VOLTAGE.SETTING FORCED STOP(Unit:0.1s)) of the MOTOWELD is not too narrow.
+(7) Check if the range set in C parameter C75(Judgment range for OUTSIDE OF VOLTAGE.SETTING FORCED STOP(Uint:0.1V)) of the MOTOWELD is not too narrow.",,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,7783,Error 783 : OUTSIDE OF VOLTAGE SETTING FORCED STOP (Low) occurred in the welder7.,Arc welding power source error,"The weld voltage command value and the weld voltage output value are different. Please check the following.
+(1) Check if the weld voltage command is not too low or too high.
+(2) Check if the selection of motor is correct, or confirm the settings of C parameter C09.
+(3) Check if the wire, shield gas, weld type, grounding are correctly set.
+(4) Check if the welding wire does not slip, or the wire is fed as instructed by the feeding command.
+(5) Check if the wire stick out is not excessively short or long.
+(6) Check if the range set in C parameter C72(Average calculation time used for OUTSIDE OF VOLTAGE.SETTING FORCED STOP(Unit:0.1s)) of the MOTOWELD is not too narrow.
+(7) Check if the range set in C parameter C75(Judgment range for OUTSIDE OF VOLTAGE.SETTING FORCED STOP(Uint:0.1V)) of the MOTOWELD is not too narrow.",,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,8783,Error 783 : OUTSIDE OF VOLTAGE SETTING FORCED STOP (Low) occurred in the welder8.,Arc welding power source error,"The weld voltage command value and the weld voltage output value are different. Please check the following.
+(1) Check if the weld voltage command is not too low or too high.
+(2) Check if the selection of motor is correct, or confirm the settings of C parameter C09.
+(3) Check if the wire, shield gas, weld type, grounding are correctly set.
+(4) Check if the welding wire does not slip, or the wire is fed as instructed by the feeding command.
+(5) Check if the wire stick out is not excessively short or long.
+(6) Check if the range set in C parameter C72(Average calculation time used for OUTSIDE OF VOLTAGE.SETTING FORCED STOP(Unit:0.1s)) of the MOTOWELD is not too narrow.
+(7) Check if the range set in C parameter C75(Judgment range for OUTSIDE OF VOLTAGE.SETTING FORCED STOP(Uint:0.1V)) of the MOTOWELD is not too narrow.",,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+6055,VEW01 WATCHDOG SIGNAL ERROR,A watchdog signal error occurred on VEW01.,1,A watchdog signal error occurred on VEW01 (welder1).,CIO ladder error,The watchdog signal updated by the CIO ladder has stopped. Reboot the robot controller.,,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,2,A watchdog signal error occurred on VEW01 (welder2).,CIO ladder error,The watchdog signal updated by the CIO ladder has stopped. Reboot the robot controller.,,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,3,A watchdog signal error occurred on VEW01 (welder3).,CIO ladder error,The watchdog signal updated by the CIO ladder has stopped. Reboot the robot controller.,,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,4,A watchdog signal error occurred on VEW01 (welder4).,CIO ladder error,The watchdog signal updated by the CIO ladder has stopped. Reboot the robot controller.,,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,5,A watchdog signal error occurred on VEW01 (welder5).,CIO ladder error,The watchdog signal updated by the CIO ladder has stopped. Reboot the robot controller.,,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,6,A watchdog signal error occurred on VEW01 (welder6).,CIO ladder error,The watchdog signal updated by the CIO ladder has stopped. Reboot the robot controller.,,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,7,A watchdog signal error occurred on VEW01 (welder7).,CIO ladder error,The watchdog signal updated by the CIO ladder has stopped. Reboot the robot controller.,,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,8,A watchdog signal error occurred on VEW01 (welder8).,CIO ladder error,The watchdog signal updated by the CIO ladder has stopped. Reboot the robot controller.,,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+6057,CC-Link COMMUNICATION ERROR,A CC-Link communication error has been detected.,,"Sub code: Indicates a communication target station that has detected a communication error in 6-digit decimal [XX Y ZZZ] format.
+@XX : IO module number
+@Y : Channel number (always ""0"")
+@ZZZ: Communication station number (always ""000"")
+",Setting error,"Check followings.
+(1) Check that the CC-Link communication settings are correct.
+(2) Check that the communication settings of the communication master (PLC) and the communication settings of the YRC1000 match.",,,,HWC
+,,,,,Communication target failure,Check that the communication master (PLC) is working normally.,,,,HWC
+,,,,,Connection failure,Check that the communication equipment such as the cable and branch unit to the communication master (PLC) are properly connected and working normally.,,,,HWC
+,,,,,CC-Link board failure,Check the communication status and the LED status on the board to confirm that the CC-Link board (SST-CCS-PCIE) is working normally.,,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+6058,CC-Link IE Field COMM ERROR,A CC-Link IE Field communication error has been detected.,,"Sub code: Indicates a communication target station that has detected a communication error in 6-digit decimal [XX Y ZZZ] format.
+@XX : IO module number
+@Y : Channel number (always ""0"")
+@ZZZ: Communication station number (always ""000"")
+",Setting error,"Check followings.
+(1) Check that the CC-Link IE Filed communication settings are correct.
+(2) Check that the communication settings of the communication master (PLC) and the communication settings of the YRC1000 match.",,,,HWC
+,,,,,Communication target failure,Check that the communication master (PLC) is working normally.,,,,HWC
+,,,,,Connection failure,Check that the communication equipment such as the cable and HUB to the communication master (PLC) are properly connected and working normally.,,,,HWC
+,,,,,CC-Link IE Field board failure,Check the communication status and the LED status on the board to confirm that the CC-Link IE Field board (Q81BDJ71GF11-T2) is working normally.,,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+6059,DeviceNet COMMUNICATION ERROR,A DeviceNet communication error has been detected.,,"Sub code: Indicates a communication target station that has detected a communication error in 6-digit decimal [XX Y ZZZ] format.
+@XX : IO module number
+@Y : Channel number
+    0: channel 1
+    1: chaneel 2 (Only for SST-DN4-PCU-2)
+@ZZZ: Communication station number (MAC ID) (Only for master)
+",Setting error,"Check followings.
+(1) Check that the CC-Link communication settings are correct.
+(2) Check that the communication settings of the communication master (PLC) and the communication settings of the YRC1000 match.",,,,HWC
+,,,,,Communication target failure,Check that the communication master (PLC) is working normally.,,,,HWC
+,,,,,Connection failure,Check that the communication equipment such as the cable and branch unit to the communication master (PLC) are properly connected and working normally.,,,,HWC
+,,,,,DeviceNet board failure,Check the communication status and the LED status on the board to confirm that the DeviceNet board (SST-DN4-PCIE or SST-DN4-PCU-2) is working normally.,,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+6060,CANNOT START HAND GUIDING(ROTATE),External force is exceeding the allowable value when starting hand guiding.,,"subcode:The direction that exceeds the allowable value is indicated by a bit.
+D01: Rx
+D02: Ry
+D03: Rz",Operation mistake,"(1)Reset the alarm.
+(2)Reduce the force for the hand guiding when starting.",,,,(R‹ZAT)
+6061,RECONFIGURE TORQUE SENSOR FAILED,An error occurred during reconfigure the  torque sensor home position operation.,10,Failed to get the current home position.,Operation error,"If any incomplete readback files exist, write or discard the files, and then try again.",,,,(R‹ZAT)
+,,,,,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,(R‹ZAT)
+,,,11,Failed to send the reconfigure data.,Operation error,"If any incomplete readback files exist, write or discard the files, and then try again.",,,,(R‹ZAT)
+,,,,,Other,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,(R‹ZAT)
+,,,12,Failed to get the readback data.,Operation error,"(1)If opened TORQUE SENSOR ORG POS window, change to other window, and then try again.
+(2)If any incomplete readback files exist, write or discard the files, and then try again.",,,,(R‹ZAT)
+,,,,,Other,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,(R‹ZAT)
+,,,13,Failed to write the readback data.,Operation error,"(1)If opened TORQUE SENSOR ORG POS window, change to other window, and then try again.
+(2)If any incomplete readback files exist, write or discard the files, and then try again.",,,,(R‹ZAT)
+,,,,,Other,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,(R‹ZAT)
+,,,23,Failed to cancel procedure.,Other,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,(R‹ZAT)
+,,,101,Timeout(Confirmation the current data).,Operation error,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,(R‹ZAT)
+,,,102,Timeout(Confirmation the reconfigure data).,Operation error,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,(R‹ZAT)
+,,,103,Timeout(Confirmation and write the readback data).,Operation error,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,(R‹ZAT)
+,,,104,Timeout(Confirmation the complete signal).,Operation error,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,(R‹ZAT)
+,,,255,Software operation failure,Software operation error occurred,"(1)After reset the alarm, turn the power OFF then back ON, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZAT)
+,,,,,,,,,,
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZAT)
+6062,COMARC SETTING ERROR,COMARC correction conditions exceeds input range.,1,Correcting the UP and DOWN path exceeds input range.,Setting error,Set the correcting the UP and DOWN path within the range.,,,,MOTION
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,MOTION
+,,,2,Correcting the LEFT and RIGHT path exceeds input range.,Setting error,Set the correcting the LEFT and RIGHT path within the range.,,,,MOTION
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,MOTION
+6102,LADDER MONITOR ERROR,An error occurred in ladder monitor process.,,"Sub Code 1:Ladder monitor data is incorrect.
+Sub Code 2:Ladder monitor index is incorrect.",Software operation error occurred,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure, ladder editor line index).",,,,SYSCON
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,"XX : IO module number
+Y : Channel number
+0: 1 channel
+1: 2 channels (SST-DN4-PCU only)
+ZZZ: Communication station number (station number)
+",138,,,,,
+,,,,,138,,,,,

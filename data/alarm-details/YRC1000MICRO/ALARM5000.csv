@@ -1,0 +1,462 @@
+YRC1000,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+Alarm Number,Alarm Name/Message,Contents,Sub Code,Meaning,Cause,Remedy,}•\1,}•\2,ŹÚŤ×ŕ–ľ(‹ZŹpŽŇ—p),Notes
+5020,VERIFY ERROR (SENSOR PARAMETER),Calc err is occurred when calc parameter at conveyor condition file.,0,USED STATUS is err at condition file1.,Setting error,Check USED STATUS at condition file1.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,1,PORT NO. is err at condition file1.,Setting error,Check PORT NO. at condition file1.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,2,BROKEN LINE DETECT is err at condition file1.,Setting error,Check BROKEN LINE DETECT at condition file1.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,3,ENCODER INPUT is err at condition file1.,Setting error,Check ENCODER INPUT at condition file1.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,4,ENCODER SIGN is err at condition file1.,Setting error,Check ENCODER SIGN at condition file1.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,5,CORRECTION is err at condition file1.,Setting error,Check CORRECTION at condition file1.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,6,VIRTUAL CV SPEED is err at condition file1.,Setting error,Check VIRTUAL CV SPEED at condition file1.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,7,AVERAGE TRAVEL TIME is err at condition file1.,Setting error,Check AVERAGE TRAVEL TIME at condition file1.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,8,POS RESOLUTION is err at condition file1.,Setting error,Check POS RESOLUTION at condition file1.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,9,PERMIT CV QUE is err at condition file1.,Setting error,Check PERMIT CV QUE at condition file1.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,100,USED STATUS is err at condition file2.,Setting error,Check PORT NO. at condition file2.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,101,PORT NO. is err at condition file2.,Setting error,Check PORT NO. at condition file2.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,102,BROKEN LINE DETECT is err at condition file2.,Setting error,Check BROKEN LINE DETECT at condition file2.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,103,ENCODER INPUT is err at condition file2.,Setting error,Check ENCODER INPUT at condition file2.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,104,ENCODER SIGN is err at condition file2.,Setting error,Check ENCODER SIGN at condition file2.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,105,CORRECTION is err at condition file2.,Setting error,Check CORRECTION at condition file2.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,106,VIRTUAL CV SPEED is err at condition file2.,Setting error,Check VIRTUAL CV SPEED at condition file2.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,107,AVERAGE TRAVEL TIME is err at condition file2.,Setting error,Check AVERAGE TRAVEL TIME at condition file2.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,108,POS RESOLUTION is err at condition file2.,Setting error,Check POS RESOLUTION at condition file2.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,109,PERMIT CV QUE is err at condition file2.,Setting error,Check PERMIT CV QUE at condition file2.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,200,USED STATUS is err at condition file3.,Setting error,Check USED STATUS at condition file3.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,201,PORT NO. is err at condition file3.,Setting error,Check PORT NO. at condition file3.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,202,BROKEN LINE DETECT is err at condition file3.,Setting error,Check BROKEN LINE DETECT at condition file3.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,203,ENCODER INPUT is err at condition file3.,Setting error,Check ENCODER INPUT at condition file3.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,204,ENCODER SIGN is err at condition file3.,Setting error,Check ENCODER SIGN at condition file3.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,205,CORRECTION is err at condition file3.,Setting error,Check CORRECTION at condition file3.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,206,VIRTUAL CV SPEED is err at condition file3.,Setting error,Check VIRTUAL CV SPEED at condition file3.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,207,AVERAGE TRAVEL TIME is err at condition file3.,Setting error,Check AVERAGE TRAVEL TIME at condition file3.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,208,POS RESOLUTION is err at condition file3.,Setting error,Check POS RESOLUTION at condition file3.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,209,PERMIT CV QUE is err at condition file3.,Setting error,Check PERMIT CV QUE at condition file3.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,300,USED STATUS is err at condition file4.,Setting error,Check USED STATUS at condition file4.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,301,PORT NO. is err at condition file4.,Setting error,Check PORT NO. at condition file4.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,302,BROKEN LINE DETECT is err at condition file4.,Setting error,Check BROKEN LINE DETECT at condition file4.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,303,ENCODER INPUT is err at condition file4.,Setting error,Check ENCODER INPUT at condition file4.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,304,ENCODER SIGN is err at condition file4.,Setting error,Check ENCODER SIGN at condition file4.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,305,CORRECTION is err at condition file4.,Setting error,Check CORRECTION at condition file4.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,306,VIRTUAL CV SPEED is err at condition file4.,Setting error,Check VIRTUAL CV SPEED at condition file4.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,307,AVERAGE TRAVEL TIME is err at condition file4.,Setting error,Check AVERAGE TRAVEL TIME at condition file4.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,308,POS RESOLUTION is err at condition file4.,Setting error,Check POS RESOLUTION at condition file4.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,309,PERMIT CV QUE is err at condition file4.,Setting error,Check PERMIT CV QUE at condition file4.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,400,USED STATUS is err at condition file5.,Setting error,Check USED STATUS at condition file5.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,401,PORT NO. is err at condition file5.,Setting error,Check PORT NO. at condition file5.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,402,BROKEN LINE DETECT is err at condition file5.,Setting error,Check BROKEN LINE DETECT at condition file5.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,403,ENCODER INPUT is err at condition file5.,Setting error,Check ENCODER INPUT at condition file5.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,404,ENCODER SIGN is err at condition file5.,Setting error,Check ENCODER SIGN at condition file5.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,405,CORRECTION is err at condition file5.,Setting error,Check CORRECTION at condition file5.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,406,VIRTUAL CV SPEED is err at condition file5.,Setting error,Check VIRTUAL CV SPEED at condition file5.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,407,AVERAGE TRAVEL TIME is err at condition file5.,Setting error,Check AVERAGE TRAVEL TIME at condition file5.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,408,POS RESOLUTION is err at condition file5.,Setting error,Check POS RESOLUTION at condition file5.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,409,PERMIT CV QUE is err at condition file5.,Setting error,Check PERMIT CV QUE at condition file5.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,500,USED STATUS is err at condition file6.,Setting error,Check USED STATUS at condition file6.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,501,PORT NO. is err at condition file6.,Setting error,Check PORT NO. at condition file6.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,502,BROKEN LINE DETECT is err at condition file6.,Setting error,Check BROKEN LINE DETECT at condition file6.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,503,ENCODER INPUT is err at condition file6.,Setting error,Check ENCODER INPUT at condition file6.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,504,ENCODER SIGN is err at condition file6.,Setting error,Check ENCODER SIGN at condition file6.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,505,CORRECTION is err at condition file6.,Setting error,Check CORRECTION at condition file6.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,506,VIRTUAL CV SPEED is err at condition file6.,Setting error,Check VIRTUAL CV SPEED at condition file6.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,507,AVERAGE TRAVEL TIME is err at condition file6.,Setting error,Check AVERAGE TRAVEL TIME at condition file6.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,508,POS RESOLUTION is err at condition file6.,Setting error,Check POS RESOLUTION at condition file6.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+,,,509,PERMIT CV QUE is err at condition file6.,Setting error,Check PERMIT CV QUE at condition file6.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+5022,CONVEYOR POSITION LIMIT,Correct pos is limit over (21M).,,"Correct pos is limit over (21M) at condition file.
+Sub Code : Alarm occurred conveyor condition file No",Synchronization section error,"Check the synchronized move at condition file, or check parameter auto cvque dis (SxE40). Correct pos is not updated after alarm is occurred, so Synchronized move is not done, and move at correct pos at alarm is occurred. ",,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+5023,CONVEYOR COUNTER LIMIT,"The conveyor position counter pulse
+overflow",,"Curr pos is over at condition file.
+Sub Code : Alarm occurred conveyor condition file No",Setting error,"Check the POS RESOLUTION or synchronized move at condition file. Correct pos is not updated after alarm is occurred, so Synchronized move is not done, and move at correct pos at alarm is occurred. 
+",,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+5024,SETUP ERROR(CV COND SUPP. FILE),The setting of CONVEYOR CONDITION SUPPORT FILE is not correct. ,,,Setting error,"Check the settings for LS and shift distance in the conveyor condition support file. If the same LS is used, set the same shift disance in each condition file. 
+
+",,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+5070,WORK IN/NOT DATA OVER FLOW,The WORK IN/NOT shift data overflow,,,Data error,"Check the shift data and the actual workpiece status.
+If any inconsistency is found, delete the shift data and prepare newly the shift data.",,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+5071,WORK ID. DATA OVER FLOW,WORK ID shift data overflow,,,Data error,"Check the shift data and the actual workpiece status.
+If any inconsistency is found, delete the shift data and prepare newly the shift data.",,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+5072,START SHIFT DATA OVER FLOW,Start shift data overflow,,,Data error,"Check the shift data and the actual workpiece status.
+If any inconsistency is found, delete the shift data and prepare newly the shift data.",,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+5073,TRACKING AREA DATA OVER FLOW,Shift section data overflow,,,Data error,"Check the tracking area data in the synchronized section and the actual workpiece status.
+If any inconsistency is found, delete the shift data in the synchronized section and prepare newly the shift
+data.",,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+5075,ENCODER STOP ERROR(CONVEYOR),"The encoder was not in suspend status
+when the control power supply was
+turned ON.",,,Data error,"Check the shift data and the actual workpiece status.
+If any inconsistency is found, delete the shift data and prepare newly the shift data.",,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+5076,TRACK AREA IN/NOT DATA POS LMT,"The WORK IN/NOT data of the first
+workpiece in the synchronized section
+exceeds the preset value.",,,Data error,Delete the WORK IN/NOT data in the synchronized section.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+5077,TRACKING AREA ID DATA POS LMT,"The WORK ID data of the first workpiece in the synchronized section
+exceeds the preset value.",,,Data error,Delete the WORK ID data in the synchronized section.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+5078,CVQUE canft exec. under tracking,CVQUE exec. under tracking. ,,,Setting error,Check the JOB.,,,,Conveyor
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,Conveyor
+5130,NT112B_M3 COMM ERROR,An error occurred in the MIII communication of the NT112B board.,FFFFFFFF,There are slave stations with incomplete transmission delay time calculation.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,FFFFFFFE,An error was detected with the error status of the ASIC.,Setting error,"(1)Check whether the IO size and address setting match the settings of the master PLC.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,,,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,FFFFFFFD,An error occurred in the SRAM read / write check.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,00001000,Invalid user parameter is set.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,00001004,Request size is over.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,00001005,Invalid HostIF pointer is set.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,00001006,RAM size is over.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,0000100B,Sequence is incorrect.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,0000100C,The setting of the slave axis number is abnormal.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,0000100D,IO map size is abnormal.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,0000101E,Station number is invalid.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,0000101F,Request size is invalid.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,00001020,Size is invalid.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,00001021,FTYPE is invalid.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,00001030,Message abort is occurred.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,00001031,Message overflow is occurred.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,00001032,Message data was sent during the request.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,00001033,Request message size is abnormal.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,00001034,Message data was received during the request.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,00001037,Message underflow is occurred.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,00001038,Message split over is occurred.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,00002010,ASIC reset error is occurred.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,00002029,Global frame is unreceived.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,00003001,MODE register setting request is unfinished.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,00003002,User parameter setting request is unfinished.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,00003008,Synchronous communication start request is unfinished.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,00003009,Asynchronous communication start request is unfinished.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,0000301A,Response buffer switch is unfinished.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,0000301C,Command buffer switch is unfinished.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,00003035,Abort message is occued.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,00003036,Busy message is occued.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+5131,NT112B BOARD ERROR,An error occurred in the NT112B board.,00000001,The version of JL - 086A of NT112B board does not match.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,00000002,Synchronous circuit initialization error of NT112B board occurred.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,00000004,An automatic update parameter error occurred on the NT112B circuit board.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,00000010,Host processing delay error of NT112B board occurred.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,00000011,MIII communication error occurred on the NT112B board.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+,,,00000019,Self-diagnostic error of NT112B board occurred.,NT112B board failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Connection failure,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, check the connection and insertion of the following cables and connectors.
+- The cable of NT112B board",,,,HWC
+,,,,,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, replace the NT112B board. Save the CMOS.BIN before replace the board to be safe. Replace the NT112B board, and then load the CMOS.BIN saved before alarm occurred.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
