@@ -21,8 +21,23 @@ import { MdEmail } from "react-icons/md";
 import { usePathname } from "next/navigation";
 import { FaUsersCog } from "react-icons/fa";
 import { FaQuestionCircle } from "react-icons/fa";
+import { MdOutlineSettingsBackupRestore } from "react-icons/md";
 
-const sideMenuItems = [
+interface ChildPage {
+  title: string;
+  link: string;
+  icon: React.ReactElement;
+}
+
+interface MenuItem {
+  title: string;
+  icon: React.ReactElement;
+  link: string;
+  childPages: ChildPage[];
+  isDisabled?: boolean;
+}
+
+const sideMenuItems: MenuItem[] = [
   {
     title: "Home",
     icon: <IoMdHome size={16} />,
@@ -70,6 +85,30 @@ const sideMenuItems = [
     childPages: [],
   },
   {
+    title: "System Expectations",
+    icon: <MdOutlineSettingsBackupRestore size={16} />,
+    link: "/system-expectations",
+    childPages: [],
+  },
+  {
+    title: "Preventive Maintenance",
+    icon: <GiLightningArc size={16} />,
+    link: "/predictive-maintenance",
+    childPages: [],
+  },
+  {
+    title: "Predictive Quality",
+    icon: <FaHubspot size={16} />,
+    link: "/predictive-quality",
+    childPages: [],
+  },
+  {
+    title: "Automated QSet",
+    icon: <GiAutomaticSas size={16} />,
+    link: "/automated-qset",
+    childPages: [],
+  },
+  {
     title: "Process",
     icon: <MdCalendarViewWeek size={16} />,
     link: "",
@@ -92,27 +131,6 @@ const sideMenuItems = [
     ],
   },
   {
-    title: "Arc Welding",
-    icon: <GiLightningArc size={16} />,
-    link: "#",
-    childPages: [],
-    isDisabled: true,
-  },
-  {
-    title: "Spot Welding",
-    icon: <FaHubspot size={16} />,
-    link: "#",
-    childPages: [],
-    isDisabled: true,
-  },
-  {
-    title: "Automated QSet",
-    icon: <GiAutomaticSas size={16} />,
-    link: "#",
-    childPages: [],
-    isDisabled: true,
-  },
-  {
     title: "Quick Assist",
     icon: <FaQuestionCircle size={16} />,
     link: "/quick-assist",
@@ -129,6 +147,7 @@ const sideMenuItems = [
     icon: <IoIosSettings size={16} />,
     link: "#",
     childPages: [],
+    isDisabled: true,
   },
 ];
 

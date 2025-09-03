@@ -1,0 +1,182 @@
+YRC1000micro,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+Alarm Number,Alarm Name/Message,Contents,Sub Code,Meaning,Cause,Remedy,図表1,図表2,詳細説明(技術者用),Notes
+6000,SYSTEM ERROR2(PFL),Process is not performed properly on the ASF04 board.,70,Invalid of Axis Speed Monitor Condition File ,Setting error,"(1)Turn the power OFF then back ON.
+(2)Confirm the Axis Speed Monitor Condition File number 32 is valid.
+(3)If the alarm occurs again, replace the controller. Save the CMOS.BIN before replacement to be safe.",,,,PFL
+,,,,,Other,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+6001,MUTING ERROR(PFL),PFL Speed limitation is invalid during PFL muting operation.,,,Operation mistake,"(1)Reset alarm.
+(2)Confirm the robot is crashed.
+(3)If PFL function is muted, confirm the safety and resume the robot.",,,,PFL
+6002,NEAR SINGULARITY(PFL),"On the singularity, 2 or more axes movement is restricted. If 2 or more axes movement is detected on the singularity, this alarm is occurred.",,,Operation mistake,"(1)Reset alarm.
+(2)If the alarm occurs again, confirm if 2 or more axes are moved near singularity in collaborative operation.
+(3)Confirm if collision occurs.
+(4)Confirm the safety and resume the robot.",,,,PFL
+6003,UNDEFINED SPEED LIMIT(PFL),"Speed limitation is required for collaborative operation. If speed limitation is not set, this alarm is occurred.",,,Setting error,"(1)Confirm the setting of speed limit condition file no.31 and 32 in accordance with the manual.
+(2)Reset alarm.
+(3)Confirm if collision occurs.
+(4)Confirm the safety and resume the robot.",,,,PFL
+6004,ESCAPE FROM CLAMPING ERROR(PFL),"When clamping is happened, robot moves the any direction which direction decrease the power automatically.
+If power is increased greatly during escaping, this alarm is occurred.",,,Operation mistake,"(1)Reset alarm.
+(2)If collision occured, confirm the safety and escape from collision.
+(3)Confirm if setting of Tool files is correct.
+(4)Confirm if torque sensor home position is deviated. If it is deviated, set home position again following Collaborative Operation Instructions. 
+(5)If the alarm occurs again, Turn the power OFF then back ON.
+(6)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+,,,,,Near singularity,"If the robot's posture when the alarm occured is near singularity, take the following measures.
+(1)Reset alarm.
+(2)Confirm if external force of TCP exceeds external force limits in posture when the alarm occured. If it exceeds, it may be improved by changing to a movement that does not pass the posture.
+(3)Confirm if external force of TCP exceeds external force limits during operation.
+(4)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+6005,EXTERNAL FORCE ERROR(PFL),Large external force is detected continuously.,,"Sub Code:alarm occurred axis or direction
+1-8: Axis number
+9-12: TCP(Resultant,X,Y,Z)",Setting error,"(1)Reset alarm.
+(2)If collision occured, confirm the safety and escape from collision.
+(3)Confirm if setting of Tool files is correct.
+(4)Confirm the torque sensor home position. And, if home position is diverged, set correct position again following Collaborative Operation Instructions.
+(5)After home position setting, confirm the movement before operation start.",,,,PFL
+,,,,,Other,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+6008,TRQ SENSOR OVERLOAD,This alarm occurs when torque above the rated is  loaded.,,Sub Code:Alarm axis is shown.,Torque sensor failure,"(1)If robot is crashed, confirm the safety and escape from crash.
+(2)Turn the power OFF then back ON.
+(3)Confirm the torque sensor home position. And, if home position is diverged, set correct position.
+(4)After home position setting, confirm the safety before operation start.",,,,PFL
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+6011,AVOIDANCE FUNC. PARAMETER ERROR,Parameter for avoidance function is wrong.,,"Subcode: Signifies the error type and the targeted D variable.
+last 3 digit: D variable's number
+first digit: erroer types
+Meaning of error type is as follows.
+None:Parameter range error
+1:Setting of two D variables is wrong.
+When setting of two D variable is wrong, the younger one is signified as the targeted D variable.",Software operation error occurred,"(1)Reset the alarm after turn off Servo Power.
+(2)Check the and correct the D variable settings.",,,,SYSCON
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,SYSCON
+6012,HAND GUIDING PARAMETER ERROR,Parameter for hund guiding is wrong.,,"Subcode: Signifies the error type and the targeted D variable.
+last 3 digit: D variable's number
+first digit: erroer types
+Meaning of error type is as follows.
+None:Parameter range error
+1:Setting of two D variables is wrong.
+When setting of two D variable is wrong, the younger one is signified as the targeted D variable.",Software operation error occurred,"(1)Reset the alarm.
+(2)Check the and correct the D variable settings.",,,,SYSCON
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,SYSCON
+6013,CANNOT START HAND GUIDING(JOINT),External force is exceeding the allowable value when starting hand guiding.,,"subcode:The axis that exceeds the allowable value is indicated by a bit.
+D01:S
+D02:L
+D03:U
+D04:R
+D05:B
+D06:T",Operation error,"(1)Reset the alarm.
+(2)Reduce the force for the hand guiding when starting.",,,,SYSCON
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,SYSCON
+6014,CANNOT START HAND GUIDING(XYZ-T),External force is exceeding the allowable value when starting hand guiding.,,"subcode:The direction or the axis that exceeds the allowable value is indicated by a bit.
+D01:X
+D02:Y
+D03:Z
+D04:T",Operation mistake,"(1)Reset the alarm.
+(2)Reduce the force for the hand guiding when starting.",,,,SYSCON
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,SYSCON
+6015,CANNOT START HAND GUIDING(RBT),External force is exceeding the allowable value when starting hand guiding,,"Subcode: The axis that exceeds the allowable value is indicated by a bit.
+D01 : S
+D02 : L
+D03 : U
+D04 : R
+D05 : B
+D06 : T",Operation mistake,"(1)Reset the alarm.
+(2)Reduce the force for the hand guiding when starting.",,,,SYSCON
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,SYSCON
+6016,AVOIDANCE FUNC.RECOVER ERR(IMOV),Avoidance function has executed during IMOV,,,Operation mistake,"(1)Reset the alarm.
+(2)Do not execute avoidance function during IMOV.",,,,SYSCON
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,SYSCON
+6017,HAND GUIDING SUSPEND,Hand guiding function has force-quit,16,Servo power has been turn OFF during escape from clamping.,Operation mistake,Reset the alarm.,,,,SYSCON
+,,,17,Hold has requested during escape from clamping.,Operation mistake,Reset the alarm.,,,,SYSCON
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,SYSCON
+6018,ESCAPE FROM CLAMPING SUSPEND,Escape from clamping function has force-quit,16,Servo power has been turn OFF during escape from clamping.,Operation mistake,Reset the alarm.,,,,SYSCON
+,,,17,Hold has requested during escape from clamping.,Operation mistake,Reset the alarm.,,,,SYSCON
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,SYSCON
+6019,DIRECT TEACHING FAILED,Cannot edit the JOB,16,Cannot edit the prohibited JOB,Operation mistake,Reset the alarm.,,,,SYSCON
+,,,64,Cannot edit JOB because edit screen is not active,Operation mistake,Reset the alarm.,,,,SYSCON
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,SYSCON
+6022,EXTERNAL FORCE ESTIMATION ERROR,External force is exceeding the allowable value when starting controller,,"Subcode: The axis that exceeds the allowable value is indicated by a bit.
+D01:S
+D02:L
+D03:U
+D04:R
+D05:B
+D06:T",Sensor error,"(1)Check if any external force has been applied to the manipulator, such as colliding with the surroundings.
+(2)Reset the alarm, and confirm the tool file settings (Weight, Unit of centroid position, +-).
+(3)Confirm the torque sensor home position. And, if home position is diverged, set correct position.",,,,SYSCON
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,SYSCON
+6023,"AVOIDANCE FUNC.
+ERR(CONV. SYNC)",Avoidance function has used during conveyor synchronized operation.,,,Operation mistake,"(1)Reset the alarm.
+(2)Do not use the avoidance function during conveyor synchronized operation.",,,,SYSCON
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,SYSCON
+6024,PENDANT COMMUNICATION ERROR,A communication error occurred between the controller and the programming pendant.,,,-,"For the cause and remedy, refer to chapter 13 ""Trouble Shooting When Alarm Is Not Displayed"" of the YRC1000micro MAINTENANCE MANUAL.",,,,HWC
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,HWC
+6036,ROBOT I/F CONNECTION ERROR,An error of communication with the host device using the YERCProfile has occuerred.,,,Setting error,"(1)Check the settings of Ethernet for the robot controller.
+(2)Check whether the host device's power is ON.
+(3)Check the settings of IP address for the host device.",,,,SYSCON
+,,,,,Connection failure,"(1)Reset the alarm.
+(2)After above operation implementation, If the alarm occurs again, check the connection and inserting state of between the host device and the ACP01-LAN connector.",,,,SYSCON
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,SYSCON
+6037,MANUAL OPERATION FAILED,An error occurred in manual operation.,3,Do not tried to manually operate multiple robots in a coordinated control job.,Operation mistake,"(1)Reset the alarm.
+(2)Set R1 and R2 to jobs in different control groups.",,,,PFL
+,,,,,Other,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+,,,,System error,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+6038,EXTERNAL FORCE CONTROL FAILED,An error occurred in external force control operation.,1,Failed to read the command of SKILLSND.,Setting error,"(1)Confirm and fix the command of SKILLSND.
+(2)Confirm and fix the delimiter character between command name and argument.",,,,PFL
+,,,,,Other,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+,,,2,Failed to read the argument of SKILL command.,Setting error,"(1)This command requires the argument. Set the argument into SKILL command.
+(2)Confirm and fix the command name of SKILLSND.
+(3)Confirm and fix the delimiter character between command name and argument.",,,,PFL
+,,,,,Other,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+,,,3,Too many arguments of SKILL command.,Setting error,Decrease the number of arguments of SKILL command.,,,,PFL
+,,,,,Other,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+,,,4,Out of range of argument value.,Setting error,Confirm and fix the value of arguments of SKILL command.,,,,PFL
+,,,,,Other,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+,,,5,Wrong combination about arguments.,Setting error,Confirm and fix the pair of arguments of SKILL command.,,,,PFL
+,,,,,Other,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+,,,,System error,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+6060,CANNOT START HAND GUIDING(ROTATE),External force is exceeding the allowable value when starting hand guiding,,"subcode:The direction that exceeds the allowable value is indicated by a bit.
+D01: Rx
+D02: Ry
+D03: Rz",Operation mistake,"(1)Reset the alarm.
+(2)Reduce the force for the hand guiding when starting.",,,,SYSCON
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,SYSCON
+6061,RECONFIGURE TORQUE SENSOR FAILED,An error occurred during reconfigure the  torque sensor home position operation.,10,Failed to get the current home position.,Operation error,"If any incomplete readback files exist, write or discard the files, and then try again.",,,,PFL
+,,,,,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+,,,11,Failed to send the reconfigure data.,Operation error,"If any incomplete readback files exist, write or discard the files, and then try again.",,,,PFL
+,,,,,Other,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+,,,12,Failed to get the readback data.,Operation error,"(1)If opened TORQUE SENSOR ORG POS window, change to other window, and then try again.
+(2)If any incomplete readback files exist, write or discard the files, and then try again.",,,,PFL
+,,,,,Other,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+,,,13,Failed to write the readback data.,Operation error,"(1)If opened TORQUE SENSOR ORG POS window, change to other window, and then try again.
+(2)If any incomplete readback files exist, write or discard the files, and then try again.",,,,PFL
+,,,,,Other,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+,,,23,Failed to cancel procedure.,Other,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+,,,101,Timeout(Confirmation the current data).,Operation error,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+,,,102,Timeout(Confirmation the reconfigure data).,Operation error,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+,,,103,Timeout(Confirmation and write the readback data).,Operation error,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+,,,104,Timeout(Confirmation the complete signal).,Operation error,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PFL
+,,,255,Software operation failure,Software operation error occurred,"(1)After reset the alarm, turn the power OFF then back ON, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,PFL

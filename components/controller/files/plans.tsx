@@ -3,9 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import TimePicker from "./ui/time-picker";
 import { BackupPlan } from "@/types/files.types";
-import { createBackupPlan, manualBackup } from "@/utils/service/files";
+import { createBackupPlan } from "@/utils/service/files";
 import { Save, Clock, Database, Calendar, History } from "lucide-react";
-import BackupHistory from "./backup-history";
 
 interface PlansProps {
   controllerId: string;
@@ -192,44 +191,53 @@ export default function Plans({
 
     try {
       setIsSaving(true);
-      const backupResult = await manualBackup(
-        controllerId,
-        instantSelectedFiles
+
+      // wl-kopya(3) mantığına göre - otomatik plan oluştur
+      const now = new Date();
+      now.setMinutes(now.getMinutes() + 1); // 1 dakika sonrası için
+
+      const dayId = now.getDay() === 0 ? 7 : now.getDay();
+      const currentTime = `${now.getHours().toString().padStart(2, "0")}:${now
+        .getMinutes()
+        .toString()
+        .padStart(2, "0")}`;
+
+      const dayNames = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ];
+      const dayName = dayNames[now.getDay()];
+
+      const instantPlan = {
+        name: `Instant Backup ${dayName}`,
+        days: [dayId],
+        time: currentTime,
+        file_types: instantSelectedFiles,
+      };
+
+      // wl-kopya(3)'teki gibi createBackupPlan kullan
+      await createBackupPlan(controllerId, instantPlan);
+
+      alert(
+        `Instant backup plan created successfully for ${instantSelectedFiles.join(
+          ", "
+        )} - scheduled for ${currentTime}`
       );
 
-      if (backupResult.success && backupResult.fileData) {
-        // Convert Base64 to Blob
-        const byteCharacters = atob(backupResult.fileData);
-        const byteNumbers = new Array(byteCharacters.length);
-        for (let i = 0; i < byteCharacters.length; i++) {
-          byteNumbers[i] = byteCharacters.charCodeAt(i);
-        }
-        const byteArray = new Uint8Array(byteNumbers);
-        const blob = new Blob([byteArray], { type: "application/zip" });
-
-        // Create download link
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = backupResult.fileName || "backup.zip";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(url);
-
-        alert(
-          `Backup completed successfully! Downloaded ${backupResult.fileCount} files as ${backupResult.fileName}`
-        );
-      } else {
-        alert(`Backup failed: ${backupResult.error}`);
-      }
-    } catch (error) {
-      console.error("Error during instant backup:", error);
-      alert("Backup failed. Please try again.");
-    } finally {
-      setIsSaving(false);
       setShowInstantModal(false);
       setInstantSelectedFiles([]);
+
+      if (onClose) onClose();
+    } catch (error) {
+      console.error("Error creating instant backup plan:", error);
+      alert("Failed to create instant backup plan. Please try again.");
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -480,8 +488,12 @@ export default function Plans({
         </>
       )}
 
-      {/* Backup History Tab Content */}
-      {activeTab === "history" && <BackupHistory controllerId={controllerId} />}
+      {activeTab === "history" && (
+        <div className="text-center py-8 text-gray-500">
+          <History className="h-8 w-8 mx-auto mb-2" />
+          <p>Backup history feature will be implemented later</p>
+        </div>
+      )}
     </div>
   );
 }

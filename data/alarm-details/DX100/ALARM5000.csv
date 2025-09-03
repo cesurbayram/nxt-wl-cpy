@@ -1,0 +1,679 @@
+DX100,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+Alarm Number,Alarm Name/Message,Contents,Sub Code,Meaning,Cause,Remedy,Chart1,Chart2,Detail,Notes
+5010,ANALOG INPUT ERROR(YCP02),Analog input value for YCP02 board is abnormal.,,Sub code: Indicates the channel where the error occurred. ,Analog input error,"(1)Check the cable.
+(2)Replace YCP02 board. ",,,,COMARC
+5011,TRANSMISSION ERROR(YCP02),"COMARC:Sirial transmission error is  occurred on JANCD-YCP02 board
+Laser tracking:Transmission error is  occurred between DX100 and laser sensor unit.",0000_0001,Transmission error,Transmission error is  occurred between DX100 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of DX100 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-YCP01 CN104 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP01 board and the cable.",,,,Laser tracking
+,,,0000_0010,Transmission error,Transmission error is  occurred between DX100 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of DX100 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-YCP01 CN104 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP01 board and the cable.",,,,Laser tracking
+,,,0000_0011,Transmission error,Transmission error is  occurred between DX100 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of DX100 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-YCP01 CN104 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP01 board and the cable.",,,,Laser tracking
+,,,0000_0100,Transmission error,Transmission error is  occurred between DX100 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of DX100 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-YCP01 CN104 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP01 board and the cable.",,,,Laser tracking
+,,,0000_0101,Transmission error,Transmission error is  occurred between DX100 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of DX100 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-YCP01 CN104 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP01 board and the cable.",,,,Laser tracking
+,,,0000_0110,Transmission error,Transmission error is  occurred between DX100 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of DX100 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-YCP01 CN104 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP01 board and the cable.",,,,Laser tracking
+,,,0000_0111,Transmission error,Transmission error is  occurred between DX100 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of DX100 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-YCP01 CN104 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP01 board and the cable.",,,,Laser tracking
+,,,0000_1000,Transmission error,Transmission error is  occurred between DX100 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of DX100 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-YCP01 CN104 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP01 board and the cable.",,,,Laser tracking
+,,,0000_1001,Transmission error,Transmission error is  occurred between DX100 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of DX100 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-YCP01 CN104 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP01 board and the cable.",,,,Laser tracking
+,,,0000_1010,Transmission error,Transmission error is  occurred between DX100 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of DX100 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-YCP01 CN104 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP01 board and the cable.",,,,Laser tracking
+,,,0000_1011,Transmission error,Transmission error is  occurred between DX100 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of DX100 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-YCP01 CN104 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP01 board and the cable.",,,,Laser tracking
+,,,0000_1100,Transmission error,Transmission error is  occurred between DX100 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of DX100 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-YCP01 CN104 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP01 board and the cable.",,,,Laser tracking
+,,,0000_1101,Transmission error,Transmission error is  occurred between DX100 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of DX100 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-YCP01 CN104 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP01 board and the cable.",,,,Laser tracking
+,,,0000_1110,Transmission error,Transmission error is  occurred between DX100 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of DX100 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-YCP01 CN104 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP01 board and the cable.",,,,Laser tracking
+,,,0000_1111,Transmission error,Transmission error is  occurred between DX100 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of DX100 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-YCP01 CN104 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP01 board and the cable.",,,,Laser tracking
+,,,0001_0000,"COMARC:Checksum error
+Laser tracking:Transmission error","COMARC:Sirial transmission error
+Laser tracking:Transmission error is  occurred between DX100 and laser sensor unit.","[COMARC]
+(1)Replace the transmission cable.
+(2)Replace JANCD-YCP02.
+[Laser tracking]
+(1)Reset the alarm, and then try again.
+(2)Turn off the power of DX100 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-YCP01 CN104 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP01 board and the cable.",,,,"COMARC
+Laser tracking"
+,,,0001_0001,Transmission error,Transmission error is  occurred between DX100 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of DX100 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-YCP01 CN104 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP01 board and the cable.",,,,Laser tracking
+,,,0001_0010,Transmission error,Transmission error is  occurred between DX100 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of DX100 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-YCP01 CN104 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP01 board and the cable.",,,,Laser tracking
+,,,0001_0011,Transmission error,Transmission error is  occurred between DX100 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of DX100 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-YCP01 CN104 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP01 board and the cable.",,,,Laser tracking
+,,,0001_0100,Transmission error,Transmission error is  occurred between DX100 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of DX100 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-YCP01 CN104 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP01 board and the cable.",,,,Laser tracking
+,,,0001_0101,Transmission error,Transmission error is  occurred between DX100 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of DX100 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-YCP01 CN104 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP01 board and the cable.",,,,Laser tracking
+,,,0001_0110,Transmission error,Transmission error is  occurred between DX100 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of DX100 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-YCP01 CN104 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP01 board and the cable.",,,,Laser tracking
+,,,0001_0111,Transmission error,Transmission error is  occurred between DX100 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of DX100 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-YCP01 CN104 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP01 board and the cable.",,,,Laser tracking
+,,,0001_1000,Transmission error,Transmission error is  occurred between DX100 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of DX100 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-YCP01 CN104 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP01 board and the cable.",,,,Laser tracking
+,,,0001_1001,Transmission error,Transmission error is  occurred between DX100 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of DX100 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-YCP01 CN104 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP01 board and the cable.",,,,Laser tracking
+,,,0001_1010,Transmission error,Transmission error is  occurred between DX100 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of DX100 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-YCP01 CN104 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP01 board and the cable.",,,,Laser tracking
+,,,0001_1011,Transmission error,Transmission error is  occurred between DX100 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of DX100 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-YCP01 CN104 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP01 board and the cable.",,,,Laser tracking
+,,,0001_1100,Transmission error,Transmission error is  occurred between DX100 and laser sensor unit.,"(1)Reset the alarm, and then try again.
+(2)Turn off the power of DX100 and Laser sensor unit, and turn on. 
+(3)Check the connection between connector on JANCD-YCP01 CN104 and the cable from laser sensor unit.
+(4)Replace JANCD-YCP01 board and the cable.",,,,Laser tracking
+,,,0010_0000,NAK command receive error,Sirial transmission error,"(1)Replace the transmission cable.
+(2)Replace JANCD-YCP02.",,,,Laser tracking
+,,,0011_0000,Transmission process time over,Sirial transmission error,"(1)Replace the transmission cable.
+(2)Replace JANCD-YCP02.",,,,Laser tracking
+,,,0100_0000,Reception process time over,Sirial transmission error,"(1)Replace the transmission cable.
+(2)Replace JANCD-YCP02.",,,,Laser tracking
+5012,SYSTEM ERROR(COMARC),An error occurred at sensor part in COMARC function,0,System task mail send error ,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,COMARC
+,,,1,System task mail receive error ,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(3)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,COMARC
+,,,2,Sensing task mail send error ,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(4)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,COMARC
+,,,3,Sensing task mail receive error ,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(5)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,COMARC
+,,,4,Transmission task mail send error ,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(6)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,COMARC
+,,,5,Transmission task mail receive error ,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(7)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,COMARC
+,,,6,Transmission task create error,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(8)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,COMARC
+,,,7,"Sensing task mail token acquisition error
+",Software operation error occurred,"(1)Reset the alarm, and then try again.
+(9)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,COMARC
+5013,SYSTEM ERROR(COMARC),Data error has occurred at the sensor part in COMARC function. ,0,Main command process error ,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(10)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,COMARC
+,,,1,Main command data error,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(11)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,COMARC
+,,,2,Sub command data error,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(12)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,COMARC
+,,,3,"Sensor bank acquisition error
+",Software operation error occurred,"(1)Reset the alarm, and then try again.
+(13)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,COMARC
+,,,4,Welding current measure value error ,Software operation error occurred,"(1)Reset the alarm, and then try again.
+(14)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,COMARC
+5019,ARITHMETIC ERROR(SENSOR),An error occurred in the arithmetic process for coordinates in gauging motion.,,It is the kind of error of arithmetic process for coordinates.,Software operation error occurred,"(1)When another alarm has occurred at the same time, Take the measures of it, 
+(2)When another alarm has not occurred at the same time, Reset the alarm, and then try again.
+(3)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Bendling
+5020,VERIFY ERROR (SENSOR PARAMETER),"Laser tracking: Wrong value is set to Sensor parameter, SxE***. ",40,"Wrong value is set to Sensor parameter, SxE040.
+Laser tracking: Analog output signal number for Gap ratio condition control is wrong. ","Wrong value is set to Sensor parameter, SxE***.","[Laser tracking]
+(1)Set correct value,1-12, to Analog output signal number for Gap ratio condition control parameter, SxE040. And check not to set same value to the other, SxE040-043. (To be developed in the future)",,,,Laser tracking
+,,,41,"Wrong value is set to Sensor parameter, SxE041.
+Laser tracking:Analog output signal number for Gap ratio condition control is wrong. ","Wrong value is set to Sensor parameter, SxE***.","[Laser tracking]
+(1)Set correct value,1-12, to Analog output signal number for Gap ratio condition control parameter, SxE041. And check not to set same value to the other, SxE040-043. (To be developed in the future)",,,,Laser tracking
+,,,42,"Wrong value is set to Sensor parameter, SxE042.
+Laser tracking:Analog output signal number for Gap ratio condition control is wrong. ","Wrong value is set to Sensor parameter, SxE***.","[Laser tracking]
+(1)Set correct value,1-12, to Analog output signal number for Gap ratio condition control parameter, SxE042. And check not to set same value to the other, SxE040-043. (To be developed in the future)",,,,Laser tracking
+,,,43,"Wrong value is set to Sensor parameter, SxE043.
+Laser tracking:Analog output signal number for Gap ratio condition control is wrong. ","Wrong value is set to Sensor parameter, SxE***.","[Laser tracking]
+(1)Set correct value,1-12, to Analog output signal number for Gap ratio condition control parameter, SxE043. And check not to set same value to the other, SxE040-043. (To be developed in the future)",,,,Laser tracking
+5021,VERIFY ERROR(CONVEYOR COND FILE),,,,,,,,,コンベヤ
+5022,CONVEYOR POSITION LIMIT,,,,,,,,,コンベヤ
+5023,CONVEYOR COUNTER LIMIT,,,,,,,,,コンベヤ
+5024,SETUP ERROR(CV COND SUPP. FILE),,,CV COND SUPP. FILE has wrong setting.,Setting error,Check the settings of the start shift distance and  LS in CONVEYOR COND SUPP.  screen.  Specify same start shift distance if the same LS is used. ,,,,コンベヤ
+,,,,,other,"If the alarm occurs again after the countermeasure, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,コンベヤ
+5025,DELETE SHIFT QUEUE ERROR,An error occurred when deleting shift queue,0,"There is no available queue.
+(CV COND SUPP. FILE1)",Data error,"Execute when there is an available queue 
+(CV COND SUPP. FILE1)",,,,
+,,,1,The conveyor is in synchronous operation (CV COND SUPP. FILE1),Data error,"Release synchronous operation of the conveyor before execute.
+( CV COND SUPP.FILE1)",,,,
+,,,2,"WORK IN/NOT SHIFT queue is not confirmed
+ (CV COND SUPP. FILE1)
+",Data error,"Confirm the queue for WORK IN/NOT SHIFT before execute. 
+( CV COND SUPP.FILE1)",,,,
+,,,3,"WORK ID. SHIFT queue is not confirmed
+ (CV COND SUPP. FILE1)
+",Data error,"Confirm the queue for WORK ID. SHIFT before execute. 
+( CV COND SUPP.FILE1)",,,,
+,,,4,"START SHIFT queue is not confirmed 
+ (CV COND SUPP. FILE1)",Data error,"Confirm the queue for START SHIFT before execute. 
+( CV COND SUPP.FILE1)",,,,
+,,,5,"WORK IN/NOT SHIFT has no target queues for deletion.  
+ (CV COND SUPP. FILE1)",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,
+,,,6,"WORK ID. SHIFT has no queues for deletion.
+ (CV COND SUPP. FILE1)",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,
+,,,7,"START SHIFT has no queues for deletion.
+ (CV COND SUPP. FILE1)",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,
+,,,100,"There is no available queue.
+(CV COND SUPP. FILE2)",Data error,"Execute when there is an available queue 
+(CV COND SUPP. FILE2)",,,,
+,,,101,The conveyor is in synchronous operation (CV COND SUPP. FILE2),Data error,"Release synchronous operation of the conveyor before execute.
+( CV COND SUPP.FILE2)",,,,
+,,,102,"WORK IN/NOT SHIFT queue is not confirmed
+(CV COND SUPP. FILE2)
+",Data error,"Confirm the queue for WORK IN/NOT SHIFT before execute. 
+( CV COND SUPP.FILE2)",,,,
+,,,103,"WORK ID. SHIFT queue is not confirmed
+(CV COND SUPP. FILE2)
+",Data error,"Confirm the queue for WORK ID. SHIFT before execute. 
+( CV COND SUPP.FILE2)",,,,
+,,,104,"START SHIFT queue is not confirmed 
+(CV COND SUPP. FILE2)",Data error,"Confirm the queue for START SHIFT before execute. 
+( CV COND SUPP.FILE2)",,,,
+,,,105,"WORK IN/NOT SHIFT has no target queues for deletion.  
+(CV COND SUPP. FILE2)",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,
+,,,106,"WORK ID. SHIFT has no queues for deletion.
+(CV COND SUPP. FILE2)",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,
+,,,107,"START SHIFT has no queues for deletion.
+(CV COND SUPP. FILE2)",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,
+,,,200,"There is no available queue.
+(CV COND SUPP. FILE3)",Data error,"Execute when there is an available queue 
+(CV COND SUPP. FILE3)",,,,
+,,,201,The conveyor is in synchronous operation (CV COND SUPP. FILE3),Data error,"Release synchronous operation of the conveyor before execute.
+( CV COND SUPP.FILE3)",,,,
+,,,202,"WORK IN/NOT SHIFT queue is not confirmed
+(CV COND SUPP. FILE3)
+",Data error,"Confirm the queue for WORK IN/NOT SHIFT before execute. 
+( CV COND SUPP.FILE3)",,,,
+,,,203,"WORK ID. SHIFT queue is not confirmed
+(CV COND SUPP. FILE3)
+",Data error,"Confirm the queue for WORK ID. SHIFT before execute. 
+( CV COND SUPP.FILE3)",,,,
+,,,204,"START SHIFT queue is not confirmed 
+(CV COND SUPP. FILE3)",Data error,"Confirm the queue for START SHIFT before execute. 
+( CV COND SUPP.FILE3)",,,,
+,,,205,"WORK IN/NOT SHIFT has no target queues for deletion.  
+(CV COND SUPP. FILE3)",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,
+,,,206,"WORK ID. SHIFT has no queues for deletion.
+(CV COND SUPP. FILE3)",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,
+,,,207,"START SHIFT has no queues for deletion.
+(CV COND SUPP. FILE3)",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,
+,,,300,"There is no available queue.
+(CV COND SUPP. FILE4)",Data error,"Execute when there is an available queue 
+(CV COND SUPP. FILE4)",,,,
+,,,301,The conveyor is in synchronous operation (CV COND SUPP. FILE4),Data error,"Release synchronous operation of the conveyor before execute.
+( CV COND SUPP.FILE4)",,,,
+,,,302,"WORK IN/NOT SHIFT queue is not confirmed
+(CV COND SUPP. FILE4)
+",Data error,"Confirm the queue for WORK IN/NOT SHIFT before execute. 
+( CV COND SUPP.FILE4)",,,,
+,,,303,"WORK ID. SHIFT queue is not confirmed
+(CV COND SUPP. FILE4)
+",Data error,"Confirm the queue for WORK ID. SHIFT before execute. 
+( CV COND SUPP.FILE4)",,,,
+,,,304,"START SHIFT queue is not confirmed 
+(CV COND SUPP. FILE4)",Data error,"Confirm the queue for START SHIFT before execute. 
+( CV COND SUPP.FILE4)",,,,
+,,,305,"WORK IN/NOT SHIFT has no target queues for deletion.  
+(CV COND SUPP. FILE4)",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,
+,,,306,"WORK ID. SHIFT has no queues for deletion.
+(CV COND SUPP. FILE4)",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,
+,,,307,"START SHIFT has no queues for deletion.
+(CV COND SUPP. FILE4)",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,
+,,,400,"There is no available queue.
+(CV COND SUPP. FILE5)",Data error,"Execute when there is an available queue 
+(CV COND SUPP. FILE5)",,,,
+,,,401,The conveyor is in synchronous operation (CV COND SUPP. FILE5),Data error,"Release synchronous operation of the conveyor before execute.
+( CV COND SUPP.FILE5)",,,,
+,,,402,"WORK IN/NOT SHIFT queue is not confirmed
+(CV COND SUPP. FILE5)
+",Data error,"Confirm the queue for WORK IN/NOT SHIFT before execute. 
+( CV COND SUPP.FILE5)",,,,
+,,,403,"WORK ID. SHIFT queue is not confirmed
+(CV COND SUPP. FILE5)
+",Data error,"Confirm the queue for WORK ID. SHIFT before execute. 
+( CV COND SUPP.FILE5)",,,,
+,,,404,"START SHIFT queue is not confirmed 
+(CV COND SUPP. FILE5)",Data error,"Confirm the queue for START SHIFT before execute. 
+( CV COND SUPP.FILE5)",,,,
+,,,405,"WORK IN/NOT SHIFT has no target queues for deletion.  
+(CV COND SUPP. FILE5)",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,
+,,,406,"WORK ID. SHIFT has no queues for deletion.
+(CV COND SUPP. FILE5)",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,
+,,,407,"START SHIFT has no queues for deletion.
+(CV COND SUPP. FILE5)",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,
+,,,500,"There is no available queue.
+(CV COND SUPP. FILE6)",Data error,"Execute when there is an available queue 
+(CV COND SUPP. FILE6)",,,,
+,,,501,The conveyor is in synchronous operation (CV COND SUPP. FILE6),Data error,"Release synchronous operation of the conveyor before execute.
+( CV COND SUPP.FILE6)",,,,
+,,,502,"WORK IN/NOT SHIFT queue is not confirmed
+(CV COND SUPP. FILE6)
+",Data error,"Confirm the queue for WORK IN/NOT SHIFT before execute. 
+( CV COND SUPP.FILE6)",,,,
+,,,503,"WORK ID. SHIFT queue is not confirmed
+(CV COND SUPP. FILE6)
+",Data error,"Confirm the queue for WORK ID. SHIFT before execute. 
+( CV COND SUPP.FILE6)",,,,
+,,,504,"START SHIFT queue is not confirmed 
+(CV COND SUPP. FILE6)",Data error,"Confirm the queue for START SHIFT before execute. 
+( CV COND SUPP.FILE6)",,,,
+,,,505,"WORK IN/NOT SHIFT has no target queues for deletion.  
+(CV COND SUPP. FILE6)",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,
+,,,506,"WORK ID. SHIFT has no queues for deletion.
+(CV COND SUPP. FILE6)",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,
+,,,507,"START SHIFT has no queues for deletion.
+(CV COND SUPP. FILE6)",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,
+5030,SYSTEM ERROR(SENSOR),,,,,,,,,汎用センサ
+5031,SENSOR ERROR,,,,,,,,,汎用センサ
+5050,MEI ERROR,The error about Motion Extension API is occurred in sensor process.,,"Sub Code: 100-250
+It is the kind of error of Motion extension API in sensor process of laser tracking function.",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+5051,SKILL COMMAND ERROR,The error about Skill command is occurred in sensor process.,,"Sub Code: 100-250
+It is the kind of error of Skill command in sensor process of laser tracking function.",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+5052,SYSTEM ERROR (LASER TRACKING),The system error is occurred in sensor process.,0,"Sub Code: 0-22
+It is the kind of error of internal sensor process of laser tracking function.
+6:The transmission error is occurred  between DX100 and Laser sensor unit. ",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,1,"Sub Code: 0-22
+It is the kind of error of internal sensor process of laser tracking function.
+6:The transmission error is occurred  between DX100 and Laser sensor unit. ",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,2,"Sub Code: 0-22
+It is the kind of error of internal sensor process of laser tracking function.
+6:The transmission error is occurred  between DX100 and Laser sensor unit. ",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,3,"Sub Code: 0-22
+It is the kind of error of internal sensor process of laser tracking function.
+6:The transmission error is occurred  between DX100 and Laser sensor unit. ",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,4,"Sub Code: 0-22
+It is the kind of error of internal sensor process of laser tracking function.
+6:The transmission error is occurred  between DX100 and Laser sensor unit. ",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,5,"Sub Code: 0-22
+It is the kind of error of internal sensor process of laser tracking function.
+6:The transmission error is occurred  between DX100 and Laser sensor unit. ",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,6,"Sub Code: 0-22
+It is the kind of error of internal sensor process of laser tracking function.
+6:The transmission error is occurred  between DX100 and Laser sensor unit. ",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,7,"Sub Code: 0-22
+It is the kind of error of internal sensor process of laser tracking function.
+6:The transmission error is occurred  between DX100 and Laser sensor unit. ",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,8,"Sub Code: 0-22
+It is the kind of error of internal sensor process of laser tracking function.
+6:The transmission error is occurred  between DX100 and Laser sensor unit. ",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,9,"Sub Code: 0-22
+It is the kind of error of internal sensor process of laser tracking function.
+6:The transmission error is occurred  between DX100 and Laser sensor unit. ",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,10,"Sub Code: 0-22
+It is the kind of error of internal sensor process of laser tracking function.
+6:The transmission error is occurred  between DX100 and Laser sensor unit. ",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,11,"Sub Code: 0-22
+It is the kind of error of internal sensor process of laser tracking function.
+6:The transmission error is occurred  between DX100 and Laser sensor unit. ",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,12,"Sub Code: 0-22
+It is the kind of error of internal sensor process of laser tracking function.
+6:The transmission error is occurred  between DX100 and Laser sensor unit. ",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,13,"Sub Code: 0-22
+It is the kind of error of internal sensor process of laser tracking function.
+6:The transmission error is occurred  between DX100 and Laser sensor unit. ",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,14,"Sub Code: 0-22
+It is the kind of error of internal sensor process of laser tracking function.
+6:The transmission error is occurred  between DX100 and Laser sensor unit. ",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,15,"Sub Code: 0-22
+It is the kind of error of internal sensor process of laser tracking function.
+6:The transmission error is occurred  between DX100 and Laser sensor unit. ",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,16,"Sub Code: 0-22
+It is the kind of error of internal sensor process of laser tracking function.
+6:The transmission error is occurred  between DX100 and Laser sensor unit. ",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,17,"Sub Code: 0-22
+It is the kind of error of internal sensor process of laser tracking function.
+6:The transmission error is occurred  between DX100 and Laser sensor unit. ",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,18,"Sub Code: 0-22
+It is the kind of error of internal sensor process of laser tracking function.
+6:The transmission error is occurred  between DX100 and Laser sensor unit. ",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,19,"Sub Code: 0-22
+It is the kind of error of internal sensor process of laser tracking function.
+6:The transmission error is occurred  between DX100 and Laser sensor unit. ",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,20,"Sub Code: 0-22
+It is the kind of error of internal sensor process of laser tracking function.
+6:The transmission error is occurred  between DX100 and Laser sensor unit. ",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,21,"Sub Code: 0-22
+It is the kind of error of internal sensor process of laser tracking function.
+6:The transmission error is occurred  between DX100 and Laser sensor unit. ",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,22,"Sub Code: 0-22
+It is the kind of error of internal sensor process of laser tracking function.
+6:The transmission error is occurred  between DX100 and Laser sensor unit. ",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,30,Abnormalities have occurred at the thermostat of a laser head. ,"The abnormalities of a laser head, the abnormalities of a cable","(1) Turn off the power supply of a robot controller and NCL01 unit. 
+(2) Check whether the laser head has carried out unusual generation of heat. 
+(3) Check whether there are any abnormalities in the I/O cable between NCL01 unit and a laser head. 
+(4) Check whether there are any abnormalities in the thermostat and cable of a laser head. ",,,,Remote laser
+,,,31,Abnormalities have occurred in LVDS of a laser head. ,"The abnormalities of a laser head, the abnormalities of a cable","(1) Turn off the power supply of a robot controller and NCL01 unit. 
+(2) Check whether there are any abnormalities in the driver of a laser head. 
+(3)Check whether there are any abnormalities in the LVDS cable between NCL01 unit and a laser head. ",,,,Remote laser
+,,,32,The abnormalities of a CAN signal.,Communicative abnormalities,"(1) Check whether the CAN cable is connected correctly. 
+(2) Check whether YCP02 substrate and YSL02 substrate are connected correctly. ",,,,Remote laser
+,,,33,A original point check signal has not been returning from a laser head. ,"The abnormalities of a laser head, the abnormalities of a cable","(1) Return a mirror to the starting point by the ""INTER LOCK"" + ""6"". 
+(2) Play back the job for a original point check again. 
+(3) If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Remote laser
+,,,40,Abnormalities have occurred at the thermostat of a laser head. ,"The abnormalities of a laser head, the abnormalities of a cable","(1) Turn off the power supply of a robot controller and NCL01 unit. 
+(2) Check whether the laser head has carried out unusual generation of heat. 
+(3) Check whether there are any abnormalities in the thermostat and cable of a laser head. ",,,,Remote laser
+,,,41,Abnormalities have occurred at the thermostat of a laser head. ,"The abnormalities of a laser head, the abnormalities of a cable","(1) Turn off the power supply of a robot controller and NCL01 unit. 
+(2) Check whether the laser head has carried out unusual generation of heat. 
+(3) Check whether there are any abnormalities in the thermostat and cable of a laser head. ",,,,Remote laser
+,,,42,"The X-axis of a laser head has abnormalities. 
+","The abnormalities of a laser head, the abnormalities of a cable","(1) Turn off the power supply of a robot controller and NCL01 unit. 
+(2) Check whether there are any abnormalities in the X-driver of a laser head. 
+(3) Check whether there are any abnormalities in the LVDS cable inside a laser head. 
+",,,,Remote laser
+,,,43,The Y-axis of a laser head has abnormalities. ,"The abnormalities of a laser head, the abnormalities of a cable","(1) Turn off the power supply of a robot controller and NCL01 unit. 
+(2) Check whether there are any abnormalities in the Y-driver of a laser head. 
+(3) Check whether there are any abnormalities in the LVDS cable inside a laser head. ",,,,Remote laser
+,,,44,The Z-axis of a laser head has abnormalities. ,"The abnormalities of a laser head, the abnormalities of a cable","(1) Turn off the power supply of a robot controller and NCL01 unit. 
+(2) Check whether there are any abnormalities in the Z-driver of a laser head. 
+(3) Check whether there are any abnormalities in the LVDS cable inside a laser head. ",,,,Remote laser
+5053,LASER TRACKING PROCESS ERROR,The data error is occurred in sensor process.,10,Mode error,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,11,Correction coordinate error,Setting error,"(1)Make common coordinate motion in the sensing path, if normal motion and synchronous motion are set in the JOB.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,12,Tool number error,Setting error,"(1)Make common tool number in the sensing path, if several tool number are set in the JOB.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,13,Control group error,Setting error,"(1)Make common control group in the sensing path, if several JOB that the control group is different are executed in the sensing path.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,14,User coordinate number error,Setting error,"(1)Make common user coordinate of External reference point control in the sensing path, if several kind of user coordinate are set in the JOB. (To be developed in the future)
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,15,Same gap mount is set,Setting error,"(1)Delete one gap mount data in Gap condition file. Because same data is set.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,16,Same gap mount is set,Setting error,"(1)Delete one gap mount data in Gap condition file. Because same data is set.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,17,Non detection error,Setting error,"(1)Remove the dirt and the dust from the sensing point.
+(2)Check that the sensing point is inside of sensor range.
+(3)Check the sensing condition of laser sensor unit.",,,,Laser tracking
+,,,18,Detection error,Setting error,"(1)Remove the dirt and the dust from the sensing point.
+(2)Check that the sensing point is inside of sensor range.
+(3)Check the sensing condition of laser sensor unit.",,,,Laser tracking
+,,,19,Laser sensor calibration error,Setting error,"(1)Check that the sensing point is inside of sensor range.
+(2)Turn on the laser beam. Move the manipulator to the teaching point. And check that the laser beam point the teaching position.
+(3)Check the sensing condition of laser sensor unit.",,,,Laser tracking
+,,,20,Laser sensor calibration error,Setting error,"(1)Check that the sensing point is inside of sensor range.
+(2)Turn on the laser beam. Move the manipulator to the teaching point. And check that the laser beam point the teaching position.
+(3)Check the sensing condition of laser sensor unit.",,,,Laser tracking
+,,,21,Correction mount error,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,28,Task error,Setting error,"(1)Check that the JOB isn't switched to the other task between tracking.
+(2)Turn on the laser beam. Move the manipulator to the teaching point. And check that the laser beam point the teaching position.
+(3)Check the sensing condition of laser sensor unit.",,,,Laser tracking
+,,,29,Application error,Setting error,"(1)Check that the JOB isn't switched to the other task between tracking.
+(2)Turn on the laser beam. Move the manipulator to the teaching point. And check that the laser beam point the teaching position.
+(3)Check the sensing condition of laser sensor unit.",,,,Laser tracking
+,,,40,Wrong laser tracking file no.,Setting error,"(1)Wrong laser tracking file no. is set to command of laser tracking function. Change it to correct no,( 1-40)
+(2)Turn on the laser beam. Move the manipulator to the teaching point. And check that the laser beam point the teaching position.
+(3)Check the sensing condition of laser sensor unit.",,,,Laser tracking
+,,,41,Wrong laser sensor calibration file no.,Setting error,"(1)Wrong laser sensor calibration file no. is set to command of laser tracking function. Change it to correct no,( 1-64)
+(2)Turn on the laser beam. Move the manipulator to the teaching point. And check that the laser beam point the teaching position.
+(3)Check the sensing condition of laser sensor unit.",,,,Laser tracking
+,,,50,End point search motion error,Setting error,"(1)Check that the tracking distance is enough long to start end point search.
+(2)Turn on the laser beam. Move the manipulator to the teaching point. And check that the laser beam point the teaching position.
+(3)Check the sensing condition of laser sensor unit.",,,,Laser tracking
+,,,50,End point search motion error,Setting error,"(1)Check that the tracking distance is enough long to start end point search.
+(2)Turn on the laser beam. Move the manipulator to the teaching point. And check that the laser beam point the teaching position.
+(3)Check the sensing condition of laser sensor unit.",,,,Laser tracking
+,,,51,End point search motion error,Setting error,"(1)Check that the tracking distance is enough long to start end point search.
+(2)Turn on the laser beam. Move the manipulator to the teaching point. And check that the laser beam point the teaching position.
+(3)Check the sensing condition of laser sensor unit.",,,,Laser tracking
+,,,52,End point search motion error,Setting error,"(1)Check that the tracking distance is enough long to start end point search.
+(2)Turn on the laser beam. Move the manipulator to the teaching point. And check that the laser beam point the teaching position.
+(3)Check the sensing condition of laser sensor unit.",,,,Laser tracking
+,,,53,End point search motion error,Setting error,"(1)Check that the tracking distance is enough long to start end point search.
+(2)Turn on the laser beam. Move the manipulator to the teaching point. And check that the laser beam point the teaching position.
+(3)Check the sensing condition of laser sensor unit.",,,,Laser tracking
+,,,54,End point search motion error,Setting error,"(1)Check that the tracking distance is enough long to start end point search.
+(2)Turn on the laser beam. Move the manipulator to the teaching point. And check that the laser beam point the teaching position.
+(3)Check the sensing condition of laser sensor unit.",,,,Laser tracking
+,,,55,End point search motion error,Setting error,"(1)Check that the tracking distance is enough long to start end point search.
+(2)Turn on the laser beam. Move the manipulator to the teaching point. And check that the laser beam point the teaching position.
+(3)Check the sensing condition of laser sensor unit.",,,,Laser tracking
+,,,56,End point search motion error,Setting error,"(1)Check that the tracking distance is enough long to start end point search.
+(2)Turn on the laser beam. Move the manipulator to the teaching point. And check that the laser beam point the teaching position.
+(3)Check the sensing condition of laser sensor unit.",,,,Laser tracking
+,,,60,Gap adaptation control error,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,70,Laser sensor calibration error,Setting error,(1)Check that there are enough long length between the sensing points 1-4.,,,,Laser tracking
+,,,71,Laser sensor calibration error,Setting error,(1)Check that there are enough long length between the sensing points 1-4.,,,,Laser tracking
+,,,72,The abnormalities of status of HIGHYAG,The abnormalities of the state of a laser head,"The status of a laser head has abnormalities. 
+Check the state of a laser head and a laser head controller. 
+",,,,Remote laser
+,,,73,The abnormalities of the READY signal of HIGHYAG,The abnormalities of the state of a laser head,"The READY signal of the laser head does not stand. 
+Check the state of a laser head and a laser head controller. ",,,,Remote laser
+,,,80,Synchronized timer error between DX100 and laser sensor unit,Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,90,Memoplay control error,Setting error,"(1)Check the memoplay file number set to instruction.(1-200)
+(2)Delete some unnecessary memoplay file. The record capacity of sampling data is over.
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,91,Memoplay control error,Setting error,"(1)Check the memoplay file number set to instruction.(1-200)
+(2)Delete some unnecessary memoplay file. The record capacity of sampling data is over.
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,92,Memoplay control error,Setting error,"(1)Check the memoplay file number set to instruction.(1-200)
+(2)Delete some unnecessary memoplay file. The record capacity of sampling data is over.
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,93,Memoplay control error,Setting error,"(1)Check the memoplay file number set to instruction.(1-200)
+(2)Delete some unnecessary memoplay file. The record capacity of sampling data is over.
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,94,Memoplay control error,Setting error,"(1)Check the memoplay file number set to instruction.(1-200)
+(2)Delete some unnecessary memoplay file. The record capacity of sampling data is over.
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,95,Memoplay control error,Setting error,"(1)Check the memoplay file number set to instruction.(1-200)
+(2)Delete some unnecessary memoplay file. The record capacity of sampling data is over.
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,96,Memoplay control error,Setting error,"(1)Check the memoplay file number set to instruction.(1-200)
+(2)Delete some unnecessary memoplay file. The record capacity of sampling data is over.
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,97,Memoplay control error,Setting error,"(1)Check the memoplay file number set to instruction.(1-200)
+(2)Delete some unnecessary memoplay file. The record capacity of sampling data is over.
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,98,Memoplay control error,Setting error,"(1)Check the memoplay file number set to instruction.(1-200)
+(2)Delete some unnecessary memoplay file. The record capacity of sampling data is over.
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,99,Memoplay control error,Setting error,"(1)Check the memoplay file number set to instruction.(1-200)
+(2)Delete some unnecessary memoplay file. The record capacity of sampling data is over.
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+,,,100,Memoplay control error,Setting error,"(1)Check the memoplay file number set to instruction.(1-200)
+(2)Delete some unnecessary memoplay file. The record capacity of sampling data is over.
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+5054,LASER SENSOR ERROR,,,"Sub Code: 1-14
+It is the kind of transmission error between DX100 and laser sensor unit.",Software operation error occurred,"(1)Turn the power OFF then back ON.
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,Laser tracking
+5060,GAUGING PROCESS ERROR,The error is occurred in sensor process.,4,"The left gauge sensor port number is wrong in GAUGEON command. It is set the parameter, SxE020-026.",Setting error,"(1)Set good value to the parameter of Left gauge sensor port number,SxE020-026.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,ﾍﾞﾝﾃﾞｨﾝｸﾞ
+,,,5,"The right gauge sensor port number is wrong in GAUGEON command. It is set the parameter, SxE020-026.",Setting error,"(1)Set good value to the parameter of Right gauge sensor port number,SxE020-026.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,ﾍﾞﾝﾃﾞｨﾝｸﾞ
+,,,6,The gain of left gauge sensor is not set in GAUGEON command. It is  set in Gauge specification file.,Setting error,"(1)Execute left gauge sensor calibration.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,ﾍﾞﾝﾃﾞｨﾝｸﾞ
+,,,7,The gain of right gauge sensor is not set in GAUGEON command. It is  set in Gauge specification file.,Setting error,"(1)Execute right gauge sensor calibration.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,ﾍﾞﾝﾃﾞｨﾝｸﾞ
+,,,8,The offset of left gauge sensor is not set in GAUGEON command. It is  set in Gauge specification file.,Setting error,"(1)Execute left gauge sensor calibration.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,ﾍﾞﾝﾃﾞｨﾝｸﾞ
+,,,9,The offset of right gauge sensor is not set in GAUGEON command. It is  set in Gauge specification file.,Setting error,"(1)Execute right gauge sensor calibration.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,ﾍﾞﾝﾃﾞｨﾝｸﾞ
+,,,10,"The left side gauge sensor port number is wrong in GAUGEON command. It is set the parameter, SxE020-026.",Setting error,"(1)Set good value to the parameter of left side gauge sensor port number,SxE020-026.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,ﾍﾞﾝﾃﾞｨﾝｸﾞ
+,,,11,"The right side gauge sensor port number is wrong in GAUGEON command. It is set the parameter, SxE020-026.",Setting error,"(1)Set good value to the parameter of right side gauge sensor port number,SxE020-026.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,ﾍﾞﾝﾃﾞｨﾝｸﾞ
+,,,12,The gain of left side gauge sensor is not set in GAUGEON command. It is  set in Gauge specification file.,Setting error,"(1)Execute left side gauge sensor calibration.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,ﾍﾞﾝﾃﾞｨﾝｸﾞ
+,,,13,The gain of right side gauge sensor is not set in GAUGEON command. It is  set in Gauge specification file.,Setting error,"(1)Execute right side gauge sensor calibration.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,ﾍﾞﾝﾃﾞｨﾝｸﾞ
+,,,14,The offset of left side gauge sensor is not set in GAUGEON command. It is  set in Gauge specification file.,Setting error,"(1)Execute left side gauge sensor calibration.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,ﾍﾞﾝﾃﾞｨﾝｸﾞ
+,,,15,The offset of right side gauge sensor is not set in GAUGEON command. It is  set in Gauge specification file.,Setting error,"(1)Execute right side gauge sensor calibration.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,ﾍﾞﾝﾃﾞｨﾝｸﾞ
+5061,SENSOR NO. SETTING ERROR,Same Sensor number is set in GAUGEON command.,0,Left and right gauge sensor number are same.,Setting error,"(1)Set different sensor number between left and right.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,ﾍﾞﾝﾃﾞｨﾝｸﾞ
+,,,1,Left and left side gauge sensor number are same.,Setting error,"(1)Set different sensor number between left and left side.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,ﾍﾞﾝﾃﾞｨﾝｸﾞ
+,,,2,Left and right side gauge sensor number are same.,Setting error,"(1)Set different sensor number between left and right side.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,ﾍﾞﾝﾃﾞｨﾝｸﾞ
+,,,3,Right and Left side gauge sensor number are same.,Setting error,"(1)Set different sensor number between right and left side.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,ﾍﾞﾝﾃﾞｨﾝｸﾞ
+,,,4,Right and Right side gauge sensor number are same.,Setting error,"(1)Set different sensor number between right and right side.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,ﾍﾞﾝﾃﾞｨﾝｸﾞ
+,,,5,Left side and right side gauge sensor number are same.,Setting error,"(1)Set different sensor number between left side and right side.
+(2)Turn the power OFF then back ON.
+(3)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,ﾍﾞﾝﾃﾞｨﾝｸﾞ
+5062,GAUGING CORRECTION OVER,The mount of gauging correction exceed maximum correction during gauging.,,"Sub code : correction type
+0000_0001 :Position correction(Y direction) exceed the maximum corection,SxE054.
+0000_0010 :Posture correction exceed the maximum corection,SxE055.
+0000_0100 :Position correction(X direction) exceed the maximum corection,SxE075.",Setting error,"(1)Check the contact state between the gauge sensor and the steel plate.
+(2)Check the  gauge sensor value and the connection.
+(3)Check the parameters, maximum position correction(Y direction)(SxE054), maximum posture correction(SxE055) and maximum position correction(X direction)(SxE075).
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,ﾍﾞﾝﾃﾞｨﾝｸﾞ
+5063,LEFT SENSOR VALUE NOT CHANGED,Left gauge sensor value does not change amount(SxE038) in the checking time(SxE031).,,,Setting error,"(1)Check the contact state between the gauge sensor and the steel plate.
+(2)Check the  gauge sensor value and the connection.
+(3)Check the parameters, unchanged amount of sensor value(SxE038) and sensor value unchanged time(SxE031).
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,ﾍﾞﾝﾃﾞｨﾝｸﾞ
+5064,RIGHT SENSOR VALUE NOT CHANGED,Right gauge sensor value does not change amount(SxE038) during checking time(SxE031).,,,Setting error,"(1)Check the contact state between the gauge sensor and the steel plate.
+(2)Check the  gauge sensor value and the connection.
+(3)Check the parameters, unchanged amount of sensor value(SxE038) and sensor value unchanged time(SxE031).
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,ﾍﾞﾝﾃﾞｨﾝｸﾞ
+5065,ILLEGAL SENSOR VALUE,"Gauge sensor value is smaller than minimum sensor value(SxE035), or greater than maximum sensor value(SxE036) during gauging.",,"Sub code : Gauge sensor type
+0000_0001 :Left gauge sensor
+0000_0010 :Right gauge sensor
+0000_0100 :Side gauge sensor",Setting error,"(1)Check the contact state between the gauge sensor and the steel plate.
+(2)Check the  gauge sensor value and the connection.
+(3)Check the parameters, minimum sensor value(SxE035) and maximum sensor value(SxE036) 
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,ﾍﾞﾝﾃﾞｨﾝｸﾞ
+5067,LNR SCALE POSITION LIMIT,The linear scale value exceeds ±21 m.,,,Linear scale or the connection failure,"(1)Check the  linear scale value and the connection.
+(2)Check the position resolution in Linear scale specification file.",,,,ﾍﾞﾝﾃﾞｨﾝｸﾞ
+5068,LNR SCALE COUNTER LIMIT,The linear scale position counter pulse is overflowed.,,,Linear scale or the connection failure,(1)Check the  linear scale value and the connection.,,,,ﾍﾞﾝﾃﾞｨﾝｸﾞ
+5069,SIDE SENSOR VALUE NOT CHANGED,Side gauge sensor value does not change amount(SxE038) in the checking time(SxE031).,,,Setting error,"(1)Check the contact state between the gauge sensor and the steel plate.
+(2)Check the  gauge sensor value and the connection.
+(3)Check the parameters, unchanged amount of sensor value(SxE038) and sensor value unchanged time(SxE031).
+(3)Turn the power OFF then back ON.
+(4)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,ﾍﾞﾝﾃﾞｨﾝｸﾞ
+5100,VERIFY ERROR(PRESS COND FILE),Incorrect setting of the press condition file ,,,Setting error,Check if the press condition file is correctly set. ,,,,PRESS
+5101,PRESS COUNTER LIMIT,Press position counter pulse overflow,,,Setting error,Check that correct press position pulse is sent to MP2110.,,,,PRESS
+5102,PRESS POSITION LIMIT,Press position error was detected.,,,Setting error,"(1)Review the resolution value in the Press condition file. 
+(2)If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,PRESS

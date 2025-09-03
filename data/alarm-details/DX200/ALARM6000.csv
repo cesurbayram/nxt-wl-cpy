@@ -1,0 +1,33 @@
+DX200,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+Alarm Number,Alarm Name/Message,Contents,Sub Code,Meaning,Cause,Remedy,}•\1,}•\2,ŹÚŤ×ŕ–ľ(‹ZŹpŽŇ—p),Notes
+6039,GAS PRESS CHECK SETTING ERROR,An error occurred when registering criteria of gas pressure check.,,,Setting error,"Do not execute any job when registering criteria of gas pressure check.
+",,,,SYSCON
+,,,,,Software operation error occurred,"Reset the alarm, and then try again.",,,,SYSCON
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,SYSCON
+6055,VEW01 WATCHDOG SIGNAL ERROR,A watchdog signal error occurred on VEW01.,1,A watchdog signal error occurred on VEW01 (welder1).,CIO ladder error,The watchdog signal updated by the CIO ladder has stopped. Reboot the robot controller.,,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,2,A watchdog signal error occurred on VEW01 (welder2).,CIO ladder error,The watchdog signal updated by the CIO ladder has stopped. Reboot the robot controller.,,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,3,A watchdog signal error occurred on VEW01 (welder3).,CIO ladder error,The watchdog signal updated by the CIO ladder has stopped. Reboot the robot controller.,,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,4,A watchdog signal error occurred on VEW01 (welder4).,CIO ladder error,The watchdog signal updated by the CIO ladder has stopped. Reboot the robot controller.,,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,5,A watchdog signal error occurred on VEW01 (welder5).,CIO ladder error,The watchdog signal updated by the CIO ladder has stopped. Reboot the robot controller.,,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,6,A watchdog signal error occurred on VEW01 (welder6).,CIO ladder error,The watchdog signal updated by the CIO ladder has stopped. Reboot the robot controller.,,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,7,A watchdog signal error occurred on VEW01 (welder7).,CIO ladder error,The watchdog signal updated by the CIO ladder has stopped. Reboot the robot controller.,,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+,,,8,A watchdog signal error occurred on VEW01 (welder8).,CIO ladder error,The watchdog signal updated by the CIO ladder has stopped. Reboot the robot controller.,,,,(R‹ZW)
+,,,,,Other,"If the alarm occurs again, save the CMOS.BIN, and then contact your YASKAWA representative about occurrence status (operating procedure).",,,,(R‹ZW)
+6100,UNDEFINED GAS PRESSURE DETECTION COND,The gas pressure dtection condtion is not set.,,Sub Code: Control group,Setting error,"(1)Check the following settings.
+- Select [PM] to open [GAS PRESSURE DETECTION SETTING] schreen.Resistert the reference value.",,,,SYSCON
+,,,,,other,"If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,SYSCON
+6101,DETECTION  POSITION UNREACHED,The difference between the current position and the gas detection position  exceeded the tolerance for the manipulator.,,Sub Code: Control group and axis,Setting error,"(1)Check the following settings.
+- Select [PM] to open [GAS PRESSURE DETECTION SETTING] schreen.Move the manipulator to the detection position.  ",,,,SYSCON
+,,,,,other,"If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,SYSCON
+6102,LADDER MONITOR ERROR,An error occurred in ladder monitor process.,,"Sub Code 1: Ladder monitor data is incorrect.
+Sub Code 2:Ladder monitor index is incorrect.",Software operation error occurred,"(1)Reset the alarm, and then try again.
+(2)If the alarm occurs again, save the CMOS.BIN, and then contact your Yaskawa representative about occurrence status (operating procedure, ladder editor line index).",,,,SYSCON

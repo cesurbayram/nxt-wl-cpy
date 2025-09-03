@@ -1,0 +1,13 @@
+DX100,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+Alarm Number,Alarm Name/Message,Contents,Sub Code,Meaning,Cause,Remedy,Chart1,Chart2,Detail,Notes
+6006,POS COMP. OVER (MOV DEPEND TEMP),Temperature-Motion Position Compensation Mount exceeds the limit.,,Sub code: Temperature-Motion Position Compensation Mount,Motor(Encoder Error (U-Axis)),"(1) Check the U-Axis encoder temperature in Servo Monitor display. (Set the security to management mode. And select a sub menu [SERVO MONITOR] under main menu [ROBOT] )
+Normal value is between 20 to 100 °C
+(2) Turn the power OFF then back ON.",,,,MOTION
+,,,,,Setting error,"(1) Reset the alarm, and then try again. 
+(2) Confirm the following setting value.
+・ Temperature-Motion Position Compensation standard temperature（S1C*G0361）
+・ Temperature-Motion Position Compensation Maximum mount （S1C*G0362）
+・ Temperature-Motion Position Compensation Minimum mount （S1C*G0363）
+(3) If the alarm occurs again, save the CMOS.BIN in maintenance mode, and then contact your Yaskawa representative about occurrence status (operating procedure).",,,,MOTION
