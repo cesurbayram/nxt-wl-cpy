@@ -20,7 +20,7 @@ export class NotificationService {
   private static async createNotification(request: CreateNotificationRequest) {
     try {
       const baseUrl =
-        process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+        process.env.NEXT_PUBLIC_FRONTEND_URL || "http://localhost:3000";
       const url = `${baseUrl}/api/notifications`;
 
       const response = await fetch(url, {

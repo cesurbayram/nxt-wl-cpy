@@ -11,6 +11,15 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   SystemAlarmHistoryItem,
   SystemAlarmDetail,
@@ -19,7 +28,14 @@ import {
   getSystemAlarmDetail,
   createSystemWorkOrder,
 } from "@/utils/service/system-expectations/alarm-error";
-import { ExternalLink, FileText, Wrench, AlertTriangle } from "lucide-react";
+import {
+  ExternalLink,
+  FileText,
+  Wrench,
+  AlertTriangle,
+  Mail,
+  Send,
+} from "lucide-react";
 import { toast } from "sonner";
 
 interface SystemAlarmDetailModalProps {
@@ -40,10 +56,17 @@ const SystemAlarmDetailModal = ({
   );
   const [loading, setLoading] = useState(false);
   const [creatingWorkOrder, setCreatingWorkOrder] = useState(false);
+  const [showMailForm, setShowMailForm] = useState(false);
+  const [createdWorkOrder, setCreatedWorkOrder] = useState<any>(null);
+  const [users, setUsers] = useState<any[]>([]);
+  const [selectedUser, setSelectedUser] = useState<any>(null);
+  const [recipientEmail, setRecipientEmail] = useState("");
+  const [sendingMail, setSendingMail] = useState(false);
 
   useEffect(() => {
     if (isOpen && alarm) {
       fetchAlarmDetail();
+      fetchUsers();
     }
   }, [isOpen, alarm]);
 
@@ -62,22 +85,76 @@ const SystemAlarmDetailModal = ({
     }
   };
 
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch("/api/user");
+      if (response.ok) {
+        const userData = await response.json();
+        setUsers(
+          userData.filter((user: any) => user.email && user.email.trim() !== "")
+        );
+      }
+    } catch (error) {
+      console.error("Failed to fetch users:", error);
+    }
+  };
+
   const handleCreateWorkOrder = async () => {
     if (!alarm || !alarmDetail) return;
 
     setCreatingWorkOrder(true);
     try {
-      await createSystemWorkOrder(
+      const result = await createSystemWorkOrder(
         controllerId,
         alarm.code,
         `${alarm.name} - ${alarmDetail.description}`
       );
+      setCreatedWorkOrder(result.workOrder);
       toast.success("System work order created successfully");
+      setShowMailForm(true);
     } catch (error) {
       console.error("Failed to create system work order:", error);
       toast.error("Failed to create system work order");
     } finally {
       setCreatingWorkOrder(false);
+    }
+  };
+
+  const handleSendMail = async () => {
+    if (!createdWorkOrder || !recipientEmail) {
+      toast.error("Please select a recipient");
+      return;
+    }
+
+    setSendingMail(true);
+    try {
+      const response = await fetch(
+        "/api/system-expectations/alarm-error-logs/work-order/send-mail",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            workOrderId: createdWorkOrder.id,
+            recipientEmail: recipientEmail,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        toast.success("Work order notification sent successfully");
+        setShowMailForm(false);
+        setRecipientEmail("");
+        setSelectedUser(null);
+      } else {
+        toast.error("Failed to send work order notification");
+      }
+    } catch (error) {
+      console.error("Failed to send work order mail:", error);
+      toast.error("Failed to send work order notification");
+    } finally {
+      setSendingMail(false);
     }
   };
 
@@ -100,7 +177,7 @@ const SystemAlarmDetailModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[80vh]">
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <AlertTriangle className="w-5 h-5 text-red-500" />
@@ -111,7 +188,7 @@ const SystemAlarmDetailModal = ({
           </DialogDescription>
         </DialogHeader>
 
-        <ScrollArea className="max-h-[60vh]">
+        <ScrollArea className="flex-1 pr-2">
           {loading ? (
             <div className="flex items-center justify-center py-8">
               <div className="text-center">
@@ -159,7 +236,6 @@ const SystemAlarmDetailModal = ({
 
               <Separator />
 
-              {/* Description */}
               <div>
                 <h3 className="font-semibold text-sm text-gray-600 mb-2">
                   Description
@@ -169,7 +245,6 @@ const SystemAlarmDetailModal = ({
                 </p>
               </div>
 
-              {/* Causes */}
               {alarmDetail.causes.length > 0 && (
                 <div>
                   <h3 className="font-semibold text-sm text-gray-600 mb-2">
@@ -189,7 +264,6 @@ const SystemAlarmDetailModal = ({
                 </div>
               )}
 
-              {/* Solution */}
               <div>
                 <h3 className="font-semibold text-sm text-gray-600 mb-2">
                   Solution
@@ -199,7 +273,6 @@ const SystemAlarmDetailModal = ({
                 </div>
               </div>
 
-              {/* Preventive Actions */}
               {alarmDetail.preventiveActions.length > 0 && (
                 <div>
                   <h3 className="font-semibold text-sm text-gray-600 mb-2">
@@ -231,19 +304,121 @@ const SystemAlarmDetailModal = ({
           )}
         </ScrollArea>
 
-        {/* Actions */}
-        <div className="flex justify-between items-center pt-4 border-t">
+        {showMailForm && createdWorkOrder && (
+          <div className="bg-blue-50 p-3 rounded-lg border border-blue-200 mt-2 flex-shrink-0">
+            <h3 className="font-semibold text-blue-800 mb-2 flex items-center gap-2 text-sm">
+              <Mail className="w-4 h-4" />
+              Send Work Order Notification
+            </h3>
+
+            <div className="mb-3">
+              <Label
+                htmlFor="recipient-email"
+                className="text-xs font-medium text-gray-700"
+              >
+                📧 Recipient Email Address{" "}
+                <span className="text-red-500">*</span>
+              </Label>
+              <div className="flex gap-1 mt-1">
+                <Input
+                  id="recipient-email"
+                  type="email"
+                  value={recipientEmail}
+                  onChange={(e) => setRecipientEmail(e.target.value)}
+                  placeholder="Enter email address (e.g., user@toyota-boshoku.com)"
+                  className="h-9 text-sm flex-1 border-blue-300 focus:border-blue-500"
+                />
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setRecipientEmail("");
+                    setSelectedUser(null);
+                  }}
+                  className="h-9 px-3 text-xs"
+                  type="button"
+                >
+                  Clear
+                </Button>
+              </div>
+            </div>
+
+            <div className="border-t border-gray-200 pt-3">
+              <Label
+                htmlFor="user-select"
+                className="text-xs font-medium text-gray-500"
+              >
+                👤 Quick Select (Optional)
+              </Label>
+              <p className="text-xs text-gray-400 mb-2">
+                Select a user to auto-fill email address
+              </p>
+              <Select
+                value={selectedUser?.id || ""}
+                onValueChange={(value) => {
+                  const user = users.find((u) => u.id === value);
+                  setSelectedUser(user);
+                  if (user) {
+                    setRecipientEmail(user.email);
+                  }
+                }}
+              >
+                <SelectTrigger className="w-full h-8 text-sm border-gray-300 bg-gray-50">
+                  <SelectValue placeholder="Choose from existing users..." />
+                </SelectTrigger>
+                <SelectContent>
+                  {users.map((user) => (
+                    <SelectItem key={user.id} value={user.id}>
+                      {user.name} {user.lastName}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex gap-2 mt-3">
+              <Button
+                onClick={handleSendMail}
+                disabled={sendingMail || !recipientEmail}
+                className="flex items-center gap-1 h-7 text-xs px-3"
+                size="sm"
+              >
+                <Send className="w-3 h-3" />
+                {sendingMail ? "Sending..." : "Send"}
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setShowMailForm(false);
+                  setRecipientEmail("");
+                  setSelectedUser(null);
+                }}
+                className="h-7 text-xs px-3"
+                size="sm"
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
+        )}
+
+        <div className="flex justify-between items-center pt-3 border-t flex-shrink-0">
           <div className="flex gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleCreateWorkOrder}
-              disabled={creatingWorkOrder}
-              className="flex items-center gap-2"
-            >
-              <Wrench className="w-4 h-4" />
-              {creatingWorkOrder ? "Creating..." : "Create Work Order"}
-            </Button>
+            {!showMailForm ? (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleCreateWorkOrder}
+                disabled={creatingWorkOrder}
+                className="flex items-center gap-2"
+              >
+                <Wrench className="w-4 h-4" />
+                {creatingWorkOrder ? "Creating..." : "Create Work Order"}
+              </Button>
+            ) : (
+              <div className="text-sm text-green-600 flex items-center gap-2">
+                <Wrench className="w-4 h-4" />
+                Work Order Created Successfully
+              </div>
+            )}
           </div>
           <Button variant="outline" onClick={onClose}>
             Close
