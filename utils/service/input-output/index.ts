@@ -30,13 +30,16 @@ const sendInputOutputCommand = async ({
   activeTab: string;
   controllerId: string;
 }): Promise<boolean> => {
-  const apiRes = await fetch("http://localhost:8082/api/input-output-socket", {
-    method: "POST",
-    body: JSON.stringify({ activeInputOutput: activeTab, controllerId }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  const apiRes = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/input-output-socket`,
+    {
+      method: "POST",
+      body: JSON.stringify({ activeInputOutput: activeTab, controllerId }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 
   if (!apiRes.ok) {
     const errorData = await apiRes.json();

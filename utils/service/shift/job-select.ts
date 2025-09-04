@@ -59,13 +59,16 @@ const sendJobSelectCommand = async (
     }
 
     console.log("Sending job-select command:", payload);
-    const apiRes = await fetch("http://localhost:8082//api/job-select-socket", {
-      method: "POST",
-      body: JSON.stringify(payload),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const apiRes = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/job-select-socket`,
+      {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     if (!apiRes.ok) {
       const errorData = await apiRes.json();

@@ -65,19 +65,22 @@ export const createSystemWorkOrder = async (
   description: string
 ): Promise<any> => {
   try {
-    const response = await fetch(`/api/system-expectations/work-order`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        controllerId,
-        alarmCode,
-        description,
-        priority: "HIGH",
-        type: "CORRECTIVE",
-      }),
-    });
+    const response = await fetch(
+      `/api/system-expectations/alarm-error-logs/work-order`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          controllerId,
+          alarmCode,
+          description,
+          priority: "HIGH",
+          type: "CORRECTIVE",
+        }),
+      }
+    );
 
     if (!response.ok) {
       throw new Error(

@@ -327,7 +327,7 @@ const sendTorkExaminationCommand = async (
     console.log("Sending to tork-examination socket:", payload);
 
     const apiRes = await fetch(
-      "http://localhost:8082/api/tork-examination-socket",
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tork-examination-socket`,
       {
         method: "POST",
         body: JSON.stringify(payload),
