@@ -46,6 +46,11 @@ import { BackupPlan } from "@/types/files.types";
 import { toast } from "sonner";
 import PlansList from "./plans-list";
 import BackupHistory from "./backup-history";
+import {
+  fetchLogData,
+  getFileSaveHistory,
+} from "@/utils/service/system-expectations/log-data";
+import { FileSaveLogEntry } from "@/types/file-save-log.types";
 
 const CmosBackupLogs = () => {
   const [controllers, setControllers] = useState<Controller[]>([]);
@@ -128,11 +133,25 @@ const CmosBackupLogs = () => {
 
   const [showBackupHistory, setShowBackupHistory] = useState(false);
 
+  const [isLoadingLogData, setIsLoadingLogData] = useState(false);
+
+  const [fileSaveHistory, setFileSaveHistory] = useState<FileSaveLogEntry[]>(
+    []
+  );
+  const [isLoadingHistory, setIsLoadingHistory] = useState(false);
+  const [showFileSaveHistory, setShowFileSaveHistory] = useState(false);
+
   const fileTypes = ["CMOS", ".jbi", ".dat", ".cnd", ".prm", ".sys", ".lst"];
 
   useEffect(() => {
     fetchControllers();
   }, []);
+
+  useEffect(() => {
+    if (selectedController) {
+      handleFetchLogData();
+    }
+  }, [selectedController]);
 
   const fetchControllers = async () => {
     try {
@@ -143,7 +162,7 @@ const CmosBackupLogs = () => {
       }
     } catch (error) {
       console.error("Error fetching controllers:", error);
-      toast.error("Controller list not found");
+      toast.error("Could not controllers");
     }
   };
 
@@ -194,7 +213,7 @@ const CmosBackupLogs = () => {
 
   const handleInstantBackup = () => {
     if (!selectedController) {
-      toast.error("Please select a controller first");
+      toast.error("First, select a controller!");
       return;
     }
     setIsInstantBackupModalOpen(true);
@@ -202,7 +221,7 @@ const CmosBackupLogs = () => {
 
   const executeInstantBackup = async () => {
     if (selectedFileTypes.length === 0) {
-      toast.error("Please select at least one file type");
+      toast.error("Please select at least one file type!");
       return;
     }
 
@@ -221,15 +240,61 @@ const CmosBackupLogs = () => {
       }
     } catch (error) {
       console.error("Instant backup error:", error);
-      toast.error("An error occurred during instant backup");
+      toast.error("An error occurred during instant backup.");
     } finally {
       setIsBackingUp(false);
     }
   };
 
+  const handleFetchFileSaveHistory = async () => {
+    if (!selectedController) {
+      toast.error("First, select a controller!");
+      return;
+    }
+
+    setIsLoadingHistory(true);
+    try {
+      const history = await getFileSaveHistory(selectedController);
+      setFileSaveHistory(history);
+      setShowFileSaveHistory(true);
+    } catch (error) {
+      console.error("Error fetching file save history:", error);
+      toast.error("Failed to fetch file save history");
+    } finally {
+      setIsLoadingHistory(false);
+    }
+  };
+
+  const handleFetchLogData = async () => {
+    if (!selectedController) {
+      toast.error("First, select a controller!");
+      return;
+    }
+
+    setIsLoadingLogData(true);
+    try {
+      const result = await fetchLogData(selectedController, "LOGDATA.DAT");
+
+      if (result.success) {
+        toast.success("Log data request sent successfully!");
+
+        setTimeout(() => {
+          handleFetchFileSaveHistory();
+        }, 1000);
+      } else {
+        toast.error(result.error || "Failed to fetch log data");
+      }
+    } catch (error) {
+      console.error("Error fetching log data:", error);
+      toast.error("Failed to fetch log data");
+    } finally {
+      setIsLoadingLogData(false);
+    }
+  };
+
   const handleSavePlan = async () => {
     if (!selectedController) {
-      toast.error("Please select a controller first");
+      toast.error("Please select a controller first!");
       return;
     }
 
@@ -341,10 +406,38 @@ const CmosBackupLogs = () => {
                   size="sm"
                   disabled={!selectedController}
                   onClick={() => setShowPlanList(!showPlanList)}
-                  className="rounded-none hover:bg-orange-50 hover:text-orange-700 transition-all duration-200 px-4 h-9"
+                  className="rounded-none border-r border-gray-200 hover:bg-orange-50 hover:text-orange-700 transition-all duration-200 px-4 h-9"
                 >
                   <Calendar className="w-4 h-4 mr-2" />
                   Plan List
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  disabled={!selectedController || isLoadingLogData}
+                  onClick={handleFetchLogData}
+                  className="rounded-none border-r border-gray-200 hover:bg-purple-50 hover:text-purple-700 transition-all duration-200 px-4 h-9"
+                >
+                  {isLoadingLogData ? (
+                    <RefreshCw className="w-4 h-4 animate-spin mr-2" />
+                  ) : (
+                    <AlertCircle className="w-4 h-4 mr-2" />
+                  )}
+                  {isLoadingLogData ? "Fetching..." : "Fetch Log Data"}
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  disabled={!selectedController || isLoadingHistory}
+                  onClick={() => setShowFileSaveHistory(!showFileSaveHistory)}
+                  className="rounded-none hover:bg-indigo-50 hover:text-indigo-700 transition-all duration-200 px-4 h-9"
+                >
+                  {isLoadingHistory ? (
+                    <RefreshCw className="w-4 h-4 animate-spin mr-2" />
+                  ) : (
+                    <Clock className="w-4 h-4 mr-2" />
+                  )}
+                  {isLoadingHistory ? "Loading..." : "File Save History"}
                 </Button>
               </div>
 
@@ -381,6 +474,121 @@ const CmosBackupLogs = () => {
         isVisible={showBackupHistory}
         refreshTrigger={refreshTrigger}
       />
+
+      {showFileSaveHistory && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Clock className="w-5 h-5 text-indigo-600" />
+                File Save History
+                <span className="text-sm text-gray-500 font-normal">
+                  ({fileSaveHistory.length} records)
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleFetchFileSaveHistory}
+                  disabled={isLoadingHistory}
+                  className="text-xs"
+                >
+                  {isLoadingHistory ? (
+                    <RefreshCw className="w-4 h-4 animate-spin mr-2" />
+                  ) : (
+                    <RefreshCw className="w-4 h-4 mr-2" />
+                  )}
+                  Refresh
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowFileSaveHistory(false)}
+                  className="text-xs"
+                >
+                  Hide
+                </Button>
+              </div>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {isLoadingHistory ? (
+              <div className="flex items-center justify-center py-8">
+                <RefreshCw className="w-6 h-6 animate-spin mr-2 text-indigo-600" />
+                <span>Loading file save history...</span>
+              </div>
+            ) : fileSaveHistory.length > 0 ? (
+              <div className="space-y-3 max-h-96 overflow-y-auto">
+                {fileSaveHistory.map((entry) => (
+                  <div
+                    key={entry.id}
+                    className={`p-4 rounded-lg border ${
+                      entry.status
+                        ? "bg-green-50 border-green-200"
+                        : "bg-red-50 border-red-200"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <span className="text-lg">{entry.status_icon}</span>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <span className="font-medium text-gray-900">
+                              {entry.file_name}
+                            </span>
+                            <span
+                              className={`px-2 py-1 rounded-full text-xs font-medium ${
+                                entry.status
+                                  ? "bg-green-100 text-green-800"
+                                  : "bg-red-100 text-red-800"
+                              }`}
+                            >
+                              {entry.status_text}
+                            </span>
+                          </div>
+                          <div className="text-sm text-gray-600 mt-1">
+                            <span>{entry.ip_address}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="text-right text-sm text-gray-500">
+                        <div>
+                          {new Date(entry.created_at).toLocaleString("tr-TR")}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-8 text-gray-500">
+                <Clock className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                <p>No file save history found</p>
+                <p className="text-sm mt-1">
+                  File save operations will appear here after fetching log data
+                </p>
+                {selectedController && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleFetchFileSaveHistory}
+                    disabled={isLoadingHistory}
+                    className="mt-3"
+                  >
+                    {isLoadingHistory ? (
+                      <RefreshCw className="w-4 h-4 animate-spin mr-2" />
+                    ) : (
+                      <RefreshCw className="w-4 h-4 mr-2" />
+                    )}
+                    Load History
+                  </Button>
+                )}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
 
       <Dialog
         open={isCreatePlanModalOpen}
