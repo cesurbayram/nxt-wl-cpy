@@ -4,6 +4,7 @@ import {
   GeneralFileSaveRequest,
   GeneralFileSaveResult,
 } from "@/types/log-data.types";
+import { LogEntry, LogFileContentResponse } from "@/types/log-content.types";
 
 const fetchLogData = async (
   controllerId: string,
@@ -66,4 +67,29 @@ const getFileSaveHistory = async (
   }
 };
 
-export { fetchLogData, getFileSaveHistory };
+const getLogFileContent = async (
+  controllerId: string
+): Promise<LogFileContentResponse> => {
+  try {
+    const response = await fetch(
+      `/api/system-expectations/cmos-backup/log-file-content/${controllerId}`
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || "Failed to fetch log file content");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching log file content:", error);
+    return {
+      success: false,
+      error: `Failed to fetch log file content: ${
+        error instanceof Error ? error.message : "Unknown error"
+      }`,
+    };
+  }
+};
+
+export { fetchLogData, getFileSaveHistory, getLogFileContent };
