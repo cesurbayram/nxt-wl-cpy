@@ -30,6 +30,8 @@ import {
   Trash2,
   Plus,
   AlertCircle,
+  FileText,
+  BookOpen,
 } from "lucide-react";
 import { getController } from "@/utils/service/controller";
 import { Controller } from "@/types/controller.types";
@@ -51,6 +53,8 @@ import {
   getFileSaveHistory,
 } from "@/utils/service/system-expectations/log-data";
 import { FileSaveLogEntry } from "@/types/file-save-log.types";
+import LogContentDisplay from "./log-content-display";
+import TeachingAnalysis from "./teaching-analysis";
 
 const CmosBackupLogs = () => {
   const [controllers, setControllers] = useState<Controller[]>([]);
@@ -147,6 +151,7 @@ const CmosBackupLogs = () => {
     fetchControllers();
   }, []);
 
+  // Auto-fetch log data when component mounts or controller changes
   useEffect(() => {
     if (selectedController) {
       handleFetchLogData();
@@ -162,10 +167,11 @@ const CmosBackupLogs = () => {
       }
     } catch (error) {
       console.error("Error fetching controllers:", error);
-      toast.error("Could not controllers");
+      toast.error("Controller listesi alınamadı");
     }
   };
 
+  // Controller > Files ile aynı handle fonksiyonları
   const handleDayToggle = (dayId: number) => {
     setDayPlans((prev) =>
       prev.map((day) =>
@@ -213,7 +219,7 @@ const CmosBackupLogs = () => {
 
   const handleInstantBackup = () => {
     if (!selectedController) {
-      toast.error("First, select a controller!");
+      toast.error("Önce controller seçin!");
       return;
     }
     setIsInstantBackupModalOpen(true);
@@ -221,7 +227,7 @@ const CmosBackupLogs = () => {
 
   const executeInstantBackup = async () => {
     if (selectedFileTypes.length === 0) {
-      toast.error("Please select at least one file type!");
+      toast.error("En az bir dosya türü seçin!");
       return;
     }
 
@@ -233,22 +239,23 @@ const CmosBackupLogs = () => {
       );
 
       if (result.success) {
-        toast.success(result.message || "Backup started successfully!");
+        toast.success(result.message || "Backup başarıyla başlatıldı!");
         setIsInstantBackupModalOpen(false);
       } else {
-        toast.error(result.error || "Backup failed to start!");
+        toast.error(result.error || "Backup başlatılamadı!");
       }
     } catch (error) {
       console.error("Instant backup error:", error);
-      toast.error("An error occurred during instant backup.");
+      toast.error("Backup başlatılırken hata oluştu!");
     } finally {
       setIsBackingUp(false);
     }
   };
 
+  // Controller > Files ile TAM AYNI handleSave fonksiyonu
   const handleFetchFileSaveHistory = async () => {
     if (!selectedController) {
-      toast.error("First, select a controller!");
+      toast.error("Önce controller seçin!");
       return;
     }
 
@@ -267,7 +274,7 @@ const CmosBackupLogs = () => {
 
   const handleFetchLogData = async () => {
     if (!selectedController) {
-      toast.error("First, select a controller!");
+      toast.error("Önce controller seçin!");
       return;
     }
 
@@ -278,9 +285,11 @@ const CmosBackupLogs = () => {
       if (result.success) {
         toast.success("Log data request sent successfully!");
 
+        // Refresh file save history and log content after sending the request
         setTimeout(() => {
           handleFetchFileSaveHistory();
-        }, 1000);
+          setRefreshTrigger((prev) => prev + 1); // Log Content Display'i yenile
+        }, 2000); // 2 saniye bekle ki C# dosyayı kaydedebilsin
       } else {
         toast.error(result.error || "Failed to fetch log data");
       }
@@ -294,10 +303,11 @@ const CmosBackupLogs = () => {
 
   const handleSavePlan = async () => {
     if (!selectedController) {
-      toast.error("Please select a controller first!");
+      toast.error("Önce controller seçin!");
       return;
     }
 
+    // Plan name otomatik oluşturulacak
     const finalPlanName = planName.trim() || "Backup Plan";
 
     const selectedPlans = dayPlans.filter(
@@ -323,9 +333,10 @@ const CmosBackupLogs = () => {
         await createBackupPlan(selectedController, backupPlan);
       }
 
-      toast.success("CMOS Backup plans saved successfully!");
+      toast.success("🎉 CMOS Backup plans saved successfully!");
       setIsCreatePlanModalOpen(false);
 
+      // Reset form - Controller > Files ile aynı
       setPlanName("");
       setDayPlans((prev) =>
         prev.map((day) => ({
@@ -335,6 +346,7 @@ const CmosBackupLogs = () => {
         }))
       );
 
+      // Refresh plans list
       setRefreshTrigger((prev) => prev + 1);
     } catch (error) {
       console.error("Error saving backup plans:", error);
@@ -346,10 +358,13 @@ const CmosBackupLogs = () => {
 
   return (
     <div className="space-y-6">
+      {/* Single Unified Card */}
       <Card>
         <CardContent className="p-4">
           <div className="flex items-center justify-between gap-4">
+            {/* Left: Controller Selection */}
             <div className="flex items-center gap-3">
+              {/* <HardDrive className="w-4 h-4 text-gray-600" /> */}
               <Label className="text-sm font-medium text-gray-700">
                 Select Controller:
               </Label>
@@ -375,7 +390,9 @@ const CmosBackupLogs = () => {
               </Select>
             </div>
 
+            {/* Right: Action Buttons */}
             <div className="flex items-center gap-3">
+              {/* Secondary Actions */}
               <div className="flex border border-gray-200 rounded-lg overflow-hidden shadow-sm">
                 <Button
                   variant="ghost"
@@ -430,7 +447,7 @@ const CmosBackupLogs = () => {
                   size="sm"
                   disabled={!selectedController || isLoadingHistory}
                   onClick={() => setShowFileSaveHistory(!showFileSaveHistory)}
-                  className="rounded-none hover:bg-indigo-50 hover:text-indigo-700 transition-all duration-200 px-4 h-9"
+                  className="rounded-none border-r border-gray-200 hover:bg-indigo-50 hover:text-indigo-700 transition-all duration-200 px-4 h-9"
                 >
                   {isLoadingHistory ? (
                     <RefreshCw className="w-4 h-4 animate-spin mr-2" />
@@ -441,6 +458,7 @@ const CmosBackupLogs = () => {
                 </Button>
               </div>
 
+              {/* Primary Action */}
               <Button
                 size="sm"
                 onClick={() => handleInstantBackup()}
@@ -463,18 +481,21 @@ const CmosBackupLogs = () => {
         </CardContent>
       </Card>
 
+      {/* Plan List */}
       <PlansList
         controllerId={selectedController}
         isVisible={showPlanList}
         refreshTrigger={refreshTrigger}
       />
 
+      {/* Backup History */}
       <BackupHistory
         controllerId={selectedController}
         isVisible={showBackupHistory}
         refreshTrigger={refreshTrigger}
       />
 
+      {/* File Save History */}
       {showFileSaveHistory && (
         <Card>
           <CardHeader>
@@ -590,6 +611,26 @@ const CmosBackupLogs = () => {
         </Card>
       )}
 
+      {/* Log Content ve Teaching Analysis - Yan yana görünüm */}
+      {selectedController && (
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-6 min-h-[600px] items-start">
+          {/* Sol taraf - Log Content Display */}
+          <LogContentDisplay
+            controllerId={selectedController}
+            isVisible={true}
+            refreshTrigger={refreshTrigger}
+          />
+
+          {/* Sağ taraf - Teaching Analysis */}
+          <TeachingAnalysis
+            controllerId={selectedController}
+            isVisible={true}
+            refreshTrigger={refreshTrigger}
+          />
+        </div>
+      )}
+
+      {/* Create Plan Modal */}
       <Dialog
         open={isCreatePlanModalOpen}
         onOpenChange={setIsCreatePlanModalOpen}
@@ -600,6 +641,7 @@ const CmosBackupLogs = () => {
           </DialogHeader>
 
           <div className="space-y-4">
+            {/* Plan Name Input */}
             <div>
               <Label className="text-sm font-medium">
                 Plan Name (Optional)
@@ -613,6 +655,7 @@ const CmosBackupLogs = () => {
               />
             </div>
 
+            {/* Table Layout */}
             <div className="border rounded-lg overflow-hidden">
               <div className="grid grid-cols-12 bg-gray-50 border-b">
                 <div className="col-span-2 p-3 font-medium text-base">Day</div>
@@ -629,6 +672,7 @@ const CmosBackupLogs = () => {
                     key={day.id}
                     className="grid grid-cols-12 border-b last:border-b-0 hover:bg-gray-50/50"
                   >
+                    {/* Day Column */}
                     <div className="col-span-2 p-3 flex items-center">
                       <Checkbox
                         checked={isEnabled}
@@ -640,6 +684,7 @@ const CmosBackupLogs = () => {
                       </Label>
                     </div>
 
+                    {/* Time Column */}
                     <div className="col-span-2 p-3">
                       <Input
                         type="time"
@@ -652,8 +697,10 @@ const CmosBackupLogs = () => {
                       />
                     </div>
 
+                    {/* File Types Column */}
                     <div className="col-span-8 p-3">
                       <div className="flex flex-wrap items-center gap-2">
+                        {/* All Checkbox - First */}
                         <div className="flex items-center gap-1">
                           <Checkbox
                             checked={
@@ -671,6 +718,7 @@ const CmosBackupLogs = () => {
                           </Label>
                         </div>
 
+                        {/* Individual File Types - Inline */}
                         {fileTypes.map((fileType) => (
                           <div
                             key={fileType}
@@ -724,6 +772,7 @@ const CmosBackupLogs = () => {
         </DialogContent>
       </Dialog>
 
+      {/* Instant Backup Modal - wl-kopya(3) Files mantığına göre */}
       <Dialog
         open={isInstantBackupModalOpen}
         onOpenChange={setIsInstantBackupModalOpen}
@@ -751,6 +800,7 @@ const CmosBackupLogs = () => {
             <div>
               <h4 className="text-sm font-medium mb-2">Select File Types:</h4>
               <div className="flex flex-wrap gap-2">
+                {/* All Checkbox */}
                 <div className="flex items-center space-x-1 px-2 py-1 bg-blue-600 bg-opacity-10 rounded cursor-pointer">
                   <Checkbox
                     checked={selectedFileTypes.length === fileTypes.length}
@@ -765,6 +815,7 @@ const CmosBackupLogs = () => {
                   <span className="text-xs font-medium">All</span>
                 </div>
 
+                {/* Individual File Types */}
                 {fileTypes.map((fileType) => (
                   <div
                     key={fileType}
