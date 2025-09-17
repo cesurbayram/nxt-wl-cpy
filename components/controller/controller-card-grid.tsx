@@ -119,7 +119,7 @@ const ControllerCardGrid = ({
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
       {controllers.map((controller) => (
         <Card
           key={controller.id}
@@ -158,30 +158,31 @@ const ControllerCardGrid = ({
 
           <CardContent className="pt-0">
             <div className="space-y-3">
-              <div className="grid grid-cols-2 gap-4 text-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-sm">
                 <div>
-                  <p className="text-muted-foreground">IP Address</p>
-                  <p className="font-mono">{controller.ipAddress}</p>
+                  <p className="text-muted-foreground text-xs">IP Address</p>
+                  <p className="font-mono text-sm break-all">{controller.ipAddress}</p>
                 </div>
                 <div>
-                  <p className="text-muted-foreground">Location</p>
-                  <p className="truncate">{controller.location}</p>
+                  <p className="text-muted-foreground text-xs">Location</p>
+                  <p className="truncate text-sm">{controller.location}</p>
                 </div>
               </div>
 
               <StatusIndicators controller={controller} />
 
-              <div className="flex items-center justify-between pt-2 border-t">
-                <div className="flex items-center gap-2">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pt-2 border-t">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2">
                   <Button
                     variant="ghost"
                     size="sm"
                     asChild
-                    className="hover:bg-[#6950e8] hover:text-white"
+                    className="hover:bg-[#6950e8] hover:text-white text-xs sm:text-sm w-full sm:w-auto"
                   >
                     <Link href={`/controller/${controller.id}`}>
-                      View Details
-                      <FaArrowRight className="h-3 w-3 ml-2" />
+                      <span className="sm:hidden">Details</span>
+                      <span className="hidden sm:inline">View Details</span>
+                      <FaArrowRight className="h-3 w-3 ml-1 sm:ml-2" />
                     </Link>
                   </Button>
 
@@ -189,10 +190,10 @@ const ControllerCardGrid = ({
                     variant="ghost"
                     size="sm"
                     asChild
-                    className="hover:bg-[#6950e8]/80 hover:text-white"
+                    className="hover:bg-[#6950e8]/80 hover:text-white text-xs sm:text-sm w-full sm:w-auto"
                   >
                     <Link href={`/controller/${controller.id}?tab=update`}>
-                      <Settings className="h-4 w-4 mr-1" />
+                      <Settings className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
                       Configure
                     </Link>
                   </Button>
@@ -206,9 +207,10 @@ const ControllerCardGrid = ({
                     e.stopPropagation();
                     deleteClick(controller);
                   }}
-                  className="hover:bg-red-500 hover:text-white text-red-600"
+                  className="hover:bg-red-500 hover:text-white text-red-600 w-full sm:w-auto"
                 >
-                  <Trash2 className="h-4 w-4" />
+                  <Trash2 className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-0" />
+                  <span className="sm:hidden">Delete</span>
                 </Button>
               </div>
             </div>

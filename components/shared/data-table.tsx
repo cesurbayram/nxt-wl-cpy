@@ -38,7 +38,7 @@ export function DataTable<TData, TValue>({
     <>
       <div className="relative w-full overflow-hidden rounded-md border">
         <div className="overflow-auto max-h-[63vh]">
-          <Table className="min-w-full">
+          <Table className="w-full">
             <TableHeader className="sticky top-0 bg-background z-10">
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>

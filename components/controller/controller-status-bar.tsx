@@ -30,11 +30,11 @@ const ControllerStatusBar = ({
   const getTeachIcon = () => {
     switch (controllerStatus.teach) {
       case "TEACH":
-        return <FaRegHandLizard size={26} color="green" />;
+        return <FaRegHandLizard className="w-5 h-5 sm:w-6 sm:h-6" color="green" />;
       case "PLAY":
-        return <BsTropicalStorm size={26} color="green" />;
+        return <BsTropicalStorm className="w-5 h-5 sm:w-6 sm:h-6" color="green" />;
       case "REMOTE":
-        return <FaExternalLinkAlt size={26} color="green" />;
+        return <FaExternalLinkAlt className="w-5 h-5 sm:w-6 sm:h-6" color="green" />;
       default:
         return null;
     }
@@ -43,96 +43,101 @@ const ControllerStatusBar = ({
   const getCycleIcon = () => {
     switch (controllerStatus.cycle) {
       case "CYCLE":
-        return <GrPowerCycle size={26} color="green" />;
+        return <GrPowerCycle className="w-5 h-5 sm:w-6 sm:h-6" color="green" />;
       case "STEP":
-        return <DiSublime size={26} color="green" />;
+        return <DiSublime className="w-5 h-5 sm:w-6 sm:h-6" color="green" />;
       case "AUTO":
-        return <MdOutlineHdrAuto size={26} color="green" />;
+        return <MdOutlineHdrAuto className="w-5 h-5 sm:w-6 sm:h-6" color="green" />;
       default:
         return null;
     }
   };
 
   return (
-    <div className="flex gap-6 items-center px-5 -mt-1">
-      <div className="flex flex-col items-center">
+    <div className="flex gap-2 sm:gap-4 lg:gap-6 items-center px-2 sm:px-5 -mt-1 w-full overflow-x-auto">
+      <div className="flex flex-col items-center min-w-0">
         <GrConnect
           color={controllerStatus?.connection ? "green" : "red"}
-          size={26}
+          className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
         />
-        <p className="text-xs">Connection</p>
+        <p className="text-xs whitespace-nowrap">
+          <span className="sm:hidden">Conn</span>
+          <span className="hidden sm:inline">Connection</span>
+        </p>
       </div>
       {getTeachIcon() && (
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center min-w-0">
           {getTeachIcon()}
-          <p className="text-xs">{controllerStatus.teach}</p>
+          <p className="text-xs whitespace-nowrap">{controllerStatus.teach}</p>
         </div>
       )}
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center min-w-0">
         <PiLightning
           color={controllerStatus?.servo ? "green" : "gray"}
-          size={26}
+          className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
         />
-        <p className="text-xs">Servo</p>
+        <p className="text-xs whitespace-nowrap">Servo</p>
       </div>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center min-w-0">
         <GiRobotGrab
           color={controllerStatus?.operating ? "green" : "gray"}
-          size={26}
+          className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
         />
-        <p className="text-xs">Operating</p>
+        <p className="text-xs whitespace-nowrap">
+          <span className="sm:hidden">Op</span>
+          <span className="hidden sm:inline">Operating</span>
+        </p>
       </div>
       {getCycleIcon() && (
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center min-w-0">
           {getCycleIcon()}
-          <p className="text-xs">{controllerStatus.cycle}</p>
+          <p className="text-xs whitespace-nowrap">{controllerStatus.cycle}</p>
         </div>
       )}
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center min-w-0">
         <FaRegStopCircle
           color={controllerStatus?.hold ? "#F1C40F" : "gray"}
-          size={26}
+          className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
         />
-        <p className="text-xs">Hold</p>
+        <p className="text-xs whitespace-nowrap">Hold</p>
       </div>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center min-w-0">
         <RiAlarmWarningLine
           color={controllerStatus?.alarm ? "red" : "gray"}
-          size={26}
+          className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
         />
-        <p className="text-xs">Alarm</p>
+        <p className="text-xs whitespace-nowrap">Alarm</p>
       </div>
-      <div className="flex flex-col items-center">
-        <BiError color={controllerStatus?.error ? "red" : "gray"} size={26} />
-        <p className="text-xs">Error</p>
+      <div className="flex flex-col items-center min-w-0">
+        <BiError 
+          color={controllerStatus?.error ? "red" : "gray"} 
+          className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6" 
+        />
+        <p className="text-xs whitespace-nowrap">Error</p>
       </div>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center min-w-0">
         <BsSignStopFill
           color={controllerStatus?.stop ? "red" : "lightgray"}
-          size={26}
+          className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
         />
-        <p className="text-xs">Stop</p>
+        <p className="text-xs whitespace-nowrap">Stop</p>
       </div>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center min-w-0">
         <BsDoorOpen
           color={controllerStatus?.doorOpen ? "red" : "gray"}
-          size={26}
+          className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
         />
-        <p className="text-xs">Door Opened</p>
+        <p className="text-xs whitespace-nowrap">
+          <span className="sm:hidden">Door</span>
+          <span className="hidden sm:inline">Door Opened</span>
+        </p>
       </div>
-      {/* <div className="flex flex-col items-center">
-        <MdOutlineSignalCellularAlt
-          color={controllerStatus?.safeSpeed ? "green" : "gray"}
-          size={26}
-        />
-        <p className="text-xs">Safe Speed</p>
-      </div> */}
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center min-w-0">
         <DiBootstrap
           color={controllerStatus?.cBackup ? "green" : "lightgray"}
-          size={32}
+          className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8"
         />
-        <p className="text-xs">Backup</p>
+        <p className="text-xs whitespace-nowrap">Backup</p>
       </div>
     </div>
   );

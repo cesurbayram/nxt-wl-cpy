@@ -51,11 +51,11 @@ const Data = ({ controllerId }: DataProps) => {
         </TabsList>
       </div>
 
-      <TabsContent value="absoData" className="col-span-4">
+      <TabsContent value="absoData" className="mt-4 lg:mt-0 lg:col-span-4">
         <AbsoDataComponent controllerId={controllerId} />
       </TabsContent>
 
-      <TabsContent value="register" className="col-span-4">
+      <TabsContent value="register" className="mt-4 lg:mt-0 lg:col-span-4">
         <RegisterComponent controllerId={controllerId} />
       </TabsContent>
     </Tabs>

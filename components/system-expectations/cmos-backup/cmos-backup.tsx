@@ -61,12 +61,14 @@ const CmosBackupLogs = () => {
   const [selectedController, setSelectedController] = useState<string>("");
   const [isBackingUp, setIsBackingUp] = useState(false);
 
+  
   const [isInstantBackupModalOpen, setIsInstantBackupModalOpen] =
     useState(false);
   const [selectedFileTypes, setSelectedFileTypes] = useState<string[]>([
     "CMOS",
   ]);
 
+  
   interface DayPlan {
     id: number;
     name: string;
@@ -129,16 +131,21 @@ const CmosBackupLogs = () => {
 
   const [planName, setPlanName] = useState<string>("");
 
+  
   const [isCreatePlanModalOpen, setIsCreatePlanModalOpen] = useState(false);
   const [isCreatingPlan, setIsCreatingPlan] = useState(false);
 
+  
   const [showPlanList, setShowPlanList] = useState(false);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
+  
   const [showBackupHistory, setShowBackupHistory] = useState(false);
 
+ 
   const [isLoadingLogData, setIsLoadingLogData] = useState(false);
 
+  
   const [fileSaveHistory, setFileSaveHistory] = useState<FileSaveLogEntry[]>(
     []
   );
@@ -358,21 +365,20 @@ const CmosBackupLogs = () => {
 
   return (
     <div className="space-y-6">
-      {/* Single Unified Card */}
+      
       <Card>
         <CardContent className="p-4">
-          <div className="flex items-center justify-between gap-4">
-            {/* Left: Controller Selection */}
-            <div className="flex items-center gap-3">
-              {/* <HardDrive className="w-4 h-4 text-gray-600" /> */}
-              <Label className="text-sm font-medium text-gray-700">
+          <div className="flex flex-col gap-4">
+            
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+              <Label className="text-sm font-medium text-gray-700 whitespace-nowrap">
                 Select Controller:
               </Label>
               <Select
                 value={selectedController}
                 onValueChange={setSelectedController}
               >
-                <SelectTrigger className="w-56 bg-white border-gray-300 shadow-sm">
+                <SelectTrigger className="w-full sm:w-56 bg-white border-gray-300 shadow-sm">
                   <SelectValue placeholder="Choose a controller..." />
                 </SelectTrigger>
                 <SelectContent>
@@ -390,89 +396,91 @@ const CmosBackupLogs = () => {
               </Select>
             </div>
 
-            {/* Right: Action Buttons */}
-            <div className="flex items-center gap-3">
-              {/* Secondary Actions */}
-              <div className="flex border border-gray-200 rounded-lg overflow-hidden shadow-sm">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setIsCreatePlanModalOpen(true)}
-                  disabled={!selectedController || isCreatingPlan}
-                  className="rounded-none border-r border-gray-200 hover:bg-blue-50 hover:text-blue-700 transition-all duration-200 px-4 h-9"
-                >
-                  {isCreatingPlan ? (
-                    <RefreshCw className="w-4 h-4 animate-spin mr-2" />
-                  ) : (
-                    <Calendar className="w-4 h-4 mr-2" />
-                  )}
-                  {isCreatingPlan ? "Creating..." : "Create Plan"}
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  disabled={!selectedController}
-                  onClick={() => setShowBackupHistory(!showBackupHistory)}
-                  className="rounded-none border-r border-gray-200 hover:bg-green-50 hover:text-green-700 transition-all duration-200 px-4 h-9"
-                >
-                  <Clock className="w-4 h-4 mr-2" />
-                  Backup History
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  disabled={!selectedController}
-                  onClick={() => setShowPlanList(!showPlanList)}
-                  className="rounded-none border-r border-gray-200 hover:bg-orange-50 hover:text-orange-700 transition-all duration-200 px-4 h-9"
-                >
-                  <Calendar className="w-4 h-4 mr-2" />
-                  Plan List
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  disabled={!selectedController || isLoadingLogData}
-                  onClick={handleFetchLogData}
-                  className="rounded-none border-r border-gray-200 hover:bg-purple-50 hover:text-purple-700 transition-all duration-200 px-4 h-9"
-                >
-                  {isLoadingLogData ? (
-                    <RefreshCw className="w-4 h-4 animate-spin mr-2" />
-                  ) : (
-                    <AlertCircle className="w-4 h-4 mr-2" />
-                  )}
-                  {isLoadingLogData ? "Fetching..." : "Fetch Log Data"}
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  disabled={!selectedController || isLoadingHistory}
-                  onClick={() => setShowFileSaveHistory(!showFileSaveHistory)}
-                  className="rounded-none border-r border-gray-200 hover:bg-indigo-50 hover:text-indigo-700 transition-all duration-200 px-4 h-9"
-                >
-                  {isLoadingHistory ? (
-                    <RefreshCw className="w-4 h-4 animate-spin mr-2" />
-                  ) : (
-                    <Clock className="w-4 h-4 mr-2" />
-                  )}
-                  {isLoadingHistory ? "Loading..." : "File Save History"}
-                </Button>
-              </div>
+            
+            <div className="flex flex-wrap gap-3">
+              
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setIsCreatePlanModalOpen(true)}
+                disabled={!selectedController || isCreatingPlan}
+                className="flex-shrink-0 hover:bg-blue-50 hover:text-blue-700 transition-all duration-200 px-3 h-9 text-xs"
+              >
+                {isCreatingPlan ? (
+                  <RefreshCw className="w-3 h-3 animate-spin mr-1" />
+                ) : (
+                  <Calendar className="w-3 h-3 mr-1" />
+                )}
+                {isCreatingPlan ? "Creating..." : "Create Plan"}
+              </Button>
 
-              {/* Primary Action */}
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={!selectedController}
+                onClick={() => setShowBackupHistory(!showBackupHistory)}
+                className="flex-shrink-0 hover:bg-green-50 hover:text-green-700 transition-all duration-200 px-3 h-9 text-xs"
+              >
+                <Clock className="w-3 h-3 mr-1" />
+                Backup History
+              </Button>
+
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={!selectedController}
+                onClick={() => setShowPlanList(!showPlanList)}
+                className="flex-shrink-0 hover:bg-orange-50 hover:text-orange-700 transition-all duration-200 px-3 h-9 text-xs"
+              >
+                <Calendar className="w-3 h-3 mr-1" />
+                Plan List
+              </Button>
+
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={!selectedController || isLoadingLogData}
+                onClick={handleFetchLogData}
+                className="flex-shrink-0 hover:bg-purple-50 hover:text-purple-700 transition-all duration-200 px-3 h-9 text-xs"
+              >
+                {isLoadingLogData ? (
+                  <RefreshCw className="w-3 h-3 animate-spin mr-1" />
+                ) : (
+                  <AlertCircle className="w-3 h-3 mr-1" />
+                )}
+                {isLoadingLogData ? "Fetching..." : "Fetch Log Data"}
+              </Button>
+
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={!selectedController || isLoadingHistory}
+                onClick={() => setShowFileSaveHistory(!showFileSaveHistory)}
+                className="flex-shrink-0 hover:bg-indigo-50 hover:text-indigo-700 transition-all duration-200 px-3 h-9 text-xs"
+              >
+                {isLoadingHistory ? (
+                  <RefreshCw className="w-3 h-3 animate-spin mr-1" />
+                ) : (
+                  <Clock className="w-3 h-3 mr-1" />
+                )}
+                {isLoadingHistory ? "Loading..." : "File Save History"}
+              </Button>
+                
+              
               <Button
                 size="sm"
                 onClick={() => handleInstantBackup()}
                 disabled={!selectedController || isBackingUp}
-                className={`px-6 h-10 font-medium shadow-lg transition-all duration-300 ${
+                className={`flex-shrink-0 px-4 h-9 font-medium shadow-lg transition-all duration-300 text-xs ${
                   selectedController && !isBackingUp
                     ? "bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white hover:shadow-xl transform hover:scale-105"
                     : "bg-gray-200 text-gray-500 cursor-not-allowed"
                 }`}
               >
                 {isBackingUp ? (
-                  <RefreshCw className="w-4 h-4 animate-spin mr-2" />
+                  <RefreshCw className="w-3 h-3 animate-spin mr-1" />
                 ) : (
-                  <Download className="w-4 h-4 mr-2" />
+                  <Download className="w-3 h-3 mr-1" />
                 )}
                 {isBackingUp ? "Processing..." : "Instant Backup"}
               </Button>
@@ -481,21 +489,21 @@ const CmosBackupLogs = () => {
         </CardContent>
       </Card>
 
-      {/* Plan List */}
+      
       <PlansList
         controllerId={selectedController}
         isVisible={showPlanList}
         refreshTrigger={refreshTrigger}
       />
 
-      {/* Backup History */}
+      
       <BackupHistory
         controllerId={selectedController}
         isVisible={showBackupHistory}
         refreshTrigger={refreshTrigger}
       />
 
-      {/* File Save History */}
+      
       {showFileSaveHistory && (
         <Card>
           <CardHeader>
@@ -611,17 +619,17 @@ const CmosBackupLogs = () => {
         </Card>
       )}
 
-      {/* Log Content ve Teaching Analysis - Yan yana görünüm */}
+      
       {selectedController && (
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-6 min-h-[600px] items-start">
-          {/* Sol taraf - Log Content Display */}
+          
           <LogContentDisplay
             controllerId={selectedController}
             isVisible={true}
             refreshTrigger={refreshTrigger}
           />
 
-          {/* Sağ taraf - Teaching Analysis */}
+          
           <TeachingAnalysis
             controllerId={selectedController}
             isVisible={true}
@@ -630,7 +638,7 @@ const CmosBackupLogs = () => {
         </div>
       )}
 
-      {/* Create Plan Modal */}
+      
       <Dialog
         open={isCreatePlanModalOpen}
         onOpenChange={setIsCreatePlanModalOpen}
@@ -641,7 +649,7 @@ const CmosBackupLogs = () => {
           </DialogHeader>
 
           <div className="space-y-4">
-            {/* Plan Name Input */}
+            
             <div>
               <Label className="text-sm font-medium">
                 Plan Name (Optional)
@@ -655,7 +663,7 @@ const CmosBackupLogs = () => {
               />
             </div>
 
-            {/* Table Layout */}
+            
             <div className="border rounded-lg overflow-hidden">
               <div className="grid grid-cols-12 bg-gray-50 border-b">
                 <div className="col-span-2 p-3 font-medium text-base">Day</div>
@@ -672,7 +680,7 @@ const CmosBackupLogs = () => {
                     key={day.id}
                     className="grid grid-cols-12 border-b last:border-b-0 hover:bg-gray-50/50"
                   >
-                    {/* Day Column */}
+                    
                     <div className="col-span-2 p-3 flex items-center">
                       <Checkbox
                         checked={isEnabled}
@@ -684,7 +692,7 @@ const CmosBackupLogs = () => {
                       </Label>
                     </div>
 
-                    {/* Time Column */}
+                    
                     <div className="col-span-2 p-3">
                       <Input
                         type="time"
@@ -697,10 +705,10 @@ const CmosBackupLogs = () => {
                       />
                     </div>
 
-                    {/* File Types Column */}
+                    
                     <div className="col-span-8 p-3">
                       <div className="flex flex-wrap items-center gap-2">
-                        {/* All Checkbox - First */}
+                        
                         <div className="flex items-center gap-1">
                           <Checkbox
                             checked={
@@ -718,7 +726,7 @@ const CmosBackupLogs = () => {
                           </Label>
                         </div>
 
-                        {/* Individual File Types - Inline */}
+                        
                         {fileTypes.map((fileType) => (
                           <div
                             key={fileType}
@@ -772,7 +780,7 @@ const CmosBackupLogs = () => {
         </DialogContent>
       </Dialog>
 
-      {/* Instant Backup Modal - wl-kopya(3) Files mantığına göre */}
+      
       <Dialog
         open={isInstantBackupModalOpen}
         onOpenChange={setIsInstantBackupModalOpen}
@@ -800,7 +808,7 @@ const CmosBackupLogs = () => {
             <div>
               <h4 className="text-sm font-medium mb-2">Select File Types:</h4>
               <div className="flex flex-wrap gap-2">
-                {/* All Checkbox */}
+                
                 <div className="flex items-center space-x-1 px-2 py-1 bg-blue-600 bg-opacity-10 rounded cursor-pointer">
                   <Checkbox
                     checked={selectedFileTypes.length === fileTypes.length}
@@ -815,7 +823,7 @@ const CmosBackupLogs = () => {
                   <span className="text-xs font-medium">All</span>
                 </div>
 
-                {/* Individual File Types */}
+                
                 {fileTypes.map((fileType) => (
                   <div
                     key={fileType}

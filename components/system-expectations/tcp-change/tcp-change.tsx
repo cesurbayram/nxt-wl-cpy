@@ -28,7 +28,7 @@ import {
   TCPDataEntry,
   TCPComparison,
   TCPToolData,
-} from "@/types/tcp-log.change.types";
+} from "@/types/tcp-log-change.types";
 
 const TCPChangeLogs: React.FC = () => {
   const [controllers, setControllers] = useState<Controller[]>([]);
@@ -61,32 +61,32 @@ const TCPChangeLogs: React.FC = () => {
   };
 
   const parseElementNumber = (elementNumber: string) => {
-    // N-M-K format parsing
+    
     const parts = elementNumber.split("-");
     if (parts.length !== 3) {
       return null;
     }
 
-    const N = parseInt(parts[0]); // Tool numarası + 1
-    const M = parseInt(parts[1]); // Parametre grubu (1 veya 9)
-    const K = parseInt(parts[2]); // Parametre index (0-5)
+    const N = parseInt(parts[0]); 
+    const M = parseInt(parts[1]); 
+    const K = parseInt(parts[2]); 
 
-    // M ve K değerine göre parametre adını belirle
+    
     let parameterName = "Unknown";
     let parameterGroupName = "Unknown";
 
     if (M === 1) {
-      // TOOL Data (X, Y, Z, Rx, Ry, Rz)
+      
       const toolDataNames = ["X", "Y", "Z", "Rx", "Ry", "Rz"];
       parameterName = toolDataNames[K] || "Unknown";
       parameterGroupName = "TOOL Data";
     } else if (M === 2) {
-      // TOOL Data M=2 (farklı parametre grubu, aynı X,Y,Z,Rx,Ry,Rz)
+      
       const toolDataNames = ["X", "Y", "Z", "Rx", "Ry", "Rz"];
       parameterName = toolDataNames[K] || "Unknown";
       parameterGroupName = "TOOL Data (M=2)";
     } else if (M === 9) {
-      // TOOL Geometry (Xg, Yg, Zg, Ix, Iy, Iz)
+      
       const toolGeometryNames = ["Xg", "Yg", "Zg", "Ix", "Iy", "Iz"];
       parameterName = toolGeometryNames[K] || "Unknown";
       parameterGroupName = "TOOL Geometry";
@@ -115,7 +115,7 @@ const TCPChangeLogs: React.FC = () => {
       }))
     );
 
-    // Tüm unique event'leri topla
+    
     const uniqueEvents = new Set<string>();
     logEntries.forEach((entry) => {
       if (entry.event) uniqueEvents.add(entry.event);
@@ -134,7 +134,7 @@ const TCPChangeLogs: React.FC = () => {
     logEntries.forEach((entry, index) => {
       const event = entry.event?.toLowerCase() || "";
 
-      // FILE NAME field kontrolü - field key'leri büyük/küçük harf duyarlı olabilir
+      
       const fields = entry.fields || {};
       const fileNameFieldKey = Object.keys(fields).find(
         (k) => k.trim().toLowerCase() === "file name"
@@ -159,12 +159,12 @@ const TCPChangeLogs: React.FC = () => {
       let afterEdit = (afterEditKey ? fields[afterEditKey] : "") || "";
       let beforeEdit = (beforeEditKey ? fields[beforeEditKey] : "") || "";
 
-      // ELEMENT VALUE yoksa AFTER EDIT kullan
+      
       if (!elementValue && afterEdit) {
         elementValue = afterEdit;
       }
 
-      // Fallback: raw entry'den parse et
+      
       if (!fileName && entry.rawData) {
         const m = entry.rawData.match(/FILE NAME\s*:\s*(\S+)/i);
         if (m) fileName = m[1];
@@ -180,7 +180,7 @@ const TCPChangeLogs: React.FC = () => {
         if (m) elementValue = m[1];
       }
 
-      // Debug logging
+      
       if (event.includes("other file edit")) {
         otherFileEditCount++;
         console.log(
@@ -195,7 +195,7 @@ const TCPChangeLogs: React.FC = () => {
         }
       }
 
-      // OTHER FILE EDT ve File Name: TOOL filtresi
+      
       if (
         (event.includes("other file edit") ||
           event.includes("other file edt")) &&
@@ -235,7 +235,7 @@ const TCPChangeLogs: React.FC = () => {
       finalEventsCount: events.length,
     });
 
-    // Tarihe göre sırala (en yeni önce)
+    
     return events.sort((a, b) => {
       if (a.date && b.date) {
         const dateA = new Date(
@@ -250,9 +250,9 @@ const TCPChangeLogs: React.FC = () => {
             "$1-$2-$3T$4:$5:$6"
           )
         );
-        return dateB.getTime() - dateA.getTime(); // En yeni tarih önce
+        return dateB.getTime() - dateA.getTime(); 
       }
-      return b.index - a.index; // Fallback: index'e göre sırala
+      return b.index - a.index; 
     });
   };
 
@@ -261,12 +261,12 @@ const TCPChangeLogs: React.FC = () => {
 
     const comparisons: TCPComparison[] = [];
 
-    // Son iki değişikliği karşılaştır
+   
     for (let i = 0; i < Math.min(entries.length - 1, 5); i++) {
       const current = entries[i];
       const previous = entries[i + 1];
 
-      // Aynı element için karşılaştırma
+      
       if (current.elementNumber === previous.elementNumber) {
         const newVal = parseFloat(current.elementValue) || 0;
         const oldVal = parseFloat(previous.elementValue) || 0;
@@ -400,68 +400,50 @@ const TCPChangeLogs: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Controller Selection */}
+      
       <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Settings className="w-5 h-5 text-blue-600" />
-              TCP Data Analysis
+        <CardContent className="p-4">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+           
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+              <span className="text-sm font-medium text-gray-700 whitespace-nowrap">
+                Controller:
+              </span>
+              <Select
+                value={selectedController}
+                onValueChange={setSelectedController}
+              >
+                <SelectTrigger className="h-9 w-full sm:w-auto sm:min-w-[200px]">
+                  <SelectValue placeholder="Select controller" />
+                </SelectTrigger>
+                <SelectContent>
+                  {controllers.map((controller) => (
+                    <SelectItem key={controller.id} value={controller.id || ""}>
+                      {controller.name} ({controller.ipAddress})
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
+
+            
             <Button
               onClick={analyzeTCPData}
               disabled={isLoading || !selectedController}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2"
+              className="bg-blue-600 hover:bg-blue-700 text-white w-full lg:w-auto px-4 lg:px-6 py-2"
               size="sm"
             >
               {isLoading ? (
-                <RefreshCw className="w-4 h-4 animate-spin mr-2" />
+                <RefreshCw className="w-3 h-3 sm:w-4 sm:h-4 animate-spin mr-1 sm:mr-2" />
               ) : (
-                <Activity className="w-4 h-4 mr-2" />
+                <Activity className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
               )}
               {isLoading ? "Analyzing..." : "Analyze Data"}
             </Button>
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="pt-0">
-          <div className="flex items-center gap-3">
-            <span className="text-sm font-medium text-gray-700 whitespace-nowrap">
-              Controller:
-            </span>
-            <Select
-              value={selectedController}
-              onValueChange={setSelectedController}
-            >
-              <SelectTrigger className="h-9">
-                <SelectValue placeholder="Select controller" />
-              </SelectTrigger>
-              <SelectContent>
-                {controllers.map((controller) => (
-                  <SelectItem key={controller.id} value={controller.id || ""}>
-                    {controller.name} ({controller.ipAddress})
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
           </div>
         </CardContent>
       </Card>
-
-      {/* Analysis Results */}
       <Card className="h-fit">
-        <CardHeader>
-          <CardTitle className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Settings className="w-5 h-5 text-blue-600" />
-              TCP Change Analysis Results
-              {tcpDataEntries.length > 0 && (
-                <span className="text-sm text-gray-500 font-normal">
-                  ({tcpDataEntries.length} records)
-                </span>
-              )}
-            </div>
-          </CardTitle>
-        </CardHeader>
         <CardContent>
           {isLoading ? (
             <div className="flex items-center justify-center py-8">
@@ -484,10 +466,10 @@ const TCPChangeLogs: React.FC = () => {
             </div>
           ) : tcpDataEntries.length > 0 ? (
             <div className="space-y-5">
-              {/* Latest vs Previous Comparison - Two Column Layout */}
+              
               {latestComparison.length > 0 && tcpDataEntries.length >= 2 && (
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-80">
-                  {/* Left: Latest Changes Summary */}
+                  
                   <div className="p-5 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg border border-green-200 h-full flex flex-col">
                     <h4 className="text-base font-medium mb-4 flex items-center gap-2 text-green-800">
                       <TrendingUp className="w-5 h-5" />
@@ -532,7 +514,7 @@ const TCPChangeLogs: React.FC = () => {
                       ))}
                     </div>
 
-                    {/* Summary Information */}
+                   
                     <div className="mt-4 space-y-2">
                       <div className="p-3 bg-white rounded-lg border">
                         <div className="text-xs font-medium text-gray-600 mb-1">
@@ -607,14 +589,14 @@ const TCPChangeLogs: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Right: Tool Value Comparison */}
+                  
                   <div className="p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200 h-full flex flex-col">
                     <h4 className="text-sm font-medium mb-3 flex items-center gap-2 text-blue-800">
                       <Calendar className="w-4 h-4" />
                       Latest vs Previous Tool Values
                     </h4>
                     <div className="space-y-2 flex-1 overflow-y-auto">
-                      {/* Latest Entry */}
+                     
                       <div className="p-3 bg-white rounded border">
                         <div className="text-xs font-medium text-green-700 mb-2">
                           Latest (#{tcpDataEntries[0].index}) -{" "}
@@ -637,7 +619,7 @@ const TCPChangeLogs: React.FC = () => {
                         </div>
                       </div>
 
-                      {/* Previous Entry */}
+                      
                       {tcpDataEntries.length > 1 && (
                         <div className="p-3 bg-white rounded border">
                           <div className="text-xs font-medium text-gray-600 mb-2">
@@ -666,7 +648,7 @@ const TCPChangeLogs: React.FC = () => {
                         </div>
                       )}
 
-                      {/* Element Number Format Guide */}
+                     
                       <div className="p-3 bg-white rounded border">
                         <div className="text-xs font-medium text-gray-600 mb-2">
                           Element Format (N-M-K):
@@ -689,7 +671,7 @@ const TCPChangeLogs: React.FC = () => {
                 </div>
               )}
 
-              {/* Recent TCP Data Records */}
+              
               <div>
                 <h4 className="text-sm font-medium mb-3 flex items-center gap-2">
                   <Clock className="w-4 h-4" />

@@ -135,43 +135,51 @@ const Maintenance = ({ controllerId }: { controllerId: string }) => {
     <>
       <Tabs
         defaultValue="plans"
-        className="grid grid-cols-5 gap-3"
+        className="flex flex-col lg:grid lg:grid-cols-5 gap-3"
         orientation="vertical"
         onValueChange={(value) => setActiveTab(value as "plans" | "logs")}
       >
-        <TabsList className="flex flex-col h-fit border-2 gap-1">
-          <TabsTrigger value="plans" className="w-full">
-            Plans
-          </TabsTrigger>
-          <TabsTrigger value="logs" className="w-full">
-            Logs
-          </TabsTrigger>
-        </TabsList>
+        
+        <div className="flex flex-col gap-4 lg:col-span-1">
+          <div className="overflow-x-auto lg:overflow-x-visible">
+            <TabsList className="flex lg:flex-col h-fit border-2 gap-1 w-full lg:w-auto">
+              <TabsTrigger value="plans" className="w-full whitespace-nowrap px-2 lg:px-4 flex-shrink-0">
+                Plans
+              </TabsTrigger>
+              <TabsTrigger value="logs" className="w-full whitespace-nowrap px-2 lg:px-4 flex-shrink-0">
+                Logs
+              </TabsTrigger>
+            </TabsList>
+          </div>
+        </div>
 
-        <TabsContent value="plans" className="col-span-4">
-          {isLoading && <p>Loading Plans...</p>}
-          {error && <p>Error: {error.message}</p>}
-          {!isLoading && !error && (
-            <MaintenanceList
-              data={planData}
-              deleteItem={(id) => handleDelete(id)}
-              onAddNew={handleAddNew}
-            />
-          )}
-        </TabsContent>
+        
+        <div className="lg:col-span-4">
+          <TabsContent value="plans" className="mt-4 lg:mt-0">
+            {isLoading && <p>Loading Plans...</p>}
+            {error && <p>Error: {error.message}</p>}
+            {!isLoading && !error && (
+              <MaintenanceList
+                data={planData}
+                deleteItem={(id) => handleDelete(id)}
+                onAddNew={handleAddNew}
+              />
+            )}
+          </TabsContent>
 
-        <TabsContent value="logs" className="col-span-4">
-          {isLoading && <p>Loading Logs...</p>}
-          {error && <p>Error: {error.message}</p>}
-          {!isLoading && !error && (
-            <MaintenanceLogList
-              data={logData}
-              deleteItem={(id) => handleDelete(id)}
-              onAddNew={handleAddNew}
-              maintenancePlans={maintenancePlans}
-            />
-          )}
-        </TabsContent>
+          <TabsContent value="logs" className="mt-4 lg:mt-0">
+            {isLoading && <p>Loading Logs...</p>}
+            {error && <p>Error: {error.message}</p>}
+            {!isLoading && !error && (
+              <MaintenanceLogList
+                data={logData}
+                deleteItem={(id) => handleDelete(id)}
+                onAddNew={handleAddNew}
+                maintenancePlans={maintenancePlans}
+              />
+            )}
+          </TabsContent>
+        </div>
       </Tabs>
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>

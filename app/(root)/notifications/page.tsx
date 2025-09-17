@@ -311,20 +311,44 @@ export default function NotificationsPage() {
         </CardHeader>
         <CardContent>
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="all">All</TabsTrigger>
-              <TabsTrigger value="unseen">
-                Unseen
-                {unreadCount > 0 && (
-                  <Badge
-                    variant="destructive"
-                    className="ml-2 h-4 w-4 rounded-full text-xs"
-                  >
-                    {unreadCount}
-                  </Badge>
-                )}
-              </TabsTrigger>
-            </TabsList>
+            <div className="overflow-x-auto">
+              <TabsList className="w-full min-w-max flex">
+                <TabsTrigger
+                  value="all"
+                  className="flex-1 whitespace-nowrap text-xs sm:text-sm px-2 sm:px-4"
+                >
+                  <span className="sm:hidden">All</span>
+                  <span className="hidden sm:inline">All</span>
+                </TabsTrigger>
+                <TabsTrigger
+                  value="unseen"
+                  className="flex-1 whitespace-nowrap text-xs sm:text-sm px-2 sm:px-4"
+                >
+                  <span className="sm:hidden">
+                    New
+                    {unreadCount > 0 && (
+                      <Badge
+                        variant="destructive"
+                        className="ml-1 h-3 w-3 rounded-full text-xs p-0"
+                      >
+                        {unreadCount}
+                      </Badge>
+                    )}
+                  </span>
+                  <span className="hidden sm:inline">
+                    Unseen
+                    {unreadCount > 0 && (
+                      <Badge
+                        variant="destructive"
+                        className="ml-2 h-4 w-4 rounded-full text-xs"
+                      >
+                        {unreadCount}
+                      </Badge>
+                    )}
+                  </span>
+                </TabsTrigger>
+              </TabsList>
+            </div>
 
             <TabsContent value="all" className="mt-4">
               <ScrollArea className="h-[600px]">

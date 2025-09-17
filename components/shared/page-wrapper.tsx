@@ -26,7 +26,7 @@ const PageWrapper = ({
 }: PageWrapperProps) => {
   return (
     <Card className="shadow-md rounded-xl">
-      <CardHeader className="flex flex-row justify-between items-center">
+      <CardHeader className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center">
         <div className="flex items-center">
           {icon && (
             <div className="p-2 bg-[#6950e81a] bg-opacity-10 inline rounded-lg mr-2">
@@ -34,22 +34,25 @@ const PageWrapper = ({
             </div>
           )}
 
-          <p className="text-base">{pageTitle}</p>
+          <p className="text-base sm:text-lg">{pageTitle}</p>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
           {headerActions}
           {additionalComponent}
 
           {shownHeaderButton && (
-            <Button className="rounded-xl bg-[#6950E8]" onClick={buttonAction}>
-              <MdAdd className="w-5 h-5 mr-2" />{" "}
-              <span className="text-sm">{buttonText}</span>
+            <Button
+              className="rounded-xl bg-[#6950E8] w-full sm:w-auto"
+              onClick={buttonAction}
+            >
+              <MdAdd className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2" />
+              <span className="text-xs sm:text-sm">{buttonText}</span>
             </Button>
           )}
         </div>
       </CardHeader>
-      <CardContent className="p-0">{children}</CardContent>
+      <CardContent className="p-1 sm:p-2 md:p-3 lg:p-4">{children}</CardContent>
     </Card>
   );
 };

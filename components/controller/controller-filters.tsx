@@ -186,27 +186,29 @@ const ControllerFilters = ({
     if (activeBadges.length === 0) return null;
 
     return (
-      <div className="flex flex-wrap gap-2 mt-4">
+      <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2 mt-4">
         <span className="text-sm font-medium text-muted-foreground">
           Active filters:
         </span>
-        {activeBadges.map((badge) => (
-          <Badge key={badge.key} variant="secondary" className="gap-1">
-            {badge.label}: {badge.value}
-            <X
-              className="h-3 w-3 cursor-pointer"
-              onClick={() => updateFilter(badge.key, "all")}
-            />
-          </Badge>
-        ))}
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={resetFilters}
-          className="h-6 px-2 text-xs"
-        >
-          Clear all
-        </Button>
+        <div className="flex flex-wrap gap-2">
+          {activeBadges.map((badge) => (
+            <Badge key={badge.key} variant="secondary" className="gap-1 text-xs">
+              {badge.label}: {badge.value}
+              <X
+                className="h-3 w-3 cursor-pointer"
+                onClick={() => updateFilter(badge.key, "all")}
+              />
+            </Badge>
+          ))}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={resetFilters}
+            className="h-6 px-2 text-xs"
+          >
+            Clear all
+          </Button>
+        </div>
       </div>
     );
   };
@@ -214,23 +216,24 @@ const ControllerFilters = ({
   return (
     <Card className="mb-6">
       <CardContent className="p-4">
-        <div className="flex flex-col md:flex-row gap-4">
-          <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Search controllers by name, IP, location..."
-              value={filters.search}
-              onChange={(e) => updateFilter("search", e.target.value)}
-              className="pl-10"
-            />
-          </div>
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col lg:flex-row gap-4">
+            <div className="flex-1 relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Search controllers by name, IP, location..."
+                value={filters.search}
+                onChange={(e) => updateFilter("search", e.target.value)}
+                className="pl-10"
+              />
+            </div>
 
-          <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2 lg:flex-shrink-0">
             <Select
               value={filters.status || "all"}
               onValueChange={(value) => updateFilter("status", value)}
             >
-              <SelectTrigger className="w-32">
+              <SelectTrigger className="w-full sm:w-32">
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent>
@@ -247,7 +250,7 @@ const ControllerFilters = ({
               value={filters.connection || "all"}
               onValueChange={(value) => updateFilter("connection", value)}
             >
-              <SelectTrigger className="w-36">
+              <SelectTrigger className="w-full sm:w-36">
                 <SelectValue placeholder="Connection" />
               </SelectTrigger>
               <SelectContent>
@@ -262,9 +265,10 @@ const ControllerFilters = ({
 
             <Popover open={isFilterOpen} onOpenChange={setIsFilterOpen}>
               <PopoverTrigger asChild>
-                <Button variant="outline" className="relative">
+                <Button variant="outline" className="relative w-full sm:w-auto">
                   <SlidersHorizontal className="h-4 w-4 mr-2" />
-                  Filters
+                  <span className="sm:hidden">More Filters</span>
+                  <span className="hidden sm:inline">Filters</span>
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-80" align="end">
@@ -406,6 +410,7 @@ const ControllerFilters = ({
                 </div>
               </PopoverContent>
             </Popover>
+            </div>
           </div>
         </div>
 

@@ -35,13 +35,30 @@ const PredictiveMaintenanceContent = () => {
 
   return (
     <Tabs value={activeTab} className="mt-5" onValueChange={handleTabChange}>
-      <TabsList className="w-full flex">
-        {tabItems.map((item) => (
-          <TabsTrigger key={item.value} value={item.value} className="flex-1">
-            {item.label}
-          </TabsTrigger>
-        ))}
-      </TabsList>
+      <div className="overflow-x-auto">
+        <TabsList className="w-full min-w-max flex">
+          {tabItems.map((item) => (
+            <TabsTrigger
+              key={item.value}
+              value={item.value}
+              className="flex-1 whitespace-nowrap text-xs sm:text-sm px-2 sm:px-4"
+            >
+              <span className="sm:hidden">
+                {item.value === "lifetime-tracking"
+                  ? "Lifetime"
+                  : item.value === "motor-lifetime"
+                  ? "Motor"
+                  : item.value === "contactors"
+                  ? "Contacts"
+                  : item.value === "environmental"
+                  ? "Environ"
+                  : item.label.split(" ")[0]}
+              </span>
+              <span className="hidden sm:inline">{item.label}</span>
+            </TabsTrigger>
+          ))}
+        </TabsList>
+      </div>
 
       <TabsContent value="lifetime-tracking">
         <div className="flex items-center justify-center h-96 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">

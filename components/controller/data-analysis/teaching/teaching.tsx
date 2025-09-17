@@ -206,7 +206,7 @@ export const Teaching: React.FC<TeachingProps> = ({ controllerId }) => {
         defaultValue={FileType.JOB}
         value={activeTab}
         onValueChange={handleFileTypeChange}
-        className="grid grid-cols-5 gap-3"
+        className="flex flex-col lg:grid lg:grid-cols-5 gap-3"
       >
         <div className="col-span-1">
           <TabsList className="flex flex-col h-fit border-2 gap-0">
@@ -254,7 +254,7 @@ export const Teaching: React.FC<TeachingProps> = ({ controllerId }) => {
           </TabsList>
         </div>
 
-        <div className="col-span-4">
+        <div className="mt-4 lg:mt-0 lg:col-span-4">
           {FILE_TYPE_CONFIGS.filter(
             (config) => config.type !== FileType.FSU
           ).map((fileTypeConfig) => (

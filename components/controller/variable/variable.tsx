@@ -101,34 +101,47 @@ const variableList = ({ controllerId }: { controllerId: string }) => {
   return (
     <Tabs
       defaultValue="byte"
-      className="grid grid-cols-5 gap-3"
+      className="flex flex-col lg:grid lg:grid-cols-5 gap-3"
       orientation="vertical"
       onValueChange={handleTabChange}
     >
-      <div className="flex flex-col gap-4">
-        <TabsList className="flex flex-col h-fit border-2 gap-1">
-          {tabItems.map((item) => (
-            <TabsTrigger key={item.value} value={item.value} className="w-full">
-              {item.label}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-        <div className="w-full px-6 mb-2">
+      <div className="flex flex-col gap-4 lg:col-span-1">
+        <div className="overflow-x-auto lg:overflow-x-visible">
+          <TabsList className="flex lg:flex-col h-fit border-2 gap-1 w-full lg:w-auto">
+            {tabItems.map((item) => (
+              <TabsTrigger
+                key={item.value}
+                value={item.value}
+                className="w-full whitespace-nowrap px-2 lg:px-4 text-xs lg:text-sm flex-shrink-0"
+              >
+                {item.label}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </div>
+
+        <div className="w-full px-2 lg:px-6 mb-2">
           <Timer callback={() => listVariables(false)} />
         </div>
       </div>
 
-      {tabItems.map((item) => (
-        <TabsContent value={item.value} key={item.value} className="col-span-4">
-          {activeTab === item.value && (
-            <>
-              {isLoading && <p>Loading...</p>}
-              {error && <p>Error: {error.message}</p>}
-              {!isLoading && !error && <VariableList variables={variables} />}
-            </>
-          )}
-        </TabsContent>
-      ))}
+      <div className="lg:col-span-4">
+        {tabItems.map((item) => (
+          <TabsContent
+            value={item.value}
+            key={item.value}
+            className="mt-4 lg:mt-0"
+          >
+            {activeTab === item.value && (
+              <>
+                {isLoading && <p>Loading...</p>}
+                {error && <p>Error: {error.message}</p>}
+                {!isLoading && !error && <VariableList variables={variables} />}
+              </>
+            )}
+          </TabsContent>
+        ))}
+      </div>
     </Tabs>
   );
 };
