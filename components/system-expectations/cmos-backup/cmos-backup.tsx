@@ -61,14 +61,12 @@ const CmosBackupLogs = () => {
   const [selectedController, setSelectedController] = useState<string>("");
   const [isBackingUp, setIsBackingUp] = useState(false);
 
-  
   const [isInstantBackupModalOpen, setIsInstantBackupModalOpen] =
     useState(false);
   const [selectedFileTypes, setSelectedFileTypes] = useState<string[]>([
     "CMOS",
   ]);
 
-  
   interface DayPlan {
     id: number;
     name: string;
@@ -131,21 +129,16 @@ const CmosBackupLogs = () => {
 
   const [planName, setPlanName] = useState<string>("");
 
-  
   const [isCreatePlanModalOpen, setIsCreatePlanModalOpen] = useState(false);
   const [isCreatingPlan, setIsCreatingPlan] = useState(false);
 
-  
   const [showPlanList, setShowPlanList] = useState(false);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
-  
   const [showBackupHistory, setShowBackupHistory] = useState(false);
 
- 
   const [isLoadingLogData, setIsLoadingLogData] = useState(false);
 
-  
   const [fileSaveHistory, setFileSaveHistory] = useState<FileSaveLogEntry[]>(
     []
   );
@@ -174,11 +167,10 @@ const CmosBackupLogs = () => {
       }
     } catch (error) {
       console.error("Error fetching controllers:", error);
-      toast.error("Controller listesi alınamadı");
+      toast.error("Controllers could not be loaded");
     }
   };
 
-  // Controller > Files ile aynı handle fonksiyonları
   const handleDayToggle = (dayId: number) => {
     setDayPlans((prev) =>
       prev.map((day) =>
@@ -253,13 +245,12 @@ const CmosBackupLogs = () => {
       }
     } catch (error) {
       console.error("Instant backup error:", error);
-      toast.error("Backup başlatılırken hata oluştu!");
+      toast.error("Backup starting failed. Please try again.");
     } finally {
       setIsBackingUp(false);
     }
   };
 
-  // Controller > Files ile TAM AYNI handleSave fonksiyonu
   const handleFetchFileSaveHistory = async () => {
     if (!selectedController) {
       toast.error("Önce controller seçin!");
@@ -292,11 +283,10 @@ const CmosBackupLogs = () => {
       if (result.success) {
         toast.success("Log data request sent successfully!");
 
-        // Refresh file save history and log content after sending the request
         setTimeout(() => {
           handleFetchFileSaveHistory();
-          setRefreshTrigger((prev) => prev + 1); // Log Content Display'i yenile
-        }, 2000); // 2 saniye bekle ki C# dosyayı kaydedebilsin
+          setRefreshTrigger((prev) => prev + 1);
+        }, 2000);
       } else {
         toast.error(result.error || "Failed to fetch log data");
       }
@@ -310,11 +300,10 @@ const CmosBackupLogs = () => {
 
   const handleSavePlan = async () => {
     if (!selectedController) {
-      toast.error("Önce controller seçin!");
+      toast.error("Please select a controller first");
       return;
     }
 
-    // Plan name otomatik oluşturulacak
     const finalPlanName = planName.trim() || "Backup Plan";
 
     const selectedPlans = dayPlans.filter(
@@ -340,10 +329,9 @@ const CmosBackupLogs = () => {
         await createBackupPlan(selectedController, backupPlan);
       }
 
-      toast.success("🎉 CMOS Backup plans saved successfully!");
+      toast.success("CMOS Backup plans saved successfully!");
       setIsCreatePlanModalOpen(false);
 
-      // Reset form - Controller > Files ile aynı
       setPlanName("");
       setDayPlans((prev) =>
         prev.map((day) => ({
@@ -353,7 +341,6 @@ const CmosBackupLogs = () => {
         }))
       );
 
-      // Refresh plans list
       setRefreshTrigger((prev) => prev + 1);
     } catch (error) {
       console.error("Error saving backup plans:", error);
@@ -365,11 +352,9 @@ const CmosBackupLogs = () => {
 
   return (
     <div className="space-y-6">
-      
       <Card>
         <CardContent className="p-4">
           <div className="flex flex-col gap-4">
-            
             <div className="flex flex-col sm:flex-row sm:items-center gap-3">
               <Label className="text-sm font-medium text-gray-700 whitespace-nowrap">
                 Select Controller:
@@ -396,9 +381,7 @@ const CmosBackupLogs = () => {
               </Select>
             </div>
 
-            
             <div className="flex flex-wrap gap-3">
-              
               <Button
                 variant="outline"
                 size="sm"
@@ -465,8 +448,7 @@ const CmosBackupLogs = () => {
                 )}
                 {isLoadingHistory ? "Loading..." : "File Save History"}
               </Button>
-                
-              
+
               <Button
                 size="sm"
                 onClick={() => handleInstantBackup()}
@@ -489,21 +471,18 @@ const CmosBackupLogs = () => {
         </CardContent>
       </Card>
 
-      
       <PlansList
         controllerId={selectedController}
         isVisible={showPlanList}
         refreshTrigger={refreshTrigger}
       />
 
-      
       <BackupHistory
         controllerId={selectedController}
         isVisible={showBackupHistory}
         refreshTrigger={refreshTrigger}
       />
 
-      
       {showFileSaveHistory && (
         <Card>
           <CardHeader>
@@ -619,17 +598,14 @@ const CmosBackupLogs = () => {
         </Card>
       )}
 
-      
       {selectedController && (
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-6 min-h-[600px] items-start">
-          
           <LogContentDisplay
             controllerId={selectedController}
             isVisible={true}
             refreshTrigger={refreshTrigger}
           />
 
-          
           <TeachingAnalysis
             controllerId={selectedController}
             isVisible={true}
@@ -638,7 +614,6 @@ const CmosBackupLogs = () => {
         </div>
       )}
 
-      
       <Dialog
         open={isCreatePlanModalOpen}
         onOpenChange={setIsCreatePlanModalOpen}
@@ -649,7 +624,6 @@ const CmosBackupLogs = () => {
           </DialogHeader>
 
           <div className="space-y-4">
-            
             <div>
               <Label className="text-sm font-medium">
                 Plan Name (Optional)
@@ -663,7 +637,6 @@ const CmosBackupLogs = () => {
               />
             </div>
 
-            
             <div className="border rounded-lg overflow-hidden">
               <div className="grid grid-cols-12 bg-gray-50 border-b">
                 <div className="col-span-2 p-3 font-medium text-base">Day</div>
@@ -680,7 +653,6 @@ const CmosBackupLogs = () => {
                     key={day.id}
                     className="grid grid-cols-12 border-b last:border-b-0 hover:bg-gray-50/50"
                   >
-                    
                     <div className="col-span-2 p-3 flex items-center">
                       <Checkbox
                         checked={isEnabled}
@@ -692,7 +664,6 @@ const CmosBackupLogs = () => {
                       </Label>
                     </div>
 
-                    
                     <div className="col-span-2 p-3">
                       <Input
                         type="time"
@@ -705,10 +676,8 @@ const CmosBackupLogs = () => {
                       />
                     </div>
 
-                    
                     <div className="col-span-8 p-3">
                       <div className="flex flex-wrap items-center gap-2">
-                        
                         <div className="flex items-center gap-1">
                           <Checkbox
                             checked={
@@ -726,7 +695,6 @@ const CmosBackupLogs = () => {
                           </Label>
                         </div>
 
-                        
                         {fileTypes.map((fileType) => (
                           <div
                             key={fileType}
@@ -780,7 +748,6 @@ const CmosBackupLogs = () => {
         </DialogContent>
       </Dialog>
 
-      
       <Dialog
         open={isInstantBackupModalOpen}
         onOpenChange={setIsInstantBackupModalOpen}
@@ -808,7 +775,6 @@ const CmosBackupLogs = () => {
             <div>
               <h4 className="text-sm font-medium mb-2">Select File Types:</h4>
               <div className="flex flex-wrap gap-2">
-                
                 <div className="flex items-center space-x-1 px-2 py-1 bg-blue-600 bg-opacity-10 rounded cursor-pointer">
                   <Checkbox
                     checked={selectedFileTypes.length === fileTypes.length}
@@ -823,7 +789,6 @@ const CmosBackupLogs = () => {
                   <span className="text-xs font-medium">All</span>
                 </div>
 
-                
                 {fileTypes.map((fileType) => (
                   <div
                     key={fileType}

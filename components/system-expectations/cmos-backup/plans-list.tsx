@@ -35,7 +35,6 @@ const PlansList = ({
   const [plans, setPlans] = useState<BackupPlan[]>([]);
   const [isLoadingPlans, setIsLoadingPlans] = useState(false);
 
-  // Edit modal states
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editingPlan, setEditingPlan] = useState<BackupPlan | null>(null);
   const [editPlanName, setEditPlanName] = useState("");
@@ -45,7 +44,6 @@ const PlansList = ({
 
   const fileTypes = ["CMOS", ".jbi", ".dat", ".cnd", ".prm", ".sys", ".lst"];
 
-  // Fetch plans when controller changes
   useEffect(() => {
     const fetchPlans = async () => {
       if (!controllerId) {
@@ -76,7 +74,7 @@ const PlansList = ({
     try {
       await deleteBackupPlan(controllerId, planId);
       toast.success("Plan successfully deleted!");
-      // Refresh plans list
+
       const data = await getBackupPlans(controllerId);
       setPlans(data);
     } catch (error) {
@@ -92,7 +90,6 @@ const PlansList = ({
       return;
     }
 
-    // Set edit modal data
     setEditingPlan(plan);
     setEditPlanName(plan.name);
     setEditPlanTime(plan.time);
@@ -138,11 +135,9 @@ const PlansList = ({
       await updateBackupPlan(controllerId, editingPlan.id, updatedPlan);
       toast.success("Plan updated successfully!");
 
-      // Refresh plans list
       const data = await getBackupPlans(controllerId);
       setPlans(data);
 
-      // Close modal
       setIsEditModalOpen(false);
       setEditingPlan(null);
     } catch (error) {
@@ -269,7 +264,6 @@ const PlansList = ({
         )}
       </CardContent>
 
-      {/* Edit Plan Modal */}
       <Dialog open={isEditModalOpen} onOpenChange={setIsEditModalOpen}>
         <DialogContent className="max-w-2xl">
           <DialogHeader>
@@ -280,7 +274,6 @@ const PlansList = ({
           </DialogHeader>
 
           <div className="space-y-4">
-            {/* Plan Name Input */}
             <div>
               <Label className="text-sm font-medium">Plan Name</Label>
               <Input
@@ -292,7 +285,6 @@ const PlansList = ({
               />
             </div>
 
-            {/* Time Input */}
             <div>
               <Label className="text-sm font-medium">Time</Label>
               <Input
@@ -303,13 +295,11 @@ const PlansList = ({
               />
             </div>
 
-            {/* File Types Selection */}
             <div>
               <Label className="text-sm font-medium mb-3 block">
                 File Types
               </Label>
               <div className="border rounded-lg p-4 bg-gray-50">
-                {/* Select All */}
                 <div className="flex items-center gap-2 mb-3 pb-2 border-b">
                   <Checkbox
                     checked={editPlanFileTypes.length === fileTypes.length}
@@ -320,7 +310,6 @@ const PlansList = ({
                   </Label>
                 </div>
 
-                {/* Individual File Types */}
                 <div className="grid grid-cols-2 gap-2">
                   {fileTypes.map((fileType) => (
                     <div key={fileType} className="flex items-center gap-2">
