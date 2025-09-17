@@ -358,7 +358,7 @@ const TorkChart = ({
   const renderAxisVisibilityControls = () => (
     <div className="mb-4 p-4 border rounded-md bg-gray-50 dark:bg-gray-800">
       <h4 className="font-medium mb-2 text-foreground">Axis Visibility</h4>
-      <div className="grid grid-cols-6 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
         {Object.keys(axisVisibility).map((axis) => (
           <div key={axis} className="flex items-center space-x-2">
             <Checkbox
@@ -1188,7 +1188,7 @@ const TorkChart = ({
             <h4 className="font-medium mb-2 text-foreground">
               Edit Axis Threshold Values
             </h4>
-            <div className="grid grid-cols-3 gap-4 mb-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
               {Object.keys(tempThresholds).map((axis) => (
                 <div key={axis} className="flex flex-col">
                   <Label

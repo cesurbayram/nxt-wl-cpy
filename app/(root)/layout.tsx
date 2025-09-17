@@ -34,15 +34,18 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="flex h-screen overflow-hidden">
-            <div className="w-64 pr-4 pl-7 border-r-2 overflow-y-auto fixed h-full">
+          <div className="flex h-screen overflow-hidden lg:overflow-auto">
+            <div className="hidden lg:block w-64 pr-4 pl-7 border-r-2 overflow-y-auto fixed h-full">
               <SideNavbar />
             </div>
-            <div className="flex-1 ml-64">
+
+            <div className="flex-1 lg:ml-64 w-full min-w-0">
               <div className="h-screen overflow-y-auto">
                 <div className="bg-background">
                   <TopNavbar />
-                  <main className="p-6">{children}</main>
+                  <main className="p-2 sm:p-3 md:p-4 lg:p-6 w-full min-w-0">
+                    {children}
+                  </main>
                 </div>
               </div>
             </div>

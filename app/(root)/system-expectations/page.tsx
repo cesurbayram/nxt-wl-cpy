@@ -44,13 +44,26 @@ const SystemExpectationsContent = () => {
 
   return (
     <Tabs value={activeTab} className="mt-5" onValueChange={handleTabChange}>
-      <TabsList className="w-full flex">
-        {tabItems.map((item) => (
-          <TabsTrigger key={item.value} value={item.value} className="flex-1">
-            {item.label}
-          </TabsTrigger>
-        ))}
-      </TabsList>
+      <div className="overflow-x-auto">
+        <TabsList className="w-full min-w-max flex">
+          {tabItems.map((item) => (
+            <TabsTrigger 
+              key={item.value} 
+              value={item.value} 
+              className="flex-1 whitespace-nowrap text-xs sm:text-sm px-2 sm:px-4"
+            >
+              <span className="sm:hidden">
+                {item.label.includes("/") ? item.label.split("/")[0].trim() : 
+                 item.label.includes("&") ? item.label.split("&")[0].trim() :
+                 item.label.replace("Logs", "").trim()}
+              </span>
+              <span className="hidden sm:inline">
+                {item.label}
+              </span>
+            </TabsTrigger>
+          ))}
+        </TabsList>
+      </div>
 
       <TabsContent value="cmos-backup">
         <CmosBackupLogs />

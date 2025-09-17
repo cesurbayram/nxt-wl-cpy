@@ -5,27 +5,28 @@ const sendTabExitCommand = async ({
   exitedTab: string;
   controllerId: string;
 }): Promise<boolean> => {
-  const apiRes = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tab-exit`,
-    {
-      method: "POST",
-      body: JSON.stringify({ exitedTab, controllerId }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-
-  if (!apiRes.ok) {
-    const errorData = await apiRes.json();
-    throw new Error(
-      `An error occurred when sending tab exit: ${
-        errorData.message || "Unknown error"
-      }`
+  try {
+    const apiRes = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tab-exit`,
+      {
+        method: "POST",
+        body: JSON.stringify({ exitedTab, controllerId }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
     );
-  }
 
-  return true;
+    if (!apiRes.ok) {
+      console.error(`Tab exit API error: ${apiRes.status} ${apiRes.statusText}`);
+      return false; 
+    }
+
+    return true;
+  } catch (error) {
+    console.error('Network error during tab exit:', error);
+    return false; 
+  }
 };
 
 export { sendTabExitCommand };

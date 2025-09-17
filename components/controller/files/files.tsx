@@ -37,7 +37,7 @@ export function Files({ controllerId }: FilesProps) {
       <LoadingUi isLoading={isLoading} />
       <Tabs
         defaultValue="create"
-        className="grid grid-cols-5 gap-3"
+        className="flex flex-col lg:grid lg:grid-cols-5 gap-3"
         orientation="vertical"
       >
         <TabsList className="flex flex-col h-fit border-2 gap-1">
@@ -49,7 +49,7 @@ export function Files({ controllerId }: FilesProps) {
           </TabsTrigger>
         </TabsList>
 
-        <div className="col-span-4">
+        <div className="mt-4 lg:mt-0 lg:col-span-4">
           <TabsContent value="create">
             <Card>
               <CardHeader>

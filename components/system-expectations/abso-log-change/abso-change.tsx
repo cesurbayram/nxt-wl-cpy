@@ -307,66 +307,47 @@ const AbsoluteDataAnalysis: React.FC = () => {
   return (
     <div className="space-y-6">
       <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Activity className="w-5 h-5 text-blue-600" />
-              Absolute Data Analysis
+        <CardContent className="p-4">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+              <span className="text-sm font-medium text-gray-700 whitespace-nowrap">
+                Controller:
+              </span>
+              <Select
+                value={selectedController}
+                onValueChange={setSelectedController}
+              >
+                <SelectTrigger className="h-9 w-full sm:w-auto sm:min-w-[200px]">
+                  <SelectValue placeholder="Select controller" />
+                </SelectTrigger>
+                <SelectContent>
+                  {controllers.map((controller) => (
+                    <SelectItem key={controller.id} value={controller.id || ""}>
+                      {controller.name} ({controller.ipAddress})
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
+
             <Button
               onClick={analyzeAbsoluteData}
               disabled={isLoading || !selectedController}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2"
+              className="bg-blue-600 hover:bg-blue-700 text-white w-full lg:w-auto px-4 lg:px-6 py-2"
               size="sm"
             >
               {isLoading ? (
-                <RefreshCw className="w-4 h-4 animate-spin mr-2" />
+                <RefreshCw className="w-3 h-3 sm:w-4 sm:h-4 animate-spin mr-1 sm:mr-2" />
               ) : (
-                <Activity className="w-4 h-4 mr-2" />
+                <Activity className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
               )}
               {isLoading ? "Analyzing..." : "Analyze Data"}
             </Button>
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="pt-0">
-          <div className="flex items-center gap-3">
-            <span className="text-sm font-medium text-gray-700 whitespace-nowrap">
-              Controller:
-            </span>
-            <Select
-              value={selectedController}
-              onValueChange={setSelectedController}
-            >
-              <SelectTrigger className="h-9">
-                <SelectValue placeholder="Select controller" />
-              </SelectTrigger>
-              <SelectContent>
-                {controllers.map((controller) => (
-                  <SelectItem key={controller.id} value={controller.id || ""}>
-                    {controller.name} ({controller.ipAddress})
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
           </div>
         </CardContent>
       </Card>
 
       <Card className="h-fit">
-        <CardHeader>
-          <CardTitle className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Activity className="w-5 h-5 text-blue-600" />
-              Analysis Results
-              {absoDataEntries.length > 0 && (
-                <span className="text-sm text-gray-500 font-normal">
-                  ({absoDataEntries.length} records)
-                </span>
-              )}
-            </div>
-          </CardTitle>
-        </CardHeader>
-
         <CardContent>
           {isLoading ? (
             <div className="flex items-center justify-center py-8">

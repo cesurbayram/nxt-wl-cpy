@@ -151,25 +151,25 @@ const Page = () => {
         variant="ghost"
         size="sm"
         onClick={() => setViewMode("grid")}
-        className={`h-8 ${
+        className={`h-7 w-7 sm:h-8 sm:w-8 p-1 ${
           viewMode === "grid"
             ? "bg-[#6950e8] text-white hover:bg-[#6950e8]/90"
             : "hover:bg-[#6950e8]/10 hover:text-[#6950e8]"
         }`}
       >
-        <Grid className="h-4 w-4" />
+        <Grid className="h-3 w-3 sm:h-4 sm:w-4" />
       </Button>
       <Button
         variant="ghost"
         size="sm"
         onClick={() => setViewMode("table")}
-        className={`h-8 ${
+        className={`h-7 w-7 sm:h-8 sm:w-8 p-1 ${
           viewMode === "table"
             ? "bg-[#6950e8] text-white hover:bg-[#6950e8]/90"
             : "hover:bg-[#6950e8]/10 hover:text-[#6950e8]"
         }`}
       >
-        <Table className="h-4 w-4" />
+        <Table className="h-3 w-3 sm:h-4 sm:w-4" />
       </Button>
     </div>
   );
@@ -210,17 +210,25 @@ const Page = () => {
               />
 
               {controller.length > 0 && (
-                <div className="flex justify-between items-center">
-                  <div className="w-1/3">
+                <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center">
+                  <div className="w-full sm:w-1/3">
                     <Timer callback={listController} />
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm text-muted-foreground">
-                      Showing {filteredControllers.length} of{" "}
-                      {controller.length} controllers
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                    <span className="text-xs sm:text-sm text-muted-foreground text-center sm:text-left">
+                      <span className="sm:hidden">
+                        {filteredControllers.length}/{controller.length}
+                      </span>
+                      <span className="hidden sm:inline">
+                        Showing {filteredControllers.length} of{" "}
+                        {controller.length} controllers
+                      </span>
                     </span>
                     {filteredControllers.length !== controller.length && (
-                      <Badge variant="secondary" className="text-xs">
+                      <Badge
+                        variant="secondary"
+                        className="text-xs self-center sm:self-auto"
+                      >
                         Filtered
                       </Badge>
                     )}

@@ -44,27 +44,35 @@ const Monitoring = ({ controllerId }: MonitoringProps) => {
   return (
     <Tabs
       defaultValue="tork"
-      className="grid grid-cols-5 gap-3"
+      className="flex flex-col lg:grid lg:grid-cols-5 gap-3"
       orientation="vertical"
       onValueChange={(value) => setActiveTab(value)}
     >
-      <div className="flex flex-col gap-4">
-        <TabsList className="flex flex-col h-fit border-2 gap-1">
-          {tabItems.map((item) => (
-            <TabsTrigger key={item.value} value={item.value} className="w-full">
-              {item.label}
-            </TabsTrigger>
-          ))}
-        </TabsList>
+      <div className="flex flex-col gap-4 lg:col-span-1">
+        <div className="overflow-x-auto lg:overflow-x-visible">
+          <TabsList className="flex lg:flex-col h-fit border-2 gap-1 w-full lg:w-auto">
+            {tabItems.map((item) => (
+              <TabsTrigger
+                key={item.value}
+                value={item.value}
+                className="w-full whitespace-nowrap px-2 lg:px-4 flex-shrink-0"
+              >
+                {item.label}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </div>
       </div>
 
-      <TabsContent value="tork" className="col-span-4">
-        <Tork controllerId={controllerId} />
-      </TabsContent>
+      <div className="lg:col-span-4">
+        <TabsContent value="tork" className="mt-4 lg:mt-0">
+          <Tork controllerId={controllerId} />
+        </TabsContent>
 
-      <TabsContent value="tork-examination" className="col-span-4">
-        <TorkExamination controllerId={controllerId} />
-      </TabsContent>
+        <TabsContent value="tork-examination" className="mt-4 lg:mt-0">
+          <TorkExamination controllerId={controllerId} />
+        </TabsContent>
+      </div>
     </Tabs>
   );
 };

@@ -6,11 +6,11 @@ export interface TCPDataEntry {
   elementNumber: string;
   elementValue: string;
   parsedElement: {
-    toolNumber: number;
+    toolNumber: number; 
     parameterGroup: number;
-    parameterGroupName: string;
-    parameterIndex: number;
-    parameterName: string;
+    parameterGroupName: string; 
+    parameterIndex: number; 
+    parameterName: string; 
     actualToolNumber: number;
   };
   rawEntry: string;

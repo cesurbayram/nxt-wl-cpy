@@ -101,95 +101,103 @@ const Utilization = ({ controllerId }: UtilizationProps) => {
   return (
     <Tabs
       defaultValue="chart"
-      className="grid grid-cols-5 gap-3"
+      className="flex flex-col lg:grid lg:grid-cols-5 gap-3"
       orientation="vertical"
       onValueChange={(value) => setActiveTab(value)}
     >
-      <div className="flex flex-col gap-4">
-        <TabsList className="flex flex-col h-fit border-2 gap-1">
-          {tabItems.map((item) => (
-            <TabsTrigger key={item.value} value={item.value} className="w-full">
-              {item.label}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-        <div className="w-full px-6 mb-2">
+      <div className="flex flex-col gap-4 lg:col-span-1">
+        <div className="overflow-x-auto lg:overflow-x-visible">
+          <TabsList className="flex lg:flex-col h-fit border-2 gap-1 w-full lg:w-auto">
+            {tabItems.map((item) => (
+              <TabsTrigger
+                key={item.value}
+                value={item.value}
+                className="w-full whitespace-nowrap px-2 lg:px-4 flex-shrink-0"
+              >
+                {item.label}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </div>
+
+        <div className="w-full px-2 lg:px-6 mb-2">
           <Timer callback={() => fetchUtilizationData(false)} />
         </div>
       </div>
 
-      <TabsContent value="chart" className="col-span-4">
-        <Card>
-          <CardHeader>
-            <CardTitle>
-              <div className="text-sm font-medium">
-                Utilization: {controller?.name || "Loading..."}
+      <div className="lg:col-span-4">
+        <TabsContent value="chart" className="mt-4 lg:mt-0">
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                <div className="text-sm font-medium">
+                  Utilization: {controller?.name || "Loading..."}
+                </div>
+              </CardTitle>
+              <div className="flex gap-4">
+                <Select value={timeRange} onValueChange={setTimeRange}>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Select time range" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {timeRanges.map((range) => (
+                      <SelectItem key={range.value} value={range.value}>
+                        {range.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <Select value={interval} onValueChange={setInterval}>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Select interval" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {intervals.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <Select value={viewType} onValueChange={setViewType}>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Select view type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {viewTypes.map((type) => (
+                      <SelectItem key={type.value} value={type.value}>
+                        {type.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
-            </CardTitle>
-            <div className="flex gap-4">
-              <Select value={timeRange} onValueChange={setTimeRange}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Select time range" />
-                </SelectTrigger>
-                <SelectContent>
-                  {timeRanges.map((range) => (
-                    <SelectItem key={range.value} value={range.value}>
-                      {range.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+            </CardHeader>
+            <CardContent>
+              {utilizationData && (
+                <UtilizationChart data={utilizationData} viewType={viewType} />
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
 
-              <Select value={interval} onValueChange={setInterval}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Select interval" />
-                </SelectTrigger>
-                <SelectContent>
-                  {intervals.map((item) => (
-                    <SelectItem key={item.value} value={item.value}>
-                      {item.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-
-              <Select value={viewType} onValueChange={setViewType}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Select view type" />
-                </SelectTrigger>
-                <SelectContent>
-                  {viewTypes.map((type) => (
-                    <SelectItem key={type.value} value={type.value}>
-                      {type.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </CardHeader>
-          <CardContent>
-            {utilizationData && (
-              <UtilizationChart data={utilizationData} viewType={viewType} />
-            )}
-          </CardContent>
-        </Card>
-      </TabsContent>
-
-      <TabsContent value="live" className="col-span-4">
-        <Card>
-          <CardHeader>
-            <CardTitle>
-              <div className="text-sm font-medium">
-                Live Utilization: {controller?.name || "Loading..."}
-              </div>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {/* Live view içeriği buraya eklenecek */}
-            <div>Live view implementation...</div>
-          </CardContent>
-        </Card>
-      </TabsContent>
+        <TabsContent value="live" className="mt-4 lg:mt-0">
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                <div className="text-sm font-medium">
+                  Live Utilization: {controller?.name || "Loading..."}
+                </div>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div>Live view implementation...</div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </div>
     </Tabs>
   );
 };

@@ -37,87 +37,92 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
     {
       accessorKey: "name",
       header: () => <div className="text-sm font-medium">Name</div>,
+      cell: ({ row }) => {
+        return (
+          <div className="min-w-0">
+            <p className="font-medium truncate">{row.original.name}</p>
+            <div className="md:hidden text-xs text-gray-500 mt-1">
+              <p>{row.original.model?.toUpperCase()}</p>
+              <p>{row.original.application?.toUpperCase()}</p>
+            </div>
+          </div>
+        );
+      },
     },
     {
       accessorKey: "statusBar",
       header: () => <div className="text-sm font-medium">Robot Status</div>,
       cell: ({ row }) => {
         return (
-          <div className="flex gap-1 items-center">
+          <div className="flex gap-1 items-center flex-wrap max-w-[200px] sm:max-w-none">
             <GrConnect
               title="connection"
               color={
                 row.original.controllerStatus?.connection ? "green" : "red"
               }
-              size={30}
+              className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
             />
             {row.original.controllerStatus?.teach === "TEACH" && (
-              <FaRegHandLizard title="teach" color="green" size={30} />
+              <FaRegHandLizard title="teach" color="green" className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
             )}
             {row.original.controllerStatus?.teach === "PLAY" && (
-              <BsTropicalStorm title="play" color="green" size={30} />
+              <BsTropicalStorm title="play" color="green" className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
             )}
             {row.original.controllerStatus?.teach === "REMOTE" && (
-              <FaExternalLinkAlt title="remote" color="green" size={30} />
+              <FaExternalLinkAlt title="remote" color="green" className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
             )}
             <PiLightning
               title="servo"
               color={row.original.controllerStatus?.servo ? "green" : "gray"}
-              size={30}
+              className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
             />
             <GiRobotGrab
               title="operating"
               color={
                 row.original.controllerStatus?.operating ? "green" : "gray"
               }
-              size={30}
+              className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
             />
             {row.original.controllerStatus?.cycle === "CYCLE" && (
-              <GrPowerCycle title="cycle" color="green" size={30} />
+              <GrPowerCycle title="cycle" color="green" className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
             )}
             {row.original.controllerStatus?.cycle === "STEP" && (
-              <DiSublime title="step" color="green" size={30} />
+              <DiSublime title="step" color="green" className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
             )}
             {row.original.controllerStatus?.cycle === "AUTO" && (
-              <MdOutlineHdrAuto title="auto" color="green" size={30} />
+              <MdOutlineHdrAuto title="auto" color="green" className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
             )}
             <FaRegStopCircle
               title="hold"
               color={row.original.controllerStatus?.hold ? "#F1C40F" : "gray"}
-              size={30}
+              className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
             />
             <RiAlarmWarningLine
               title="alarm"
               color={row.original.controllerStatus?.alarm ? "red" : "gray"}
-              size={35}
+              className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
             />
             <BiError
               title="error"
               color={row.original.controllerStatus?.error ? "red" : "gray"}
-              size={30}
+              className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
             />
             <BsSignStopFill
               title="stop"
               color={row.original.controllerStatus?.stop ? "red" : "lightgray"}
-              size={30}
+              className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
             />
             <BsDoorOpen
               title="door open"
               color={row.original.controllerStatus?.doorOpen ? "red" : "gray"}
-              size={30}
+              className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
             />
-            {/* <MdOutlineSignalCellularAlt
-              color={
-                row.original.controllerStatus?.safeSpeed ? "green" : "gray"
-              }
-              size={30}
-            /> */}
             <DiBootstrap
               title="backup"
               color={
                 row.original.controllerStatus?.cBackup ? "green" : "lightgray"
               }
-              size={40}
+              className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
             />
           </div>
         );
@@ -125,7 +130,7 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
     },
     {
       accessorKey: "model",
-      header: () => <div className="text-sm font-medium">Controller Type</div>,
+      header: () => <div className="text-sm font-medium hidden lg:block">Controller Type</div>,
       cell: ({ row }) => {
         const model =
           row.original.model === "yrc1000"
@@ -139,12 +144,12 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
             : row.original.model === "fs100"
             ? "FS100"
             : "Unknown Model";
-        return <p>{model}</p>;
+        return <p className="hidden lg:block">{model}</p>;
       },
     },
     {
       accessorKey: "application",
-      header: () => <div className="text-sm font-medium">Application</div>,
+      header: () => <div className="text-sm font-medium hidden md:block">Application</div>,
       cell: ({ row }) => {
         const application =
           row.original.application === "arc"
@@ -158,17 +163,23 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
             : row.original.application === "paint"
             ? "PAINT"
             : "Unknown Application";
-        return <p>{application}</p>;
+        return <p className="hidden md:block">{application}</p>;
       },
     },
 
     {
       accessorKey: "ipAddress",
-      header: () => <div className="text-sm font-medium">IP Address</div>,
+      header: () => <div className="text-sm font-medium hidden xl:block">IP Address</div>,
+      cell: ({ row }) => {
+        return <p className="hidden xl:block font-mono text-sm">{row.original.ipAddress}</p>;
+      },
     },
     {
       accessorKey: "location",
-      header: () => <div className="text-sm font-medium">Location</div>,
+      header: () => <div className="text-sm font-medium hidden lg:block">Location</div>,
+      cell: ({ row }) => {
+        return <p className="hidden lg:block">{row.original.location}</p>;
+      },
     },
     {
       accessorKey: "status",
@@ -185,22 +196,22 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
       ),
       cell: ({ row }) => {
         return (
-          <div className="flex justify-center items-center gap-4 h-full">
+          <div className="flex justify-center items-center gap-2 sm:gap-4 h-full">
             <Button
               size="icon"
               variant="ghost"
-              className="p-2"
+              className="p-1 sm:p-2 h-8 w-8 sm:h-10 sm:w-10"
               onClick={async (e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 await deleteClick({ id: row.original.id });
               }}
             >
-              <MdDelete size={20} className="text-red-500" />
+              <MdDelete size={16} className="text-red-500 sm:w-5 sm:h-5" />
             </Button>
-            <Button size="icon" variant="ghost" className="p-2" asChild>
+            <Button size="icon" variant="ghost" className="p-1 sm:p-2 h-8 w-8 sm:h-10 sm:w-10" asChild>
               <Link href={`/controller/${row.original.id}`}>
-                <FaArrowRight size={20} className="text-[#6950E8]" />
+                <FaArrowRight size={16} className="text-[#6950E8] sm:w-5 sm:h-5" />
               </Link>
             </Button>
           </div>
@@ -210,8 +221,12 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
   ];
 
   return (
-    <div className="overflow-auto">
-      <DataTable columns={columns} data={controller} />
+    <div className="w-full">
+      <div className="overflow-x-auto">
+        <div className="min-w-[600px]">
+          <DataTable columns={columns} data={controller} />
+        </div>
+      </div>
     </div>
   );
 };

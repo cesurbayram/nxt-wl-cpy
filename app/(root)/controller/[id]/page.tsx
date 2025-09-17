@@ -103,17 +103,15 @@ const Page = ({ params }: { params: { id: string } }) => {
           previousTab.current
         )
       ) {
-        try {
-          sendTabExitCommand({
-            exitedTab: previousTab.current,
-            controllerId: params.id,
-          });
-        } catch (error) {
+        sendTabExitCommand({
+          exitedTab: previousTab.current,
+          controllerId: params.id,
+        }).catch((error) => {
           console.error(
             `Failed to send ${previousTab.current} exit on page unmount:`,
             error
           );
-        }
+        });
       }
     };
   }, [params.id]);
@@ -124,6 +122,14 @@ const Page = ({ params }: { params: { id: string } }) => {
       setActiveTab(tabParam);
     }
   }, [searchParams, activeTab]);
+
+  const modifiedTabs = useMemo(() => {
+    if (params.id != "0") {
+      return [...tabItems, { label: "Update Controller", value: "update" }];
+    } else if (params.id == "0") {
+      return [{ label: "Create Controller", value: "create" }];
+    }
+  }, [params.id]);
 
   const handleStatusRefresh = async () => {
     if (params.id !== "0") {
@@ -140,10 +146,8 @@ const Page = ({ params }: { params: { id: string } }) => {
   };
 
   const handleTabChange = async (value: string) => {
-    // İlk önce UI'ı güncelle (anında geçiş)
     setActiveTab(value);
 
-    // Sonra eski tab için exit command gönder (paralel çalışsın)
     if (
       previousTab.current &&
       ["inputOutput", "variable", "job", "monitoring", "data"].includes(
@@ -163,14 +167,6 @@ const Page = ({ params }: { params: { id: string } }) => {
     previousTab.current = value;
   };
 
-  const modifiedTabs = useMemo(() => {
-    if (params.id != "0") {
-      return [...tabItems, { label: "Update Controller", value: "update" }];
-    } else if (params.id == "0") {
-      return [{ label: "Create Controller", value: "create" }];
-    }
-  }, [params.id]);
-
   return (
     <>
       <PageWrapper
@@ -187,11 +183,13 @@ const Page = ({ params }: { params: { id: string } }) => {
         }
       >
         {params.id != "0" && controller?.controllerStatus && (
-          <div className="flex items-center justify-between">
-            <ControllerStatusBar
-              controllerStatus={controller.controllerStatus}
-            />
-            <div className="w-1/4 flex justify-end px-6">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 lg:gap-0">
+            <div className="overflow-x-auto">
+              <ControllerStatusBar
+                controllerStatus={controller.controllerStatus}
+              />
+            </div>
+            <div className="w-full lg:w-1/4 flex justify-center lg:justify-end px-0 lg:px-6">
               <Timer callback={handleStatusRefresh} />
             </div>
           </div>
@@ -201,17 +199,50 @@ const Page = ({ params }: { params: { id: string } }) => {
           className="mt-5"
           onValueChange={handleTabChange}
         >
-          <TabsList className="w-full flex">
-            {modifiedTabs?.map((item) => (
-              <TabsTrigger
-                key={item.value}
-                value={item.value}
-                className="flex-1"
-              >
-                {item.label}
-              </TabsTrigger>
-            ))}
-          </TabsList>
+          <div className="overflow-x-auto">
+            <TabsList className="w-full min-w-max flex">
+              {modifiedTabs?.map((item) => (
+                <TabsTrigger
+                  key={item.value}
+                  value={item.value}
+                  className="flex-1 whitespace-nowrap text-xs sm:text-sm px-2 sm:px-4"
+                >
+                  <span className="sm:hidden">
+                    {item.value === "alarm"
+                      ? "Alarms"
+                      : item.value === "monitoring"
+                      ? "Monitor"
+                      : item.value === "inputOutput"
+                      ? "I/O"
+                      : item.value === "variable"
+                      ? "Variables"
+                      : item.value === "data"
+                      ? "Data"
+                      : item.value === "datanal"
+                      ? "Analysis"
+                      : item.value === "job"
+                      ? "Job"
+                      : item.value === "file"
+                      ? "Files"
+                      : item.value === "util"
+                      ? "Util"
+                      : item.value === "maintenance"
+                      ? "Maint"
+                      : item.value === "camera"
+                      ? "Camera"
+                      : item.value === "remotePend"
+                      ? "Remote"
+                      : item.value === "update"
+                      ? "Update"
+                      : item.value === "create"
+                      ? "Create"
+                      : item.label}
+                  </span>
+                  <span className="hidden sm:inline">{item.label}</span>
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </div>
           {params.id != "0" && (
             <>
               <TabsContent value="alarm">

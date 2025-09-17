@@ -47,8 +47,8 @@ const InputOutputList = ({ inputOutput }: InputOutputListProps) => {
   ];
 
   return (
-    <div className="grid grid-cols-12 gap-4">
-      <div className="col-span-3 border-r pr-4">
+    <div className="flex flex-col lg:grid lg:grid-cols-12 gap-4">
+      <div className="lg:col-span-3 border-r pr-4">
         <div className="text-sm font-medium mb-2">Signal Byte Number</div>
         <div className="relative">
           <div className="border rounded">
@@ -90,7 +90,7 @@ const InputOutputList = ({ inputOutput }: InputOutputListProps) => {
         </div>
       </div>
 
-      <div className="col-span-9">
+      <div className="lg:col-span-9">
         <div className="flex items-center justify-between mb-2">
           <div className="text-sm font-medium">
             Bits for {selectedByte && `${selectedByte}X`}

@@ -224,7 +224,7 @@ const AlarmErrorLogs = () => {
 
   const handleFilteredAlarmsChange = (filtered: SystemAlarmHistoryItem[]) => {
     setFilteredAlarms(filtered);
-    setCurrentPage(1); // Reset to first page when filters change
+    setCurrentPage(1);
   };
 
   const getControllerName = () => {
@@ -247,7 +247,7 @@ const AlarmErrorLogs = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
         <Card className="shadow-sm">
           <CardContent className="p-3">
-            <div className="flex items-center gap-3">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3">
               <div className="flex-1">
                 <label className="text-xs text-gray-500 mb-1 block">
                   Controller
@@ -377,27 +377,29 @@ const AlarmErrorLogs = () => {
                   <div className="text-center py-8">Loading alarms...</div>
                 ) : (
                   <div>
-                    <div className="rounded-lg border overflow-hidden">
-                      <Table>
+                    <div className="rounded-lg border overflow-x-auto">
+                      <Table className="min-w-full">
                         <TableHeader>
                           <TableRow className="bg-gray-50 hover:bg-gray-50">
-                            <TableHead className="font-semibold">#</TableHead>
-                            <TableHead className="font-semibold">
+                            <TableHead className="font-semibold text-xs sm:text-sm whitespace-nowrap">
+                              #
+                            </TableHead>
+                            <TableHead className="font-semibold text-xs sm:text-sm whitespace-nowrap">
                               Date
                             </TableHead>
-                            <TableHead className="font-semibold">
+                            <TableHead className="font-semibold text-xs sm:text-sm whitespace-nowrap">
                               Code
                             </TableHead>
-                            <TableHead className="font-semibold">
+                            <TableHead className="font-semibold text-xs sm:text-sm whitespace-nowrap">
                               Description
                             </TableHead>
-                            <TableHead className="font-semibold">
+                            <TableHead className="font-semibold text-xs sm:text-sm whitespace-nowrap">
                               Type
                             </TableHead>
-                            <TableHead className="font-semibold">
+                            <TableHead className="font-semibold text-xs sm:text-sm whitespace-nowrap">
                               Mode
                             </TableHead>
-                            <TableHead className="font-semibold">
+                            <TableHead className="font-semibold text-xs sm:text-sm whitespace-nowrap">
                               Actions
                             </TableHead>
                           </TableRow>
@@ -411,15 +413,24 @@ const AlarmErrorLogs = () => {
                                   index % 2 === 0 ? "bg-white" : "bg-gray-50/30"
                                 }`}
                               >
-                                <TableCell className="font-mono text-sm font-medium text-gray-600">
+                                <TableCell className="font-mono text-xs sm:text-sm font-medium text-gray-600 whitespace-nowrap">
                                   {startIndex + index + 1}
                                 </TableCell>
-                                <TableCell className="text-sm">
-                                  {new Date(alarm.originDate).toLocaleString()}
+                                <TableCell className="text-xs sm:text-sm whitespace-nowrap">
+                                  <span className="sm:hidden">
+                                    {new Date(
+                                      alarm.originDate
+                                    ).toLocaleDateString()}
+                                  </span>
+                                  <span className="hidden sm:inline">
+                                    {new Date(
+                                      alarm.originDate
+                                    ).toLocaleString()}
+                                  </span>
                                 </TableCell>
-                                <TableCell>
-                                  <div className="flex items-center gap-2">
-                                    <span className="font-mono text-sm font-bold text-gray-900 bg-gray-100 px-2 py-1 rounded">
+                                <TableCell className="whitespace-nowrap">
+                                  <div className="flex items-center gap-1 sm:gap-2">
+                                    <span className="font-mono text-xs sm:text-sm font-bold text-gray-900 bg-gray-100 px-1 sm:px-2 py-1 rounded">
                                       {alarm.code}
                                     </span>
                                     <Button
@@ -431,41 +442,46 @@ const AlarmErrorLogs = () => {
                                       }
                                       title="View alarm details and solution"
                                     >
-                                      <FileText className="w-4 h-4" />
+                                      <FileText className="w-3 h-3 sm:w-4 sm:h-4" />
                                     </Button>
                                   </div>
                                 </TableCell>
                                 <TableCell
-                                  className="text-sm max-w-xs truncate"
+                                  className="text-xs sm:text-sm max-w-xs truncate"
                                   title={alarm.name}
                                 >
                                   {alarm.name}
                                 </TableCell>
-                                <TableCell>
+                                <TableCell className="whitespace-nowrap">
                                   <Badge
                                     className={`${getSeverityColor(
                                       alarm.type
-                                    )} font-semibold px-3 py-1 rounded-full text-xs`}
+                                    )} font-semibold px-1 sm:px-3 py-1 rounded-full text-xs`}
                                   >
                                     {alarm.type}
                                   </Badge>
                                 </TableCell>
-                                <TableCell>
-                                  <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium">
+                                <TableCell className="whitespace-nowrap">
+                                  <span className="bg-blue-100 text-blue-800 px-1 sm:px-2 py-1 rounded-full text-xs font-medium">
                                     {alarm.mode}
                                   </span>
                                 </TableCell>
-                                <TableCell>
+                                <TableCell className="whitespace-nowrap">
                                   <Button
                                     size="sm"
                                     variant="outline"
-                                    className="h-8 text-xs hover:bg-orange-50 hover:border-orange-300 hover:text-orange-700 transition-all duration-200"
+                                    className="h-7 sm:h-8 text-xs hover:bg-orange-50 hover:border-orange-300 hover:text-orange-700 transition-all duration-200"
                                     onClick={() =>
                                       handleCreateWorkOrderClick(alarm)
                                     }
                                   >
                                     <Settings className="w-3 h-3 mr-1" />
-                                    Create Work Order
+                                    <span className="sm:hidden">
+                                      Work Order
+                                    </span>
+                                    <span className="hidden sm:inline">
+                                      Create Work Order
+                                    </span>
                                   </Button>
                                 </TableCell>
                               </TableRow>
@@ -492,13 +508,13 @@ const AlarmErrorLogs = () => {
                     </div>
 
                     {filteredAlarms.length > itemsPerPage && (
-                      <div className="flex items-center justify-between mt-4 px-2">
-                        <div className="text-sm text-gray-600">
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-4 px-2">
+                        <div className="text-xs sm:text-sm text-gray-600 text-center sm:text-left">
                           Showing {startIndex + 1} to{" "}
                           {Math.min(endIndex, filteredAlarms.length)} of{" "}
                           {filteredAlarms.length} alarms
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center justify-center gap-2">
                           <Button
                             variant="outline"
                             size="sm"
