@@ -82,7 +82,6 @@ const performInstantBackup = async (
   }
 };
 
-// Create weekly backup plan - saves to database
 const createWeeklyBackupPlan = async (
   controllerId: string,
   planName: string,
@@ -91,7 +90,6 @@ const createWeeklyBackupPlan = async (
   }
 ): Promise<WeeklyPlanResult> => {
   try {
-    // Extract enabled days and their configurations
     const enabledDays = Object.entries(weeklyPlan)
       .filter(([_, config]) => config.enabled)
       .map(([day, config]) => {
@@ -184,11 +182,116 @@ const getBackupSessionDetails = async (
   return res.json();
 };
 
+const deleteBackupSession = async (
+  sessionId: string
+): Promise<{ success: boolean; message?: string; error?: string }> => {
+  try {
+    const res = await fetch(
+      `/api/system-expectations/cmos-backup/backup-session/${sessionId}`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    if (!res.ok) {
+      throw new Error("Failed to delete backup session");
+    }
+
+    return {
+      success: true,
+      message: "Backup session deleted successfully",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: `Delete failed: ${error}`,
+    };
+  }
+};
+
+const createBackupZip = async (
+  sessionId: string
+): Promise<{
+  success: boolean;
+  message?: string;
+  error?: string;
+  zipFileName?: string;
+  fileCount?: number;
+}> => {
+  try {
+    const res = await fetch(
+      `/api/system-expectations/cmos-backup/create-zip/${sessionId}`,
+      {
+        method: "POST",
+      }
+    );
+
+    if (!res.ok) {
+      throw new Error("Failed to create backup ZIP");
+    }
+
+    const result = await res.json();
+    return {
+      success: true,
+      message: result.message,
+      zipFileName: result.zipFileName,
+      fileCount: result.fileCount,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: `ZIP creation failed: ${error}`,
+    };
+  }
+};
+
+const checkBackupZip = async (
+  sessionId: string
+): Promise<{
+  exists: boolean;
+  zipFileName?: string;
+  zipSizeBytes?: number;
+  createdAt?: string;
+}> => {
+  try {
+    const res = await fetch(
+      `/api/system-expectations/cmos-backup/create-zip/${sessionId}`,
+      {
+        method: "GET",
+      }
+    );
+
+    if (!res.ok) {
+      throw new Error("Failed to check ZIP status");
+    }
+
+    return res.json();
+  } catch (error) {
+    console.error("Error checking ZIP:", error);
+    return { exists: false };
+  }
+};
+
+const downloadBackupZip = (sessionId: string): void => {
+  const downloadUrl = `/api/system-expectations/cmos-backup/download-zip/${sessionId}`;
+
+  const link = document.createElement("a");
+  link.href = downloadUrl;
+  link.download = "";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+
 export {
   performInstantBackup,
   createWeeklyBackupPlan,
   getBackupHistory,
   getBackupSessionDetails,
+  deleteBackupSession,
+  createBackupZip,
+  checkBackupZip,
+  downloadBackupZip,
   type InstantBackupResult,
   type WeeklyPlanResult,
 };

@@ -5,6 +5,7 @@ import TimePicker from "./ui/time-picker";
 import { BackupPlan } from "@/types/files.types";
 import { createBackupPlan } from "@/utils/service/files";
 import { Save, Clock, Database, Calendar, History } from "lucide-react";
+import FilesBackupHistory from "./backup-history";
 
 interface PlansProps {
   controllerId: string;
@@ -489,10 +490,7 @@ export default function Plans({
       )}
 
       {activeTab === "history" && (
-        <div className="text-center py-8 text-gray-500">
-          <History className="h-8 w-8 mx-auto mb-2" />
-          <p>Backup history feature will be implemented later</p>
-        </div>
+        <FilesBackupHistory controllerId={controllerId} />
       )}
     </div>
   );

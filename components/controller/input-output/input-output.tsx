@@ -9,6 +9,7 @@ import {
   sendInputOutputCommand,
 } from "@/utils/service/input-output";
 import Timer from "@/components/shared/timer";
+import { sendTabExitCommand } from "@/utils/service/tab-exit";
 
 const tabItems = [
   {
@@ -72,6 +73,7 @@ const InputOutputTabs = ({ controllerId }: { controllerId: string }) => {
   const [error, setError] = useState<Error | null>(null);
   const isFirstRender = useRef(true);
   const currentTabRef = useRef(activeTab);
+  const previousTabRef = useRef<string | null>(null);
 
   const sendActiveTabRequest = async (
     activeTab: string,
@@ -115,7 +117,36 @@ const InputOutputTabs = ({ controllerId }: { controllerId: string }) => {
     }
   }, [controllerId, activeTab]);
 
-  const handleTabChange = (value: string) => {
+  useEffect(() => {
+    return () => {
+      if (previousTabRef.current && controllerId) {
+        sendTabExitCommand({
+          exitedTab: previousTabRef.current,
+          controllerId: controllerId,
+        }).catch((error) => {
+          console.error(
+            `Failed to send ${previousTabRef.current}Exit on unmount:`,
+            error
+          );
+        });
+      }
+    };
+  }, [controllerId]);
+
+  const handleTabChange = async (value: string) => {
+    if (previousTabRef.current && previousTabRef.current !== value) {
+      try {
+        await sendTabExitCommand({
+          exitedTab: previousTabRef.current,
+          controllerId: controllerId,
+        });
+        console.log(`${previousTabRef.current}Exit sent`);
+      } catch (error) {
+        console.error(`Failed to send ${previousTabRef.current}Exit:`, error);
+      }
+    }
+
+    previousTabRef.current = value;
     isFirstRender.current = true;
     setActiveTab(value);
   };

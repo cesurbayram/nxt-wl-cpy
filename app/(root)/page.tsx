@@ -15,8 +15,9 @@ import UtilizationChart from "@/components/controller/utilization/utilization-ch
 import { getBackupPlans } from "@/utils/service/files";
 import { getJobsByControllerId } from "@/utils/service/job";
 import { getAlarmsByControllerId } from "@/utils/service/alarm";
-import Timer from "@/components/shared/timer";
 import { FaSwatchbook } from "react-icons/fa";
+import { RefreshCw } from "lucide-react";
+import SystemInfoCard from "@/components/controller/system-info-card";
 
 const Page = ({ params }: { params: { id: string } }) => {
   const [selectedControllerId, setSelectedControllerId] = useState<
@@ -45,6 +46,7 @@ const Page = ({ params }: { params: { id: string } }) => {
     offline: 0,
     detected: 0,
   });
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   useEffect(() => {
     const fetchControllers = async () => {
@@ -116,6 +118,7 @@ const Page = ({ params }: { params: { id: string } }) => {
 
   const refreshData = async () => {
     if (selectedControllerId) {
+      setIsRefreshing(true);
       try {
         const controllerData = await getControllerById(selectedControllerId);
         setSelectedController(controllerData);
@@ -130,6 +133,8 @@ const Page = ({ params }: { params: { id: string } }) => {
         await fetchCurrentStatus(selectedControllerId);
       } catch (error) {
         console.error("Error refreshing data:", error);
+      } finally {
+        setIsRefreshing(false);
       }
     }
   };
@@ -229,18 +234,30 @@ const Page = ({ params }: { params: { id: string } }) => {
         selectedController.controllerStatus && (
           <>
             <div className="mb-6">
-              <div className="flex justify-end mb-2">
-                <Timer callback={refreshData} />
-              </div>
               <ControllerStatusBar
                 controllerStatus={selectedController.controllerStatus}
               />
             </div>
 
-            <div className="grid grid-cols-12 gap-4">
+            <div className="grid grid-cols-12 gap-4 mb-6">
               <Card className="col-span-8">
                 <CardHeader>
-                  <CardTitle>Performance</CardTitle>
+                  <div className="flex items-center justify-between">
+                    <CardTitle>Performance</CardTitle>
+                    <button
+                      onClick={refreshData}
+                      disabled={isRefreshing}
+                      className="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors disabled:opacity-50"
+                      title="Refresh All Data"
+                    >
+                      <RefreshCw
+                        size={16}
+                        className={`text-gray-600 transition-transform duration-500 ${
+                          isRefreshing ? "animate-spin" : ""
+                        }`}
+                      />
+                    </button>
+                  </div>
                 </CardHeader>
                 <CardContent>
                   {utilizationData && (
@@ -354,6 +371,13 @@ const Page = ({ params }: { params: { id: string } }) => {
                 </CardContent>
               </Card>
             </div>
+
+            {/* System Information - Ayrı Kart */}
+            <Card className="w-full">
+              <CardContent className="p-0">
+                <SystemInfoCard controllerId={selectedControllerId} />
+              </CardContent>
+            </Card>
           </>
         )
       )}

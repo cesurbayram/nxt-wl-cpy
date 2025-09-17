@@ -11,10 +11,12 @@ import {
   ChevronRight,
   Calendar,
   RefreshCw,
+  Trash2,
 } from "lucide-react";
 import {
   getBackupHistory,
   getBackupSessionDetails,
+  deleteBackupSession,
 } from "@/utils/service/system-expectations/cmos-backup";
 import {
   BackupSessionWithController,
@@ -22,6 +24,7 @@ import {
   BackupHistoryProps,
 } from "@/types/backup.types";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
 const BackupHistory = ({
   controllerId,
@@ -35,6 +38,7 @@ const BackupHistory = ({
     [key: string]: BackupFileDetail[];
   }>({});
   const [loadingDetails, setLoadingDetails] = useState<string | null>(null);
+  const [deletingSession, setDeletingSession] = useState<string | null>(null);
 
   useEffect(() => {
     if (isVisible && controllerId) {
@@ -90,6 +94,41 @@ const BackupHistory = ({
     return minutes > 0 ? `${minutes}m ${seconds % 60}s` : `${seconds}s`;
   };
 
+  const handleDeleteSession = async (
+    sessionId: string,
+    event: React.MouseEvent
+  ) => {
+    event.stopPropagation();
+
+    if (!confirm("Are you sure you want to delete this backup session?")) {
+      return;
+    }
+
+    setDeletingSession(sessionId);
+    try {
+      const result = await deleteBackupSession(sessionId);
+
+      if (result.success) {
+        toast.success("Backup session deleted successfully");
+
+        setSessions((prev) =>
+          prev.filter((session) => session.id !== sessionId)
+        );
+
+        if (expandedSession === sessionId) {
+          setExpandedSession(null);
+        }
+      } else {
+        toast.error(result.error || "Failed to delete session!");
+      }
+    } catch (error) {
+      console.error("Error deleting session:", error);
+      toast.error("Failed to delete session");
+    } finally {
+      setDeletingSession(null);
+    }
+  };
+
   if (!isVisible) return null;
 
   return (
@@ -122,7 +161,6 @@ const BackupHistory = ({
                 key={session.id}
                 className="border rounded-lg overflow-hidden"
               >
-                {/* Session Header */}
                 <div
                   className="p-4 bg-gray-50 hover:bg-gray-100 cursor-pointer transition-colors"
                   onClick={() => toggleSessionDetails(session.id)}
@@ -185,11 +223,23 @@ const BackupHistory = ({
                           {session.total_files} total files
                         </div>
                       </div>
+                      <Button
+                        onClick={(e) => handleDeleteSession(session.id, e)}
+                        disabled={deletingSession === session.id}
+                        size="sm"
+                        variant="outline"
+                        className="text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200"
+                      >
+                        {deletingSession === session.id ? (
+                          <RefreshCw className="w-4 h-4 animate-spin" />
+                        ) : (
+                          <Trash2 className="w-4 h-4" />
+                        )}
+                      </Button>
                     </div>
                   </div>
                 </div>
 
-                {/* Session Details */}
                 {expandedSession === session.id && (
                   <div className="border-t bg-white">
                     {loadingDetails === session.id ? (
