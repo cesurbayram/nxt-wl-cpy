@@ -16,10 +16,10 @@ const VariableList = ({ variables }: VariableListProps) => {
       accessorKey: "value",
       header: () => <div className="text-sm font-medium">Value</div>,
     },
-    {
+    /* {
       accessorKey: "name",
       header: () => <div className="text-sm font-medium">Name</div>,
-    },
+    }, */
   ];
 
   return <DataTable columns={columns} data={variables} />;

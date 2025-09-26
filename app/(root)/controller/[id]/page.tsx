@@ -97,18 +97,22 @@ const Page = ({ params }: { params: { id: string } }) => {
     fetchController();
 
     return () => {
-      if (
-        previousTab.current &&
-        ["inputOutput", "variable", "job", "monitoring", "data"].includes(
-          previousTab.current
-        )
-      ) {
+
+      const tabToSubTabMap: Record<string, string> = {
+        variable: "byte",
+        inputOutput: "extInput",
+        data: "absoData",
+        monitoring: "tork",
+        job: "job"
+      };
+
+      if (previousTab.current && tabToSubTabMap[previousTab.current]) {
         sendTabExitCommand({
-          exitedTab: previousTab.current,
+          exitedTab: tabToSubTabMap[previousTab.current],
           controllerId: params.id,
         }).catch((error) => {
           console.error(
-            `Failed to send ${previousTab.current} exit on page unmount:`,
+            `Failed to send ${tabToSubTabMap[previousTab.current!]} exit on page unmount:`,
             error
           );
         });
@@ -148,19 +152,27 @@ const Page = ({ params }: { params: { id: string } }) => {
   const handleTabChange = async (value: string) => {
     setActiveTab(value);
 
-    if (
-      previousTab.current &&
-      ["inputOutput", "variable", "job", "monitoring", "data"].includes(
-        previousTab.current
-      )
-    ) {
+
+    const currentTab = previousTab.current || activeTab;
+
+
+    const tabToSubTabMap: Record<string, string> = {
+      variable: "byte",
+      inputOutput: "extInput",
+      data: "absoData",
+      monitoring: "tork",
+      job: "job"
+    };
+
+    if (currentTab && tabToSubTabMap[currentTab]) {
       try {
         await sendTabExitCommand({
-          exitedTab: previousTab.current,
+          exitedTab: tabToSubTabMap[currentTab],
           controllerId: params.id,
         });
+        console.log(`${tabToSubTabMap[currentTab]}Exit sent for ${currentTab} tab`);
       } catch (error) {
-        console.error(`Failed to send ${previousTab.current} exit:`, error);
+        console.error(`Failed to send ${tabToSubTabMap[currentTab]} exit:`, error);
       }
     }
 
@@ -211,32 +223,32 @@ const Page = ({ params }: { params: { id: string } }) => {
                     {item.value === "alarm"
                       ? "Alarms"
                       : item.value === "monitoring"
-                      ? "Monitor"
-                      : item.value === "inputOutput"
-                      ? "I/O"
-                      : item.value === "variable"
-                      ? "Variables"
-                      : item.value === "data"
-                      ? "Data"
-                      : item.value === "datanal"
-                      ? "Analysis"
-                      : item.value === "job"
-                      ? "Job"
-                      : item.value === "file"
-                      ? "Files"
-                      : item.value === "util"
-                      ? "Util"
-                      : item.value === "maintenance"
-                      ? "Maint"
-                      : item.value === "camera"
-                      ? "Camera"
-                      : item.value === "remotePend"
-                      ? "Remote"
-                      : item.value === "update"
-                      ? "Update"
-                      : item.value === "create"
-                      ? "Create"
-                      : item.label}
+                        ? "Monitor"
+                        : item.value === "inputOutput"
+                          ? "I/O"
+                          : item.value === "variable"
+                            ? "Variables"
+                            : item.value === "data"
+                              ? "Data"
+                              : item.value === "datanal"
+                                ? "Analysis"
+                                : item.value === "job"
+                                  ? "Job"
+                                  : item.value === "file"
+                                    ? "Files"
+                                    : item.value === "util"
+                                      ? "Util"
+                                      : item.value === "maintenance"
+                                        ? "Maint"
+                                        : item.value === "camera"
+                                          ? "Camera"
+                                          : item.value === "remotePend"
+                                            ? "Remote"
+                                            : item.value === "update"
+                                              ? "Update"
+                                              : item.value === "create"
+                                                ? "Create"
+                                                : item.label}
                   </span>
                   <span className="hidden sm:inline">{item.label}</span>
                 </TabsTrigger>

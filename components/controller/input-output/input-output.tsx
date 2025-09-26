@@ -134,15 +134,18 @@ const InputOutputTabs = ({ controllerId }: { controllerId: string }) => {
   }, [controllerId]);
 
   const handleTabChange = async (value: string) => {
-    if (previousTabRef.current && previousTabRef.current !== value) {
+
+    const currentTab = previousTabRef.current || activeTab;
+
+    if (currentTab && currentTab !== value) {
       try {
         await sendTabExitCommand({
-          exitedTab: previousTabRef.current,
+          exitedTab: currentTab,
           controllerId: controllerId,
         });
-        console.log(`${previousTabRef.current}Exit sent`);
+        console.log(`${currentTab}Exit sent`);
       } catch (error) {
-        console.error(`Failed to send ${previousTabRef.current}Exit:`, error);
+        console.error(`Failed to send ${currentTab}Exit:`, error);
       }
     }
 

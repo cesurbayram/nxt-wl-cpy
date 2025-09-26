@@ -35,6 +35,7 @@ import {
   sendJobSelectCommand,
 } from "@/utils/service/shift/job-select";
 import { ProductionValue } from "@/types/production-value.types";
+import SystemCountConfig from "./system-count-config";
 
 const formSchema = z.object({
   controllerId: z.string().min(1, { message: "Controller is required" }),
@@ -460,6 +461,29 @@ export default function ProductionValueForm({
                           />
                         </div>
                       </div>
+                    ) : null;
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* System Count Configuration */}
+            {selectedJobs.length > 0 && form.watch("controllerId") && (
+              <div className="mt-6">
+                <h4 className="text-sm font-medium mb-4">System Count Configuration:</h4>
+                <div className="space-y-4">
+                  {selectedJobs.map((item) => {
+                    const job = jobs.find((j) => j.id === item.jobId);
+                    return job ? (
+                      <SystemCountConfig
+                        key={item.jobId}
+                        jobId={item.jobId}
+                        jobName={job.name}
+                        controllerId={form.watch("controllerId")}
+                        onConfigChange={() => {
+                          // Config değiştiğinde herhangi bir refresh gerekirse burada yapılabilir
+                        }}
+                      />
                     ) : null;
                   })}
                 </div>

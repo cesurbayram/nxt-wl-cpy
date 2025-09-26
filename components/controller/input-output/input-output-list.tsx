@@ -32,7 +32,7 @@ const InputOutputList = ({ inputOutput }: InputOutputListProps) => {
     isActive: boolean;
   }>[] = [
     { accessorKey: "bitNumber", header: "Bit Number" },
-    { accessorKey: "name", header: "Name" },
+    /* { accessorKey: "name", header: "Name" }, */
     {
       accessorKey: "isActive",
       header: "Activity",
