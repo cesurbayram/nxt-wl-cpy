@@ -6,7 +6,7 @@ const getGeneralVariableData = async (
 ): Promise<GeneralVariable[]> => {
   const response = await fetch(
     `/api/controller/${controllerId}/general-variable?type=${variableType}`,
-    {
+    { 
       method: "GET",
       headers: {
         "Content-Type": "application/json",
