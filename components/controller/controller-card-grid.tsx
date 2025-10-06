@@ -11,6 +11,9 @@ import {
   Settings,
   Activity,
   AlertTriangle,
+  Eye,
+  Wrench,
+  Sliders,
 } from "lucide-react";
 import { GrConnect } from "react-icons/gr";
 import {
@@ -171,33 +174,43 @@ const ControllerCardGrid = ({
 
               <StatusIndicators controller={controller} />
 
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pt-2 border-t">
-                <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    asChild
-                    className="hover:bg-[#6950e8] hover:text-white text-xs sm:text-sm w-full sm:w-auto"
-                  >
-                    <Link href={`/controller/${controller.id}`}>
-                      <span className="sm:hidden">Details</span>
-                      <span className="hidden sm:inline">View Details</span>
-                      <FaArrowRight className="h-3 w-3 ml-1 sm:ml-2" />
-                    </Link>
-                  </Button>
+              <div className="flex flex-wrap items-center gap-2 pt-2 border-t">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  asChild
+                  className="hover:bg-[#6950e8] hover:text-white text-xs sm:text-sm flex-1 min-w-[100px]"
+                >
+                  <Link href={`/controller/${controller.id}/details`}>
+                    <Eye className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
+                    <span className="sm:hidden">Details</span>
+                    <span className="hidden sm:inline">View Details</span>
+                  </Link>
+                </Button>
 
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    asChild
-                    className="hover:bg-[#6950e8]/80 hover:text-white text-xs sm:text-sm w-full sm:w-auto"
-                  >
-                    <Link href={`/controller/${controller.id}?tab=update`}>
-                      <Settings className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
-                      Configure
-                    </Link>
-                  </Button>
-                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  asChild
+                  className="hover:bg-[#6950e8]/80 hover:text-white text-xs sm:text-sm flex-1 min-w-[100px]"
+                >
+                  <Link href={`/controller/${controller.id}/configuration`}>
+                    <Wrench className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
+                    Configure
+                  </Link>
+                </Button>
+
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  asChild
+                  className="hover:bg-[#6950e8]/60 hover:text-white text-xs sm:text-sm flex-1 min-w-[100px]"
+                >
+                  <Link href={`/controller/${controller.id}/advanced`}>
+                    <Sliders className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
+                    Advanced
+                  </Link>
+                </Button>
 
                 <Button
                   variant="ghost"
@@ -207,10 +220,10 @@ const ControllerCardGrid = ({
                     e.stopPropagation();
                     deleteClick(controller);
                   }}
-                  className="hover:bg-red-500 hover:text-white text-red-600 w-full sm:w-auto"
+                  className="hover:bg-red-500 hover:text-white text-red-600 w-full"
                 >
-                  <Trash2 className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-0" />
-                  <span className="sm:hidden">Delete</span>
+                  <Trash2 className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
+                  Delete
                 </Button>
               </div>
             </div>

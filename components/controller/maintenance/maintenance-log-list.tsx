@@ -6,19 +6,17 @@ import { ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "../../shared/data-table";
 import { Button } from "../../ui/button";
 import { MdDelete } from "react-icons/md";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface MaintenanceLogListProps {
   data: MaintenanceLog[];
   deleteItem: (id: string) => void;
-  onAddNew: () => void;
   maintenancePlans: MaintenancePlan[];
 }
 
 const MaintenanceLogList = ({
   data,
   deleteItem,
-  onAddNew,
   maintenancePlans,
 }: MaintenanceLogListProps) => {
   const columns: ColumnDef<MaintenanceLog>[] = [
@@ -90,15 +88,7 @@ const MaintenanceLogList = ({
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-end space-y-0 pb-2">
-        <Button
-          onClick={onAddNew}
-          className="rounded-xl bg-[#6950e8] text-white"
-        >
-          + Add New Log
-        </Button>
-      </CardHeader>
-      <CardContent>
+      <CardContent className="pt-6">
         <DataTable columns={columns} data={data} />
       </CardContent>
     </Card>

@@ -125,7 +125,7 @@ const Page = () => {
   };
 
   const handleRouteControllerCreate = () => {
-    router.push("/controller/0");
+    router.push("/controller/0/details");
   };
 
   const handleFilterChange = (newFilters: FilterOptions) => {

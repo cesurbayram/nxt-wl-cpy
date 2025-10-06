@@ -1,388 +1,439 @@
 "use client";
-
-import React, { useState, useEffect } from "react";
-import { Controller } from "@/types/controller.types";
-import { getController, getControllerById } from "@/utils/service/controller";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import PageWrapper from "@/components/shared/page-wrapper";
-import { LiaEditSolid } from "react-icons/lia";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { GiMechanicalArm } from "react-icons/gi";
-import ControllerStatusBar from "@/components/controller/controller-status-bar";
 import LoadingUi from "@/components/shared/loading-ui";
-import { UtilizationData } from "@/types/utilization.types";
-import { getUtilizationData } from "@/utils/service/utilization";
-import UtilizationChart from "@/components/controller/utilization/utilization-chart";
-import { getBackupPlans } from "@/utils/service/files";
-import { getJobsByControllerId } from "@/utils/service/job";
-import { getAlarmsByControllerId } from "@/utils/service/alarm";
-import { FaSwatchbook } from "react-icons/fa";
-import { RefreshCw } from "lucide-react";
-import SystemInfoCard from "@/components/controller/system-info-card";
+import { Home as HomeIcon } from "lucide-react";
+import Link from "next/link";
+import {
+  fetchSystemData,
+  getSystemFileContent,
+} from "@/utils/service/system-info/system-info";
+import {
+  parseSystemFile,
+  formatRobotModel,
+  formatApplication,
+  type ParsedSystemInfo,
+} from "@/utils/common/parse-system-file";
 
-const Page = ({ params }: { params: { id: string } }) => {
-  const [selectedControllerId, setSelectedControllerId] = useState<
-    string | null
-  >(null);
-  const [controllers, setControllers] = useState<Controller[]>([]);
-  const [selectedController, setSelectedController] =
-    useState<Controller | null>(null);
-  const [utilizationData, setUtilizationData] = useState<UtilizationData[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isControllersLoading, setIsControllersLoading] = useState(false);
-  const [backupInfo, setBackupInfo] = useState<any>(null);
-  const [jobInfo, setJobInfo] = useState<any>(null);
-  const [alarmCounts, setAlarmCounts] = useState<{
-    major: number;
-    minor: number;
-    system: number;
-    user: number;
-    offline: number;
-    detected: number;
-  }>({
-    major: 0,
-    minor: 0,
-    system: 0,
-    user: 0,
-    offline: 0,
-    detected: 0,
-  });
-  const [isRefreshing, setIsRefreshing] = useState(false);
+interface ControllerWithSystemInfo {
+  id: string;
+  name: string;
+  ipAddress: string;
+  status: string;
+  location?: string;
+  cellId?: string;
+  controllerStatus?: {
+    teach: string;
+    servo: boolean;
+    operating: boolean;
+    connection: boolean;
+  };
+  systemInfo?: ParsedSystemInfo;
+  isLoadingSystemInfo?: boolean;
+}
+
+interface CellWithControllers {
+  id: string;
+  name: string;
+  status: string;
+  lineId: string;
+  controllers: ControllerWithSystemInfo[];
+}
+
+interface LineHierarchy {
+  id: string;
+  name: string;
+  status: string;
+  cells: CellWithControllers[];
+}
+
+const HomePage = () => {
+  const router = useRouter();
+  const [lines, setLines] = useState<LineHierarchy[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchHierarchy = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch("/api/home/hierarchy");
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch hierarchy");
+      }
+
+      const data: LineHierarchy[] = await response.json();
+      setLines(data);
+
+      // Automatically fetch system.sys for all controllers
+      for (const line of data) {
+        for (const cell of line.cells) {
+          for (const controller of cell.controllers) {
+            fetchControllerSystemInfo(controller.id, line.id, cell.id);
+          }
+        }
+      }
+    } catch (err: any) {
+      setError(err.message);
+      console.error("Error fetching hierarchy:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const fetchControllerSystemInfo = async (
+    controllerId: string,
+    lineId: string,
+    cellId: string
+  ) => {
+    try {
+      // Update loading state
+      setLines((prev) =>
+        prev.map((line) =>
+          line.id === lineId
+            ? {
+                ...line,
+                cells: line.cells.map((cell) =>
+                  cell.id === cellId
+                    ? {
+                        ...cell,
+                        controllers: cell.controllers.map((ctrl) =>
+                          ctrl.id === controllerId
+                            ? { ...ctrl, isLoadingSystemInfo: true }
+                            : ctrl
+                        ),
+                      }
+                    : cell
+                ),
+              }
+            : line
+        )
+      );
+
+      // Request system.sys file from robot
+      await fetchSystemData(controllerId, "SYSTEM.SYS");
+
+      // Wait a bit for the file to be saved
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      // Get the file content
+      const systemFileResponse = await getSystemFileContent(controllerId);
+
+      if (systemFileResponse.success && systemFileResponse.content) {
+        const parsedInfo = parseSystemFile(systemFileResponse.content);
+
+        // Update the controller with parsed system info
+        setLines((prev) =>
+          prev.map((line) =>
+            line.id === lineId
+              ? {
+                  ...line,
+                  cells: line.cells.map((cell) =>
+                    cell.id === cellId
+                      ? {
+                          ...cell,
+                          controllers: cell.controllers.map((ctrl) =>
+                            ctrl.id === controllerId
+                              ? {
+                                  ...ctrl,
+                                  systemInfo: parsedInfo,
+                                  isLoadingSystemInfo: false,
+                                }
+                              : ctrl
+                          ),
+                        }
+                      : cell
+                  ),
+                }
+              : line
+          )
+        );
+      } else {
+        // Mark as failed
+        setLines((prev) =>
+          prev.map((line) =>
+            line.id === lineId
+              ? {
+                  ...line,
+                  cells: line.cells.map((cell) =>
+                    cell.id === cellId
+                      ? {
+                          ...cell,
+                          controllers: cell.controllers.map((ctrl) =>
+                            ctrl.id === controllerId
+                              ? { ...ctrl, isLoadingSystemInfo: false }
+                              : ctrl
+                          ),
+                        }
+                      : cell
+                  ),
+                }
+              : line
+          )
+        );
+      }
+    } catch (error) {
+      console.error(`Error fetching system info for ${controllerId}:`, error);
+      setLines((prev) =>
+        prev.map((line) =>
+          line.id === lineId
+            ? {
+                ...line,
+                cells: line.cells.map((cell) =>
+                  cell.id === cellId
+                    ? {
+                        ...cell,
+                        controllers: cell.controllers.map((ctrl) =>
+                          ctrl.id === controllerId
+                            ? { ...ctrl, isLoadingSystemInfo: false }
+                            : ctrl
+                        ),
+                      }
+                    : cell
+                ),
+              }
+            : line
+        )
+      );
+    }
+  };
 
   useEffect(() => {
-    const fetchControllers = async () => {
-      setIsControllersLoading(true);
-      try {
-        const data = await getController();
-        setControllers(data);
-      } catch (error) {
-        console.error("Error fetching controllers:", error);
-      }
-      setIsControllersLoading(false);
-    };
-
-    fetchControllers();
+    fetchHierarchy();
   }, []);
 
-  const fetchCurrentStatus = async (controllerId: string) => {
-    try {
-      const backupPlans = await getBackupPlans(controllerId);
-      const latestBackup = backupPlans[0];
-      setBackupInfo(latestBackup);
+  const getControllerMode = (controller: ControllerWithSystemInfo): string => {
+    if (!controller.controllerStatus?.connection) {
+      return "Disconnected";
+    }
 
-      const jobs = await getJobsByControllerId(controllerId);
-      const currentJob = jobs[0];
-      setJobInfo(currentJob);
+    const teach = controller.controllerStatus?.teach;
+    const operating = controller.controllerStatus?.operating;
 
-      const detectedAlarms = await getAlarmsByControllerId(
-        controllerId,
-        "detected"
-      );
-      const majorAlarms = await getAlarmsByControllerId(
-        controllerId,
-        "almhist",
-        "MAJOR"
-      );
-      const minorAlarms = await getAlarmsByControllerId(
-        controllerId,
-        "almhist",
-        "MINOR"
-      );
-      const systemAlarms = await getAlarmsByControllerId(
-        controllerId,
-        "almhist",
-        "SYSTEM"
-      );
-      const userAlarms = await getAlarmsByControllerId(
-        controllerId,
-        "almhist",
-        "USER"
-      );
-      const offlineAlarms = await getAlarmsByControllerId(
-        controllerId,
-        "almhist",
-        "OFF-LINE"
-      );
-
-      setAlarmCounts({
-        major: majorAlarms.length,
-        minor: minorAlarms.length,
-        system: systemAlarms.length,
-        user: userAlarms.length,
-        offline: offlineAlarms.length,
-        detected: detectedAlarms.length,
-      });
-    } catch (error) {
-      console.error("Error fetching current status:", error);
+    if (teach === "TEACH" || teach === "TEACH ON") {
+      return "Teach";
+    } else if (operating) {
+      return "Running";
+    } else {
+      return "Standby";
     }
   };
 
-  const refreshData = async () => {
-    if (selectedControllerId) {
-      setIsRefreshing(true);
-      try {
-        const controllerData = await getControllerById(selectedControllerId);
-        setSelectedController(controllerData);
-
-        const utilizationResult = await getUtilizationData(
-          selectedControllerId,
-          "7d",
-          "5min"
-        );
-        setUtilizationData(utilizationResult);
-
-        await fetchCurrentStatus(selectedControllerId);
-      } catch (error) {
-        console.error("Error refreshing data:", error);
-      } finally {
-        setIsRefreshing(false);
-      }
+  const getModeColor = (mode: string): string => {
+    switch (mode.toLowerCase()) {
+      case "running":
+        return "bg-green-100 text-green-800 border border-green-200";
+      case "teach":
+        return "bg-yellow-100 text-yellow-800 border border-yellow-200";
+      case "standby":
+        return "bg-gray-100 text-gray-800 border border-gray-200";
+      case "disconnected":
+        return "bg-red-100 text-red-800 border border-red-200";
+      default:
+        return "bg-gray-100 text-gray-800 border border-gray-200";
     }
   };
 
-  useEffect(() => {
-    const fetchControllerData = async () => {
-      if (!selectedControllerId) return;
-
-      setIsLoading(true);
-      try {
-        const controllerData = await getControllerById(selectedControllerId);
-        setSelectedController(controllerData);
-
-        const utilizationResult = await getUtilizationData(
-          selectedControllerId,
-          "7d",
-          "5min"
-        );
-        setUtilizationData(utilizationResult);
-
-        await fetchCurrentStatus(selectedControllerId);
-      } catch (error) {
-        console.error("Error fetching controller data:", error);
-      }
-      setIsLoading(false);
-    };
-
-    fetchControllerData();
-  }, [selectedControllerId]);
+  if (error) {
+    return (
+      <>
+        <LoadingUi isLoading={isLoading} />
+        <PageWrapper
+          shownHeaderButton={false}
+          pageTitle="Home"
+          icon={<HomeIcon size={24} color="#6950e8" />}
+        >
+          <div className="text-center py-12">
+            <p className="text-red-500">{error}</p>
+          </div>
+        </PageWrapper>
+      </>
+    );
+  }
 
   return (
+    <>
+      <LoadingUi isLoading={isLoading} />
     <PageWrapper
       shownHeaderButton={false}
-      pageTitle="WatchLog"
-      icon={<FaSwatchbook size={24} color="#6950e8" />}
-    >
-      <Card className="mb-6">
-        <CardHeader>
-          <CardTitle>Controllers</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-3 gap-4">
-            {controllers?.map((ctrl) => (
-              <div
-                key={ctrl.id}
-                className={`p-4 border rounded-lg cursor-pointer transition-colors ${
-                  selectedControllerId === ctrl.id
-                    ? "border-primary bg-muted/50"
-                    : ""
-                }`}
-                onClick={() => setSelectedControllerId(ctrl.id || "")}
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <div className="font-medium">{ctrl.name}</div>
-                  <div className="flex flex-col items-end gap-2">
-                    <div
-                      className={`h-2 w-2 rounded-full ${
-                        ctrl.controllerStatus?.connection
-                          ? "bg-green-500"
-                          : "bg-red-500"
-                      }`}
-                    />
-                    <img
-                      src="/yrc1000.png"
-                      alt="Controller Model"
-                      className="w-12 h-12 object-contain"
-                    />
+        pageTitle="Home"
+        icon={<HomeIcon size={24} color="#6950e8" />}
+      >
+        {lines.length === 0 && !isLoading ? (
+          <div className="text-center py-12">
+            <p className="text-gray-500">No production lines configured</p>
+          </div>
+        ) : (
+          <div className="space-y-6">
+            {lines.map((line) => (
+              <div key={line.id}>
+                {line.cells.map((cell) => (
+                  <div
+                    key={cell.id}
+                    className="bg-white rounded-lg border shadow-sm overflow-hidden mb-6"
+                  >
+                    <div className="border-b bg-gray-50 px-4 py-3">
+                      <h2 className="text-base font-semibold text-gray-900 flex items-center gap-2">
+                        <span>📍</span>
+                        Line {line.name}
+                      </h2>
+                    </div>
+
+                    {cell.controllers.length === 0 ? (
+                      <div className="text-center py-12">
+                        <p className="text-gray-500">
+                          No controllers in this cell
+                          </p>
+                        </div>
+                      ) : (
+                      <div className="overflow-x-auto">
+                        <table className="w-full">
+                          <thead>
+                            <tr className="border-b bg-gray-50">
+                              <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900 border-r">
+                                Cell Name
+                              </th>
+                              <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900 border-r">
+                                Controller
+                              </th>
+                              <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900 border-r">
+                                Model
+                              </th>
+                              <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900 border-r">
+                                Version
+                              </th>
+                              <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900 border-r">
+                                Application
+                              </th>
+                              <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900">
+                                Status
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {cell.controllers.map((controller, index) => {
+                              const mode = getControllerMode(controller);
+                              const modeColor = getModeColor(mode);
+
+                              return (
+                                <tr
+                                  key={controller.id}
+                                  className="border-b hover:bg-muted/50 transition-colors"
+                                >
+                                  {index === 0 && (
+                                    <td
+                                      rowSpan={cell.controllers.length}
+                                      className="px-4 py-3 font-medium text-gray-900 border-r bg-gray-50"
+                                    >
+                                      {cell.name}
+                                    </td>
+                                  )}
+                                  <td className="px-4 py-3 border-r">
+                                    <Link
+                                      href={`/controller/${controller.id}/details`}
+                                      className="text-[#6950e8] hover:underline font-medium inline-flex items-center gap-2 group"
+                                    >
+                                      <span>{controller.name}</span>
+                                      <svg
+                                        className="w-4 h-4 transition-transform group-hover:translate-x-1"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                      >
+                                        <path
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                          strokeWidth={2}
+                                          d="M9 5l7 7-7 7"
+                                        />
+                                      </svg>
+                                    </Link>
+                                  </td>
+                                  <td className="px-4 py-3 border-r">
+                                    {controller.isLoadingSystemInfo ? (
+                                      <span className="inline-flex items-center gap-2 text-gray-500 text-sm">
+                                        <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                        Loading...
+                                      </span>
+                                    ) : controller.systemInfo?.robotModel ? (
+                                      <span className="font-mono text-sm text-gray-700">
+                                        {formatRobotModel(
+                                          controller.systemInfo.robotModel
+                                        )}
+                                      </span>
+                                    ) : (
+                                      <span className="text-gray-400 text-sm">
+                                        N/A
+                                      </span>
+                                    )}
+                                  </td>
+                                  <td className="px-4 py-3 border-r">
+                                    {controller.isLoadingSystemInfo ? (
+                                      <span className="inline-flex items-center gap-2 text-gray-500 text-sm">
+                                        <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                        Loading...
+                                      </span>
+                                    ) : controller.systemInfo?.version ? (
+                                      <span className="font-mono text-sm text-gray-700">
+                                        {controller.systemInfo.version}
+                                      </span>
+                                    ) : (
+                                      <span className="text-gray-400 text-sm">
+                                        N/A
+                                      </span>
+                                    )}
+                                  </td>
+                                  <td className="px-4 py-3 border-r">
+                                    {controller.isLoadingSystemInfo ? (
+                                      <span className="inline-flex items-center gap-2 text-gray-500 text-sm">
+                                        <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                        Loading...
+                                      </span>
+                                    ) : controller.systemInfo?.application ? (
+                                      <span className="text-sm text-gray-700">
+                                        {formatApplication(
+                                          controller.systemInfo.application
+                                        )}
+                                      </span>
+                                    ) : (
+                                      <span className="text-gray-400 text-sm">
+                                        N/A
+                                      </span>
+                                    )}
+                                  </td>
+                                  <td className="px-4 py-3">
+                                    <span
+                                      className={`inline-block px-3 py-1 rounded text-sm font-medium ${modeColor}`}
+                                    >
+                                      {mode}
+                                    </span>
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                      </div>
+                    )}
                   </div>
-                </div>
-                <div className="text-sm text-muted-foreground">
-                  Model: {ctrl.model}
-                </div>
-                <div className="text-sm text-muted-foreground">
-                  IP: {ctrl.ipAddress}
-                </div>
-                <div className="text-sm text-muted-foreground">
-                  Location: {ctrl.location}
-                </div>
+                ))}
               </div>
             ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {!selectedControllerId ? (
-        <div className="flex flex-col items-center justify-center p-12 text-center">
-          <GiMechanicalArm size={48} className="text-muted-foreground mb-4" />
-          <h3 className="text-lg font-medium mb-2">Select a Controller</h3>
-          <p className="text-sm text-muted-foreground">
-            Choose a controller from the list above to view its details
-          </p>
-        </div>
-      ) : isLoading ? (
-        <LoadingUi isLoading={true} />
-      ) : (
-        selectedController &&
-        selectedController.controllerStatus && (
-          <>
-            <div className="mb-6">
-              <ControllerStatusBar
-                controllerStatus={selectedController.controllerStatus}
-              />
             </div>
-
-            <div className="grid grid-cols-12 gap-4 mb-6">
-              <Card className="col-span-8">
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle>Performance</CardTitle>
-                    <button
-                      onClick={refreshData}
-                      disabled={isRefreshing}
-                      className="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors disabled:opacity-50"
-                      title="Refresh All Data"
-                    >
-                      <RefreshCw
-                        size={16}
-                        className={`text-gray-600 transition-transform duration-500 ${
-                          isRefreshing ? "animate-spin" : ""
-                        }`}
-                      />
-                    </button>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  {utilizationData && (
-                    <UtilizationChart data={utilizationData} viewType="line" />
-                  )}
-                </CardContent>
-              </Card>
-
-              <Card className="col-span-4">
-                <CardHeader>
-                  <CardTitle>Current Status</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-6">
-                    <div className="border-t pt-4">
-                      <h3 className="text-base font-semibold mb-3">
-                        Latest Backup
-                      </h3>
-                      {backupInfo ? (
-                        <div className="space-y-2">
-                          <p className="text-sm font-medium">
-                            <span className="text-muted-foreground">Name:</span>{" "}
-                            {backupInfo.name}
-                          </p>
-                          <p className="text-sm font-medium">
-                            <span className="text-muted-foreground">Date:</span>{" "}
-                            {new Date(backupInfo.created_at).toLocaleString()}
-                          </p>
-                          <p className="text-sm font-medium">
-                            <span className="text-muted-foreground">
-                              File Types:
-                            </span>{" "}
-                            {backupInfo.file_types?.join(", ")}
-                          </p>
-                        </div>
-                      ) : (
-                        <p className="text-sm text-muted-foreground">
-                          No backup information
-                        </p>
-                      )}
-                    </div>
-
-                    <div className="border-t pt-4">
-                      <h3 className="text-base font-semibold mb-3">
-                        Current Job
-                      </h3>
-                      {jobInfo ? (
-                        <div className="space-y-2">
-                          <p className="text-sm font-medium">
-                            <span className="text-muted-foreground">Name:</span>{" "}
-                            {jobInfo.job_name}
-                          </p>
-                          <p className="text-sm font-medium">
-                            <span className="text-muted-foreground">Line:</span>{" "}
-                            {jobInfo.current_line}
-                          </p>
-                        </div>
-                      ) : (
-                        <p className="text-sm text-muted-foreground">
-                          No active job
-                        </p>
-                      )}
-                    </div>
-
-                    <div className="border-t pt-4">
-                      <h3 className="text-base font-semibold mb-3">
-                        Alarm Statistics
-                      </h3>
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <p className="text-sm font-medium">
-                            <span className="text-muted-foreground">
-                              Major:
-                            </span>{" "}
-                            {alarmCounts.major}
-                          </p>
-                          <p className="text-sm font-medium">
-                            <span className="text-muted-foreground">
-                              Minor:
-                            </span>{" "}
-                            {alarmCounts.minor}
-                          </p>
-                          <p className="text-sm font-medium">
-                            <span className="text-muted-foreground">
-                              System:
-                            </span>{" "}
-                            {alarmCounts.system}
-                          </p>
-                        </div>
-                        <div className="space-y-2">
-                          <p className="text-sm font-medium">
-                            <span className="text-muted-foreground">User:</span>{" "}
-                            {alarmCounts.user}
-                          </p>
-                          <p className="text-sm font-medium">
-                            <span className="text-muted-foreground">
-                              Off-line:
-                            </span>{" "}
-                            {alarmCounts.offline}
-                          </p>
-                          <p className="text-sm font-medium">
-                            <span className="text-muted-foreground">
-                              Detected:
-                            </span>{" "}
-                            {alarmCounts.detected}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* System Information - Ayrı Kart */}
-            <Card className="w-full">
-              <CardContent className="p-0">
-                <SystemInfoCard controllerId={selectedControllerId} />
-              </CardContent>
-            </Card>
-          </>
-        )
       )}
     </PageWrapper>
+    </>
   );
 };
 
-export default Page;
+export default HomePage;

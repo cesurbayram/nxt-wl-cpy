@@ -21,6 +21,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 
 const Maintenance = ({ controllerId }: { controllerId: string }) => {
@@ -31,13 +32,18 @@ const Maintenance = ({ controllerId }: { controllerId: string }) => {
     []
   );
   const [isLoading, setIsLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isPlan, setIsPlan] = useState(true);
 
-  const fetchData = async () => {
+  const fetchData = async (isRefresh: boolean = false) => {
     try {
-      setIsLoading(true);
+      if (isRefresh) {
+        setIsRefreshing(true);
+      } else {
+        setIsLoading(true);
+      }
       setError(null);
 
       if (activeTab === "plans") {
@@ -59,8 +65,16 @@ const Maintenance = ({ controllerId }: { controllerId: string }) => {
       );
       toast.error("Failed to fetch data");
     } finally {
-      setIsLoading(false);
+      if (isRefresh) {
+        setIsRefreshing(false);
+      } else {
+        setIsLoading(false);
+      }
     }
+  };
+
+  const handleRefresh = () => {
+    fetchData(true);
   };
 
   useEffect(() => {
@@ -135,46 +149,58 @@ const Maintenance = ({ controllerId }: { controllerId: string }) => {
     <>
       <Tabs
         defaultValue="plans"
-        className="flex flex-col lg:grid lg:grid-cols-5 gap-3"
-        orientation="vertical"
+        className="w-full"
         onValueChange={(value) => setActiveTab(value as "plans" | "logs")}
       >
-        
-        <div className="flex flex-col gap-4 lg:col-span-1">
-          <div className="overflow-x-auto lg:overflow-x-visible">
-            <TabsList className="flex lg:flex-col h-fit border-2 gap-1 w-full lg:w-auto">
-              <TabsTrigger value="plans" className="w-full whitespace-nowrap px-2 lg:px-4 flex-shrink-0">
-                Plans
-              </TabsTrigger>
-              <TabsTrigger value="logs" className="w-full whitespace-nowrap px-2 lg:px-4 flex-shrink-0">
-                Logs
-              </TabsTrigger>
-            </TabsList>
+        {/* Header with Tabs and Buttons */}
+        <div className="flex items-center justify-between mb-4 border-b pb-2">
+          <TabsList className="flex h-fit border-2 gap-1">
+            <TabsTrigger value="plans" className="whitespace-nowrap px-4">
+              Plans
+            </TabsTrigger>
+            <TabsTrigger value="logs" className="whitespace-nowrap px-4">
+              Logs
+            </TabsTrigger>
+          </TabsList>
+          
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleRefresh}
+              disabled={isRefreshing}
+              className="rounded-xl border border-gray-300 text-gray-700 px-4 py-2 hover:bg-gray-50 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
+              Refresh
+            </button>
+            <button
+              onClick={handleAddNew}
+              className="rounded-xl bg-[#6950e8] text-white px-6 py-2 hover:bg-[#592be7] transition-colors"
+            >
+              + Add New {activeTab === "plans" ? "Plan" : "Log"}
+            </button>
           </div>
         </div>
 
-        
-        <div className="lg:col-span-4">
-          <TabsContent value="plans" className="mt-4 lg:mt-0">
+        {/* Content */}
+        <div className="w-full">
+          <TabsContent value="plans">
             {isLoading && <p>Loading Plans...</p>}
             {error && <p>Error: {error.message}</p>}
             {!isLoading && !error && (
               <MaintenanceList
                 data={planData}
                 deleteItem={(id) => handleDelete(id)}
-                onAddNew={handleAddNew}
               />
             )}
           </TabsContent>
 
-          <TabsContent value="logs" className="mt-4 lg:mt-0">
+          <TabsContent value="logs">
             {isLoading && <p>Loading Logs...</p>}
             {error && <p>Error: {error.message}</p>}
             {!isLoading && !error && (
               <MaintenanceLogList
                 data={logData}
                 deleteItem={(id) => handleDelete(id)}
-                onAddNew={handleAddNew}
                 maintenancePlans={maintenancePlans}
               />
             )}

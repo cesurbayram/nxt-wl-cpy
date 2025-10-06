@@ -210,7 +210,7 @@ const ControllerList = ({ controller, deleteClick }: ControllerListProps) => {
               <MdDelete size={16} className="text-red-500 sm:w-5 sm:h-5" />
             </Button>
             <Button size="icon" variant="ghost" className="p-1 sm:p-2 h-8 w-8 sm:h-10 sm:w-10" asChild>
-              <Link href={`/controller/${row.original.id}`}>
+              <Link href={`/controller/${row.original.id}/details`}>
                 <FaArrowRight size={16} className="text-[#6950E8] sm:w-5 sm:h-5" />
               </Link>
             </Button>

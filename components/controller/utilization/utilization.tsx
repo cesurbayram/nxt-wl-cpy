@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import UtilizationChart from "./utilization-chart";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Select,
   SelectContent,
@@ -11,20 +10,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { RefreshCw } from "lucide-react";
 import { getControllerById } from "@/utils/service/controller";
 import { getUtilizationData } from "@/utils/service/utilization";
-import Timer from "@/components/shared/timer";
-
-const tabItems = [
-  {
-    label: "Chart",
-    value: "chart",
-  },
-  // {
-  //   label: "Live",
-  //   value: "live",
-  // },
-];
 
 const timeRanges = [
   { label: "Last 7 days", value: "7d" },
@@ -52,7 +41,6 @@ interface UtilizationProps {
 }
 
 const Utilization = ({ controllerId }: UtilizationProps) => {
-  const [activeTab, setActiveTab] = useState("chart");
   const [timeRange, setTimeRange] = useState("7d");
   const [interval, setInterval] = useState("5min");
   const [viewType, setViewType] = useState("line");
@@ -60,6 +48,7 @@ const Utilization = ({ controllerId }: UtilizationProps) => {
   const [controller, setController] = useState<any>(null);
   const [utilizationData, setUtilizationData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const fetchController = async () => {
     try {
@@ -70,9 +59,12 @@ const Utilization = ({ controllerId }: UtilizationProps) => {
     }
   };
 
-  const fetchUtilizationData = async (isInitialLoad: boolean = false) => {
+  const fetchUtilizationData = async (isInitialLoad: boolean = false, isRefresh: boolean = false) => {
     if (isInitialLoad) {
       setIsLoading(true);
+    }
+    if (isRefresh) {
+      setIsRefreshing(true);
     }
     try {
       const data = await getUtilizationData(controllerId, timeRange, interval);
@@ -83,7 +75,14 @@ const Utilization = ({ controllerId }: UtilizationProps) => {
       if (isInitialLoad) {
         setIsLoading(false);
       }
+      if (isRefresh) {
+        setIsRefreshing(false);
+      }
     }
+  };
+
+  const handleRefresh = () => {
+    fetchUtilizationData(false, true);
   };
 
   useEffect(() => {
@@ -99,34 +98,7 @@ const Utilization = ({ controllerId }: UtilizationProps) => {
   }
 
   return (
-    <Tabs
-      defaultValue="chart"
-      className="flex flex-col lg:grid lg:grid-cols-5 gap-3"
-      orientation="vertical"
-      onValueChange={(value) => setActiveTab(value)}
-    >
-      <div className="flex flex-col gap-4 lg:col-span-1">
-        <div className="overflow-x-auto lg:overflow-x-visible">
-          <TabsList className="flex lg:flex-col h-fit border-2 gap-1 w-full lg:w-auto">
-            {tabItems.map((item) => (
-              <TabsTrigger
-                key={item.value}
-                value={item.value}
-                className="w-full whitespace-nowrap px-2 lg:px-4 flex-shrink-0"
-              >
-                {item.label}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-        </div>
-
-        <div className="w-full px-2 lg:px-6 mb-2">
-          <Timer callback={() => fetchUtilizationData(false)} />
-        </div>
-      </div>
-
-      <div className="lg:col-span-4">
-        <TabsContent value="chart" className="mt-4 lg:mt-0">
+    <div className="w-full">
           <Card>
             <CardHeader>
               <CardTitle>
@@ -134,7 +106,7 @@ const Utilization = ({ controllerId }: UtilizationProps) => {
                   Utilization: {controller?.name || "Loading..."}
                 </div>
               </CardTitle>
-              <div className="flex gap-4">
+              <div className="flex gap-4 items-center">
                 <Select value={timeRange} onValueChange={setTimeRange}>
                   <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Select time range" />
@@ -173,6 +145,16 @@ const Utilization = ({ controllerId }: UtilizationProps) => {
                     ))}
                   </SelectContent>
                 </Select>
+
+                <Button
+                  onClick={handleRefresh}
+                  disabled={isRefreshing}
+                  variant="outline"
+                  className="flex items-center gap-2"
+                >
+                  <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
+                  Refresh
+                </Button>
               </div>
             </CardHeader>
             <CardContent>
@@ -181,24 +163,7 @@ const Utilization = ({ controllerId }: UtilizationProps) => {
               )}
             </CardContent>
           </Card>
-        </TabsContent>
-
-        <TabsContent value="live" className="mt-4 lg:mt-0">
-          <Card>
-            <CardHeader>
-              <CardTitle>
-                <div className="text-sm font-medium">
-                  Live Utilization: {controller?.name || "Loading..."}
-                </div>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div>Live view implementation...</div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </div>
-    </Tabs>
+    </div>
   );
 };
 

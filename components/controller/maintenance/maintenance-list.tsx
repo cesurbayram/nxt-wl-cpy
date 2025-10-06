@@ -7,19 +7,16 @@ import { DataTable } from "../../shared/data-table";
 import { Button } from "../../ui/button";
 import { MdDelete, MdOutlineSettings } from "react-icons/md";
 import { getUtilizationData } from "@/utils/service/utilization";
-import Timer from "@/components/shared/timer";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface MaintenanceListProps {
   data: MaintenancePlan[];
   deleteItem: (id: string) => void;
-  onAddNew: () => void;
 }
 
 const MaintenanceList = ({
   data,
   deleteItem,
-  onAddNew,
 }: MaintenanceListProps) => {
   const [servoPowerTimes, setServoPowerTimes] = useState<{
     [key: string]: number;
@@ -214,18 +211,7 @@ const MaintenanceList = ({
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <div className="flex-1">
-          <Timer callback={() => fetchUtilizationData(false)} />
-        </div>
-        <Button
-          onClick={onAddNew}
-          className="rounded-xl bg-[#6950e8] text-white"
-        >
-          + Add New Plan
-        </Button>
-      </CardHeader>
-      <CardContent>
+      <CardContent className="pt-6">
         {isLoading ? (
           <p className="p-4">Loading...</p>
         ) : error ? (
