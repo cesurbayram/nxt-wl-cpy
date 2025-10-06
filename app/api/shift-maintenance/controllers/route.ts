@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { dbPool } from "@/utils/dbUtil";
+import fs from "fs";
+import path from "path";
+import { parseSystemFile } from "@/utils/common/parse-system-file";
 
 export const dynamic = "force-dynamic";
 
@@ -10,6 +13,7 @@ export async function GET(request: NextRequest) {
         c.id,
         c.name,
         c.model,
+        c.ip_address,
         u.servo_power_time
       FROM controller c
       LEFT JOIN (
@@ -22,7 +26,57 @@ export async function GET(request: NextRequest) {
       ORDER BY c.name
     `);
 
-    return NextResponse.json(result.rows);
+    // Add robot_model from system.sys files
+    const controllersWithRobotModel = result.rows.map((controller) => {
+      let robot_model = null;
+
+      try {
+        const systemInfoDir = path.join(
+          "C:",
+          "Watchlog",
+          "UI",
+          `${controller.ip_address}_SYSTEM`
+        );
+
+        if (fs.existsSync(systemInfoDir)) {
+          const files = fs.readdirSync(systemInfoDir);
+          const systemFiles = files.filter(
+            (file) =>
+              file.toUpperCase().includes("SYSTEM") &&
+              (file.endsWith(".SYS") || file.endsWith(".sys"))
+          );
+
+          if (systemFiles.length > 0) {
+            const latestFile = systemFiles
+              .map((fileName) => {
+                const filePath = path.join(systemInfoDir, fileName);
+                const stats = fs.statSync(filePath);
+                return { fileName, filePath, mtime: stats.mtime };
+              })
+              .sort((a, b) => b.mtime.getTime() - a.mtime.getTime())[0];
+
+            const content = fs.readFileSync(latestFile.filePath, "utf8");
+            const parsedInfo = parseSystemFile(content);
+            robot_model = parsedInfo.robotModel || null;
+          }
+        }
+      } catch (error) {
+        console.error(
+          `Error reading system.sys for controller ${controller.id}:`,
+          error
+        );
+      }
+
+      return {
+        id: controller.id,
+        name: controller.name,
+        model: controller.model,
+        robot_model,
+        servo_power_time: controller.servo_power_time,
+      };
+    });
+
+    return NextResponse.json(controllersWithRobotModel);
   } catch (error) {
     console.error("Error fetching controllers for maintenance:", error);
     return NextResponse.json(

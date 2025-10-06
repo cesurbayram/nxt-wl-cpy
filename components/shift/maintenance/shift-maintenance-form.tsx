@@ -12,6 +12,7 @@ import {
   ControllerForMaintenance,
   ShiftMaintenanceHistory,
 } from "@/types/shift-maintenance.types";
+import { getMaintenanceIntervals } from "@/utils/common/robot-maintenance-intervals";
 
 interface MaintenanceFormProps {
   selectedController: ControllerForMaintenance | null;
@@ -76,51 +77,69 @@ const MaintenanceForm: React.FC<MaintenanceFormProps> = ({
   onDeleteMaintenance,
   controllers,
 }) => {
-  const maintenanceTypes = [
+  // Get robot-specific maintenance intervals
+  const robotIntervals = selectedController
+    ? getMaintenanceIntervals(
+        selectedController.robot_model,
+        selectedController.model
+      )
+    : null;
+
+  // Filter maintenance types based on robot model
+  const availableMaintenanceTypes = [
     {
       id: "General Maintenance",
       label: "General Maintenance",
       description: "Regular periodic maintenance",
+      show: true, // Always show
     },
     {
       id: "Timing Belt",
       label: "Timing Belt",
       description: "Belt inspection and maintenance",
+      show: !robotIntervals || robotIntervals.belt === "var", // Only show if belt is available
     },
     {
       id: "Battery",
       label: "Battery",
       description: "Battery check and replacement",
+      show: true, // Always show
     },
     {
       id: "Flexible Cable",
       label: "Flexible Cable",
       description: "Internal cable inspection and maintenance",
+      show: !robotIntervals || robotIntervals.internalCable !== "yok", // Only show if cable exists
     },
-  ];
+  ].filter((type) => type.show);
 
-  const overhaulTypes = [
+  // Filter overhaul types based on robot model
+  const availableOverhaulTypes = [
     {
       id: "Overhaul - Maintenance",
       label: "Maintenance",
       description: "General overhaul maintenance",
+      show: true, // Always show
     },
     {
       id: "Overhaul - Belt",
       label: "Belt",
       description: "Belt replacement during overhaul",
+      show: !robotIntervals || robotIntervals.belt === "var", // Only show if belt is available
     },
     {
       id: "Overhaul - Cable",
       label: "Internal Cable",
       description: "Cable replacement during overhaul",
+      show: !robotIntervals || robotIntervals.internalCable !== "yok", // Only show if cable exists
     },
     {
       id: "Overhaul - Parts",
       label: "Parts Replacement",
       description: "Parts replacement during overhaul",
+      show: true, // Always show
     },
-  ];
+  ].filter((type) => type.show);
 
   const handleMaintenanceTypeChange = (typeId: string, checked: boolean) => {
     setFormData((prev) => ({
@@ -132,7 +151,7 @@ const MaintenanceForm: React.FC<MaintenanceFormProps> = ({
   };
 
   const handleOverhaulToggle = (checked: boolean) => {
-    const overhaulTypeIds = overhaulTypes.map((type) => type.id);
+    const overhaulTypeIds = availableOverhaulTypes.map((type) => type.id);
     if (checked) {
       setFormData((prev) => ({
         ...prev,
@@ -170,98 +189,67 @@ const MaintenanceForm: React.FC<MaintenanceFormProps> = ({
                 </Label>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                  {/* First column - First 2 types */}
                   <div className="space-y-2">
-                    <div className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-50 transition-colors">
-                      <Checkbox
-                        id="General Maintenance"
-                        checked={formData.maintenance_types.includes(
-                          "General Maintenance"
-                        )}
-                        onCheckedChange={(checked) =>
-                          handleMaintenanceTypeChange(
-                            "General Maintenance",
-                            checked as boolean
-                          )
-                        }
-                      />
-                      <Label
-                        htmlFor="General Maintenance"
-                        className="text-sm cursor-pointer flex-1"
+                    {availableMaintenanceTypes.slice(0, 2).map((type) => (
+                      <div
+                        key={type.id}
+                        className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-50 transition-colors"
                       >
-                        General Maintenance
-                      </Label>
-                    </div>
-
-                    <div className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-50 transition-colors">
-                      <Checkbox
-                        id="Battery"
-                        checked={formData.maintenance_types.includes("Battery")}
-                        onCheckedChange={(checked) =>
-                          handleMaintenanceTypeChange(
-                            "Battery",
-                            checked as boolean
-                          )
-                        }
-                      />
-                      <Label
-                        htmlFor="Battery"
-                        className="text-sm cursor-pointer flex-1"
-                      >
-                        Battery
-                      </Label>
-                    </div>
+                        <Checkbox
+                          id={type.id}
+                          checked={formData.maintenance_types.includes(type.id)}
+                          onCheckedChange={(checked) =>
+                            handleMaintenanceTypeChange(
+                              type.id,
+                              checked as boolean
+                            )
+                          }
+                        />
+                        <Label
+                          htmlFor={type.id}
+                          className="text-sm cursor-pointer flex-1"
+                        >
+                          {type.label}
+                        </Label>
+                      </div>
+                    ))}
                   </div>
 
+                  {/* Second column - Remaining types */}
                   <div className="space-y-2">
-                    <div className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-50 transition-colors">
-                      <Checkbox
-                        id="Timing Belt"
-                        checked={formData.maintenance_types.includes(
-                          "Timing Belt"
-                        )}
-                        onCheckedChange={(checked) =>
-                          handleMaintenanceTypeChange(
-                            "Timing Belt",
-                            checked as boolean
-                          )
-                        }
-                      />
-                      <Label
-                        htmlFor="Timing Belt"
-                        className="text-sm cursor-pointer flex-1"
+                    {availableMaintenanceTypes.slice(2).map((type) => (
+                      <div
+                        key={type.id}
+                        className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-50 transition-colors"
                       >
-                        Timing Belt
-                      </Label>
-                    </div>
-
-                    <div className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-50 transition-colors">
-                      <Checkbox
-                        id="Flexible Cable"
-                        checked={formData.maintenance_types.includes(
-                          "Flexible Cable"
-                        )}
-                        onCheckedChange={(checked) =>
-                          handleMaintenanceTypeChange(
-                            "Flexible Cable",
-                            checked as boolean
-                          )
-                        }
-                      />
-                      <Label
-                        htmlFor="Flexible Cable"
-                        className="text-sm cursor-pointer flex-1"
-                      >
-                        Flexible Cable
-                      </Label>
-                    </div>
+                        <Checkbox
+                          id={type.id}
+                          checked={formData.maintenance_types.includes(type.id)}
+                          onCheckedChange={(checked) =>
+                            handleMaintenanceTypeChange(
+                              type.id,
+                              checked as boolean
+                            )
+                          }
+                        />
+                        <Label
+                          htmlFor={type.id}
+                          className="text-sm cursor-pointer flex-1"
+                        >
+                          {type.label}
+                        </Label>
+                      </div>
+                    ))}
                   </div>
 
+                  {/* Third column - Overhaul Section */}
                   <div className="space-y-2">
                     <div className="flex flex-col">
                       <div className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-50 transition-colors">
                         <Checkbox
                           id="overhaul-main"
-                          checked={overhaulTypes.every((type) =>
+                          checked={availableOverhaulTypes.every((type) =>
                             formData.maintenance_types.includes(type.id)
                           )}
                           onCheckedChange={(checked) =>
@@ -285,7 +273,7 @@ const MaintenanceForm: React.FC<MaintenanceFormProps> = ({
 
                       {isOverhaulExpanded && (
                         <div className="mt-1 space-y-1 ml-6">
-                          {overhaulTypes.map((type) => (
+                          {availableOverhaulTypes.map((type) => (
                             <div
                               key={type.id}
                               className="flex items-center space-x-2 p-2 rounded-md hover:bg-orange-50 transition-colors"
@@ -503,95 +491,122 @@ const MaintenanceForm: React.FC<MaintenanceFormProps> = ({
             <div className="mb-3 p-2 bg-gray-50 rounded border">
               <h4 className="text-sm font-semibold text-gray-700 mb-2 uppercase tracking-wider">
                 PREDICTIVE - {selectedController.name}
+                {selectedController.robot_model && (
+                  <span className="ml-2 text-xs text-blue-600 font-normal">
+                    ({selectedController.robot_model})
+                  </span>
+                )}
               </h4>
               <div className="space-y-1">
                 {(() => {
-                  const maintenanceData =
-                    getMaintenanceStatus(selectedController);
-                  const maintenanceTypes = [
-                    {
-                      key: "General Maintenance",
-                      label: "GENERAL MAINTENANCE",
-                    },
-                    { key: "Timing Belt", label: "TIMING BELT EXCHANGE" },
-                    { key: "Battery", label: "BATTERY EXCHANGE" },
-                    { key: "Flexible Cable", label: "FLEXIBLE CABLE EXCHANGE" },
-                    { key: "Overhaul - Maintenance", label: "OVERHAUL" },
-                  ];
+                  try {
+                    const maintenanceData =
+                      getMaintenanceStatus(selectedController);
+                    const maintenanceTypes = [
+                      {
+                        key: "General Maintenance",
+                        label: "GENERAL MAINTENANCE",
+                      },
+                      { key: "Timing Belt", label: "TIMING BELT EXCHANGE" },
+                      { key: "Battery", label: "BATTERY EXCHANGE" },
+                      {
+                        key: "Flexible Cable",
+                        label: "FLEXIBLE CABLE EXCHANGE",
+                      },
+                      { key: "Overhaul - Maintenance", label: "OVERHAUL" },
+                    ];
 
-                  return maintenanceTypes.map((type) => {
-                    const maintenance = maintenanceData[type.key];
-                    if (!maintenance) return null;
+                    return maintenanceTypes.map((type) => {
+                      const maintenance = maintenanceData[type.key];
+                      if (!maintenance) return null;
 
-                    const percentage = Math.max(
-                      0,
-                      Math.min(
-                        100,
-                        ((maintenance.targetHours - maintenance.remaining) /
-                          maintenance.targetHours) *
-                          100
-                      )
-                    );
-
-                    const getBarColor = () => {
-                      if (maintenance.status === "OVERDUE") return "bg-red-500";
-                      if (maintenance.status === "WARNING")
-                        return "bg-yellow-500";
-                      return "bg-green-500";
-                    };
-
-                    const getTextColor = () => {
-                      if (maintenance.status === "OVERDUE")
-                        return "text-red-600";
-                      if (maintenance.status === "WARNING")
-                        return "text-yellow-600";
-                      return "text-green-600";
-                    };
-
-                    // Calculate next maintenance date
-                    const calculateNextMaintenanceDate = () => {
-                      const currentDate = new Date();
-
-                      // Simply add 1 year to current date
-                      const nextMaintenanceDate = new Date();
-                      nextMaintenanceDate.setFullYear(
-                        currentDate.getFullYear() + 1
+                      const percentage = Math.max(
+                        0,
+                        Math.min(
+                          100,
+                          ((maintenance.targetHours - maintenance.remaining) /
+                            maintenance.targetHours) *
+                            100
+                        )
                       );
 
-                      return nextMaintenanceDate.toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      });
-                    };
+                      const getBarColor = () => {
+                        if (maintenance.status === "OVERDUE")
+                          return "bg-red-500";
+                        if (maintenance.status === "WARNING")
+                          return "bg-yellow-500";
+                        return "bg-green-500";
+                      };
 
+                      const getTextColor = () => {
+                        if (maintenance.status === "OVERDUE")
+                          return "text-red-600";
+                        if (maintenance.status === "WARNING")
+                          return "text-yellow-600";
+                        return "text-green-600";
+                      };
+
+                      // Calculate next maintenance date
+                      const calculateNextMaintenanceDate = () => {
+                        const currentDate = new Date();
+
+                        // Simply add 1 year to current date
+                        const nextMaintenanceDate = new Date();
+                        nextMaintenanceDate.setFullYear(
+                          currentDate.getFullYear() + 1
+                        );
+
+                        return nextMaintenanceDate.toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                        });
+                      };
+
+                      return (
+                        <div
+                          key={type.key}
+                          className="flex items-center justify-between"
+                        >
+                          <div className="text-xs font-medium text-gray-600 w-40">
+                            {type.label}
+                          </div>
+                          <div className="w-96 bg-gray-200 rounded-full h-3 mx-3">
+                            <div
+                              className={`h-3 rounded-full transition-all duration-300 ${getBarColor()}`}
+                              style={{ width: `${percentage}%` }}
+                            />
+                          </div>
+                          <div className="text-right">
+                            <div
+                              className={`text-xs font-medium ${getTextColor()}`}
+                            >
+                              {maintenance.remaining.toLocaleString()}h
+                            </div>
+                            <div className="text-xs text-gray-500">
+                              {calculateNextMaintenanceDate()}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    });
+                  } catch (error) {
+                    console.error(
+                      "Error calculating maintenance status:",
+                      error
+                    );
                     return (
-                      <div
-                        key={type.key}
-                        className="flex items-center justify-between"
-                      >
-                        <div className="text-xs font-medium text-gray-600 w-40">
-                          {type.label}
-                        </div>
-                        <div className="w-96 bg-gray-200 rounded-full h-3 mx-3">
-                          <div
-                            className={`h-3 rounded-full transition-all duration-300 ${getBarColor()}`}
-                            style={{ width: `${percentage}%` }}
-                          />
-                        </div>
-                        <div className="text-right">
-                          <div
-                            className={`text-xs font-medium ${getTextColor()}`}
-                          >
-                            {maintenance.remaining.toLocaleString()}h
-                          </div>
-                          <div className="text-xs text-gray-500">
-                            {calculateNextMaintenanceDate()}
-                          </div>
-                        </div>
+                      <div className="text-xs text-red-600 p-2">
+                        Error: Unable to calculate maintenance intervals.
+                        {!selectedController.robot_model && (
+                          <span className="block mt-1">
+                            Robot model not found. Please update system.sys
+                            file.
+                          </span>
+                        )}
                       </div>
                     );
-                  });
+                  }
                 })()}
               </div>
             </div>
@@ -618,6 +633,7 @@ const MaintenanceForm: React.FC<MaintenanceFormProps> = ({
                     name: (historyRecord as any)?.controller_name || "Unknown",
                     model:
                       (historyRecord as any)?.controller_model || "Unknown",
+                    robot_model: currentController?.robot_model,
                     servo_power_time: currentController?.servo_power_time || 0, // Use current servo time from controllers
                   };
                 });
@@ -629,104 +645,133 @@ const MaintenanceForm: React.FC<MaintenanceFormProps> = ({
                   >
                     <h4 className="text-sm font-semibold text-gray-700 mb-2 uppercase tracking-wider">
                       PREDICTIVE - {controller.name}
+                      {controller.robot_model && (
+                        <span className="ml-2 text-xs text-blue-600 font-normal">
+                          ({controller.robot_model})
+                        </span>
+                      )}
                     </h4>
                     <div className="space-y-1">
                       {(() => {
-                        const maintenanceData = getMaintenanceStatus(
-                          controller as any
-                        );
-                        const maintenanceTypes = [
-                          {
-                            key: "General Maintenance",
-                            label: "GENERAL MAINTENANCE",
-                          },
-                          { key: "Timing Belt", label: "TIMING BELT EXCHANGE" },
-                          { key: "Battery", label: "BATTERY EXCHANGE" },
-                          {
-                            key: "Flexible Cable",
-                            label: "FLEXIBLE CABLE EXCHANGE",
-                          },
-                          { key: "Overhaul - Maintenance", label: "OVERHAUL" },
-                        ];
-
-                        return maintenanceTypes.map((type) => {
-                          const maintenance = maintenanceData[type.key];
-                          if (!maintenance) return null;
-
-                          const percentage = Math.max(
-                            0,
-                            Math.min(
-                              100,
-                              ((maintenance.targetHours -
-                                maintenance.remaining) /
-                                maintenance.targetHours) *
-                                100
-                            )
+                        try {
+                          const maintenanceData = getMaintenanceStatus(
+                            controller as any
                           );
+                          const maintenanceTypes = [
+                            {
+                              key: "General Maintenance",
+                              label: "GENERAL MAINTENANCE",
+                            },
+                            {
+                              key: "Timing Belt",
+                              label: "TIMING BELT EXCHANGE",
+                            },
+                            { key: "Battery", label: "BATTERY EXCHANGE" },
+                            {
+                              key: "Flexible Cable",
+                              label: "FLEXIBLE CABLE EXCHANGE",
+                            },
+                            {
+                              key: "Overhaul - Maintenance",
+                              label: "OVERHAUL",
+                            },
+                          ];
 
-                          const getBarColor = () => {
-                            if (maintenance.status === "OVERDUE")
-                              return "bg-red-500";
-                            if (maintenance.status === "WARNING")
-                              return "bg-yellow-500";
-                            return "bg-green-500";
-                          };
+                          return maintenanceTypes.map((type) => {
+                            const maintenance = maintenanceData[type.key];
+                            if (!maintenance) return null;
 
-                          const getTextColor = () => {
-                            if (maintenance.status === "OVERDUE")
-                              return "text-red-600";
-                            if (maintenance.status === "WARNING")
-                              return "text-yellow-600";
-                            return "text-green-600";
-                          };
-
-                          // Calculate next maintenance date
-                          const calculateNextMaintenanceDate = () => {
-                            const currentDate = new Date();
-
-                            // Simply add 1 year to current date
-                            const nextMaintenanceDate = new Date();
-                            nextMaintenanceDate.setFullYear(
-                              currentDate.getFullYear() + 1
+                            const percentage = Math.max(
+                              0,
+                              Math.min(
+                                100,
+                                ((maintenance.targetHours -
+                                  maintenance.remaining) /
+                                  maintenance.targetHours) *
+                                  100
+                              )
                             );
 
-                            return nextMaintenanceDate.toLocaleDateString(
-                              "en-US",
-                              {
-                                year: "numeric",
-                                month: "short",
-                                day: "numeric",
-                              }
-                            );
-                          };
+                            const getBarColor = () => {
+                              if (maintenance.status === "OVERDUE")
+                                return "bg-red-500";
+                              if (maintenance.status === "WARNING")
+                                return "bg-yellow-500";
+                              return "bg-green-500";
+                            };
 
+                            const getTextColor = () => {
+                              if (maintenance.status === "OVERDUE")
+                                return "text-red-600";
+                              if (maintenance.status === "WARNING")
+                                return "text-yellow-600";
+                              return "text-green-600";
+                            };
+
+                            // Calculate next maintenance date
+                            const calculateNextMaintenanceDate = () => {
+                              const currentDate = new Date();
+
+                              // Simply add 1 year to current date
+                              const nextMaintenanceDate = new Date();
+                              nextMaintenanceDate.setFullYear(
+                                currentDate.getFullYear() + 1
+                              );
+
+                              return nextMaintenanceDate.toLocaleDateString(
+                                "en-US",
+                                {
+                                  year: "numeric",
+                                  month: "short",
+                                  day: "numeric",
+                                }
+                              );
+                            };
+
+                            return (
+                              <div
+                                key={type.key}
+                                className="flex items-center justify-between"
+                              >
+                                <div className="text-xs font-medium text-gray-600 w-40">
+                                  {type.label}
+                                </div>
+                                <div className="w-96 bg-gray-200 rounded-full h-3 mx-3">
+                                  <div
+                                    className={`h-3 rounded-full transition-all duration-300 ${getBarColor()}`}
+                                    style={{ width: `${percentage}%` }}
+                                  />
+                                </div>
+                                <div className="text-right">
+                                  <div
+                                    className={`text-xs font-medium ${getTextColor()}`}
+                                  >
+                                    {maintenance.remaining.toLocaleString()}h
+                                  </div>
+                                  <div className="text-xs text-gray-500">
+                                    {calculateNextMaintenanceDate()}
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          });
+                        } catch (error) {
+                          console.error(
+                            "Error calculating maintenance status:",
+                            error
+                          );
                           return (
-                            <div
-                              key={type.key}
-                              className="flex items-center justify-between"
-                            >
-                              <div className="text-xs font-medium text-gray-600 w-40">
-                                {type.label}
-                              </div>
-                              <div className="w-96 bg-gray-200 rounded-full h-3 mx-3">
-                                <div
-                                  className={`h-3 rounded-full transition-all duration-300 ${getBarColor()}`}
-                                  style={{ width: `${percentage}%` }}
-                                />
-                              </div>
-                              <div className="text-right">
-                                <div
-                                  className={`text-xs font-medium ${getTextColor()}`}
-                                >
-                                  {maintenance.remaining.toLocaleString()}h
-                                </div>
-                                <div className="text-xs text-gray-500">
-                                  {calculateNextMaintenanceDate()}
-                                </div>
-                              </div>
+                            <div className="text-xs text-red-600 p-2">
+                              Error: Unable to calculate maintenance intervals.
+                              {!controller.robot_model && (
+                                <span className="block mt-1">
+                                  Robot model not found. Please update
+                                  system.sys file.
+                                </span>
+                              )}
                             </div>
                           );
-                        });
+                        }
                       })()}
                     </div>
                   </div>

@@ -58,6 +58,7 @@ const ShiftMaintenance = () => {
         getMaintenanceHistory(),
       ]);
 
+      console.log("Controllers with robot_model:", controllersData);
       setControllers(controllersData);
       setMaintenanceHistory(historyData);
     } catch (error) {
@@ -251,6 +252,17 @@ const ShiftMaintenance = () => {
                         {controller.model}
                       </span>
                     </div>
+
+                    {controller.robot_model && (
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs text-gray-500 uppercase">
+                          Robot
+                        </span>
+                        <span className="text-xs font-medium text-blue-600">
+                          {controller.robot_model}
+                        </span>
+                      </div>
+                    )}
 
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-gray-500 uppercase">

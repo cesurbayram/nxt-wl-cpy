@@ -2,6 +2,7 @@ import {
   ControllerForMaintenance,
   ShiftMaintenanceHistory,
 } from "@/types/shift-maintenance.types";
+import { getMaintenanceIntervals } from "@/utils/common/robot-maintenance-intervals";
 
 export const useMaintenanceCalculations = (
   maintenanceHistory: ShiftMaintenanceHistory[]
@@ -9,10 +10,20 @@ export const useMaintenanceCalculations = (
   const getMaintenanceStatus = (controller: ControllerForMaintenance) => {
     const currentHours = controller.servo_power_time || 0;
     const model = controller.model;
+    const robotModel = controller.robot_model;
 
-    const modelLower = model.toLowerCase();
-    const isYRC1000Series = modelLower.includes("yrc1000");
-    const generalHours = isYRC1000Series ? 12000 : 6000;
+    // Get maintenance intervals based on robot model
+    const intervals = getMaintenanceIntervals(robotModel, model);
+    const generalHours = intervals.periodicMaintenance;
+
+    console.log("Maintenance Calculation:", {
+      controllerId: controller.id,
+      controllerName: controller.name,
+      robotModel,
+      controllerModel: model,
+      intervals,
+      currentHours,
+    });
 
     const controllerHistory = maintenanceHistory.filter(
       (h) => h.controller_id === controller.id
@@ -93,7 +104,8 @@ export const useMaintenanceCalculations = (
     const timingBeltHistory = controllerHistory.filter(
       (h) => h.maintenance_type === "Timing Belt"
     );
-    const timingBeltHours = timingBeltHistory.length > 0 ? 24000 : 6000;
+    // Use robot-specific belt interval if available, fallback to 24000 after first maintenance
+    const timingBeltHours = timingBeltHistory.length > 0 ? 24000 : generalHours;
     const timingBeltCheck = calculateStatus(
       timingBeltHours,
       getLastMaintenanceHours("Timing Belt")
@@ -102,7 +114,7 @@ export const useMaintenanceCalculations = (
     const batteryHistory = controllerHistory.filter(
       (h) => h.maintenance_type === "Battery"
     );
-    const batteryHours = batteryHistory.length > 0 ? 24000 : 6000;
+    const batteryHours = batteryHistory.length > 0 ? 24000 : generalHours;
     const batteryCheck = calculateStatus(
       batteryHours,
       getLastMaintenanceHours("Battery"),
@@ -113,7 +125,13 @@ export const useMaintenanceCalculations = (
     const flexibleCableHistory = controllerHistory.filter(
       (h) => h.maintenance_type === "Flexible Cable"
     );
-    const flexibleCableHours = flexibleCableHistory.length > 0 ? 24000 : 6000;
+    // Use internal cable interval from robot data
+    const flexibleCableHours =
+      typeof intervals.internalCable === "number"
+        ? intervals.internalCable
+        : flexibleCableHistory.length > 0
+        ? 24000
+        : generalHours;
     const flexibleCableCheck = calculateStatus(
       flexibleCableHours,
       getLastMaintenanceHours("Flexible Cable"),
@@ -125,7 +143,8 @@ export const useMaintenanceCalculations = (
       h.maintenance_type.includes("Overhaul")
     );
     const hasOverhaulHistory = overhaulHistory.length > 0;
-    const overhaulInterval = hasOverhaulHistory ? 36000 : 6000;
+    // Use robot-specific overhaul interval
+    const overhaulInterval = intervals.overhaul;
 
     const getOverhaulStatus = (overhaulType: string) => {
       return calculateStatus(

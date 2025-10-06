@@ -23,5 +23,6 @@ export interface ControllerForMaintenance {
   id: string;
   name: string;
   model: string;
+  robot_model?: string;
   servo_power_time?: number;
 }

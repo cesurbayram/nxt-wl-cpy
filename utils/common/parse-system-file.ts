@@ -18,7 +18,7 @@ export interface ParsedSystemInfo {
  * @returns Parsed system information
  */
 export const parseSystemFile = (content: string): ParsedSystemInfo => {
-  const lines = content.split('\n');
+  const lines = content.split("\n");
   const result: ParsedSystemInfo = {};
 
   for (let i = 0; i < lines.length; i++) {
@@ -26,7 +26,7 @@ export const parseSystemFile = (content: string): ParsedSystemInfo => {
     const trimmedLine = line.trim();
 
     // Parse SYSTEM NO (e.g., "//SYSTEM NO : DS4.42.00A(JP/US)-14")
-    if (trimmedLine.startsWith('//SYSTEM NO')) {
+    if (trimmedLine.startsWith("//SYSTEM NO")) {
       const match = trimmedLine.match(/:\s*(.+)/);
       if (match) {
         result.systemNo = match[1].trim();
@@ -35,7 +35,7 @@ export const parseSystemFile = (content: string): ParsedSystemInfo => {
     }
 
     // Parse PARAM NO (e.g., "//PARAM  NO : 4.34")
-    if (trimmedLine.startsWith('//PARAM')) {
+    if (trimmedLine.startsWith("//PARAM")) {
       const match = trimmedLine.match(/:\s*(.+)/);
       if (match) {
         result.paramNo = match[1].trim();
@@ -43,7 +43,7 @@ export const parseSystemFile = (content: string): ParsedSystemInfo => {
     }
 
     // Parse APPLI (e.g., "//APPLI     : ARC WELDING")
-    if (trimmedLine.startsWith('//APPLI')) {
+    if (trimmedLine.startsWith("//APPLI")) {
       const match = trimmedLine.match(/:\s*(.+)/);
       if (match) {
         result.application = match[1].trim();
@@ -51,25 +51,40 @@ export const parseSystemFile = (content: string): ParsedSystemInfo => {
     }
 
     // Parse LANGUAGE (e.g., "//LANGUAGE  :  4.42-14-00, 4.42-14-00")
-    if (trimmedLine.startsWith('//LANGUAGE')) {
+    if (trimmedLine.startsWith("//LANGUAGE")) {
       const match = trimmedLine.match(/:\s*(.+)/);
       if (match) {
         result.language = match[1].trim();
       }
     }
 
-    // Parse ROBOT NAME section (e.g., "MA01400-B0*  0011_1111")
-    if (trimmedLine.startsWith('//ROBOT NAME')) {
+    // Parse ROBOT NAME section (e.g., "R1 : 1-06VX8-A0*(GP8)  0011_1111")
+    if (trimmedLine.startsWith("//ROBOT NAME")) {
       // Get the next line after //ROBOT NAME
       if (i < lines.length - 1) {
         const nextLine = lines[i + 1].trim();
         // Check if next line is not a comment and not empty
-        if (nextLine && !nextLine.startsWith('//')) {
-          // Extract robot model (first part before spaces)
-          const robotMatch = nextLine.match(/^([A-Z0-9\-\*]+)/);
-          if (robotMatch) {
-            result.robotModel = robotMatch[1];
-            result.robotName = nextLine; // Keep full line
+        if (nextLine && !nextLine.startsWith("//")) {
+          // Check if line contains colon (format: "R1 : 1-06VX8-A0*(GP8)")
+          if (nextLine.includes(":")) {
+            const parts = nextLine.split(":");
+            if (parts.length >= 2) {
+              result.robotName = parts[0].trim(); // e.g., "R1"
+              // Extract model after colon, before any trailing numbers
+              const modelPart = parts[1].trim();
+              // Match the model pattern (e.g., "1-06VX8-A0*(GP8)")
+              const robotMatch = modelPart.match(/^([^\s]+(?:\([^)]+\))?)/);
+              if (robotMatch) {
+                result.robotModel = robotMatch[1];
+              }
+            }
+          } else {
+            // Old format without colon: "MA01400-B0*  0011_1111"
+            const robotMatch = nextLine.match(/^([A-Z0-9\-\*]+)/);
+            if (robotMatch) {
+              result.robotModel = robotMatch[1];
+              result.robotName = nextLine; // Keep full line
+            }
           }
         }
       }
@@ -85,17 +100,17 @@ export const parseSystemFile = (content: string): ParsedSystemInfo => {
  * @returns Formatted model string (e.g., "MA1440/MH12-A0*(MA1440)")
  */
 export const formatRobotModel = (robotModel?: string): string => {
-  if (!robotModel) return 'Unknown';
-  
+  if (!robotModel) return "Unknown";
+
   // Extract base model number (e.g., MA01400 -> MA1440)
   const modelMatch = robotModel.match(/([A-Z]+)0*(\d+)/);
   if (modelMatch) {
     const prefix = modelMatch[1];
     const number = modelMatch[2];
-    const suffix = robotModel.replace(/[A-Z]+\d+/, '');
+    const suffix = robotModel.replace(/[A-Z]+\d+/, "");
     return `${prefix}${number}${suffix}`;
   }
-  
+
   return robotModel;
 };
 
@@ -105,16 +120,15 @@ export const formatRobotModel = (robotModel?: string): string => {
  * @returns Formatted application name
  */
 export const formatApplication = (application?: string): string => {
-  if (!application) return 'Unknown';
-  
+  if (!application) return "Unknown";
+
   const appMap: { [key: string]: string } = {
-    'ARC WELDING': 'ARC',
-    'HANDLING': 'HANDLING',
-    'SPOT WELDING': 'SPOT',
-    'GENERAL': 'GENERAL',
-    'PAINT': 'PAINT',
+    "ARC WELDING": "ARC",
+    HANDLING: "HANDLING",
+    "SPOT WELDING": "SPOT",
+    GENERAL: "GENERAL",
+    PAINT: "PAINT",
   };
-  
+
   return appMap[application.toUpperCase()] || application;
 };
-
