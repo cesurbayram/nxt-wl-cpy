@@ -4,6 +4,7 @@ export interface ProductionValue {
   shiftId: string;
   jobId: string;
   producedProductCount: number;
+  generalNo?: string; // Hangi GeneralDouble değişkeninden system count çekilecek
   note?: string;
   createdAt?: string;
   updatedAt?: string;

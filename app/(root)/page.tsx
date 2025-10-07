@@ -15,6 +15,7 @@ import {
   formatApplication,
   type ParsedSystemInfo,
 } from "@/utils/common/parse-system-file";
+import { SystemHealthReportButton } from "@/components/home/system-health-report-button";
 
 interface ControllerWithSystemInfo {
   id: string;
@@ -243,6 +244,7 @@ const HomePage = () => {
           shownHeaderButton={false}
           pageTitle="Home"
           icon={<HomeIcon size={24} color="#6950e8" />}
+          headerActions={<SystemHealthReportButton />}
         >
           <div className="text-center py-12">
             <p className="text-red-500">{error}</p>
@@ -259,6 +261,7 @@ const HomePage = () => {
       shownHeaderButton={false}
         pageTitle="Home"
         icon={<HomeIcon size={24} color="#6950e8" />}
+        headerActions={<SystemHealthReportButton />}
       >
         {lines.length === 0 && !isLoading ? (
           <div className="text-center py-12">

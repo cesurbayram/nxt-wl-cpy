@@ -53,6 +53,7 @@ interface ProductionValueFormProps {
 interface JobProductCount {
   jobId: string;
   productCount: number;
+  generalNo: string;
 }
 
 export default function ProductionValueForm({
@@ -132,6 +133,39 @@ export default function ProductionValueForm({
     fetchData();
   }, []);
 
+  const sendGeneralDoubleRequest = async (
+    controllerId: string,
+    generalNo: string
+  ) => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/general-variable-socket`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            type: "GeneralDouble",
+            data: {
+              controllerId: controllerId,
+              GeneralNo: generalNo,
+            },
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("GeneralDouble request failed");
+      }
+
+      return true;
+    } catch (error) {
+      console.error("Error sending GeneralDouble request:", error);
+      return false;
+    }
+  };
+
   const onSubmit = async (data: FormValues) => {
     setIsLoading(true);
     try {
@@ -150,12 +184,53 @@ export default function ProductionValueForm({
         return;
       }
 
+      // Validate generalNo
+      const invalidGeneralNo = selectedJobs.find((job) => !job.generalNo || job.generalNo.trim() === "");
+      if (invalidGeneralNo) {
+        const jobName =
+          jobs.find((j) => j.id === invalidGeneralNo.jobId)?.name || "Seçili iş";
+        toast.error(`${jobName} için GeneralDouble No girmelisiniz`);
+        setIsLoading(false);
+        return;
+      }
+
+      // 1. Önce tüm job'lar için GeneralDouble isteği at ve DB'ye kaydet
+      for (const job of selectedJobs) {
+        const jobName = jobs.find((j) => j.id === job.jobId)?.name || "Job";
+        
+        // c-ytr'ye istek at
+        await sendGeneralDoubleRequest(
+          data.controllerId,
+          job.generalNo
+        );
+
+        // c-wl DB'ye kaydet (general_double_data)
+        try {
+          await fetch(`/api/controller/${data.controllerId}/general-variable`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              generalNo: job.generalNo,
+              variableType: "double"
+            }),
+          });
+          console.log(`✅ ${jobName} - GeneralNo ${job.generalNo} general_double_data'ya kaydedildi`);
+        } catch (dbErr) {
+          console.error("general_double_data save error:", dbErr);
+        }
+      }
+
+      // 2. Kısa bir bekleme (robot'un veriyi göndermesi için)
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      // 3. Production values'ları kaydet
       for (const job of selectedJobs) {
         const productionValue: ProductionValue = {
           controllerId: data.controllerId,
           shiftId: data.shiftId,
           jobId: job.jobId,
           producedProductCount: job.productCount,
+          generalNo: job.generalNo, // GeneralDouble No'yu kaydet
           note: data.note,
         };
 
@@ -189,7 +264,7 @@ export default function ProductionValueForm({
       if (existingJobIndex >= 0) {
         return prev.filter((item) => item.jobId !== jobId);
       } else {
-        return [...prev, { jobId, productCount: 0 }];
+        return [...prev, { jobId, productCount: 0, generalNo: "" }];
       }
     });
   };
@@ -198,6 +273,14 @@ export default function ProductionValueForm({
     setSelectedJobs((prev) =>
       prev.map((item) =>
         item.jobId === jobId ? { ...item, productCount: count } : item
+      )
+    );
+  };
+
+  const updateGeneralNo = (jobId: string, generalNo: string) => {
+    setSelectedJobs((prev) =>
+      prev.map((item) =>
+        item.jobId === jobId ? { ...item, generalNo } : item
       )
     );
   };
@@ -479,10 +562,8 @@ export default function ProductionValueForm({
                         key={item.jobId}
                         jobId={item.jobId}
                         jobName={job.name}
-                        controllerId={form.watch("controllerId")}
-                        onConfigChange={() => {
-                          // Config değiştiğinde herhangi bir refresh gerekirse burada yapılabilir
-                        }}
+                        generalNo={item.generalNo}
+                        onGeneralNoChange={(value) => updateGeneralNo(item.jobId, value)}
                       />
                     ) : null;
                   })}

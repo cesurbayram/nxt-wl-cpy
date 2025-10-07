@@ -293,10 +293,54 @@ export async function DELETE(request: NextRequest) {
   const client = await dbPool.connect();
   try {
     await client.query("BEGIN");
+
+    // ✅ ÖNCE: Bağımlı tabloları temizle (foreign key constraint hatası olmasın)
+    const dependentTables = [
+      "general_byte_data",
+      "general_int_data",
+      "general_double_data",
+      "general_real_data",
+      "general_string_data",
+      "general_register_data",
+      "general_signal_data",
+      "controller_status",
+      "alarm",
+      "almhist",
+      "utilization_data",
+      "backup_sessions",
+      "backup_files",
+      "production_value",
+      "maintenance_plan",
+      "maintenance_log",
+      "tork_data",
+      "teaching_comparisons",
+      "job",
+      "job_select",
+      "b_read", "d_read", "s_read", "i_read", "r_read",
+      "b_write", "d_write", "s_write", "i_write", "r_write",
+    ];
+
+   
+    for (const table of dependentTables) {
+      try {
+        await client.query(`SAVEPOINT sp_${table}`);
+        await client.query(
+          `DELETE FROM ${table} WHERE controller_id = $1`,
+          [id]
+        );
+        await client.query(`RELEASE SAVEPOINT sp_${table}`);
+      } catch (err: any) {
+       
+        await client.query(`ROLLBACK TO SAVEPOINT sp_${table}`);
+      }
+    }
+
+    
     const result = await client.query(
       `DELETE FROM "controller" WHERE id = $1`,
       [id]
     );
+    
     await client.query("COMMIT");
 
     if (result.rowCount === 0) {

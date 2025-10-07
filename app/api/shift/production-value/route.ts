@@ -18,7 +18,8 @@ export async function GET(request: NextRequest) {
         pv.controller_id AS "controllerId", 
         pv.shift_id AS "shiftId", 
         pv.job_id AS "jobId", 
-        pv.produced_product_count AS "producedProductCount", 
+        pv.produced_product_count AS "producedProductCount",
+        pv.general_no AS "generalNo", 
         pv.note, 
         pv.created_at AS "createdAt", 
         pv.updated_at AS "updatedAt",
@@ -74,6 +75,7 @@ export async function POST(request: NextRequest) {
     shiftId,
     jobId,
     producedProductCount,
+    generalNo,
     note,
   }: ProductionValue = await request.json();
   const client = await dbPool.connect();
@@ -83,9 +85,9 @@ export async function POST(request: NextRequest) {
     await client.query("BEGIN");
 
     await client.query(
-      `INSERT INTO production_value (id, controller_id, shift_id, job_id, produced_product_count, note)
-      VALUES ($1, $2, $3, $4, $5, $6)`,
-      [newId, controllerId, shiftId, jobId, producedProductCount, note || ""]
+      `INSERT INTO production_value (id, controller_id, shift_id, job_id, produced_product_count, general_no, note)
+      VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+      [newId, controllerId, shiftId, jobId, producedProductCount, generalNo || null, note || ""]
     );
 
     await client.query("COMMIT");
