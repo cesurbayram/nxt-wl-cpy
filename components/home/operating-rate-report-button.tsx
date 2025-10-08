@@ -2,16 +2,16 @@
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Download, Activity, Loader2, FileText } from "lucide-react";
+import { Activity, Download, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
-interface SystemHealthReportButtonProps {
+interface OperatingRateReportButtonProps {
   className?: string;
 }
 
-export function SystemHealthReportButton({
+export function OperatingRateReportButton({
   className = "",
-}: SystemHealthReportButtonProps) {
+}: OperatingRateReportButtonProps) {
   const [isGenerating, setIsGenerating] = useState(false);
   const [progress, setProgress] = useState(0);
 
@@ -20,14 +20,14 @@ export function SystemHealthReportButton({
       setIsGenerating(true);
       setProgress(10);
 
-      toast.info("Generating system health report...", {
-        description: "This may take a moment. Collecting data from all controllers.",
+      toast.info("Generating operating rate report...", {
+        description: "Analyzing 7-day log data from all robots.",
       });
 
       setProgress(30);
 
-
-      const response = await fetch("/api/home/system-health-report", {
+      
+      const response = await fetch("/api/home/operating-rate-report", {
         method: "GET",
       });
 
@@ -35,23 +35,23 @@ export function SystemHealthReportButton({
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to generate report");
+        throw new Error(errorData.error || "Failed to generate operating rate report");
       }
 
       setProgress(90);
 
-
+     
       const blob = await response.blob();
       const pdfBlob = new Blob([blob], { type: 'application/pdf' });
 
-
+     
       const url = window.URL.createObjectURL(pdfBlob);
       const link = document.createElement("a");
       link.href = url;
 
-
+     
       const contentDisposition = response.headers.get("Content-Disposition");
-      let fileName = "system_health_report.pdf";
+      let fileName = "operating_rate_report.pdf";
 
       if (contentDisposition) {
         const fileNameMatch = contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
@@ -60,7 +60,7 @@ export function SystemHealthReportButton({
         }
       }
 
-
+    
       if (!fileName.toLowerCase().endsWith('.pdf')) {
         fileName = fileName.replace(/\.[^.]*$/, '.pdf');
       }
@@ -75,13 +75,15 @@ export function SystemHealthReportButton({
 
       setProgress(100);
 
-      toast.success("Report downloaded successfully!", {
-        description: `${fileName} has been saved to your downloads folder.`,
+      toast.success("Operating rate report downloaded successfully!", {
+        description: "7-day log data analysis is ready.",
       });
+
     } catch (error: any) {
-      console.error("Error downloading report:", error);
-      toast.error("Failed to generate report", {
-        description: error.message || "An error occurred while generating the report.",
+      console.error("Error downloading operating rate report:", error);
+      
+      toast.error("Failed to generate operating rate report", {
+        description: error.message || "Please try again later.",
       });
     } finally {
       setIsGenerating(false);
@@ -110,7 +112,7 @@ export function SystemHealthReportButton({
               <Download className="h-4 w-4 text-gray-500 group-hover:text-[#6950e8] transition-colors" />
             </div>
             <span className="text-xs font-medium text-gray-700 group-hover:text-[#6950e8] transition-colors">
-              System Health Report
+              Operating Rate Report
             </span>
           </>
         )}

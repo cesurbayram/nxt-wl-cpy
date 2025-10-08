@@ -5,6 +5,7 @@ export interface LineHierarchy {
   id: string;
   name: string;
   status: string;
+  factoryName: string;
   cells: CellWithControllers[];
 }
 
@@ -25,35 +26,25 @@ export interface ControllerDetail {
   status: string;
   location?: string;
   cellId?: string;
-  controllerStatus?: {
-    alarm: boolean;
-    cycle: string;
-    doorOpen: boolean;
-    error: boolean;
-    hold: boolean;
-    operating: boolean;
-    servo: boolean;
-    stop: boolean;
-    teach: string;
-    cBackup: boolean;
-    connection: boolean;
-  };
 }
 
-/**
- * GET /api/home/hierarchy
- * Returns complete hierarchy: Lines -> Cells -> Controllers
- */
 export async function GET(request: NextRequest) {
   try {
-    // Get all lines
+
     const linesResult = await dbPool.query(
-      `SELECT id, name, status FROM line ORDER BY name`
+      `SELECT 
+        l.id, 
+        l.name, 
+        l.status,
+        COALESCE(f.name, 'Unknown Factory') as factory_name
+      FROM line l
+      LEFT JOIN factory f ON l.factory_id = f.id
+      ORDER BY l.name`
     );
 
     const lines: LineHierarchy[] = [];
 
-    // For each line, get its cells and controllers
+
     for (const line of linesResult.rows) {
       const cellsResult = await dbPool.query(
         `SELECT id, name, status, line_id FROM cell WHERE line_id = $1 ORDER BY name`,
@@ -62,7 +53,7 @@ export async function GET(request: NextRequest) {
 
       const cells: CellWithControllers[] = [];
 
-      // For each cell, get its controllers by matching location pattern
+
       for (const cell of cellsResult.rows) {
         const controllersResult = await dbPool.query(
           `SELECT
@@ -72,22 +63,8 @@ export async function GET(request: NextRequest) {
             c.application,
             c.ip_address AS "ipAddress",
             c.status,
-            c.location,
-            json_build_object(
-              'alarm', ct.alarm,
-              'cycle', ct.cycle,
-              'doorOpen', ct.door_opened,
-              'error', ct.error,
-              'hold', ct.hold,
-              'operating', ct.operating,
-              'servo', ct.servo,
-              'stop', ct.stop,
-              'teach', ct.teach,
-              'cBackup', ct.c_backup,
-              'connection', ct.connection
-            ) AS "controllerStatus"
+            c.location
           FROM controller c
-          INNER JOIN controller_status ct ON c.id = ct.controller_id
           WHERE c.location LIKE $1
           ORDER BY c.name`,
           [`%/${line.name}/${cell.name}`]
@@ -106,6 +83,7 @@ export async function GET(request: NextRequest) {
         id: line.id,
         name: line.name,
         status: line.status,
+        factoryName: line.factory_name,
         cells,
       });
     }

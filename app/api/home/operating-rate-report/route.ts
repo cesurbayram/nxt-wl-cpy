@@ -1,20 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
-import { collectSystemHealthData } from "@/utils/service/home/system-health-collector";
-import { generateSystemHealthPDF } from "@/utils/common/reports/system-health-pdf-generator-simple";
+import { collectOperatingRateReportData } from "@/utils/service/home/operating-rate-collector";
+import { generateOperatingRatePDF } from "@/utils/common/reports/operating-rate-pdf-generator";
 
 export const dynamic = "force-dynamic";
-export const maxDuration = 300;
+export const maxDuration = 300; 
 
 
 export async function GET(request: NextRequest) {
   try {
     
-    const reportData = await collectSystemHealthData();
+    const reportData = await collectOperatingRateReportData();
 
-  
-    const doc = await generateSystemHealthPDF(reportData);
+   
+    const doc = await generateOperatingRatePDF(reportData);
 
-  
+   
     const pdfBuffer = doc.output("arraybuffer");
 
    
@@ -23,9 +23,9 @@ export async function GET(request: NextRequest) {
       .toISOString()
       .replace(/[:.]/g, "-")
       .substring(0, 19);
-    const fileName = `system_health_report_${dateStr}.pdf`;
+    const fileName = `operating_rate_report_${dateStr}.pdf`;
 
-   
+    
     return new NextResponse(pdfBuffer, {
       status: 200,
       headers: {
@@ -38,13 +38,12 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error: any) {
-    console.error("Error generating system health report:", error);
+    console.error("Error generating operating rate report:", error);
 
-    
     return NextResponse.json(
       {
         success: false,
-        error: "Failed to generate system health report",
+        error: "Failed to generate operating rate report",
         details: error.message,
         stack: process.env.NODE_ENV === "development" ? error.stack : undefined,
       },
@@ -52,4 +51,3 @@ export async function GET(request: NextRequest) {
     );
   }
 }
-

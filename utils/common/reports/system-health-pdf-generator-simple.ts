@@ -13,18 +13,15 @@ const COLORS = {
   darkGray: "#1f2937",
 };
 
-// Suppress autoTable warnings about table width
+
 const originalWarn = console.warn;
 console.warn = function(...args: any[]) {
   if (args[0] && typeof args[0] === 'string' && args[0].includes('Of the table content')) {
-    return; // Suppress this specific warning
+    return;
   }
   originalWarn.apply(console, args);
 };
 
-/**
- * Generate complete system health PDF report (WITHOUT CHARTS)
- */
 export async function generateSystemHealthPDF(
   data: SystemHealthReportData
 ): Promise<jsPDF> {
@@ -34,58 +31,56 @@ export async function generateSystemHealthPDF(
     format: "a4",
   });
 
-  // Page 1: Executive Summary
+ 
   addPage1_ExecutiveSummary(doc, data);
 
-  // Page 2: Controller Status Table
+ 
   doc.addPage();
   addPage2_ControllerStatus(doc, data);
 
-  // Page 3: Performance Analysis
+  
   doc.addPage();
   addPage3_PerformanceAnalysis(doc, data);
 
-  // Page 4: Alarm Analysis
+
   doc.addPage();
   addPage4_AlarmAnalysis(doc, data);
 
-  // Page 5: Backup Status
+ 
   doc.addPage();
   addPage5_BackupStatus(doc, data);
 
-  // Page 6: Production Summary
+ 
   doc.addPage();
   addPage6_ProductionSummary(doc, data);
 
-  // Page 7: Maintenance Timeline
+  
   doc.addPage();
   addPage7_MaintenanceTimeline(doc, data);
 
-  // Page 8: Log Analysis
+ 
   doc.addPage();
   addPage8_LogAnalysis(doc, data);
 
-  // Add page numbers to all pages
+
   addPageNumbers(doc);
 
   return doc;
 }
 
-/**
- * Add header to page
- */
+
 function addPageHeader(doc: jsPDF, title: string) {
-  // Header background
-  doc.setFillColor(105, 80, 232); // primary color
+
+  doc.setFillColor(105, 80, 232);
   doc.rect(0, 0, 210, 25, "F");
 
-  // Title
+
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(18);
   doc.setFont("helvetica", "bold");
   doc.text(title, 15, 15);
 
-  // Date
+
   doc.setFontSize(10);
   doc.setFont("helvetica", "normal");
   const dateStr = new Date().toLocaleDateString("en-US", {
@@ -97,33 +92,44 @@ function addPageHeader(doc: jsPDF, title: string) {
   });
   doc.text(dateStr, 210 - 15, 15, { align: "right" });
 
-  // Reset color
+
   doc.setTextColor(0, 0, 0);
 }
 
-/**
- * Add page numbers to all pages
- */
+
 function addPageNumbers(doc: jsPDF) {
   const totalPages = doc.getNumberOfPages();
 
   for (let i = 1; i <= totalPages; i++) {
     doc.setPage(i);
+    
+   
+    doc.setFillColor(243, 244, 246); 
+    doc.rect(0, 280, 210, 17, "F");
+    doc.setDrawColor(107, 114, 128); 
+    doc.setLineWidth(0.2);
+    doc.line(20, 281, 190, 281);
+    
+    doc.setTextColor(107, 114, 128);
     doc.setFontSize(8);
-    doc.setTextColor(150, 150, 150);
-    doc.text(`Page ${i} of ${totalPages}`, 105, 290, { align: "center" });
+    doc.setFont("helvetica", "normal");
+    doc.text("WatchLog - System Health Monitoring", 20, 288);
+    doc.setFont("helvetica", "bold");
+    doc.text(`Page ${i} of ${totalPages}`, 185, 288);
+    
+    doc.setFont("helvetica", "italic");
+    doc.setFontSize(7);
+    doc.text("Confidential - For Internal Use Only", 105, 292, { align: 'center' });
   }
 }
 
-/**
- * PAGE 1: Executive Summary
- */
+
 function addPage1_ExecutiveSummary(doc: jsPDF, data: SystemHealthReportData) {
   addPageHeader(doc, "System Health Overview");
 
   let yPos = 35;
 
-  // Title
+
   doc.setFontSize(20);
   doc.setFont("helvetica", "bold");
   doc.setTextColor(31, 41, 55);
@@ -131,13 +137,13 @@ function addPage1_ExecutiveSummary(doc: jsPDF, data: SystemHealthReportData) {
 
   yPos += 15;
 
-  // KPI Cards - 2 rows of 2
+
   const cardWidth = 85;
   const cardHeight = 30;
   const gap = 10;
   const startX = 15;
 
-  // Row 1
+
   drawKPICard(
     doc,
     startX,
@@ -162,7 +168,7 @@ function addPage1_ExecutiveSummary(doc: jsPDF, data: SystemHealthReportData) {
 
   yPos += cardHeight + gap;
 
-  // Row 2
+
   drawKPICard(
     doc,
     startX,
@@ -187,7 +193,7 @@ function addPage1_ExecutiveSummary(doc: jsPDF, data: SystemHealthReportData) {
 
   yPos += cardHeight + 15;
 
-  // Key Insights
+
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
   doc.setTextColor(31, 41, 55);
@@ -199,12 +205,12 @@ function addPage1_ExecutiveSummary(doc: jsPDF, data: SystemHealthReportData) {
   doc.setFont("helvetica", "normal");
 
   const insights = [
-    `• Top Performing Robot: ${data.summary.topPerformingRobot}`,
-    `• Most Alarms: ${data.summary.mostAlarmsRobot}`,
-    `• Offline Robots: ${data.summary.offlineCount}`,
-    `• Production Today: ${data.production.totalProductionToday} units`,
-    `• Backup Coverage: ${data.backups.controllersWithBackup}/${data.metadata.totalControllers} controllers`,
-    `• Active Alarms: ${data.alarms.activeAlarms}`,
+    `Top Performing Robot: ${data.summary.topPerformingRobot}`,
+    `Most Alarms: ${data.summary.mostAlarmsRobot}`,
+    `Offline Robots: ${data.summary.offlineCount}`,
+    `Production Today: ${data.production.totalProductionToday} units`,
+    `Backup Coverage: ${data.backups.controllersWithBackup}/${data.metadata.totalControllers} controllers`,
+    `Active Alarms: ${data.alarms.activeAlarms}`,
   ];
 
   insights.forEach((insight) => {
@@ -214,7 +220,7 @@ function addPage1_ExecutiveSummary(doc: jsPDF, data: SystemHealthReportData) {
 
   yPos += 10;
 
-  // Status Summary Table
+
   doc.setFontSize(12);
   doc.setFont("helvetica", "bold");
   doc.text("System Status Summary", 15, yPos);
@@ -227,22 +233,22 @@ function addPage1_ExecutiveSummary(doc: jsPDF, data: SystemHealthReportData) {
       [
         "Controllers Online",
         `${data.summary.onlineCount}/${data.summary.totalRobots}`,
-        data.summary.onlineCount >= data.summary.totalRobots * 0.9 ? "✓ Good" : "⚠ Warning",
+        data.summary.onlineCount >= data.summary.totalRobots * 0.9 ? "Good" : "Warning",
       ],
       [
         "Active Alarms",
         data.alarms.activeAlarms.toString(),
-        data.alarms.activeAlarms === 0 ? "✓ Good" : "⚠ Action Needed",
+        data.alarms.activeAlarms === 0 ? "Good" : "Action Needed",
       ],
       [
         "Backup Coverage",
         `${((data.backups.controllersWithBackup / data.metadata.totalControllers) * 100).toFixed(0)}%`,
-        data.backups.controllersWithBackup === data.metadata.totalControllers ? "✓ Complete" : "⚠ Incomplete",
+        data.backups.controllersWithBackup === data.metadata.totalControllers ? "Complete" : "Incomplete",
       ],
       [
         "Production Trend",
         data.production.productionDiff >= 0 ? `+${data.production.productionDiff}` : data.production.productionDiff.toString(),
-        data.production.productionDiff >= 0 ? "✓ Increasing" : "⚠ Decreasing",
+        data.production.productionDiff >= 0 ? "Increasing" : "Decreasing",
       ],
     ],
     theme: "striped",
@@ -256,9 +262,7 @@ function addPage1_ExecutiveSummary(doc: jsPDF, data: SystemHealthReportData) {
   });
 }
 
-/**
- * Draw KPI Card
- */
+
 function drawKPICard(
   doc: jsPDF,
   x: number,
@@ -269,31 +273,29 @@ function drawKPICard(
   value: string,
   color: string
 ) {
-  // Card background
+
   doc.setFillColor(249, 250, 251);
   doc.roundedRect(x, y, width, height, 2, 2, "F");
 
-  // Color accent bar
+
   const rgb = hexToRgb(color);
   doc.setFillColor(rgb.r, rgb.g, rgb.b);
   doc.roundedRect(x, y, 4, height, 2, 2, "F");
 
-  // Label
+
   doc.setFontSize(10);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(107, 114, 128);
   doc.text(label, x + 10, y + 12);
 
-  // Value
+
   doc.setFontSize(18);
   doc.setFont("helvetica", "bold");
   doc.setTextColor(31, 41, 55);
   doc.text(value, x + 10, y + 23);
 }
 
-/**
- * PAGE 2: Controller Status Table
- */
+
 function addPage2_ControllerStatus(doc: jsPDF, data: SystemHealthReportData) {
   addPageHeader(doc, "Controller Status Details");
 
@@ -309,7 +311,7 @@ function addPage2_ControllerStatus(doc: jsPDF, data: SystemHealthReportData) {
     c.name,
     c.model,
     c.location,
-    c.isOnline ? "✓ Online" : "✗ Offline",
+    c.isOnline ? "Online" : "Offline",
     c.servo ? "ON" : "OFF",
     c.operating ? "Yes" : "No",
     c.alarm ? "YES" : "No",
@@ -355,15 +357,13 @@ function addPage2_ControllerStatus(doc: jsPDF, data: SystemHealthReportData) {
   );
 }
 
-/**
- * PAGE 3: Performance Analysis
- */
+
 function addPage3_PerformanceAnalysis(doc: jsPDF, data: SystemHealthReportData) {
   addPageHeader(doc, "Performance & Efficiency Analysis");
 
   let yPos = 35;
 
-  // Today vs Yesterday Comparison
+  
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
   doc.text("Performance Comparison (Today vs Yesterday)", 15, yPos);
@@ -401,7 +401,7 @@ function addPage3_PerformanceAnalysis(doc: jsPDF, data: SystemHealthReportData) 
 
   yPos = (doc as any).lastAutoTable.finalY + 15;
 
-  // Weekly Trend Data (Table format)
+ 
   if (data.performance.weeklyTrend.length > 0) {
     doc.setFontSize(12);
     doc.setFont("helvetica", "bold");
@@ -431,9 +431,9 @@ function addPage3_PerformanceAnalysis(doc: jsPDF, data: SystemHealthReportData) 
     yPos = (doc as any).lastAutoTable.finalY + 10;
   }
 
-  // All Robots Performance (NO LIMIT)
+ 
   if (data.performance.robotPerformances.length > 0) {
-    // Check if we need a new page
+  
     if (yPos > 250) {
       doc.addPage();
       addPageHeader(doc, "Performance & Efficiency Analysis (Continued)");
@@ -467,15 +467,13 @@ function addPage3_PerformanceAnalysis(doc: jsPDF, data: SystemHealthReportData) 
   }
 }
 
-/**
- * PAGE 4: Alarm Analysis
- */
+
 function addPage4_AlarmAnalysis(doc: jsPDF, data: SystemHealthReportData) {
   addPageHeader(doc, "Alarm Analysis & Trends");
 
   let yPos = 35;
 
-  // Summary stats
+
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
   doc.text("Alarm Summary (Last 24 Hours)", 15, yPos);
@@ -496,7 +494,7 @@ function addPage4_AlarmAnalysis(doc: jsPDF, data: SystemHealthReportData) {
 
   yPos += 12;
 
-  // Severity Distribution (as table)
+  
   doc.setFontSize(12);
   doc.setFont("helvetica", "bold");
   doc.text("Alarm Severity Distribution", 15, yPos);
@@ -529,7 +527,7 @@ function addPage4_AlarmAnalysis(doc: jsPDF, data: SystemHealthReportData) {
 
   yPos = (doc as any).lastAutoTable.finalY + 10;
 
-  // All Alarm Codes (NO LIMIT)
+  
   if (data.alarms.topAlarmCodes.length > 0) {
     doc.setFontSize(12);
     doc.setFont("helvetica", "bold");
@@ -567,9 +565,9 @@ function addPage4_AlarmAnalysis(doc: jsPDF, data: SystemHealthReportData) {
     yPos = (doc as any).lastAutoTable.finalY + 10;
   }
 
-  // ALL Recent Alarms (NO LIMIT - will create multiple pages if needed)
+  
   if (data.alarms.recentAlarms.length > 0) {
-    // Check if we need a new page
+    
     if (yPos > 250) {
       doc.addPage();
       addPageHeader(doc, "Alarm Analysis & Trends (Continued)");
@@ -618,15 +616,13 @@ function addPage4_AlarmAnalysis(doc: jsPDF, data: SystemHealthReportData) {
   }
 }
 
-/**
- * PAGE 5: Backup Status
- */
+
 function addPage5_BackupStatus(doc: jsPDF, data: SystemHealthReportData) {
   addPageHeader(doc, "Backup Status & Coverage");
 
   let yPos = 35;
 
-  // Summary
+
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
   doc.text("Backup Coverage Summary", 15, yPos);
@@ -647,7 +643,7 @@ function addPage5_BackupStatus(doc: jsPDF, data: SystemHealthReportData) {
 
   yPos += 12;
 
-  // Backup Details Table
+ 
   doc.setFontSize(12);
   doc.setFont("helvetica", "bold");
   doc.text("Backup Details by Robot", 15, yPos);
@@ -687,7 +683,7 @@ function addPage5_BackupStatus(doc: jsPDF, data: SystemHealthReportData) {
 
   yPos = (doc as any).lastAutoTable.finalY + 10;
 
-  // Missing Backups Warning
+ 
   if (data.backups.missingBackups.length > 0) {
     doc.setFillColor(254, 226, 226);
     doc.roundedRect(15, yPos, 180, 20 + data.backups.missingBackups.length * 5, 2, 2, "F");
@@ -697,14 +693,14 @@ function addPage5_BackupStatus(doc: jsPDF, data: SystemHealthReportData) {
     doc.setFontSize(11);
     doc.setFont("helvetica", "bold");
     doc.setTextColor(185, 28, 28);
-    doc.text("⚠️ Controllers Needing Backup:", 20, yPos);
+    doc.text("Controllers Needing Backup:", 20, yPos);
 
     yPos += 6;
 
     doc.setFontSize(9);
     doc.setFont("helvetica", "normal");
     data.backups.missingBackups.forEach((name) => {
-      doc.text(`• ${name}`, 25, yPos);
+      doc.text(`- ${name}`, 25, yPos);
       yPos += 5;
     });
 
@@ -712,15 +708,13 @@ function addPage5_BackupStatus(doc: jsPDF, data: SystemHealthReportData) {
   }
 }
 
-/**
- * PAGE 6: Production Summary
- */
+
 function addPage6_ProductionSummary(doc: jsPDF, data: SystemHealthReportData) {
   addPageHeader(doc, "Production Summary & Metrics");
 
   let yPos = 35;
 
-  // Production Overview
+ 
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
   doc.text("Daily Production Overview", 15, yPos);
@@ -759,7 +753,7 @@ function addPage6_ProductionSummary(doc: jsPDF, data: SystemHealthReportData) {
 
   yPos += 5;
 
-  // Shift Production
+ 
   if (data.production.shiftProduction.length > 0) {
     doc.setFontSize(12);
     doc.setFont("helvetica", "bold");
@@ -789,9 +783,9 @@ function addPage6_ProductionSummary(doc: jsPDF, data: SystemHealthReportData) {
     yPos = (doc as any).lastAutoTable.finalY + 10;
   }
 
-  // Production by ALL Controllers (NO LIMIT)
+  
   if (data.production.productionByController.length > 0) {
-    // Check if we need a new page
+    
     if (yPos > 230) {
       doc.addPage();
       addPageHeader(doc, "Production Summary & Metrics (Continued)");
@@ -831,15 +825,13 @@ function addPage6_ProductionSummary(doc: jsPDF, data: SystemHealthReportData) {
   }
 }
 
-/**
- * PAGE 7: Maintenance Timeline
- */
+
 function addPage7_MaintenanceTimeline(doc: jsPDF, data: SystemHealthReportData) {
   addPageHeader(doc, "Maintenance History & Schedule");
 
   let yPos = 35;
 
-  // Recent Maintenance
+ 
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
   doc.text("Recent Maintenance Activities", 15, yPos);
@@ -885,7 +877,7 @@ function addPage7_MaintenanceTimeline(doc: jsPDF, data: SystemHealthReportData) 
     yPos += 15;
   }
 
-  // Upcoming Maintenance
+ 
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
   doc.text("Upcoming Maintenance (Next 30 Days)", 15, yPos);
@@ -929,15 +921,13 @@ function addPage7_MaintenanceTimeline(doc: jsPDF, data: SystemHealthReportData) 
   }
 }
 
-/**
- * PAGE 8: Log Analysis
- */
+
 function addPage8_LogAnalysis(doc: jsPDF, data: SystemHealthReportData) {
   addPageHeader(doc, "Log Activity Analysis");
 
   let yPos = 35;
 
-  // Summary
+  
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
   doc.text("Log Data Summary", 15, yPos);
@@ -952,7 +942,7 @@ function addPage8_LogAnalysis(doc: jsPDF, data: SystemHealthReportData) {
 
   yPos += 12;
 
-  // Logs by Controller
+
   if (data.logs.logsByController.length > 0) {
     doc.setFontSize(12);
     doc.setFont("helvetica", "bold");
@@ -990,9 +980,9 @@ function addPage8_LogAnalysis(doc: jsPDF, data: SystemHealthReportData) {
     yPos = (doc as any).lastAutoTable.finalY + 10;
   }
 
-  // ALL Common Operations (NO LIMIT)
+  
   if (data.logs.topEvents.length > 0) {
-    // Check if we need a new page
+    
     if (yPos > 230) {
       doc.addPage();
       addPageHeader(doc, "Log Activity Analysis (Continued)");
@@ -1033,9 +1023,9 @@ function addPage8_LogAnalysis(doc: jsPDF, data: SystemHealthReportData) {
     yPos = (doc as any).lastAutoTable.finalY + 10;
   }
 
-  // ALL Critical Events (NO LIMIT)
+  
   if (data.logs.criticalEvents.length > 0) {
-    // Check if we need a new page
+    
     if (yPos > 230) {
       doc.addPage();
       addPageHeader(doc, "Log Activity Analysis (Continued)");
@@ -1077,9 +1067,7 @@ function addPage8_LogAnalysis(doc: jsPDF, data: SystemHealthReportData) {
   }
 }
 
-/**
- * Helper: Convert hex to RGB
- */
+
 function hexToRgb(hex: string): { r: number; g: number; b: number } {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result

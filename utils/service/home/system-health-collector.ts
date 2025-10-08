@@ -12,9 +12,6 @@ import {
 } from "@/types/system-health-report.types";
 import { readLogDataFile, analyzeLogEntries } from "./logdata-parser";
 
-/**
- * Collect all system health data
- */
 export async function collectSystemHealthData(): Promise<SystemHealthReportData> {
   const now = new Date();
   const yesterday = new Date(now);
@@ -95,9 +92,7 @@ function generateSystemSummary(
   };
 }
 
-/**
- * Collect controller status data
- */
+
 async function collectControllerStatus(): Promise<ControllerStatusData[]> {
   try {
     const query = `
