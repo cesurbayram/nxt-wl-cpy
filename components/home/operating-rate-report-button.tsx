@@ -6,117 +6,117 @@ import { Activity, Download, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 interface OperatingRateReportButtonProps {
-  className?: string;
+    className?: string;
 }
 
 export function OperatingRateReportButton({
-  className = "",
+    className = "",
 }: OperatingRateReportButtonProps) {
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [progress, setProgress] = useState(0);
+    const [isGenerating, setIsGenerating] = useState(false);
+    const [progress, setProgress] = useState(0);
 
-  const handleDownload = async () => {
-    try {
-      setIsGenerating(true);
-      setProgress(10);
+    const handleDownload = async () => {
+        try {
+            setIsGenerating(true);
+            setProgress(10);
 
-      toast.info("Generating operating rate report...", {
-        description: "Analyzing 7-day log data from all robots.",
-      });
+            toast.info("Generating operating rate report...", {
+                description: "Analyzing 7-day log data from all robots.",
+            });
 
-      setProgress(30);
+            setProgress(30);
 
-      
-      const response = await fetch("/api/home/operating-rate-report", {
-        method: "GET",
-      });
 
-      setProgress(70);
+            const response = await fetch("/api/home/operating-rate-report", {
+                method: "GET",
+            });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to generate operating rate report");
-      }
+            setProgress(70);
 
-      setProgress(90);
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || "Failed to generate operating rate report");
+            }
 
-     
-      const blob = await response.blob();
-      const pdfBlob = new Blob([blob], { type: 'application/pdf' });
+            setProgress(90);
 
-     
-      const url = window.URL.createObjectURL(pdfBlob);
-      const link = document.createElement("a");
-      link.href = url;
 
-     
-      const contentDisposition = response.headers.get("Content-Disposition");
-      let fileName = "operating_rate_report.pdf";
+            const blob = await response.blob();
+            const pdfBlob = new Blob([blob], { type: 'application/pdf' });
 
-      if (contentDisposition) {
-        const fileNameMatch = contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
-        if (fileNameMatch && fileNameMatch[1]) {
-          fileName = fileNameMatch[1].replace(/['"]/g, '');
+
+            const url = window.URL.createObjectURL(pdfBlob);
+            const link = document.createElement("a");
+            link.href = url;
+
+
+            const contentDisposition = response.headers.get("Content-Disposition");
+            let fileName = "operating_rate_report.pdf";
+
+            if (contentDisposition) {
+                const fileNameMatch = contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
+                if (fileNameMatch && fileNameMatch[1]) {
+                    fileName = fileNameMatch[1].replace(/['"]/g, '');
+                }
+            }
+
+
+            if (!fileName.toLowerCase().endsWith('.pdf')) {
+                fileName = fileName.replace(/\.[^.]*$/, '.pdf');
+            }
+
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+
+
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+
+            setProgress(100);
+
+            toast.success("Operating rate report downloaded successfully!", {
+                description: "7-day log data analysis is ready.",
+            });
+
+        } catch (error: any) {
+            console.error("Error downloading operating rate report:", error);
+
+            toast.error("Failed to generate operating rate report", {
+                description: error.message || "Please try again later.",
+            });
+        } finally {
+            setIsGenerating(false);
+            setProgress(0);
         }
-      }
+    };
 
-    
-      if (!fileName.toLowerCase().endsWith('.pdf')) {
-        fileName = fileName.replace(/\.[^.]*$/, '.pdf');
-      }
-
-      link.download = fileName;
-      document.body.appendChild(link);
-      link.click();
-
-
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
-
-      setProgress(100);
-
-      toast.success("Operating rate report downloaded successfully!", {
-        description: "7-day log data analysis is ready.",
-      });
-
-    } catch (error: any) {
-      console.error("Error downloading operating rate report:", error);
-      
-      toast.error("Failed to generate operating rate report", {
-        description: error.message || "Please try again later.",
-      });
-    } finally {
-      setIsGenerating(false);
-      setProgress(0);
-    }
-  };
-
-  return (
-    <div className={`relative ${className}`}>
-      <Button
-        onClick={handleDownload}
-        disabled={isGenerating}
-        variant="outline"
-        size="lg"
-        className="h-14 px-3 flex flex-col items-center justify-center gap-1 border-2 hover:border-[#6950e8] hover:bg-[#6950e8]/5 transition-all duration-200 group min-w-[140px] max-w-[160px]"
-      >
-        {isGenerating ? (
-          <>
-            <Loader2 className="h-5 w-5 animate-spin text-[#6950e8]" />
-            <span className="text-sm font-medium">Generating {progress}%</span>
-          </>
-        ) : (
-          <>
-            <div className="flex items-center gap-2">
-              <Activity className="h-5 w-5 text-[#6950e8] group-hover:scale-110 transition-transform" />
-              <Download className="h-4 w-4 text-gray-500 group-hover:text-[#6950e8] transition-colors" />
-            </div>
-            <span className="text-xs font-medium text-gray-700 group-hover:text-[#6950e8] transition-colors">
-              Operating Rate Report
-            </span>
-          </>
-        )}
-      </Button>
-    </div>
-  );
+    return (
+        <div className={`relative ${className}`}>
+            <Button
+                onClick={handleDownload}
+                disabled={isGenerating}
+                variant="outline"
+                size="lg"
+                className="h-14 px-3 flex flex-col items-center justify-center gap-1 border-2 hover:border-[#6950e8] hover:bg-[#6950e8]/5 transition-all duration-200 group min-w-[140px] max-w-[160px]"
+            >
+                {isGenerating ? (
+                    <>
+                        <Loader2 className="h-5 w-5 animate-spin text-[#6950e8]" />
+                        <span className="text-sm font-medium">Generating {progress}%</span>
+                    </>
+                ) : (
+                    <>
+                        <div className="flex items-center gap-2">
+                            <Activity className="h-5 w-5 text-[#6950e8] group-hover:scale-110 transition-transform" />
+                            <Download className="h-4 w-4 text-gray-500 group-hover:text-[#6950e8] transition-colors" />
+                        </div>
+                        <span className="text-xs font-medium text-gray-700 group-hover:text-[#6950e8] transition-colors">
+                            Operating Rate Report
+                        </span>
+                    </>
+                )}
+            </Button>
+        </div>
+    );
 }

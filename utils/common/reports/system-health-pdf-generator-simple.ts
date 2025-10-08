@@ -15,7 +15,7 @@ const COLORS = {
 
 
 const originalWarn = console.warn;
-console.warn = function(...args: any[]) {
+console.warn = function (...args: any[]) {
   if (args[0] && typeof args[0] === 'string' && args[0].includes('Of the table content')) {
     return;
   }
@@ -31,14 +31,14 @@ export async function generateSystemHealthPDF(
     format: "a4",
   });
 
- 
+
   addPage1_ExecutiveSummary(doc, data);
 
- 
+
   doc.addPage();
   addPage2_ControllerStatus(doc, data);
 
-  
+
   doc.addPage();
   addPage3_PerformanceAnalysis(doc, data);
 
@@ -46,19 +46,19 @@ export async function generateSystemHealthPDF(
   doc.addPage();
   addPage4_AlarmAnalysis(doc, data);
 
- 
+
   doc.addPage();
   addPage5_BackupStatus(doc, data);
 
- 
+
   doc.addPage();
   addPage6_ProductionSummary(doc, data);
 
-  
+
   doc.addPage();
   addPage7_MaintenanceTimeline(doc, data);
 
- 
+
   doc.addPage();
   addPage8_LogAnalysis(doc, data);
 
@@ -102,21 +102,21 @@ function addPageNumbers(doc: jsPDF) {
 
   for (let i = 1; i <= totalPages; i++) {
     doc.setPage(i);
-    
-   
-    doc.setFillColor(243, 244, 246); 
+
+
+    doc.setFillColor(243, 244, 246);
     doc.rect(0, 280, 210, 17, "F");
-    doc.setDrawColor(107, 114, 128); 
+    doc.setDrawColor(107, 114, 128);
     doc.setLineWidth(0.2);
     doc.line(20, 281, 190, 281);
-    
+
     doc.setTextColor(107, 114, 128);
     doc.setFontSize(8);
     doc.setFont("helvetica", "normal");
     doc.text("WatchLog - System Health Monitoring", 20, 288);
     doc.setFont("helvetica", "bold");
     doc.text(`Page ${i} of ${totalPages}`, 185, 288);
-    
+
     doc.setFont("helvetica", "italic");
     doc.setFontSize(7);
     doc.text("Confidential - For Internal Use Only", 105, 292, { align: 'center' });
@@ -363,7 +363,7 @@ function addPage3_PerformanceAnalysis(doc: jsPDF, data: SystemHealthReportData) 
 
   let yPos = 35;
 
-  
+
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
   doc.text("Performance Comparison (Today vs Yesterday)", 15, yPos);
@@ -401,7 +401,7 @@ function addPage3_PerformanceAnalysis(doc: jsPDF, data: SystemHealthReportData) 
 
   yPos = (doc as any).lastAutoTable.finalY + 15;
 
- 
+
   if (data.performance.weeklyTrend.length > 0) {
     doc.setFontSize(12);
     doc.setFont("helvetica", "bold");
@@ -431,9 +431,9 @@ function addPage3_PerformanceAnalysis(doc: jsPDF, data: SystemHealthReportData) 
     yPos = (doc as any).lastAutoTable.finalY + 10;
   }
 
- 
+
   if (data.performance.robotPerformances.length > 0) {
-  
+
     if (yPos > 250) {
       doc.addPage();
       addPageHeader(doc, "Performance & Efficiency Analysis (Continued)");
@@ -494,7 +494,7 @@ function addPage4_AlarmAnalysis(doc: jsPDF, data: SystemHealthReportData) {
 
   yPos += 12;
 
-  
+
   doc.setFontSize(12);
   doc.setFont("helvetica", "bold");
   doc.text("Alarm Severity Distribution", 15, yPos);
@@ -527,7 +527,7 @@ function addPage4_AlarmAnalysis(doc: jsPDF, data: SystemHealthReportData) {
 
   yPos = (doc as any).lastAutoTable.finalY + 10;
 
-  
+
   if (data.alarms.topAlarmCodes.length > 0) {
     doc.setFontSize(12);
     doc.setFont("helvetica", "bold");
@@ -565,9 +565,9 @@ function addPage4_AlarmAnalysis(doc: jsPDF, data: SystemHealthReportData) {
     yPos = (doc as any).lastAutoTable.finalY + 10;
   }
 
-  
+
   if (data.alarms.recentAlarms.length > 0) {
-    
+
     if (yPos > 250) {
       doc.addPage();
       addPageHeader(doc, "Alarm Analysis & Trends (Continued)");
@@ -643,7 +643,7 @@ function addPage5_BackupStatus(doc: jsPDF, data: SystemHealthReportData) {
 
   yPos += 12;
 
- 
+
   doc.setFontSize(12);
   doc.setFont("helvetica", "bold");
   doc.text("Backup Details by Robot", 15, yPos);
@@ -683,7 +683,7 @@ function addPage5_BackupStatus(doc: jsPDF, data: SystemHealthReportData) {
 
   yPos = (doc as any).lastAutoTable.finalY + 10;
 
- 
+
   if (data.backups.missingBackups.length > 0) {
     doc.setFillColor(254, 226, 226);
     doc.roundedRect(15, yPos, 180, 20 + data.backups.missingBackups.length * 5, 2, 2, "F");
@@ -714,7 +714,7 @@ function addPage6_ProductionSummary(doc: jsPDF, data: SystemHealthReportData) {
 
   let yPos = 35;
 
- 
+
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
   doc.text("Daily Production Overview", 15, yPos);
@@ -753,7 +753,7 @@ function addPage6_ProductionSummary(doc: jsPDF, data: SystemHealthReportData) {
 
   yPos += 5;
 
- 
+
   if (data.production.shiftProduction.length > 0) {
     doc.setFontSize(12);
     doc.setFont("helvetica", "bold");
@@ -783,9 +783,9 @@ function addPage6_ProductionSummary(doc: jsPDF, data: SystemHealthReportData) {
     yPos = (doc as any).lastAutoTable.finalY + 10;
   }
 
-  
+
   if (data.production.productionByController.length > 0) {
-    
+
     if (yPos > 230) {
       doc.addPage();
       addPageHeader(doc, "Production Summary & Metrics (Continued)");
@@ -831,7 +831,7 @@ function addPage7_MaintenanceTimeline(doc: jsPDF, data: SystemHealthReportData) 
 
   let yPos = 35;
 
- 
+
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
   doc.text("Recent Maintenance Activities", 15, yPos);
@@ -877,7 +877,7 @@ function addPage7_MaintenanceTimeline(doc: jsPDF, data: SystemHealthReportData) 
     yPos += 15;
   }
 
- 
+
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
   doc.text("Upcoming Maintenance (Next 30 Days)", 15, yPos);
@@ -927,7 +927,7 @@ function addPage8_LogAnalysis(doc: jsPDF, data: SystemHealthReportData) {
 
   let yPos = 35;
 
-  
+
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
   doc.text("Log Data Summary", 15, yPos);
@@ -980,9 +980,9 @@ function addPage8_LogAnalysis(doc: jsPDF, data: SystemHealthReportData) {
     yPos = (doc as any).lastAutoTable.finalY + 10;
   }
 
-  
+
   if (data.logs.topEvents.length > 0) {
-    
+
     if (yPos > 230) {
       doc.addPage();
       addPageHeader(doc, "Log Activity Analysis (Continued)");
@@ -1023,9 +1023,9 @@ function addPage8_LogAnalysis(doc: jsPDF, data: SystemHealthReportData) {
     yPos = (doc as any).lastAutoTable.finalY + 10;
   }
 
-  
+
   if (data.logs.criticalEvents.length > 0) {
-    
+
     if (yPos > 230) {
       doc.addPage();
       addPageHeader(doc, "Log Activity Analysis (Continued)");
@@ -1072,10 +1072,10 @@ function hexToRgb(hex: string): { r: number; g: number; b: number } {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result
     ? {
-        r: parseInt(result[1], 16),
-        g: parseInt(result[2], 16),
-        b: parseInt(result[3], 16),
-      }
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16),
+    }
     : { r: 0, g: 0, b: 0 };
 }
 

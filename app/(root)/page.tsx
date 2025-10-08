@@ -91,8 +91,8 @@ const HomePage = () => {
   return (
     <>
       <LoadingUi isLoading={isLoading} />
-    <PageWrapper
-      shownHeaderButton={false}
+      <PageWrapper
+        shownHeaderButton={false}
         pageTitle="Home"
         icon={<HomeIcon size={24} color="#6950e8" />}
         headerActions={
@@ -120,7 +120,7 @@ const HomePage = () => {
                     <div className="border-b bg-gray-50 px-4 py-3">
                       <h2 className="text-base font-semibold text-gray-900 flex items-center gap-2">
                         <span>📍</span>
-                       Factory {line.factoryName} / Line {line.name}
+                        Factory {line.factoryName} / Line {line.name}
                       </h2>
                     </div>
 
@@ -128,9 +128,9 @@ const HomePage = () => {
                       <div className="text-center py-12">
                         <p className="text-gray-500">
                           No controllers in this cell
-                          </p>
-                        </div>
-                      ) : (
+                        </p>
+                      </div>
+                    ) : (
                       <div className="overflow-x-auto">
                         <table className="w-full">
                           <thead>
@@ -190,9 +190,9 @@ const HomePage = () => {
                 ))}
               </div>
             ))}
-            </div>
-      )}
-    </PageWrapper>
+          </div>
+        )}
+      </PageWrapper>
     </>
   );
 };

@@ -8,16 +8,16 @@ export const maxDuration = 300;
 
 export async function GET(request: NextRequest) {
   try {
-    
+
     const reportData = await collectSystemHealthData();
 
-  
+
     const doc = await generateSystemHealthPDF(reportData);
 
-  
+
     const pdfBuffer = doc.output("arraybuffer");
 
-   
+
     const now = new Date();
     const dateStr = now
       .toISOString()
@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
       .substring(0, 19);
     const fileName = `system_health_report_${dateStr}.pdf`;
 
-   
+
     return new NextResponse(pdfBuffer, {
       status: 200,
       headers: {
@@ -40,7 +40,7 @@ export async function GET(request: NextRequest) {
   } catch (error: any) {
     console.error("Error generating system health report:", error);
 
-    
+
     return NextResponse.json(
       {
         success: false,
