@@ -137,6 +137,12 @@ const sideMenuItems: MenuItem[] = [
     childPages: [],
   },
   {
+    title: "System Reports",
+    icon: <HiDocumentReport size={16} />,
+    link: "/system-reports",
+    childPages: [],
+  },
+  {
     title: "Notification",
     icon: <IoIosNotifications size={16} />,
     link: "/notifications",

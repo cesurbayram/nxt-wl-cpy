@@ -2,16 +2,16 @@
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Activity, Download, Loader2 } from "lucide-react";
+import { FileBarChart, Download, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
-interface OperatingRateReportButtonProps {
+interface UtilizationReportButtonProps {
     className?: string;
 }
 
-export function OperatingRateReportButton({
+export function UtilizationReportButton({
     className = "",
-}: OperatingRateReportButtonProps) {
+}: UtilizationReportButtonProps) {
     const [isGenerating, setIsGenerating] = useState(false);
     const [progress, setProgress] = useState(0);
 
@@ -20,14 +20,14 @@ export function OperatingRateReportButton({
             setIsGenerating(true);
             setProgress(10);
 
-            toast.info("Generating operating rate report...", {
-                description: "Analyzing 7-day log data from all robots.",
+            toast.info("Generating utilization report...", {
+                description: "Collecting 7-day utilization data from all robots.",
             });
 
             setProgress(30);
 
 
-            const response = await fetch("/api/home/operating-rate-report", {
+            const response = await fetch("/api/system-reports/utilization-report", {
                 method: "GET",
             });
 
@@ -35,7 +35,7 @@ export function OperatingRateReportButton({
 
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(errorData.error || "Failed to generate operating rate report");
+                throw new Error(errorData.error || "Failed to generate utilization report");
             }
 
             setProgress(90);
@@ -51,7 +51,7 @@ export function OperatingRateReportButton({
 
 
             const contentDisposition = response.headers.get("Content-Disposition");
-            let fileName = "operating_rate_report.pdf";
+            let fileName = "utilization_report.pdf";
 
             if (contentDisposition) {
                 const fileNameMatch = contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
@@ -75,14 +75,14 @@ export function OperatingRateReportButton({
 
             setProgress(100);
 
-            toast.success("Operating rate report downloaded successfully!", {
-                description: "7-day log data analysis is ready.",
+            toast.success("Utilization report downloaded successfully!", {
+                description: "7-day robot performance analysis is ready.",
             });
 
         } catch (error: any) {
-            console.error("Error downloading operating rate report:", error);
+            console.error("Error downloading utilization report:", error);
 
-            toast.error("Failed to generate operating rate report", {
+            toast.error("Failed to generate utilization report", {
                 description: error.message || "Please try again later.",
             });
         } finally {
@@ -97,26 +97,22 @@ export function OperatingRateReportButton({
                 onClick={handleDownload}
                 disabled={isGenerating}
                 variant="outline"
-                size="lg"
-                className="h-14 px-3 flex flex-col items-center justify-center gap-1 border-2 hover:border-[#6950e8] hover:bg-[#6950e8]/5 transition-all duration-200 group min-w-[140px] max-w-[160px]"
+                size="default"
+                className="w-full h-10 border-2 hover:border-[#6950e8] hover:bg-[#6950e8] hover:text-white transition-all duration-200 font-medium"
             >
                 {isGenerating ? (
                     <>
-                        <Loader2 className="h-5 w-5 animate-spin text-[#6950e8]" />
-                        <span className="text-sm font-medium">Generating {progress}%</span>
+                        <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                        {progress}%
                     </>
                 ) : (
                     <>
-                        <div className="flex items-center gap-2">
-                            <Activity className="h-5 w-5 text-[#6950e8] group-hover:scale-110 transition-transform" />
-                            <Download className="h-4 w-4 text-gray-500 group-hover:text-[#6950e8] transition-colors" />
-                        </div>
-                        <span className="text-xs font-medium text-gray-700 group-hover:text-[#6950e8] transition-colors">
-                            Operating Rate Report
-                        </span>
+                        <Download className="h-4 w-4 mr-2" />
+                        Download
                     </>
                 )}
             </Button>
         </div>
     );
 }
+

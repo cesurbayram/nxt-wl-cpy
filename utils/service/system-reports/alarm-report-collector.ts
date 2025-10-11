@@ -318,3 +318,4 @@ function calculateAlarmSummary(controllerData: ControllerAlarmData[]) {
         average_alarms_per_controller: Math.round((totalAlarms / controllerData.length) * 100) / 100
     };
 }
+

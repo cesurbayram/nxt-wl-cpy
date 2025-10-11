@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { collectOperatingRateReportData } from "@/utils/service/home/operating-rate-collector";
-import { generateOperatingRatePDF } from "@/utils/common/reports/operating-rate-pdf-generator";
+import { collectUtilizationReportData } from "@/utils/service/system-reports/utilization-report-collector";
+import { generateUtilizationPDF } from "@/utils/common/reports/utilization-pdf-generator";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 300;
@@ -9,10 +9,10 @@ export const maxDuration = 300;
 export async function GET(request: NextRequest) {
     try {
 
-        const reportData = await collectOperatingRateReportData();
+        const reportData = await collectUtilizationReportData();
 
 
-        const doc = await generateOperatingRatePDF(reportData);
+        const doc = await generateUtilizationPDF(reportData);
 
 
         const pdfBuffer = doc.output("arraybuffer");
@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
             .toISOString()
             .replace(/[:.]/g, "-")
             .substring(0, 19);
-        const fileName = `operating_rate_report_${dateStr}.pdf`;
+        const fileName = `utilization_report_${dateStr}.pdf`;
 
 
         return new NextResponse(pdfBuffer, {
@@ -38,12 +38,12 @@ export async function GET(request: NextRequest) {
             },
         });
     } catch (error: any) {
-        console.error("Error generating operating rate report:", error);
+        console.error("Error generating utilization report:", error);
 
         return NextResponse.json(
             {
                 success: false,
-                error: "Failed to generate operating rate report",
+                error: "Failed to generate utilization report",
                 details: error.message,
                 stack: process.env.NODE_ENV === "development" ? error.stack : undefined,
             },
@@ -51,3 +51,4 @@ export async function GET(request: NextRequest) {
         );
     }
 }
+

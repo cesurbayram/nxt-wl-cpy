@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { collectAlarmReportData } from "@/utils/service/home/alarm-report-collector";
+import { collectAlarmReportData } from "@/utils/service/system-reports/alarm-report-collector";
 import { generateAlarmReportPDF } from "@/utils/common/reports/alarm-pdf-generator";
 
 export const dynamic = "force-dynamic";
@@ -51,3 +51,4 @@ export async function GET(request: NextRequest) {
         );
     }
 }
+

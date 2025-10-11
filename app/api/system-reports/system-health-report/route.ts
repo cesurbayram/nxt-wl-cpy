@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { collectSystemHealthData } from "@/utils/service/home/system-health-collector";
+import { collectSystemHealthData } from "@/utils/service/system-reports/system-health-collector";
 import { generateSystemHealthPDF } from "@/utils/common/reports/system-health-pdf-generator-simple";
 
 export const dynamic = "force-dynamic";

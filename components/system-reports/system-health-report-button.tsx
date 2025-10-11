@@ -27,7 +27,7 @@ export function SystemHealthReportButton({
       setProgress(30);
 
 
-      const response = await fetch("/api/home/system-health-report", {
+      const response = await fetch("/api/system-reports/system-health-report", {
         method: "GET",
       });
 
@@ -95,26 +95,22 @@ export function SystemHealthReportButton({
         onClick={handleDownload}
         disabled={isGenerating}
         variant="outline"
-        size="lg"
-        className="h-14 px-3 flex flex-col items-center justify-center gap-1 border-2 hover:border-[#6950e8] hover:bg-[#6950e8]/5 transition-all duration-200 group min-w-[140px] max-w-[160px]"
+        size="default"
+        className="w-full h-10 border-2 hover:border-[#6950e8] hover:bg-[#6950e8] hover:text-white transition-all duration-200 font-medium"
       >
         {isGenerating ? (
           <>
-            <Loader2 className="h-5 w-5 animate-spin text-[#6950e8]" />
-            <span className="text-sm font-medium">Generating {progress}%</span>
+            <Loader2 className="h-4 w-4 animate-spin mr-2" />
+            {progress}%
           </>
         ) : (
           <>
-            <div className="flex items-center gap-2">
-              <Activity className="h-5 w-5 text-[#6950e8] group-hover:scale-110 transition-transform" />
-              <Download className="h-4 w-4 text-gray-500 group-hover:text-[#6950e8] transition-colors" />
-            </div>
-            <span className="text-xs font-medium text-gray-700 group-hover:text-[#6950e8] transition-colors">
-              System Health Report
-            </span>
+            <Download className="h-4 w-4 mr-2" />
+            Download
           </>
         )}
       </Button>
     </div>
   );
 }
+
