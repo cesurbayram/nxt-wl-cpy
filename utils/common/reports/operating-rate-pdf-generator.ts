@@ -168,10 +168,13 @@ function addReportContent(doc: jsPDF, data: OperatingRateReportData) {
         const trendIcon = trend > 5 ? "↗" : trend < -5 ? "↘" : "→";
         const rate = analysis.operating_rate_percentage;
         const statusIcon = rate > 75 ? "OK" : rate > 50 ? "!" : "!!";
+        
+        // Use name if available, otherwise use IP address or Robot # as fallback
+        const robotName = controller.name || controller.ip_address || `Robot #${index + 1}`;
 
         return [
             `${index + 1}`,
-            cleanTableText(controller.name, 22),
+            cleanTableText(robotName, 22),
             `${rate.toFixed(0)}%`,
             `${analysis.total_log_entries}`,
             `${analysis.critical_events.total_count}`,

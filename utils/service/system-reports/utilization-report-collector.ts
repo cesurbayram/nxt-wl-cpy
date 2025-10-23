@@ -17,21 +17,26 @@ export async function collectUtilizationReportData(): Promise<UtilizationReportD
         c.name, 
         c.ip_address 
       FROM controller c
-      INNER JOIN controller_status ct ON c.id = ct.controller_id
+      LEFT JOIN controller_status ct ON c.id = ct.controller_id
       ORDER BY c.name
     `;
 
         const controllersResult = await client.query(controllersQuery);
         const controllers = controllersResult.rows;
 
+
         if (controllers.length === 0) {
-            throw new Error("No controllers found with status");
+            throw new Error("No controllers found");
         }
 
 
         const controllerData: ControllerUtilizationData[] = [];
 
         for (const controller of controllers) {
+            // Create proper display name
+            const displayName = controller.name || 
+                               `Robot (${controller.ip_address || controller.id})`;
+            
             const dailyData = await collectControllerDailyData(client, controller.id);
 
             if (dailyData.length > 0) {
@@ -39,13 +44,15 @@ export async function collectUtilizationReportData(): Promise<UtilizationReportD
 
                 controllerData.push({
                     id: controller.id,
-                    name: controller.name,
+                    name: displayName,
                     ip_address: controller.ip_address,
                     daily_data: dailyData,
                     totals
                 });
+            } else {
             }
         }
+        
 
 
         const summary = calculateSummaryStatistics(controllerData);
@@ -63,7 +70,6 @@ export async function collectUtilizationReportData(): Promise<UtilizationReportD
         };
 
     } catch (error) {
-        console.error("Error collecting utilization report data:", error);
 
 
         try {
@@ -78,30 +84,43 @@ export async function collectUtilizationReportData(): Promise<UtilizationReportD
 
             const fallbackResult = await client.query(fallbackQuery);
 
-            if (fallbackResult.rows.length > 0) {
 
-                return {
-                    metadata: {
-                        title: "7-Day Robot Utilization Report",
-                        generated_at: new Date().toISOString(),
-                        period: "Last 7 Days",
-                        total_controllers: fallbackResult.rows.length
-                    },
-                    controllers: [],
-                    summary: {
-                        total_operating_hours: 0,
-                        average_daily_hours: 0,
-                        most_efficient_controller: "N/A",
-                        least_efficient_controller: "N/A",
-                        total_efficiency_percentage: 0
-                    }
-                };
-            }
+            return {
+                metadata: {
+                    title: "7-Day Robot Utilization Report",
+                    generated_at: new Date().toISOString(),
+                    period: "Last 7 Days",
+                    total_controllers: fallbackResult.rows.length || 0
+                },
+                controllers: [],
+                summary: {
+                    total_operating_hours: 0,
+                    average_daily_hours: 0,
+                    most_efficient_controller: "N/A - No Data Available",
+                    least_efficient_controller: "N/A - No Data Available",
+                    total_efficiency_percentage: 0
+                }
+            };
         } catch (fallbackError) {
-            console.error("Fallback query also failed:", fallbackError);
-        }
 
-        throw error;
+            // Return empty but valid structure
+            return {
+                metadata: {
+                    title: "7-Day Robot Utilization Report",
+                    generated_at: new Date().toISOString(),
+                    period: "Last 7 Days",
+                    total_controllers: 0
+                },
+                controllers: [],
+                summary: {
+                    total_operating_hours: 0,
+                    average_daily_hours: 0,
+                    most_efficient_controller: "N/A - No Data Available",
+                    least_efficient_controller: "N/A - No Data Available",
+                    total_efficiency_percentage: 0
+                }
+            };
+        }
     } finally {
         client.release();
     }
@@ -113,6 +132,20 @@ async function collectControllerDailyData(
     controllerId: string
 ): Promise<DailyUtilizationData[]> {
     try {
+        // Check if utilization_data table exists
+        const tableCheckQuery = `
+      SELECT EXISTS (
+        SELECT FROM information_schema.tables 
+        WHERE table_name = 'utilization_data'
+      );
+    `;
+
+        const tableExists = await client.query(tableCheckQuery);
+
+        if (!tableExists.rows[0]?.exists) {
+            return [];
+        }
+
         const query = `
       SELECT 
         DATE(timestamp) as date,
@@ -167,7 +200,6 @@ async function collectControllerDailyData(
 
         return dailyData.reverse();
     } catch (error) {
-        console.error(`Error collecting daily data for controller ${controllerId}:`, error);
         return [];
     }
 }

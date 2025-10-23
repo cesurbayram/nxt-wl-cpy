@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { dbPool } from "@/utils/dbUtil";
 import fs from "fs";
 import path from "path";
+import os from "os";
 import { LogEntry, LogFileContentResponse } from "@/types/log-content.types";
 
 function parseLogContent(content: string): LogEntry[] {
@@ -127,7 +128,16 @@ export async function GET(
 
     const fileName = "LOGDATA.DAT";
     const folderName = `${ipAddress}_LOGDATA`;
-    const filePath = path.join("C:", "Watchlog", "UI", folderName, fileName);
+    
+    // Platform-agnostic base path
+    // Windows: C:\Watchlog\UI\
+    // Mac/Linux: ~/Watchlog/UI/ (e.g., /Users/username/Watchlog/UI/)
+    const baseDir = process.env.WATCHLOG_BASE_DIR || 
+                    (process.platform === "win32" 
+                      ? path.join("C:", "Watchlog", "UI")
+                      : path.join(os.homedir(), "Watchlog", "UI"));
+    
+    const filePath = path.join(baseDir, folderName, fileName);
 
     if (!fs.existsSync(filePath)) {
       return NextResponse.json({

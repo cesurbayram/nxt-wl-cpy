@@ -140,7 +140,6 @@ async function collectControllerStatus(): Promise<ControllerStatusData[]> {
       lastUpdate: row.updated_at ? new Date(row.updated_at).toISOString() : "Never",
     }));
   } catch (error) {
-    console.error("Error collecting controller status:", error);
     return [];
   }
 }
@@ -297,7 +296,6 @@ async function collectPerformanceData(): Promise<PerformanceAnalysis> {
       })),
     };
   } catch (error) {
-    console.error("Error collecting performance data:", error);
     return {
       currentPeriod: {
         avgServoTime: 0,
@@ -449,7 +447,6 @@ async function collectAlarmData(): Promise<AlarmAnalysis> {
       })),
     };
   } catch (error) {
-    console.error("Error collecting alarm data:", error);
     return {
       totalLast24h: 0,
       activeAlarms: 0,
@@ -517,7 +514,6 @@ async function collectBackupStatus(): Promise<BackupStatus> {
       missingBackups,
     };
   } catch (error) {
-    console.error("Error collecting backup status:", error);
     return {
       controllersWithBackup: 0,
       controllersWithoutBackup: 0,
@@ -633,7 +629,6 @@ async function collectProductionData(): Promise<ProductionSummary> {
       })),
     };
   } catch (error) {
-    console.error("Error collecting production data:", error);
     return {
       totalProductionToday: 0,
       totalProductionYesterday: 0,
@@ -767,7 +762,6 @@ async function collectMaintenanceData(): Promise<MaintenanceData> {
       controllersNeedingMaintenance: upcomingMaintenance.length,
     };
   } catch (error) {
-    console.error("Error collecting maintenance data:", error);
     return {
       recentMaintenance: [],
       upcomingMaintenance: [],
@@ -828,7 +822,6 @@ async function collectLogData(): Promise<LogAnalysis> {
           criticalCount: analysis.criticalEvents.length,
         });
       } catch (error) {
-        console.error(`Error processing logs for ${controller.name}:`, error);
         logsByController.push({
           controllerName: controller.name,
           totalEntries: 0,
@@ -859,7 +852,6 @@ async function collectLogData(): Promise<LogAnalysis> {
       eventTypeDistribution: allTopEvents,
     };
   } catch (error) {
-    console.error("Error collecting log data:", error);
     return {
       totalLogEntries: 0,
       logsByController: [],

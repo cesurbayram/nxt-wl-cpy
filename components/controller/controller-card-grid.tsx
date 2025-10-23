@@ -14,6 +14,7 @@ import {
   Eye,
   Wrench,
   Sliders,
+  GripVertical,
 } from "lucide-react";
 import { GrConnect } from "react-icons/gr";
 import {
@@ -29,10 +30,30 @@ import { BiError } from "react-icons/bi";
 import { BsSignStopFill } from "react-icons/bs";
 import { FaRegStopCircle } from "react-icons/fa";
 import Link from "next/link";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+  DragOverlay,
+  DragStartEvent,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  rectSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 interface ControllerCardGridProps {
   controllers: Controller[];
   deleteClick: (controller: Controller) => void;
+  onReorder?: (controllers: Controller[]) => void;
 }
 
 const ControllerCardGrid = ({
@@ -121,26 +142,48 @@ const ControllerCardGrid = ({
     );
   };
 
-  return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
-      {controllers.map((controller) => (
-        <Card
-          key={controller.id}
-          className="hover:shadow-lg transition-all duration-200 cursor-pointer group"
-        >
+  // Sortable Card Component
+  const SortableCard = ({ controller }: { controller: Controller }) => {
+    const {
+      attributes,
+      listeners,
+      setNodeRef,
+      transform,
+      transition,
+      isDragging,
+    } = useSortable({ id: controller.id || '' });
+
+    const style = {
+      transform: CSS.Transform.toString(transform),
+      transition,
+      opacity: isDragging ? 0.5 : 1,
+    };
+
+    return (
+      <div ref={setNodeRef} style={style}>
+        <Card className="hover:shadow-lg transition-all duration-200 group">
           <CardHeader className="pb-3">
             <div className="flex justify-between items-start">
-              <div className="space-y-1">
-                <h3 className="font-semibold text-lg group-hover:text-primary transition-colors">
-                  {controller.name}
-                </h3>
-                <div className="flex items-center gap-2">
-                  <Badge variant="outline" className="text-xs">
-                    {getModelDisplay(controller.model)}
-                  </Badge>
-                  <Badge variant="outline" className="text-xs">
-                    {getApplicationDisplay(controller.application)}
-                  </Badge>
+              <div className="flex items-start gap-2 flex-1">
+                <div
+                  {...attributes}
+                  {...listeners}
+                  className="cursor-grab active:cursor-grabbing mt-1 text-gray-400 hover:text-[#6950e8] transition-colors"
+                >
+                  <GripVertical className="h-5 w-5" />
+                </div>
+                <div className="space-y-1 flex-1">
+                  <h3 className="font-semibold text-lg group-hover:text-primary transition-colors">
+                    {controller.name}
+                  </h3>
+                  <div className="flex items-center gap-2">
+                    <Badge variant="outline" className="text-xs">
+                      {getModelDisplay(controller.model)}
+                    </Badge>
+                    <Badge variant="outline" className="text-xs">
+                      {getApplicationDisplay(controller.application)}
+                    </Badge>
+                  </div>
                 </div>
               </div>
 
@@ -229,8 +272,92 @@ const ControllerCardGrid = ({
             </div>
           </CardContent>
         </Card>
-      ))}
-    </div>
+      </div>
+    );
+  };
+
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const [items, setItems] = useState(controllers);
+
+  React.useEffect(() => {
+    setItems(controllers);
+  }, [controllers]);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  const handleDragStart = (event: DragStartEvent) => {
+    setActiveId(event.active.id as string);
+  };
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (over && active.id !== over.id) {
+      setItems((items) => {
+        const oldIndex = items.findIndex((item) => item.id === active.id);
+        const newIndex = items.findIndex((item) => item.id === over.id);
+        const newItems = arrayMove(items, oldIndex, newIndex);
+        return newItems;
+      });
+    }
+
+    setActiveId(null);
+  };
+
+  const activeController = activeId
+    ? items.find((item) => item.id === activeId)
+    : null;
+
+  return (
+    <DndContext
+      sensors={sensors}
+      collisionDetection={closestCenter}
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
+    >
+      <SortableContext items={items.map((c) => c.id || '')} strategy={rectSortingStrategy}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
+          {items.map((controller) => (
+            <SortableCard key={controller.id} controller={controller} />
+          ))}
+        </div>
+      </SortableContext>
+      <DragOverlay>
+        {activeController ? (
+          <Card className="shadow-2xl opacity-90 rotate-3">
+            <CardHeader className="pb-3">
+              <div className="flex justify-between items-start">
+                <div className="flex items-start gap-2">
+                  <GripVertical className="h-5 w-5 text-[#6950e8] mt-1" />
+                  <div className="space-y-1">
+                    <h3 className="font-semibold text-lg">
+                      {activeController.name}
+                    </h3>
+                    <div className="flex items-center gap-2">
+                      <Badge variant="outline" className="text-xs">
+                        {getModelDisplay(activeController.model)}
+                      </Badge>
+                      <Badge variant="outline" className="text-xs">
+                        {getApplicationDisplay(activeController.application)}
+                      </Badge>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardHeader>
+          </Card>
+        ) : null}
+      </DragOverlay>
+    </DndContext>
   );
 };
 

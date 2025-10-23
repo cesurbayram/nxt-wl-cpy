@@ -3,6 +3,7 @@ import { dbPool } from "@/utils/dbUtil";
 import archiver from "archiver";
 import fs from "fs";
 import path from "path";
+import os from "os";
 
 export async function POST(
   request: NextRequest,
@@ -24,6 +25,7 @@ export async function POST(
       JOIN controller c ON bs.controller_id = c.id
       WHERE bs.id = $1
     `;
+    
 
     const sessionResult = await dbPool.query(sessionQuery, [sessionId]);
 
@@ -53,7 +55,12 @@ export async function POST(
       );
     }
 
-    const backupBaseDir = "C:\\Watchlog\\Backup";
+    // Platform-agnostic backup directory
+    const backupBaseDir = process.env.WATCHLOG_BACKUP_DIR || 
+                          (process.platform === "win32" 
+                            ? path.join("C:", "Watchlog", "Backup")
+                            : path.join(os.homedir(), "Watchlog", "Backup"));
+    
     const controllerBackupDir = path.join(backupBaseDir, controllerIp);
 
     const zipDir = path.join(backupBaseDir, "zips");

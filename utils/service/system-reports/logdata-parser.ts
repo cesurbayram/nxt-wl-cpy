@@ -19,7 +19,7 @@ export function parseLogContent(content: string, maxEntries: number = 100): Pars
     const trimmedLine = line.trim();
 
     if (trimmedLine.startsWith("///INDEX")) {
-      // Save previous entry
+
       if (currentEntry.index !== undefined) {
         if (isMultiLineValue && multiLineContent.length > 0) {
           currentEntry.fields![multiLineKey] = multiLineContent.join("\n");
@@ -61,7 +61,7 @@ export function parseLogContent(content: string, maxEntries: number = 100): Pars
       } else if (key === "LOGIN NAME") {
         currentEntry.loginName = value;
       } else if (key.startsWith("///")) {
-        // Ignore comment lines
+
       } else {
         currentEntry.fields![key] = value;
 
@@ -100,17 +100,15 @@ export function parseLogContent(content: string, maxEntries: number = 100): Pars
   return entries;
 }
 
-/**
- * Read LOGDATA.DAT file for a specific controller
- */
+
 export async function readLogDataFile(ipAddress: string): Promise<ParsedLogEntry[]> {
   try {
     const fileName = "LOGDATA.DAT";
     const folderName = `${ipAddress}_LOGDATA`;
-    
+
     // Check platform and use appropriate path
     const isWindows = process.platform === 'win32';
-    const filePath = isWindows 
+    const filePath = isWindows
       ? path.join("C:", "Watchlog", "UI", folderName, fileName)
       : path.join(process.env.HOME || "/tmp", "Watchlog", "UI", folderName, fileName);
 
@@ -121,7 +119,6 @@ export async function readLogDataFile(ipAddress: string): Promise<ParsedLogEntry
     const fileContent = fs.readFileSync(filePath, "utf-8");
     return parseLogContent(fileContent, 100);
   } catch (error) {
-    console.error(`Error reading log file for ${ipAddress}:`, error);
     return [];
   }
 }

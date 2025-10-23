@@ -126,23 +126,32 @@ export function Files({ controllerId }: FilesProps) {
     <>
       <LoadingUi isLoading={isLoading} />
       <Tabs defaultValue="create" className="w-full">
-        {/* Header with Tabs and Instant Backup Button */}
-        <div className="flex items-center justify-between mb-4 border-b pb-2">
-          <TabsList className="flex h-fit border-2 gap-1">
-            <TabsTrigger value="create" className="whitespace-nowrap px-4">
+
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 mb-6 p-4 bg-gradient-to-r from-blue-50/50 to-purple-50/50 rounded-xl border border-gray-200/60">
+          <TabsList className="inline-flex h-11 items-center bg-white/80 backdrop-blur-sm p-1.5 rounded-xl shadow-md border border-gray-200/60 gap-1">
+            <TabsTrigger
+              value="create"
+              className="whitespace-nowrap px-6 py-2.5 rounded-lg font-medium text-sm transition-all data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#6950e8] data-[state=active]:to-[#5840d8] data-[state=active]:text-white data-[state=active]:shadow-lg"
+            >
               Create Plan
             </TabsTrigger>
-            <TabsTrigger value="list" className="whitespace-nowrap px-4">
+            <TabsTrigger
+              value="list"
+              className="whitespace-nowrap px-6 py-2.5 rounded-lg font-medium text-sm transition-all data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#6950e8] data-[state=active]:to-[#5840d8] data-[state=active]:text-white data-[state=active]:shadow-lg"
+            >
               Plan List
             </TabsTrigger>
-            <TabsTrigger value="history" className="whitespace-nowrap px-4">
+            <TabsTrigger
+              value="history"
+              className="whitespace-nowrap px-6 py-2.5 rounded-lg font-medium text-sm transition-all data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#6950e8] data-[state=active]:to-[#5840d8] data-[state=active]:text-white data-[state=active]:shadow-lg"
+            >
               Backup History
             </TabsTrigger>
           </TabsList>
 
           <button
             onClick={() => setShowInstantModal(true)}
-            className="rounded-xl bg-[#6950e8] bg-opacity-10 hover:bg-opacity-20 transition-colors text-[#6950e8] font-semibold px-6 py-2 shadow-sm hover:shadow-md flex items-center gap-2"
+            className="rounded-xl bg-gradient-to-r from-[#6950e8] to-[#5840d8] hover:from-[#5840d8] hover:to-[#4730c8] text-white font-semibold px-6 py-2.5 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] flex items-center justify-center gap-2"
           >
             <Clock className="h-4 w-4" />
             Instant Backup
@@ -206,7 +215,7 @@ export function Files({ controllerId }: FilesProps) {
                       checked={
                         fileType.value === "all"
                           ? instantSelectedFiles.length ===
-                            fileTypes.length - 1
+                          fileTypes.length - 1
                           : instantSelectedFiles.includes(fileType.value)
                       }
                       onCheckedChange={() =>

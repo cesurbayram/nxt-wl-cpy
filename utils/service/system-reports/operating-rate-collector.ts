@@ -22,32 +22,39 @@ export async function collectOperatingRateReportData(): Promise<OperatingRateRep
         c.name, 
         c.ip_address 
       FROM controller c
-      INNER JOIN controller_status ct ON c.id = ct.controller_id
+      LEFT JOIN controller_status ct ON c.id = ct.controller_id
       ORDER BY c.name
     `;
 
         const controllersResult = await client.query(controllersQuery);
         const controllers = controllersResult.rows;
 
+
         if (controllers.length === 0) {
-            throw new Error("No controllers found with status");
+            throw new Error("No controllers found");
         }
 
 
         const controllerData: ControllerOperatingData[] = [];
 
         for (const controller of controllers) {
+            
+            const displayName = controller.name || 
+                               `Robot (${controller.ip_address || controller.id})`;
+            
             const operatingAnalysis = await analyzeControllerOperatingRate(controller);
 
             if (operatingAnalysis) {
                 controllerData.push({
                     id: controller.id,
-                    name: controller.name,
+                    name: displayName,
                     ip_address: controller.ip_address,
                     operating_analysis: operatingAnalysis
                 });
+            } else {
             }
         }
+        
 
 
         const summary = calculateOperatingRateSummary(controllerData);
@@ -64,7 +71,6 @@ export async function collectOperatingRateReportData(): Promise<OperatingRateRep
         };
 
     } catch (error) {
-        console.error("Error collecting operating rate report data:", error);
 
 
         try {
@@ -79,30 +85,45 @@ export async function collectOperatingRateReportData(): Promise<OperatingRateRep
 
             const fallbackResult = await client.query(fallbackQuery);
 
-            if (fallbackResult.rows.length > 0) {
-                return {
-                    metadata: {
-                        title: "7-Day Operating Rate Analysis Report",
-                        generated_at: new Date().toISOString(),
-                        period: "Last 7 Days",
-                        total_controllers: fallbackResult.rows.length
-                    },
-                    controllers: [],
-                    summary: {
-                        overall_operating_rate: 0,
-                        total_log_entries: 0,
-                        total_critical_events: 0,
-                        most_efficient_controller: "N/A",
-                        least_efficient_controller: "N/A",
-                        average_daily_operating_rate: 0
-                    }
-                };
-            }
-        } catch (fallbackError) {
-            console.error("Fallback query also failed:", fallbackError);
-        }
 
-        throw error;
+            return {
+                metadata: {
+                    title: "7-Day Operating Rate Analysis Report",
+                    generated_at: new Date().toISOString(),
+                    period: "Last 7 Days",
+                    total_controllers: fallbackResult.rows.length || 0
+                },
+                controllers: [],
+                summary: {
+                    overall_operating_rate: 0,
+                    total_log_entries: 0,
+                    total_critical_events: 0,
+                    most_efficient_controller: "N/A - No Data Available",
+                    least_efficient_controller: "N/A - No Data Available",
+                    average_daily_operating_rate: 0
+                }
+            };
+        } catch (fallbackError) {
+
+            // Return empty but valid structure
+            return {
+                metadata: {
+                    title: "7-Day Operating Rate Analysis Report",
+                    generated_at: new Date().toISOString(),
+                    period: "Last 7 Days",
+                    total_controllers: 0
+                },
+                controllers: [],
+                summary: {
+                    overall_operating_rate: 0,
+                    total_log_entries: 0,
+                    total_critical_events: 0,
+                    most_efficient_controller: "N/A - No Data Available",
+                    least_efficient_controller: "N/A - No Data Available",
+                    average_daily_operating_rate: 0
+                }
+            };
+        }
     } finally {
         client.release();
     }
@@ -160,7 +181,6 @@ async function analyzeControllerOperatingRate(controller: any) {
         };
 
     } catch (error) {
-        console.error(`Error analyzing operating rate for controller ${controller.name}:`, error);
         return null;
     }
 }
@@ -171,20 +191,30 @@ async function readLogDataFile(ipAddress: string): Promise<LogEntry[]> {
         const fileName = "LOGDATA.DAT";
         const folderName = `${ipAddress}_LOGDATA`;
 
+        // Try multiple possible paths
+        const possiblePaths = [
+            // Windows paths
+            path.join("C:", "Watchlog", "UI", folderName, fileName),
+            path.join("C:", "WatchLog", folderName, fileName),
+            // Mac/Linux paths
+            path.join(process.env.HOME || "/tmp", "Watchlog", "UI", folderName, fileName),
+            path.join(process.env.HOME || "/tmp", "WatchLog", folderName, fileName),
+            path.join("/tmp", "Watchlog", "UI", folderName, fileName),
+            // Current directory paths
+            path.join(process.cwd(), "Watchlog", "UI", folderName, fileName),
+            path.join(process.cwd(), "watchlog", folderName, fileName),
+        ];
 
-        const isWindows = process.platform === 'win32';
-        const filePath = isWindows
-            ? path.join("C:", "Watchlog", "UI", folderName, fileName)
-            : path.join(process.env.HOME || "/tmp", "Watchlog", "UI", folderName, fileName);
-
-        if (!fs.existsSync(filePath)) {
-            return [];
+        // Try each path
+        for (const filePath of possiblePaths) {
+            if (fs.existsSync(filePath)) {
+                const fileContent = fs.readFileSync(filePath, "utf-8");
+                return parseLogContent(fileContent);
+            }
         }
 
-        const fileContent = fs.readFileSync(filePath, "utf-8");
-        return parseLogContent(fileContent);
+        return [];
     } catch (error) {
-        console.error(`Error reading log file for ${ipAddress}:`, error);
         return [];
     }
 }

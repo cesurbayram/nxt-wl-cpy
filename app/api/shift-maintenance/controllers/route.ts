@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { dbPool } from "@/utils/dbUtil";
 import fs from "fs";
 import path from "path";
+import os from "os";
 import { parseSystemFile } from "@/utils/common/parse-system-file";
 
 export const dynamic = "force-dynamic";
@@ -31,12 +32,13 @@ export async function GET(request: NextRequest) {
       let robot_model = null;
 
       try {
-        const systemInfoDir = path.join(
-          "C:",
-          "Watchlog",
-          "UI",
-          `${controller.ip_address}_SYSTEM`
-        );
+        // Platform-agnostic base path
+        const baseDir = process.env.WATCHLOG_BASE_DIR || 
+                        (process.platform === "win32" 
+                          ? path.join("C:", "Watchlog", "UI")
+                          : path.join(os.homedir(), "Watchlog", "UI"));
+        
+        const systemInfoDir = path.join(baseDir, `${controller.ip_address}_SYSTEM`);
 
         if (fs.existsSync(systemInfoDir)) {
           const files = fs.readdirSync(systemInfoDir);

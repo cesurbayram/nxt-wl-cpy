@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { dbPool } from "@/utils/dbUtil";
 import fs from "fs";
 import path from "path";
+import os from "os";
 
 export async function GET(
   request: NextRequest,
@@ -31,12 +32,13 @@ export async function GET(
 
     const ipAddress = controllerResult.rows[0].ip_address;
 
-    const systemInfoDir = path.join(
-      "C:",
-      "Watchlog",
-      "UI",
-      `${ipAddress}_SYSTEM`
-    );
+    // Platform-agnostic base path
+    const baseDir = process.env.WATCHLOG_BASE_DIR || 
+                    (process.platform === "win32" 
+                      ? path.join("C:", "Watchlog", "UI")
+                      : path.join(os.homedir(), "Watchlog", "UI"));
+    
+    const systemInfoDir = path.join(baseDir, `${ipAddress}_SYSTEM`);
 
     if (!fs.existsSync(systemInfoDir)) {
       return NextResponse.json({

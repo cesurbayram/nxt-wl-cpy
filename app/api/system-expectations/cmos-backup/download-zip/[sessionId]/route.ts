@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
+import os from "os";
 
 export async function GET(
   request: NextRequest,
@@ -16,7 +17,12 @@ export async function GET(
       );
     }
 
-    const backupBaseDir = "C:\\Watchlog\\Backup";
+    // Platform-agnostic backup directory
+    const backupBaseDir = process.env.WATCHLOG_BACKUP_DIR || 
+                          (process.platform === "win32" 
+                            ? path.join("C:", "Watchlog", "Backup")
+                            : path.join(os.homedir(), "Watchlog", "Backup"));
+    
     const zipDir = path.join(backupBaseDir, "zips");
 
     const today = new Date().toISOString().split("T")[0];

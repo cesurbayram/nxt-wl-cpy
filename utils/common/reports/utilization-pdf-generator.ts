@@ -90,11 +90,11 @@ function addReportContent(doc: jsPDF, data: UtilizationReportData) {
     if (data.controllers.length === 0) {
 
         doc.setFillColor(254, 243, 199);
-        doc.rect(15, yPos, 180, 60, "F");
+        doc.rect(15, yPos, 180, 80, "F");
 
         yPos += 15;
         doc.setTextColor(146, 64, 14);
-        doc.setFontSize(12);
+        doc.setFontSize(14);
         doc.setFont("helvetica", "bold");
         doc.text("No Utilization Data Available", 20, yPos);
         yPos += 12;
@@ -208,10 +208,13 @@ function addReportContent(doc: jsPDF, data: UtilizationReportData) {
         const trendIcon = trend > 5 ? "↗" : trend < -5 ? "↘" : "→";
         const efficiency = controller.totals.average_daily_hours / 24 * 100;
         const statusIcon = efficiency > 75 ? "OK" : efficiency > 50 ? "!" : "!!";
+        
+        // Use name if available, otherwise use IP address or Robot # as fallback
+        const robotName = controller.name || controller.ip_address || `Robot #${index + 1}`;
 
         return [
             `${index + 1}`,
-            cleanTableText(controller.name, 25),
+            cleanTableText(robotName, 25),
             `${formatNumberForPDF(controller.totals.total_operating_hours)}h`,
             `${formatNumberForPDF(controller.totals.average_daily_hours)}h`,
             `${efficiency.toFixed(0)}%`,

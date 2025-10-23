@@ -122,6 +122,32 @@ function addPage1_Summary(doc: jsPDF, data: AlarmReportData) {
     const avgAlarms = data.summary.average_alarms_per_controller;
 
 
+    // Add explanatory info box first
+    doc.setFillColor(240, 248, 255);  // Light blue background
+    doc.setDrawColor(59, 130, 246);   // Blue border
+    doc.setLineWidth(0.5);
+    doc.roundedRect(20, yPos, 170, 28, 3, 3, "FD");
+    
+    yPos += 6;
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(30, 58, 138);
+    doc.text("Report Explanation", 25, yPos);
+    
+    yPos += 6;
+    doc.setFontSize(8.5);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(50, 50, 50);
+    doc.text("- Total: Total number of alarms", 25, yPos);
+    yPos += 4.5;
+    doc.text("- Critical: Number of critical alarms", 25, yPos);
+    yPos += 4.5;
+    doc.text("- Top Code: Most frequent alarm code", 25, yPos);
+    yPos += 4.5;
+    doc.text("- Last Alarm: Last alarm date", 25, yPos);
+    
+    yPos += 12;
+
     const cardWidth = 53;
     const cardHeight = 32;
     const cardGap = 5;
@@ -178,14 +204,18 @@ function addPage1_Summary(doc: jsPDF, data: AlarmReportData) {
     const summaryTableData = data.controllers.map((controller, index) => {
         const summary = controller.alarm_summary;
         const lastAlarmDate = formatDateForPDF(summary.last_alarm_date);
-        const criticalStatus = summary.critical_count > 0 ? '!!' : 'OK';
+        // If critical, show "!! X", otherwise just "OK" without number
+        const criticalStatus = summary.critical_count > 0 ? `!! ${summary.critical_count}` : 'OK';
+        
+        // Use name if available, otherwise use IP address or Robot # as fallback
+        const robotName = controller.name || controller.ip_address || `Robot #${index + 1}`;
 
         return [
             `${index + 1}`,
-            cleanTableText(controller.name, 28),
+            robotName, // Use robotName directly instead of cleanTableText
             `${summary.total_count}`,
-            `${criticalStatus} ${summary.critical_count}`,
-            cleanTableText(summary.most_frequent_code, 12),
+            criticalStatus,  // No extra number added, already included in criticalStatus
+            cleanTableText(summary.most_frequent_code, 12) || summary.most_frequent_code || 'N/A',
             lastAlarmDate
         ];
     });
@@ -198,27 +228,29 @@ function addPage1_Summary(doc: jsPDF, data: AlarmReportData) {
         headStyles: {
             fillColor: COLORS.primary,
             textColor: COLORS.white,
-            fontSize: 9,
+            fontSize: 10,
             fontStyle: 'bold',
             halign: 'center',
-            cellPadding: 5
+            cellPadding: 6
         },
         bodyStyles: {
-            fontSize: 9,
+            fontSize: 10,
             textColor: COLORS.text,
             halign: 'center',
-            cellPadding: 4
+            cellPadding: 5,
+            lineColor: [220, 220, 220],
+            lineWidth: 0.1
         },
         alternateRowStyles: {
-            fillColor: COLORS.grayLight
+            fillColor: [248, 249, 250]  // Soft gray
         },
         columnStyles: {
-            0: { cellWidth: 12, halign: 'center' },
-            1: { cellWidth: 55, halign: 'left', fontStyle: 'bold' },
-            2: { cellWidth: 18, halign: 'center' },
-            3: { cellWidth: 22, halign: 'center' },
-            4: { cellWidth: 22, halign: 'center' },
-            5: { cellWidth: 28, halign: 'center', fontSize: 8 }
+            0: { cellWidth: 12, halign: 'center', fontStyle: 'bold' },           // # - bold
+            1: { cellWidth: 52, halign: 'left', fontStyle: 'bold' },             // Robot Name - left aligned, bold
+            2: { cellWidth: 20, halign: 'center' },                               // Total - centered
+            3: { cellWidth: 26, halign: 'center' },                               // Critical - centered
+            4: { cellWidth: 26, halign: 'center' },                               // Top Code - centered
+            5: { cellWidth: 34, halign: 'center', fontSize: 9 }                   // Last Alarm - centered
         },
         margin: { left: 20, right: 20 }
     });
@@ -294,29 +326,27 @@ function addPage1_Summary(doc: jsPDF, data: AlarmReportData) {
 
 function addControllerAlarmPage(doc: jsPDF, controller: any, pageNumber: number) {
     let yPos = 20;
-
+    
+    // Use name if available, otherwise use IP address as fallback
+    const robotDisplayName = controller.name || controller.ip_address || `Robot ${controller.id}`;
 
     doc.setFillColor(...COLORS.primaryDark);
     doc.rect(0, 0, 210, 40, "F");
 
-
-    doc.setFillColor(...COLORS.primaryLight);
-    doc.circle(25, 20, 7, "F");
-
     doc.setTextColor(...COLORS.white);
     doc.setFontSize(17);
     doc.setFont("helvetica", "bold");
-    doc.text(`${controller.name}`, 36, 18);
+    doc.text(`${robotDisplayName}`, 20, 18);
 
     doc.setFontSize(9);
     doc.setFont("helvetica", "normal");
     doc.setTextColor(...COLORS.primaryLight);
-    doc.text(`Detailed Alarm Analysis`, 36, 25);
+    doc.text(`Detailed Alarm Analysis`, 20, 25);
 
 
     doc.setFontSize(8);
-    doc.text(`Model: ${controller.model}`, 36, 32);
-    doc.text(`IP: ${controller.ip_address}`, 110, 32);
+    doc.text(`Model: ${controller.model}`, 20, 32);
+    doc.text(`IP: ${controller.ip_address}`, 100, 32);
 
     yPos = 52;
 
@@ -400,24 +430,28 @@ function addControllerAlarmPage(doc: jsPDF, controller: any, pageNumber: number)
             body: detailsData,
             theme: 'striped',
             bodyStyles: {
-                fontSize: 8.5,
+                fontSize: 9,
                 textColor: COLORS.text,
-                cellPadding: 3
+                cellPadding: 5,
+                lineColor: [230, 230, 230],
+                lineWidth: 0.1,
+                valign: 'top'
             },
             alternateRowStyles: {
-                fillColor: COLORS.grayLight
+                fillColor: [252, 252, 253]  // Very light gray
             },
             columnStyles: {
                 0: {
-                    cellWidth: 35,
+                    cellWidth: 48,
                     fontStyle: 'bold',
-                    fillColor: COLORS.primaryLight,
-                    textColor: COLORS.primaryDark,
+                    fillColor: [240, 243, 248],  // Soft blue-gray
+                    textColor: [40, 50, 70],     // Darker text
                     halign: 'left'
                 },
                 1: {
-                    cellWidth: 145,
-                    halign: 'left'
+                    cellWidth: 122,
+                    halign: 'left',
+                    cellPadding: 6
                 }
             },
             margin: { left: 20, right: 20 }

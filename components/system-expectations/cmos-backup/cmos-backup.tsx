@@ -356,14 +356,14 @@ const CmosBackupLogs = () => {
         <CardContent className="p-4">
           <div className="flex flex-col gap-4">
             <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-              <Label className="text-sm font-medium text-gray-700 whitespace-nowrap">
+              <Label className="text-sm font-medium text-foreground whitespace-nowrap">
                 Select Controller:
               </Label>
               <Select
                 value={selectedController}
                 onValueChange={setSelectedController}
               >
-                <SelectTrigger className="w-full sm:w-56 bg-white border-gray-300 shadow-sm">
+                <SelectTrigger className="w-full sm:w-56 bg-background border-input shadow-sm">
                   <SelectValue placeholder="Choose a controller..." />
                 </SelectTrigger>
                 <SelectContent>

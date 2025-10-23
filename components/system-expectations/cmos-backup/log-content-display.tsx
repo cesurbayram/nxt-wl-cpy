@@ -136,19 +136,19 @@ const LogContentDisplay: React.FC<LogContentDisplayProps> = ({
   return (
     <Card className="h-fit flex flex-col">
       <CardHeader>
-        <CardTitle className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <FileText className="w-5 h-5 text-blue-600" />
-            Log Data Content
+        <CardTitle className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-2 flex-wrap">
+            <FileText className="w-5 h-5 text-blue-600 flex-shrink-0" />
+            <span className="text-base sm:text-lg break-words">Log Data Content</span>
             {logEntries.length > 0 && (
-              <span className="text-sm text-gray-500 font-normal">
+              <span className="text-sm text-gray-500 font-normal whitespace-nowrap">
                 ({logEntries.length} entries)
               </span>
             )}
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 w-full sm:w-auto">
             {lastModified && (
-              <span className="text-xs text-gray-500">
+              <span className="text-xs text-gray-500 break-words">
                 Last modified: {new Date(lastModified).toLocaleString("tr-TR")}
               </span>
             )}
@@ -157,7 +157,7 @@ const LogContentDisplay: React.FC<LogContentDisplayProps> = ({
               size="sm"
               onClick={fetchLogContent}
               disabled={isLoading}
-              className="text-xs"
+              className="text-xs flex-shrink-0 w-full sm:w-auto"
             >
               {isLoading ? (
                 <RefreshCw className="w-4 h-4 animate-spin mr-2" />
@@ -204,15 +204,17 @@ const LogContentDisplay: React.FC<LogContentDisplayProps> = ({
                   key={entry.index}
                   className="p-3 rounded-lg border border-gray-200 hover:shadow-md transition-shadow bg-white"
                 >
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex items-center gap-3">
-                      <span className="text-sm font-mono bg-gray-100 px-2 py-1 rounded">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-start justify-between gap-3 mb-3">
+                    <div className="flex items-start gap-2 sm:gap-3 flex-wrap">
+                      <span className="text-sm font-mono bg-gray-100 px-2 py-1 rounded whitespace-nowrap flex-shrink-0">
                         #{entry.index}
                       </span>
-                      <div className="flex items-center gap-2">
-                        {getEventIcon(entry.event || "")}
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <div className="flex-shrink-0">
+                          {getEventIcon(entry.event || "")}
+                        </div>
                         <span
-                          className={`px-2 py-1 rounded-full text-xs font-medium border ${getEventBadgeColor(
+                          className={`px-2 py-1 rounded-full text-xs font-medium border break-words ${getEventBadgeColor(
                             entry.event || ""
                           )}`}
                         >
@@ -220,13 +222,13 @@ const LogContentDisplay: React.FC<LogContentDisplayProps> = ({
                         </span>
                       </div>
                     </div>
-                    <div className="text-right text-sm text-gray-600">
-                      <div className="flex items-center gap-1">
+                    <div className="text-left sm:text-right text-sm text-gray-600 flex-shrink-0">
+                      <div className="flex items-center gap-1 whitespace-nowrap">
                         <Calendar className="w-3 h-3" />
                         {date}
                       </div>
                       {time && (
-                        <div className="flex items-center gap-1">
+                        <div className="flex items-center gap-1 whitespace-nowrap">
                           <Clock className="w-3 h-3" />
                           {time}
                         </div>
@@ -236,10 +238,10 @@ const LogContentDisplay: React.FC<LogContentDisplayProps> = ({
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
                     {entry.loginName && (
-                      <div className="flex items-center gap-2">
-                        <User className="w-4 h-4 text-gray-500" />
-                        <span className="text-gray-600">Login Name:</span>
-                        <span className="font-medium">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <User className="w-4 h-4 text-gray-500 flex-shrink-0" />
+                        <span className="text-gray-600 whitespace-nowrap">Login Name:</span>
+                        <span className="font-medium break-words">
                           {entry.loginName || "N/A"}
                         </span>
                       </div>
@@ -261,14 +263,14 @@ const LogContentDisplay: React.FC<LogContentDisplayProps> = ({
                           key={key}
                           className={
                             isJobName
-                              ? "col-span-full flex items-center gap-2"
-                              : "flex items-center gap-2"
+                              ? "col-span-full flex items-center gap-2 flex-wrap"
+                              : "flex items-center gap-2 flex-wrap"
                           }
                         >
-                          <Settings className="w-4 h-4 text-gray-500" />
-                          <span className="text-gray-600">{key}:</span>
+                          <Settings className="w-4 h-4 text-gray-500 flex-shrink-0" />
+                          <span className="text-gray-600 whitespace-nowrap">{key}:</span>
                           <span
-                            className={`font-medium ${
+                            className={`font-medium break-all ${
                               isJobName
                                 ? "text-blue-700"
                                 : isImportant
@@ -287,7 +289,7 @@ const LogContentDisplay: React.FC<LogContentDisplayProps> = ({
                     <summary className="cursor-pointer text-xs text-gray-500 hover:text-gray-700">
                       Show raw data
                     </summary>
-                    <pre className="mt-2 text-xs bg-gray-50 p-2 rounded border overflow-x-auto">
+                    <pre className="mt-2 text-xs bg-gray-50 p-2 rounded border overflow-x-auto break-all whitespace-pre-wrap">
                       {entry.rawData}
                     </pre>
                   </details>

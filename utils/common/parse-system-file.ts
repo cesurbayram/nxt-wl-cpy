@@ -2,6 +2,22 @@
  * Parse system.sys file content to extract robot information
  */
 
+export interface RobotInfo {
+  name: string; // R1, R2, etc.
+  model: string; // MA1440/MH12-A0*(MA1440)
+  servoPowerTime?: string;
+  playbackTime?: string;
+  movingTime?: string;
+}
+
+export interface PositionerInfo {
+  name: string; // S1, S2, S3, etc.
+  model: string; // TURN-1, etc.
+  servoPowerTime?: string;
+  playbackTime?: string;
+  movingTime?: string;
+}
+
 export interface ParsedSystemInfo {
   systemNo?: string;
   version?: string;
@@ -10,6 +26,8 @@ export interface ParsedSystemInfo {
   language?: string;
   robotModel?: string;
   robotName?: string;
+  robots: RobotInfo[];
+  positioners: PositionerInfo[];
 }
 
 /**
@@ -19,7 +37,10 @@ export interface ParsedSystemInfo {
  */
 export const parseSystemFile = (content: string): ParsedSystemInfo => {
   const lines = content.split("\n");
-  const result: ParsedSystemInfo = {};
+  const result: ParsedSystemInfo = {
+    robots: [],
+    positioners: []
+  };
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
@@ -60,33 +81,109 @@ export const parseSystemFile = (content: string): ParsedSystemInfo => {
 
     // Parse ROBOT NAME section (e.g., "R1 : 1-06VX8-A0*(GP8)  0011_1111")
     if (trimmedLine.startsWith("//ROBOT NAME")) {
-      // Get the next line after //ROBOT NAME
-      if (i < lines.length - 1) {
-        const nextLine = lines[i + 1].trim();
-        // Check if next line is not a comment and not empty
-        if (nextLine && !nextLine.startsWith("//")) {
-          // Check if line contains colon (format: "R1 : 1-06VX8-A0*(GP8)")
-          if (nextLine.includes(":")) {
-            const parts = nextLine.split(":");
-            if (parts.length >= 2) {
-              result.robotName = parts[0].trim(); // e.g., "R1"
-              // Extract model after colon, before any trailing numbers
-              const modelPart = parts[1].trim();
-              // Match the model pattern (e.g., "1-06VX8-A0*(GP8)")
-              const robotMatch = modelPart.match(/^([^\s]+(?:\([^)]+\))?)/);
-              if (robotMatch) {
-                result.robotModel = robotMatch[1];
+      let j = i + 1;
+      while (j < lines.length) {
+        const robotLine = lines[j].trim();
+        if (robotLine.startsWith("//") || !robotLine) break;
+        
+        if (robotLine.includes(":")) {
+          const parts = robotLine.split(":");
+          if (parts.length >= 2) {
+            const name = parts[0].trim();
+            const modelPart = parts[1].trim();
+            const modelMatch = modelPart.match(/^([^\s]+(?:\([^)]+\))?)/);
+            
+            if (modelMatch) {
+              const model = modelMatch[1];
+              
+              if (name.startsWith("R")) {
+                result.robots.push({ name, model });
+                if (!result.robotName) {
+                  result.robotName = name;
+                  result.robotModel = model;
+                }
+              } else if (name.startsWith("S")) {
+                result.positioners.push({ name, model });
               }
-            }
-          } else {
-            // Old format without colon: "MA01400-B0*  0011_1111"
-            const robotMatch = nextLine.match(/^([A-Z0-9\-\*]+)/);
-            if (robotMatch) {
-              result.robotModel = robotMatch[1];
-              result.robotName = nextLine; // Keep full line
             }
           }
         }
+        j++;
+      }
+    }
+
+    // Parse SERVO POWER times
+    if (trimmedLine.startsWith("//SERVO POWER")) {
+      let j = i + 1;
+      while (j < lines.length) {
+        const powerLine = lines[j].trim();
+        if (powerLine.startsWith("//") || !powerLine) break;
+        
+        if (powerLine.includes(":") && !powerLine.startsWith("TOTAL")) {
+          const parts = powerLine.split(":");
+          const name = parts[0].trim();
+          const timeMatch = powerLine.match(/,(.+)$/);
+          
+          if (timeMatch) {
+            const time = timeMatch[1].trim();
+            const robot = result.robots.find(r => r.name === name);
+            const positioner = result.positioners.find(p => p.name === name);
+            
+            if (robot) robot.servoPowerTime = time;
+            if (positioner) positioner.servoPowerTime = time;
+          }
+        }
+        j++;
+      }
+    }
+
+    // Parse PLAYBACK TIME
+    if (trimmedLine.startsWith("//PLAYBACK TIME")) {
+      let j = i + 1;
+      while (j < lines.length) {
+        const playLine = lines[j].trim();
+        if (playLine.startsWith("//") || !playLine) break;
+        
+        if (playLine.includes(":") && !playLine.startsWith("TOTAL")) {
+          const parts = playLine.split(":");
+          const name = parts[0].trim();
+          const timeMatch = playLine.match(/,(.+)$/);
+          
+          if (timeMatch) {
+            const time = timeMatch[1].trim();
+            const robot = result.robots.find(r => r.name === name);
+            const positioner = result.positioners.find(p => p.name === name);
+            
+            if (robot) robot.playbackTime = time;
+            if (positioner) positioner.playbackTime = time;
+          }
+        }
+        j++;
+      }
+    }
+
+    // Parse MOVING TIME
+    if (trimmedLine.startsWith("//MOVING TIME")) {
+      let j = i + 1;
+      while (j < lines.length) {
+        const moveLine = lines[j].trim();
+        if (moveLine.startsWith("//") || !moveLine) break;
+        
+        if (moveLine.includes(":") && !moveLine.startsWith("TOTAL")) {
+          const parts = moveLine.split(":");
+          const name = parts[0].trim();
+          const timeMatch = moveLine.match(/,(.+)$/);
+          
+          if (timeMatch) {
+            const time = timeMatch[1].trim();
+            const robot = result.robots.find(r => r.name === name);
+            const positioner = result.positioners.find(p => p.name === name);
+            
+            if (robot) robot.movingTime = time;
+            if (positioner) positioner.movingTime = time;
+          }
+        }
+        j++;
       }
     }
   }

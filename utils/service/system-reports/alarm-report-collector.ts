@@ -21,17 +21,19 @@ export async function collectAlarmReportData(): Promise<AlarmReportData> {
         c.id, 
         c.name, 
         c.ip_address,
-        c.model
+        c.model,
+        c.location,
+        c.application
       FROM controller c
-      INNER JOIN controller_status ct ON c.id = ct.controller_id
+      LEFT JOIN controller_status ct ON c.id = ct.controller_id
       ORDER BY c.name
     `;
 
         const controllersResult = await client.query(controllersQuery);
         const controllers = controllersResult.rows;
-
+        
         if (controllers.length === 0) {
-            throw new Error("No controllers found with status");
+            throw new Error("No controllers found");
         }
 
 
@@ -41,13 +43,31 @@ export async function collectAlarmReportData(): Promise<AlarmReportData> {
         const controllerData: ControllerAlarmData[] = [];
 
         for (const controller of controllers) {
+            // Create a display name with proper fallback
+            const displayName = controller.name || 
+                                `${controller.model || 'Robot'} (${controller.ip_address || controller.id})`;
+            
             const alarmData = await collectControllerAlarmData(client, controller, alarmMappings);
 
             if (alarmData) {
                 controllerData.push(alarmData);
+            } else {
+                // EVEN IF NO ALARMS, ADD CONTROLLER WITH EMPTY DATA
+                controllerData.push({
+                    id: controller.id,
+                    name: displayName,
+                    ip_address: controller.ip_address,
+                    model: controller.model || 'Unknown',
+                    recent_alarms: [],
+                    alarm_summary: {
+                        total_count: 0,
+                        critical_count: 0,
+                        most_frequent_code: 'N/A',
+                        last_alarm_date: 'N/A'
+                    }
+                });
             }
         }
-
 
         const summary = calculateAlarmSummary(controllerData);
 
@@ -63,9 +83,6 @@ export async function collectAlarmReportData(): Promise<AlarmReportData> {
         };
 
     } catch (error) {
-        console.error("Error collecting alarm report data:", error);
-
-
         try {
             const fallbackQuery = `
         SELECT 
@@ -79,29 +96,41 @@ export async function collectAlarmReportData(): Promise<AlarmReportData> {
 
             const fallbackResult = await client.query(fallbackQuery);
 
-            if (fallbackResult.rows.length > 0) {
-                return {
-                    metadata: {
-                        title: "Robot Alarm Analysis Report",
-                        generated_at: new Date().toISOString(),
-                        period: "Recent Alarms (Last 5 per Robot)",
-                        total_controllers: fallbackResult.rows.length
-                    },
-                    controllers: [],
-                    summary: {
-                        total_alarms: 0,
-                        critical_alarms: 0,
-                        most_problematic_controller: "N/A",
-                        most_common_alarm_code: "N/A",
-                        average_alarms_per_controller: 0
-                    }
-                };
-            }
+            return {
+                metadata: {
+                    title: "Robot Alarm Analysis Report",
+                    generated_at: new Date().toISOString(),
+                    period: "Recent Alarms (Last 5 per Robot)",
+                    total_controllers: fallbackResult.rows.length || 0
+                },
+                controllers: [],
+                summary: {
+                    total_alarms: 0,
+                    critical_alarms: 0,
+                    most_problematic_controller: "N/A - No Data Available",
+                    most_common_alarm_code: "N/A - No Data Available",
+                    average_alarms_per_controller: 0
+                }
+            };
         } catch (fallbackError) {
-            console.error("Fallback query also failed:", fallbackError);
+            // Return empty but valid structure
+            return {
+                metadata: {
+                    title: "Robot Alarm Analysis Report",
+                    generated_at: new Date().toISOString(),
+                    period: "Recent Alarms (Last 5 per Robot)",
+                    total_controllers: 0
+                },
+                controllers: [],
+                summary: {
+                    total_alarms: 0,
+                    critical_alarms: 0,
+                    most_problematic_controller: "N/A - No Data Available",
+                    most_common_alarm_code: "N/A - No Data Available",
+                    average_alarms_per_controller: 0
+                }
+            };
         }
-
-        throw error;
     } finally {
         client.release();
     }
@@ -115,22 +144,47 @@ async function collectControllerAlarmData(
 ): Promise<ControllerAlarmData | null> {
     try {
 
-        const alarmsQuery = `
+        // Try almhist first, fall back to alarm table if it doesn't exist
+        let alarmsQuery = `
       SELECT 
         code, 
-        name, 
-        origin_date,
-        mode, 
-        type
-      FROM almhist 
+        text as name, 
+        detected as origin_date,
+        '' as mode, 
+        priority as type
+      FROM alarm 
       WHERE controller_id = $1 
-      ORDER BY origin_date DESC 
+      ORDER BY detected DESC 
       LIMIT 5
     `;
 
+        // Check if almhist table exists, use it if available
+        const tableCheckQuery = `
+      SELECT EXISTS (
+        SELECT FROM information_schema.tables 
+        WHERE table_name = 'almhist'
+      );
+    `;
+
+        const tableExists = await client.query(tableCheckQuery);
+
+        if (tableExists.rows[0]?.exists) {
+            alarmsQuery = `
+        SELECT 
+          code, 
+          name, 
+          origin_date,
+          mode, 
+          type
+        FROM almhist 
+        WHERE controller_id = $1 
+        ORDER BY origin_date DESC 
+        LIMIT 5
+      `;
+        }
+
         const alarmsResult = await client.query(alarmsQuery, [controller.id]);
         const alarms = alarmsResult.rows;
-
 
         const controllerModel = controller.model || 'YRC1000';
         const modelMappings = alarmMappings[controllerModel] || alarmMappings['YRC1000'] || {};
@@ -153,9 +207,13 @@ async function collectControllerAlarmData(
             last_alarm_date: alarms.length > 0 ? alarms[0].origin_date : 'N/A'
         };
 
+        // Create proper display name with fallback
+        const displayName = controller.name || 
+                           `${controllerModel} (${controller.ip_address || controller.id})`;
+        
         return {
             id: controller.id,
-            name: controller.name,
+            name: displayName,
             ip_address: controller.ip_address,
             model: controllerModel,
             recent_alarms: enrichedAlarms,
@@ -163,7 +221,6 @@ async function collectControllerAlarmData(
         };
 
     } catch (error) {
-        console.error(`Error collecting alarm data for controller ${controller.name}:`, error);
         return null;
     }
 }
@@ -176,7 +233,6 @@ async function loadAlarmDetailMappings(): Promise<{ [model: string]: AlarmCodeMa
         const alarmDetailsPath = path.join(process.cwd(), 'data', 'alarm-details');
 
         if (!fs.existsSync(alarmDetailsPath)) {
-            console.warn('Alarm details directory not found:', alarmDetailsPath);
             return mappings;
         }
 
@@ -197,19 +253,20 @@ async function loadAlarmDetailMappings(): Promise<{ [model: string]: AlarmCodeMa
                     const csvContent = fs.readFileSync(csvPath, 'utf-8');
 
 
+                    // CSV format: Lines 1-3 are metadata/empty, Line 4 is header, Line 5+ is data
                     const records = parse(csvContent, {
                         columns: true,
                         skip_empty_lines: true,
                         trim: true,
-                        from_line: 4
+                        from_line: 4  // Start from line 4 where headers are
                     });
 
                     records.forEach((record: any) => {
                         const alarmNumber = record['Alarm Number'];
-                        if (alarmNumber && alarmNumber !== '') {
-                            modelMapping[alarmNumber] = {
+                        if (alarmNumber && alarmNumber !== '' && alarmNumber !== 'Alarm Number') {
+                            const alarmDetails = {
                                 alarm_number: alarmNumber,
-                                alarm_name: record['Alarm Name'] || record['Alarm Name/Message'] || '',
+                                alarm_name: record['Alarm Name/Message'] || record['Alarm Name'] || '',
                                 contents: record['Contents'] || '',
                                 sub_code: record['Sub Code'] || '',
                                 meaning: record['Meaning'] || '',
@@ -217,19 +274,19 @@ async function loadAlarmDetailMappings(): Promise<{ [model: string]: AlarmCodeMa
                                 remedy: record['Remedy'] || '',
                                 notes: record['Notes'] || ''
                             };
+                            modelMapping[alarmNumber] = alarmDetails;
                         }
                     });
                 }
 
                 mappings[modelDir] = modelMapping;
-                console.log(`Loaded ${Object.keys(modelMapping).length} alarm definitions for ${modelDir}`);
             } catch (error) {
-                console.error(`Error loading alarm details for ${modelDir}:`, error);
+                // Silently handle errors
             }
         }
 
     } catch (error) {
-        console.error('Error loading alarm detail mappings:', error);
+        // Silently handle errors
     }
 
     return mappings;
@@ -242,7 +299,6 @@ function getAlarmDetails(code: string, mappings: AlarmCodeMapping): AlarmDetails
     if (details) {
         return details;
     }
-
 
     return {
         alarm_number: code,

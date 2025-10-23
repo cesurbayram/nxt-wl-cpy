@@ -153,30 +153,37 @@ const Maintenance = ({ controllerId }: { controllerId: string }) => {
         onValueChange={(value) => setActiveTab(value as "plans" | "logs")}
       >
         {/* Header with Tabs and Buttons */}
-        <div className="flex items-center justify-between mb-4 border-b pb-2">
-          <TabsList className="flex h-fit border-2 gap-1">
-            <TabsTrigger value="plans" className="whitespace-nowrap px-4">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 mb-6 p-4 bg-gradient-to-r from-blue-50/50 to-purple-50/50 rounded-xl border border-gray-200/60">
+          <TabsList className="inline-flex h-11 items-center bg-white/80 backdrop-blur-sm p-1.5 rounded-xl shadow-md border border-gray-200/60 gap-1">
+            <TabsTrigger 
+              value="plans" 
+              className="whitespace-nowrap px-8 py-2.5 rounded-lg font-medium text-sm transition-all data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#6950e8] data-[state=active]:to-[#5840d8] data-[state=active]:text-white data-[state=active]:shadow-lg"
+            >
               Plans
             </TabsTrigger>
-            <TabsTrigger value="logs" className="whitespace-nowrap px-4">
+            <TabsTrigger 
+              value="logs" 
+              className="whitespace-nowrap px-8 py-2.5 rounded-lg font-medium text-sm transition-all data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#6950e8] data-[state=active]:to-[#5840d8] data-[state=active]:text-white data-[state=active]:shadow-lg"
+            >
               Logs
             </TabsTrigger>
           </TabsList>
           
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <button
               onClick={handleRefresh}
               disabled={isRefreshing}
-              className="rounded-xl border border-gray-300 text-gray-700 px-4 py-2 hover:bg-gray-50 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="rounded-xl border-2 border-gray-200 bg-white text-gray-700 px-5 py-2.5 hover:border-gray-300 hover:bg-gray-50 hover:shadow-md transition-all duration-300 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed font-medium text-sm"
             >
               <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
               Refresh
             </button>
             <button
               onClick={handleAddNew}
-              className="rounded-xl bg-[#6950e8] text-white px-6 py-2 hover:bg-[#592be7] transition-colors"
+              className="rounded-xl bg-gradient-to-r from-[#6950e8] to-[#5840d8] hover:from-[#5840d8] hover:to-[#4730c8] text-white font-semibold px-6 py-2.5 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] flex items-center gap-2"
             >
-              + Add New {activeTab === "plans" ? "Plan" : "Log"}
+              <span className="text-lg leading-none">+</span>
+              Add New {activeTab === "plans" ? "Plan" : "Log"}
             </button>
           </div>
         </div>

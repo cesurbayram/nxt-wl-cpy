@@ -363,6 +363,37 @@ function addPage3_PerformanceAnalysis(doc: jsPDF, data: SystemHealthReportData) 
 
   let yPos = 35;
 
+  // Check if there's any performance data
+  const hasData = data.performance.currentPeriod.totalRecords > 0 || 
+                  data.performance.previousPeriod.totalRecords > 0;
+
+  if (!hasData) {
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
+    doc.text("Performance Data", 15, yPos);
+    yPos += 10;
+
+    doc.setFillColor(254, 243, 199);
+    doc.roundedRect(15, yPos, 180, 50, 2, 2, "F");
+
+    yPos += 15;
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(146, 64, 14);
+    doc.text("No Performance Data Available", 20, yPos);
+
+    yPos += 10;
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    doc.text("• No utilization data found in the system", 25, yPos);
+    yPos += 6;
+    doc.text("• Check if utilization_data table exists and is being populated", 25, yPos);
+    yPos += 6;
+    doc.text("• Verify robot connections and data collection services", 25, yPos);
+
+    doc.setTextColor(0, 0, 0);
+    return;
+  }
 
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
@@ -473,12 +504,31 @@ function addPage4_AlarmAnalysis(doc: jsPDF, data: SystemHealthReportData) {
 
   let yPos = 35;
 
-
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
   doc.text("Alarm Summary (Last 24 Hours)", 15, yPos);
 
   yPos += 8;
+
+  // Show status even if no alarms
+  if (data.alarms.totalLast24h === 0 && data.alarms.activeAlarms === 0) {
+    doc.setFillColor(209, 250, 229);
+    doc.roundedRect(15, yPos, 180, 40, 2, 2, "F");
+
+    yPos += 15;
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(16, 185, 129);
+    doc.text("No Alarms Detected", 20, yPos);
+
+    yPos += 10;
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    doc.text("All robots are operating normally with no active alarms in the last 24 hours.", 25, yPos);
+
+    doc.setTextColor(0, 0, 0);
+    yPos += 15;
+  }
 
   doc.setFontSize(10);
   doc.setFont("helvetica", "normal");
@@ -927,12 +977,35 @@ function addPage8_LogAnalysis(doc: jsPDF, data: SystemHealthReportData) {
 
   let yPos = 35;
 
-
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
   doc.text("Log Data Summary", 15, yPos);
 
   yPos += 8;
+
+  // Check if there's any log data
+  if (data.logs.totalLogEntries === 0) {
+    doc.setFillColor(254, 243, 199);
+    doc.roundedRect(15, yPos, 180, 50, 2, 2, "F");
+
+    yPos += 15;
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(146, 64, 14);
+    doc.text("No Log Data Found", 20, yPos);
+
+    yPos += 10;
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    doc.text("• LOGDATA.DAT files not found for any robots", 25, yPos);
+    yPos += 6;
+    doc.text("• Verify Watchlog service is running", 25, yPos);
+    yPos += 6;
+    doc.text("• Check file paths and permissions", 25, yPos);
+
+    doc.setTextColor(0, 0, 0);
+    return;
+  }
 
   doc.setFontSize(10);
   doc.setFont("helvetica", "normal");
